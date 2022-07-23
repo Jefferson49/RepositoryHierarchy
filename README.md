@@ -79,24 +79,24 @@ In order to manage archives and sources, Gedcom and webtrees basically provide t
 + Source
 + Call number (of a source within a repository)
 
-# How the module maps to Gedcom and to Archive concepts
+# How the module maps to Gedcom and to archive management concepts
 The table describes how the concepts from archive and library management are mapped to Gedcom/webtrees and the Repository Hierarchy custom module:
 
 |Archive/Library Concept|Gedcom/webtrees data structures|Repository Hierarchy Module|
 |:------|:--------------|:---------------------------|
 |Archive,<br>Library|Repository|Repository|
-|Archival Arrangement,<br>Library Classification|-|Call number category|
-|Fond,<br>record group,<br>series,<br>folder|-|Call number category|
+|Archival Arrangement,<br>Library Classification|-|Hierarchy of call number categories|
+|Fonds,<br>Record group,<br>Series,<br>Folder|-|Call number category|
 |Item|Source|Source|
 |Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
-# Concept of the Repository Hierarchy Module
+# Concepts of the Repository Hierarchy Module
 In the following, the concepts of the RepositoryHierarchy module are described. 
 
 ## Call number categories
 In the module, a new concept "Call numbers category" is introduced. Call number categories are defined as hierarchical elements, which constitute the structure of an archival arrangement.
 
-## Call number categories, call numbers, and delimiters
+## Relationship between call number categories, call numbers, and delimiters
 Call number categories are extracted form call numbers. The module identifies sub-strings in call numbers as call number categories by using delimiters. A chosen delimiter (or a set of delimiters) cuts the full call number into sub-strings of call number categories.
 
 Example call number structure:
@@ -119,7 +119,7 @@ Based on the identified call number categories, the module creates the following
 ## Delimiter expressions for call numbers
 A delimiter is a sequence of one or more characters for specifying the boundary between separate, independent regions in a text. In the RepositoryHierarchy module, delimiters are used to cut call numbers into sub-strings of call number categories. The call number categories will be used to construct a hierarchy of call numbers.
 
-### Use a single delimiter
+### Usage of a single delimiter
 A single delimiter is used by providing a single character or a sequence of characters in the related input form ("delimiter expression"). 
 
 Example:
@@ -133,7 +133,7 @@ Example:
             + Item 1
             + Item 2
 
-### Use a set of delimiters
+### Usage of a set of delimiters
 A set of delimiters is used by providing the delimiters in the input form ("delimiter expression") separated by "**;**".
 
 Example:
@@ -161,7 +161,7 @@ Example:
 
 I.e. the "-" delimiter in "Record-group" is not evaluated, because the "/" delimiter is evaluated first. After all matches of the "/" delimiter have been evaluated, the "-" delimiter is found in "Series A-Nr. 7".
 	
-### Use a regular expression for the delimiter
+### Usage of a regular expression for the delimiter
 A regular expression is used by providing it in the input form ("delimiter expression"). The regular expression needs to contain the delimiter in brackets. This provides a much more powerful way to specify delimiters.
 
 Please note, that the "full" regular expression will be used to find a certain pattern in the call numbers. However, **only the characters in the brackets** ("the match" of the regular expression) **will be used as the delimiter**.
@@ -178,7 +178,7 @@ Example:
 
 In this example, the delimiter is the space character in the brackets, i.e. "**( )**". However, the full pattern "**Film( )Number**" is used to find corresponding strings. Therefore, only space characters, which match the pattern, are identified as delimiter. Other space characters, are NOT identified as delimiter.
 
-### Use a set of regular expressions for the delimiter
+### Usage of a set of regular expressions for the delimiter
 A set of regular expressions can be used by providing several regular expressions in the input form ("delimiter expression") separated by "**;**". It is also possible to mix simple delimiters (i.e. a single character or sequence of characters) with regular expressions.
 
 Example:
@@ -196,7 +196,7 @@ Example:
 
 Like for a set of simple delimiters, the delimiter expressions are evaluated from left to right. Please refer to the description and example for a set of simple delimiters.
 
-## Load and save options
+## Save and load options
 By pressing certain radio buttons in the front end, certain load and save operations can be executed while pressing the "view" button. 
 
 ### Save and load a repository
@@ -220,7 +220,7 @@ By opening the "Add new source" link close to a call number category, a form is 
 While the "{new}" placeholder should be modified, the rest of the call number, which consists of the call number category hierarchy should only be modified if the "route" or "path" of the call number category shall also be changed. If the intention is to simple add a new source to an existing call number category, only the "{new}" placeholder should be changed.
 
 # Preferences
-The following preferences can be activated/deactivated in the control panel:
+The following preferences can be activated/deactivated by administrators in the control panel:
 + Show label before call number category.
 + Show help icon after label for delimiter expression.
 + Show help link after label for delimiter expression.
