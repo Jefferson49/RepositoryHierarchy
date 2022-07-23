@@ -56,7 +56,7 @@ public function handle(ServerRequestInterface $request): ResponseInterface
         $markdown_text = 
 I18N::translate('A delimiter is a sequence of one or more characters for specifying the boundary between separate, independent regions in a text. Use delimiters to cut call numbers into chunks of call number categories. The call number categories will be used to construct a hierarchy of call numbers.').'
 1. '. I18N::translate('Use a single delimiter, e.g.').' "**/**" '. I18N::translate('or').' "**-**"
-2. '. I18N::translate('Use a set of delimiters separated by').' "**'. RepositoryHierarchy::DELIMITER_SEPARATOR . '**" ' .  I18N::translate('e.g.') . ' "**/;-**"'.  I18N::translate('or') .' "**"#;,**"'.'
+2. '. I18N::translate('Use a set of delimiters separated by').' "**'. RepositoryHierarchy::DELIMITER_SEPARATOR . '**" ' .  I18N::translate('e.g.') . ' "**/;-**"'.  I18N::translate('or') .' "**#;,**"'.'
 3. '. I18N::translate('Use a regular expressions, which contain the delimiter in brackets, e.g.').' **'. I18N::translate('Fonds').'(/)** ' . I18N::translate('or').' **(-)'.I18N::translate('Item').'**
 4. '. I18N::translate('Use a set of regular expressions separated by') .' "**'. RepositoryHierarchy::DELIMITER_SEPARATOR . '**" '.I18N::translate('e.g.'). ' **'.I18N::translate('Fonds').'(/)'.I18N::translate('Series').RepositoryHierarchy::DELIMITER_SEPARATOR.I18N::translate('Series').'(-)'.I18N::translate('Item').'**
 ###### '.I18N::translate('Example').' 1:
@@ -104,7 +104,7 @@ I18N::translate('A delimiter is a sequence of one or more characters for specify
 + '. I18N::translate('Please note that the following characters need to be escaped if not used as meta characters in a regular expression').': **' . RepositoryHierarchy::ESCAPE_CHARACTERS . RepositoryHierarchy::DELIMITER_SEPARATOR .'**
 + '. I18N::translate('For example, use').' "**\\\[**" ' . I18N::translate('instead of') . ' "**\[**" '. I18N::translate('or') . ' "**\\\+**" '. I18N::translate('instead of') . ' "**\+**" ' . I18N::translate('if they should be recognized as plain characters.').'
 ##### '. I18N::translate('Detailed description').'
-[Readme](https://github.com/Jefferson49/)
+[Readme](https://github.com/Jefferson49/RepositoryHierarchy)
 ##### '. I18N::translate('Information about regular expressions').'
 [Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)';
 
