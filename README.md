@@ -46,7 +46,12 @@ This README file contains the following main sections:
 
 <a name="Installation"></a>
 ##  Installation
-Copy the folder "..." into the "module_v4" folder of your webtrees installation.
++ Download the [latest release](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest) of the module
++ Copy the folder "repository_hierarchy" into the "module_v4" folder of your webtrees installation
++ Check if the module is activated in the control panel:
+    + Login to webtrees as an administrator
+	+ Go to <span class="pointer">Control Panel/Modules/Individual page/Tabs</span>, and find the module called "Repository Hierarchy"
+	+ Check if it has a tick for "Enabled"
 
 <a name="Version"></a>
 ##  Webtrees version  
