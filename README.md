@@ -23,13 +23,13 @@ This README file contains the following main sections:
 *   [What are the benefits of using this module?](#Benefits)
 *   [Screenshot](#Screenshot)
 *   [Installation](#Installation)
-*   [Webtrees version](#Version)
+*   [Webtrees Version](#Version)
 *   [Some background about archive and library management](#Background)
 *   [Concepts of the Repository Hierarchy Module](#Concepts)
 *   [How the module maps to Gedcom and to archive management concepts](#Mapping)
-*   [**Usage of the module**](#Usage)
+*   [**How to use the module?**](#Usage)
 *   [Preferences](#Preferences)
-*   [Github repository](#Github)
+*   [Github Repository](#Github)
 
 <a name="Benefits"></a>
 ##  What are the benefits of using this module?
@@ -138,7 +138,7 @@ The following table describes how the concepts from archive and library manageme
 |Archive,<br>Library|Repository|Repository|
 |Archival Arrangement,<br>Library Classification|-|Hierarchy of call number categories|
 |Fonds,<br>Record group,<br>Series,<br>Folder|-|Call number category|
-|Item|Source|Source|
+|Item,<br>file,<br>book|Source|Source|
 |Call number|Call number|Call number|
 |Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
