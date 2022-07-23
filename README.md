@@ -26,7 +26,7 @@ Resulting repository hierarchy:
 + Use the generated hierarchical repository list as a finding aid (i.e. table of content or catalog) for repositories
 
 # Screenshot
-![Screenshot] (ressources/img/screenshot.jpg)
+![Screenshot](resources/img/screenshot.jpg)
 
 # Installation
 Copy the folder "..." into the "module_v4" folder of your webtrees installation.
@@ -85,8 +85,8 @@ The table describes how the concepts from archive and library management are map
 |Archive/Library Concept|Gedcom/webtrees data structures|Repository Hierarchy Module|
 |:------|:--------------|:---------------------------|
 |Archive,<br>Library|Repository|Repository|
-|Archival Arrangement, Library Classification|-|Call number category|
-|Fond, record group, series, folder|-|Call number category|
+|Archival Arrangement,<br>Library Classification|-|Call number category|
+|Fond,<br>record group,<br>series,<br>folder|-|Call number category|
 |Item|Source|Source|
 |Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
