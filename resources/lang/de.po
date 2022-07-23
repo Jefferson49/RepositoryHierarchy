@@ -1,0 +1,475 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Repository Hierarchy\n"
+"POT-Creation-Date: 2022-07-23 15:20+0200\n"
+"PO-Revision-Date: 2022-07-23 15:20+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: CallNumberCategory.php:165
+msgid "Sources without call number"
+msgstr "Quellen ohne Signatur"
+
+#: CallNumberCategory.php:167
+msgid "Default call number category"
+msgstr "Default Signatur-Kategorie"
+
+#: CallNumberFixAction.php:94
+msgid "Data fixes"
+msgstr ""
+
+#: RepositoryHierarchy.php:242 RepositoryHierarchy.php:593
+#: RepositoryHierarchyHelpTexts.php:67 RepositoryHierarchyHelpTexts.php:77
+#: RepositoryHierarchyHelpTexts.php:87 RepositoryHierarchyHelpTexts.php:96
+msgid "Repository Hierarchy"
+msgstr "Archiv Hierarchie"
+
+#: RepositoryHierarchy.php:252
+msgid ""
+"A hierarchical structured list of the sources of an archive based on the "
+"call numbers of the sources"
+msgstr ""
+"Eine hierarchisch strukturierte Liste der Quellen in einem Archiv, basierend "
+"auf den Signaturen der Quellen"
+
+#: RepositoryHierarchy.php:461
+#, php-format
+msgid "The preferences for the module “%s” were updated."
+msgstr "Die Einstellungen für das Modul %s wurden aktualisiert."
+
+#: RepositoryHierarchy.php:482 resources/views/options.phtml:36
+msgid "Sources"
+msgstr ""
+
+#: RepositoryHierarchy.php:595
+#, php-format
+msgid "Repository Hierachy of: %s"
+msgstr "Archiv Hierarchie von: %s"
+
+#: RepositoryHierarchy.php:626
+msgid "Regular expression not accepted"
+msgstr "Regulärer Ausdruck nicht akzeptiert"
+
+#: RepositoryHierarchy.php:635
+msgid "No valid delimiter or valid regular expression for delimiter found."
+msgstr "Kein valider Delimiter oder valider Ausdruck für Delimiter gefunden."
+
+#: RepositoryHierarchy.php:860
+msgid "load delimiter expression from administrator"
+msgstr "Delimiter Ausdruck von Administrator laden"
+
+#: RepositoryHierarchy.php:866
+msgid "none"
+msgstr "Keine"
+
+#: RepositoryHierarchy.php:867
+msgid "save repository"
+msgstr "Archiv speichern"
+
+#: RepositoryHierarchy.php:868
+msgid "load repository"
+msgstr "Archiv laden"
+
+#: RepositoryHierarchy.php:869
+msgid "save delimiter expression"
+msgstr "Delimiter Ausdruck speichern"
+
+#: RepositoryHierarchy.php:870
+msgid "load delimiter expression"
+msgstr "Delimiter Ausdruck laden"
+
+#: RepositoryHierarchy.php:899
+msgid "Custom module"
+msgstr ""
+
+#: RepositoryHierarchy.php:942
+msgid "Error during update of preferences"
+msgstr "Fehler beim Aktualisieren der Einstellungen"
+
+#: RepositoryHierarchy.php:955
+msgid "Could not load repository. No repository stored."
+msgstr "Archiv konnte nicht geladen werden. Kein Archiv gespeichert."
+
+#: RepositoryHierarchy.php:978
+#, php-format
+msgid "The tree “%s” does not contain any repository"
+msgstr "Der Stammbaum \"%s\" enthält kein Archiv"
+
+#: RepositoryHierarchy.php:1000
+msgid ""
+"Could not load delimiter expression from administrator. No administrator "
+"delimiter expression stored."
+msgstr ""
+"Delimiter Ausdruck von Administrator konnte nicht geladen werden. Kein "
+"Delimiter Ausdruck von Administrator gespeichert."
+
+#: RepositoryHierarchy.php:1009
+msgid "Could not load delimiter expression. No delimiter expression stored."
+msgstr ""
+"Delimiter Ausdruck konnte nicht geladen werden. Kein Delimiter Ausdruck "
+"gespeichert."
+
+#: RepositoryHierarchy.php:1033
+msgid "Error in delimiter expression"
+msgstr "Fehler in Delimiter Ausdruck"
+
+#: RepositoryHierarchy.php:1040 RepositoryHierarchyHelpTexts.php:104
+msgid ""
+"Please note that the following characters need to be escaped if not used as "
+"meta characters in a regular expression"
+msgstr ""
+"Bitte beachten Sie, dass die folgenden Zeichen mit einer Escape Sequenz "
+"versehen werden müssen, falls sie nicht als Meta-Zeichen in einem regulären "
+"Ausdruck verwendet werden"
+
+#: RepositoryHierarchy.php:1043 RepositoryHierarchyHelpTexts.php:105
+msgid "For example, use"
+msgstr "Nutzen Sie zum Beispiel"
+
+#: RepositoryHierarchy.php:1043 RepositoryHierarchy.php:1044
+#: RepositoryHierarchyHelpTexts.php:105
+msgid "instead of"
+msgstr "statt"
+
+#: RepositoryHierarchy.php:1043 RepositoryHierarchyHelpTexts.php:58
+#: RepositoryHierarchyHelpTexts.php:59 RepositoryHierarchyHelpTexts.php:60
+#: RepositoryHierarchyHelpTexts.php:105
+msgid "or"
+msgstr "oder"
+
+#: RepositoryHierarchy.php:1044
+msgid "if the characters shall be used as plain text."
+msgstr "wenn die Zeichen als reiner Text verwendet werden sollen."
+
+#: RepositoryHierarchyHelpTexts.php:55
+msgid "How to use delimiter expressions?"
+msgstr "Wie werden Delimiter Ausdrücke verwendet?"
+
+#: RepositoryHierarchyHelpTexts.php:57
+msgid ""
+"A delimiter is a sequence of one or more characters for specifying the "
+"boundary between separate, independent regions in a text. Use delimiters to "
+"cut call numbers into chunks of call number categories. The call number "
+"categories will be used to construct a hierarchy of call numbers."
+msgstr ""
+"Ein Delimiter ist eine Sequenz von einem oder mehreren Zeichen, um die "
+"Grenze zwischen getrennten, unabhängigen Bereichen in einem Text anzugeben. "
+"Nutzen Sie Delimiter, um Signaturen in einzelne Bereiche aufzuteilen, welche "
+"Signatur-Kategorien ergeben. Die Signatur-Kategorien werden anschließend "
+"genutzt, um eine Hierarchie aus Signaturen aufzubauen."
+
+#: RepositoryHierarchyHelpTexts.php:58
+msgid "Use a single delimiter, e.g."
+msgstr "Nutzen Sie einen einzelnen Delimiter, z.B."
+
+#: RepositoryHierarchyHelpTexts.php:59
+msgid "Use a set of delimiters separated by"
+msgstr "Nutzen Sie eine Delimiter-Kombination getrennt durch"
+
+#: RepositoryHierarchyHelpTexts.php:59 RepositoryHierarchyHelpTexts.php:61
+msgid "e.g."
+msgstr "z.B."
+
+#: RepositoryHierarchyHelpTexts.php:60
+msgid ""
+"Use a regular expressions, which contain the delimiter in brackets, e.g."
+msgstr ""
+"Nutzen Sie einen Regulären Ausdruck, welcher den Delimiter in Klammern "
+"enthält, z.B."
+
+#: RepositoryHierarchyHelpTexts.php:60 RepositoryHierarchyHelpTexts.php:61
+#: RepositoryHierarchyHelpTexts.php:64 RepositoryHierarchyHelpTexts.php:65
+#: RepositoryHierarchyHelpTexts.php:68 RepositoryHierarchyHelpTexts.php:74
+#: RepositoryHierarchyHelpTexts.php:75 RepositoryHierarchyHelpTexts.php:78
+#: RepositoryHierarchyHelpTexts.php:93 RepositoryHierarchyHelpTexts.php:94
+#: RepositoryHierarchyHelpTexts.php:95 RepositoryHierarchyHelpTexts.php:97
+#: RepositoryHierarchyHelpTexts.php:100
+msgid "Fonds"
+msgstr "Bestand"
+
+#: RepositoryHierarchyHelpTexts.php:60 RepositoryHierarchyHelpTexts.php:61
+#: RepositoryHierarchyHelpTexts.php:64 RepositoryHierarchyHelpTexts.php:65
+#: RepositoryHierarchyHelpTexts.php:70 RepositoryHierarchyHelpTexts.php:71
+#: RepositoryHierarchyHelpTexts.php:74 RepositoryHierarchyHelpTexts.php:75
+#: RepositoryHierarchyHelpTexts.php:80 RepositoryHierarchyHelpTexts.php:81
+msgid "Item"
+msgstr ""
+
+#: RepositoryHierarchyHelpTexts.php:61
+msgid "Use a set of regular expressions separated by"
+msgstr "Nutzen Sie eine Kombination von Regulären Ausdrücken, getrennt durch"
+
+#: RepositoryHierarchyHelpTexts.php:61 RepositoryHierarchyHelpTexts.php:64
+#: RepositoryHierarchyHelpTexts.php:65 RepositoryHierarchyHelpTexts.php:69
+#: RepositoryHierarchyHelpTexts.php:74 RepositoryHierarchyHelpTexts.php:75
+#: RepositoryHierarchyHelpTexts.php:79
+msgid "Series"
+msgstr "Serie"
+
+#: RepositoryHierarchyHelpTexts.php:62 RepositoryHierarchyHelpTexts.php:72
+#: RepositoryHierarchyHelpTexts.php:82 RepositoryHierarchyHelpTexts.php:91
+msgid "Example"
+msgstr "Beispiel"
+
+#: RepositoryHierarchyHelpTexts.php:63 RepositoryHierarchyHelpTexts.php:73
+#: RepositoryHierarchyHelpTexts.php:83 RepositoryHierarchyHelpTexts.php:92
+msgid "Call numbers"
+msgstr "Signaturen"
+
+#: RepositoryHierarchyHelpTexts.php:66 RepositoryHierarchyHelpTexts.php:76
+#: RepositoryHierarchyHelpTexts.php:86
+msgid "Delimiter expression"
+msgstr "Delimiter Ausdruck"
+
+#: RepositoryHierarchyHelpTexts.php:84 RepositoryHierarchyHelpTexts.php:85
+msgid "Film Number"
+msgstr "Film Nummer"
+
+#: RepositoryHierarchyHelpTexts.php:86 RepositoryHierarchyHelpTexts.php:88
+msgid "Film"
+msgstr "Film"
+
+#: RepositoryHierarchyHelpTexts.php:86 RepositoryHierarchyHelpTexts.php:89
+#: RepositoryHierarchyHelpTexts.php:90 RepositoryHierarchyHelpTexts.php:95
+#: RepositoryHierarchyHelpTexts.php:99 RepositoryHierarchyHelpTexts.php:102
+msgid "Number"
+msgstr "Nummer"
+
+#: RepositoryHierarchyHelpTexts.php:93
+msgid "Biography Number"
+msgstr "Biographie Nummer"
+
+#: RepositoryHierarchyHelpTexts.php:94
+msgid "Photo Number"
+msgstr "Foto Nummer"
+
+#: RepositoryHierarchyHelpTexts.php:95
+msgid "Delimiter expression:"
+msgstr "Delimiter Ausdruck:"
+
+#: RepositoryHierarchyHelpTexts.php:98
+msgid "Biography"
+msgstr "Biographie"
+
+#: RepositoryHierarchyHelpTexts.php:101
+msgid "Photo"
+msgstr "Foto"
+
+#: RepositoryHierarchyHelpTexts.php:103
+msgid "Important Note"
+msgstr "Wichtiger Hinweis"
+
+#: RepositoryHierarchyHelpTexts.php:105
+msgid "if they should be recognized as plain characters."
+msgstr "wenn sie als reiner Text erkannt werden sollen."
+
+#: RepositoryHierarchyHelpTexts.php:106
+msgid "Detailed description"
+msgstr "Detaillierte Beschreibung"
+
+#: RepositoryHierarchyHelpTexts.php:108
+msgid "Information about regular expressions"
+msgstr "Informationen zu Regulären Ausdrücken"
+
+#: RepositoryHierarchyHelpTexts.php:118 resources/views/page.phtml:54
+msgid "Help"
+msgstr "Hilfe"
+
+#: RepositoryHierarchyHelpTexts.php:119
+msgid "The help text has not yet been written for this item."
+msgstr "Der Hilfetext wurde für diesen Punkt noch nicht geschrieben."
+
+#: resources/views/help-delimiter.phtml:8
+msgid ""
+"Data fixes can require lots of slow calculations, so it is not possible to "
+"create an exact list of records that need to be updated."
+msgstr ""
+
+#: resources/views/help-delimiter.phtml:12
+msgid ""
+"For example, we can quickly find individuals that do not have a death event, "
+"but it is much slower to calculate if the individual is dead."
+msgstr ""
+
+#: resources/views/help-delimiter.phtml:16
+msgid ""
+"This list is created using a simple (but fast) search, and therefore "
+"includes records that will not be updated."
+msgstr ""
+
+#: resources/views/modals/create-source.phtml:22
+msgid "Create a source"
+msgstr "Quelle anlegen"
+
+#: resources/views/modals/source-fields.phtml:17 resources/views/tree.phtml:68
+msgid "Title"
+msgstr ""
+
+#: resources/views/modals/source-fields.phtml:25
+msgid "Abbreviation"
+msgstr ""
+
+#: resources/views/modals/source-fields.phtml:33 resources/views/tree.phtml:83
+msgid "Author"
+msgstr "Autor"
+
+#: resources/views/modals/source-fields.phtml:39
+msgid "Publication"
+msgstr "Veröffentlichung"
+
+#: resources/views/modals/source-fields.phtml:47
+#: resources/views/options.phtml:22 resources/views/options.phtml:62
+#: resources/views/page.phtml:38
+msgid "Repository"
+msgstr ""
+
+#: resources/views/modals/source-fields.phtml:53
+#: resources/views/options.phtml:42
+msgid "Call number"
+msgstr "Signatur"
+
+#: resources/views/modals/source-fields.phtml:56
+msgid "new"
+msgstr "Neu"
+
+#: resources/views/modals/source-fields.phtml:61
+msgid "Text"
+msgstr "Text"
+
+#: resources/views/options.phtml:32 resources/views/options.phtml:102
+msgid "Records"
+msgstr ""
+
+#: resources/views/options.phtml:52 resources/views/options.phtml:82
+msgid "Search call number category"
+msgstr "Suche Signatur-Kategorie"
+
+#: resources/views/options.phtml:72
+msgid "Category full name"
+msgstr "Vollständiger Kategorie-Name"
+
+#: resources/views/options.phtml:92
+msgid "Replace by"
+msgstr "Ersetzen durch"
+
+#: resources/views/page.phtml:47
+msgid "Delimiter Expression for Call Numbers"
+msgstr "Delimiter Ausdruck für Signatur"
+
+#: resources/views/page.phtml:65
+msgid "Load/save options"
+msgstr "Optionen zum Laden/Speichern"
+
+#: resources/views/page.phtml:75
+msgid "view"
+msgstr "Anzeigen"
+
+#: resources/views/settings.phtml:27
+msgid "Control panel"
+msgstr ""
+
+#: resources/views/settings.phtml:33
+msgid "Hit the radio buttons to select or unselect the related options"
+msgstr "Drücken Sie die Knöpfe, um einzelne Optionen an- oder abzuwählen"
+
+#: resources/views/settings.phtml:42
+msgid "Show label before call number category."
+msgstr "Anzeige Label vor Signatur-Kategorien."
+
+#: resources/views/settings.phtml:45
+msgid "Show help icon after label for delimiter expression."
+msgstr "Hilfe-Icon nach dem Label für den Delimiter Ausdruck anzeigen."
+
+#: resources/views/settings.phtml:48
+msgid "Show help link after label for delimiter expression."
+msgstr "Hilfe-Link nach dem Label für den Delimiter Ausdruck anzeigen."
+
+#: resources/views/settings.phtml:51
+msgid ""
+"Use truncated categories. The call number categories will be truncated and "
+"shown without the trunk."
+msgstr ""
+"Verwendung von gekürzten Kategorien. Signatur-Kategorien werden vom Stamm "
+"der Signatur-Kategorien abgeschnitten und ohne den Stamm angezeigt."
+
+#: resources/views/settings.phtml:54
+msgid ""
+"Use truncated call numbers. The call numbers will be truncated and shown "
+"without call number category."
+msgstr ""
+"Verwendung von gekürzten Signaturen. Signaturen werden abgeschnitten und "
+"ohne Signatur-Kategorien angezeigt."
+
+#: resources/views/settings.phtml:57
+msgid "Show the title of the sources."
+msgstr "Titel bei Quellen anzeigen."
+
+#: resources/views/settings.phtml:60
+msgid "Show the XREF of the sources."
+msgstr "XREF Bezeichner bei Quellen anzeigen."
+
+#: resources/views/settings.phtml:63
+msgid "Show the author of the sources."
+msgstr "Autor bei Quellen anzeigen."
+
+#: resources/views/settings.phtml:66
+msgid "Show the date range of the sources."
+msgstr "Datumsbereich bei Quellen anzeigen."
+
+#: resources/views/settings.phtml:69
+msgid "Allow users to load stored delimiter expressions from administrator."
+msgstr ""
+"Laden von gespeicherten Delimiter Ausdrücken vom Administrator erlauben."
+
+#: resources/views/settings.phtml:76
+msgid "save"
+msgstr "Speichern"
+
+#: resources/views/tree.phtml:23
+msgid "Call Number Category"
+msgstr "Signatur-Kategorie"
+
+#: resources/views/tree.phtml:41
+msgid "Rename"
+msgstr "Umbenennen"
+
+#: resources/views/tree.phtml:50
+msgid "Add new source"
+msgstr "Neue Quelle hinzufügen"
+
+#: resources/views/tree.phtml:89
+msgid "Date range"
+msgstr "Datumsbereich"
+
+#~ msgid "Call numbers:"
+#~ msgstr "Signaturen:"
+
+#~ msgid "Category"
+#~ msgstr "Kategorie"
+
+#~ msgid "Search/replace for call number categories"
+#~ msgstr "Suchen/Ersetzen für Signatur-Kategorien"
+
+#~ msgid "Change call numbers by searching/replacing call number categories"
+#~ msgstr "Ändern von Signaturen durch Suchen/Ersetzen von Signatur-Kategorien"
+
+#~ msgid "Replace call number category"
+#~ msgstr "Ersetze durch Signatur-Kategorie"
+
+#~ msgid "Archive Hierarchy"
+#~ msgstr "Archiv Hierarchie"
+
+#~ msgid "Repository Hierachy"
+#~ msgstr "Archiv Hierarchie"
+
+#~ msgid "Series-"
+#~ msgstr "Serie-"

@@ -1,0 +1,108 @@
+<?php
+
+/**
+ * @var string  $repository_xref 
+ * @var string  $category_full_name 
+ * @var string  $category_name 
+ * @var string  $category_name_replace 
+ * @var array   $types
+ */
+ 
+declare(strict_types=1);
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Source;
+
+?>
+
+<div class="row mb-3">
+    <label class="col-sm-3 col-form-label">
+        <?= I18N::translate('Repository') ?>
+    </label>
+
+    <div class="col-sm-9">
+        <input class="form-control" value="<?= e($repository_xref) ?>" disabled>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-sm-3 col-form-label">
+        <?= I18N::translate('Records') ?>
+    </label>
+
+    <div class="col-sm-9">
+		<input class="form-control" value="<?= I18N::translate('Sources') ?>" disabled>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-sm-3 col-form-label">
+        <?= I18N::translate('Call number') ?>
+    </label>
+
+    <div class="col-sm-9">
+        <input class="form-control" value="<?= e($category_full_name) ?>" disabled>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-sm-3 col-form-label">
+        <b><?= I18N::translate('Search call number category') ?></b>
+    </label>
+
+    <div class="col-sm-9">
+        <input class="form-control" value="<?= e($category_name) ?>" disabled>
+    </div>
+</div>
+
+<div class="visually-hidden">
+    <label class="col-sm-3 col-form-label" for="repository_xref">
+        <?= I18N::translate('Repository') ?>
+    </label>
+
+    <div class="col-sm-9">
+        <input class="form-control" id="repository_xref" name="repository_xref" value="<?= e($repository_xref) ?>">
+    </div>
+</div>
+
+<div class="visually-hidden">
+    <label class="col-sm-3 col-form-label" for="category_full_name">
+        <?= I18N::translate('Category full name') ?>
+    </label>
+
+    <div class="col-sm-9">
+        <input class="form-control" id="category_full_name" name="category_full_name" value="<?= e($category_full_name) ?>">
+    </div>
+</div>
+
+<div class="visually-hidden">
+    <label class="col-sm-3 col-form-label" for="category_name" >
+        <?= I18N::translate('Search call number category') ?>
+    </label>
+
+    <div class="col-sm-9">
+        <input class="form-control" id="category_name" name="category_name" value="<?= e($category_name) ?>">
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-sm-3 col-form-label" for="category_name_replace">
+        <b><?= I18N::translate('Replace by') ?></b>
+    </label>
+
+    <div class="col-sm-9">
+        <input class="form-control" id="category_name_replace" name="category_name_replace" value="<?= e($category_name_replace) ?>">
+    </div>
+</div>
+
+<div class="visually-hidden">
+    <label class="col-sm-3 col-form-label" for="type">
+        <?= I18N::translate('Records') ?>
+    </label>
+
+    <div class="col-sm-9">
+        <?= view('components/select', ['name' => 'type', 'options' => $types, 'selected' => Source::RECORD_TYPE]) ?>
+    </div>
+</div>
