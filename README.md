@@ -1,12 +1,12 @@
 ##  Repository Hierarchy
-A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. The module uses delimiters expressions to extract call number categories from the call numbers of the sources. Based on the extracted categories, a hierarchical tree of call number categories and the related sources is constructed and shown.
+A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. The module uses delimiter expressions to extract call number categories from the call numbers of the sources. Based on the extracted categories, a hierarchical tree of call number categories and the related sources is constructed and shown.
 
 Example call numbers:
 + Fonds A / Record group X / Series 1 / Folder A23 / Source 11
 + Fonds A / Record group X / Series 1 / Folder A23 / Source 12
 + Fonds A / Record group X / Series 2 / Folder B82 / Source 51
 
-Delimiter expression: "** / **"
+Delimiter expression: " / "
 
 Resulting repository hierarchy:
 + Fonds A
