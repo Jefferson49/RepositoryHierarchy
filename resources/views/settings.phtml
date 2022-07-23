@@ -1,0 +1,93 @@
+<?php
+ 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\Http\RequestHandlers\ControlPanel;
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\View;
+
+/**
+ * @var  string		$title
+ * @var  bool		$show_category_label
+ * @var  bool		$show_help_icon
+ * @var  bool		$show_help_link
+ * @var  bool		$show_category_expanded
+ * @var  bool		$show_truncated_call_number
+ * @var  bool		$show_truncated_category
+ * @var  bool		$show_title
+ * @var  bool		$show_xref
+ * @var  bool		$show_author
+ * @var  bool		$show_date_range
+ * @var  bool		$allow_admin_delimiter
+ */
+
+?>
+
+
+<?= view('components/breadcrumbs', ['links' => [route(ControlPanel::class) => I18N::translate('Control panel'), $title]]) ?>
+
+<h1><?= $title ?></h1>
+
+<div class="row mb-3">
+	<div class="alert alert-info my-3">
+		<b><?= I18N::translate('Hit the radio buttons to select or unselect the related options') ?></b>
+	</div>
+
+	<form method="post">
+		<?= csrf_field() ?>
+		<input type="hidden" name="save" id="save" value="1">
+
+        <div class="row mb-3 justify-content-between m-0">
+           <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show label before call number category.'), 'name' => RepositoryHierarchy::PREF_SHOW_CATEGORY_LABEL, 'checked' => $show_category_label]) ?>
+			</div> 
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show help icon after label for delimiter expression.'), 'name' => RepositoryHierarchy::PREF_SHOW_HELP_ICON, 'checked' => $show_help_icon]) ?>
+			</div> 
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show help link after label for delimiter expression.'), 'name' => RepositoryHierarchy::PREF_SHOW_HELP_LINK, 'checked' => $show_help_link]) ?>
+			</div> 
+           <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Use truncated categories. The call number categories will be truncated and shown without the trunk.'), 'name' => RepositoryHierarchy::PREF_SHOW_TRUNCATED_CATEGORY, 'checked' => $show_truncated_category]) ?>
+			</div> 
+           <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Use truncated call numbers. The call numbers will be truncated and shown without call number category.'), 'name' => RepositoryHierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, 'checked' => $show_truncated_call_number]) ?>
+			</div> 
+           <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show the title of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_TITLE, 'checked' => $show_title]) ?>
+			</div>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show the XREF of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_XREF, 'checked' => $show_xref]) ?>
+			</div>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show the author of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_AUTHOR, 'checked' => $show_author]) ?>
+			</div>			
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show the date range of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_DATE_RANGE, 'checked' => $show_date_range]) ?>
+            </div>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Allow users to load stored delimiter expressions from administrator.'), 'name' => RepositoryHierarchy::PREF_ALLOW_ADMIN_DELIMITER, 'checked' => $allow_admin_delimiter]) ?>
+            </div>
+			
+            <div class="col">
+				<p></p>
+				<button type="submit" class="btn btn-primary">
+					<?= view('icons/save') ?>
+					<?= I18N::translate('save') ?>
+				</button>
+			</div>
+		</div>
+    </form>	
+</div>
+
+<?php View::push('javascript') ?>
+<script>
+    $('#select-all-1').change(function(e) {
+        if (e.currentTarget.checked) {
+            $('.mb-3 .row').find('input[type="checkbox"]').prop('checked', true);
+        } else {
+            $('.mb-3 .row').find('input[type="checkbox"]').prop('checked', false);
+        }
+    });
+</script>
+<?php View::endpush() ?>
