@@ -20,7 +20,6 @@ Resulting repository hierarchy:
 <a name="Contents"></a>				
 ##  Table of Contents
 This README file contains the following main sections:
-*   [Table of Contents](#Contents)
 *   [What are the benefits of using this module?](#Benefits)
 *   [Screenshot](#Screenshot)
 *   [Installation](#Installation)
@@ -154,7 +153,7 @@ Example:
             + Item 1
             + Item 2
 
-####  Usage of a set of delimiters
+###  Usage of a set of delimiters
 A set of delimiters is used by providing the delimiters in the input form ("delimiter expression") separated by "**;**".
 
 Example:
@@ -182,7 +181,7 @@ Example:
 
 I.e. the "-" delimiter in "Record-group" is not evaluated, because the "/" delimiter is evaluated first. After all matches of the "/" delimiter have been evaluated, the "-" delimiter is found in "Series A-Nr. 7".
 	
-####  Usage of a regular expression for the delimiter
+###  Usage of a regular expression for the delimiter
 A regular expression is used by providing it in the input form ("delimiter expression"). The regular expression needs to contain the delimiter in brackets. This provides a much more powerful way to specify delimiters.
 
 Please note, that the "full" regular expression will be used to find a certain pattern in the call numbers. However, **only the characters in the brackets** ("the match" of the regular expression) **will be used as the delimiter**.
@@ -199,7 +198,7 @@ Example:
 
 In this example, the delimiter is the space character in the brackets, i.e. "**( )**". However, the full pattern "**Film( )Number**" is used to find corresponding strings. Therefore, only space characters, which match the pattern, are identified as delimiter. Other space characters, are NOT identified as delimiter.
 
-####  Usage of a set of regular expressions for the delimiter
+###  Usage of a set of regular expressions for the delimiter
 A set of regular expressions can be used by providing several regular expressions in the input form ("delimiter expression") separated by "**;**". It is also possible to mix simple delimiters (i.e. a single character or sequence of characters) with regular expressions.
 
 Example:
