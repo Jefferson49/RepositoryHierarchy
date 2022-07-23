@@ -81,9 +81,14 @@ The table describes how the concepts from archive and library management are map
 
 |Archive/Library Concept|Gedcom/webtrees data structures|Repository Hierarchy Module|
 |:------|:--------------|:---------------------------|
-|Archive, Library|Repository|Repository|
-|Archival Arrangement, Library Classification|-|Call number categories|
-|Fond, record group, series, folders|-|Call number categories|
+|Archive, 
+Library|Repository|Repository|
+|Archival Arrangement, 
+Library Classification|-|Call number category|
+|Fond, 
+record group, 
+series, 
+folder|-|Call number category|
 |Item|Source|Source|
 |Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
@@ -91,13 +96,13 @@ The table describes how the concepts from archive and library management are map
 In the following, the concepts of the RepositoryHierarchy module are described. 
 
 ## Call number categories
-In the module, a new concept "Call numbers category" is introduced. Call numbers categories are defined as hierarchical elements, which constitute the structure of an archival arrangement.
+In the module, a new concept "Call numbers category" is introduced. Call number categories are defined as hierarchical elements, which constitute the structure of an archival arrangement.
 
 ## Call number categories, call numbers, and delimiters
 Call number categories are extracted form call numbers. The module identifies sub-strings in call numbers as call number categories by using delimiters. A chosen delimiter (or a set of delimiters) cuts the full call number into sub-strings of call number categories.
 
 Example call number structure:
-"Fonds/Record group/Series/Folder/ Source"
+"Fonds/Record group/Series/Folder/Source"
 
 In this case, the module identifies the following strings as **call number categories**:
 + Fonds
@@ -106,7 +111,7 @@ In this case, the module identifies the following strings as **call number categ
 + Folder
 + Source
 
-Based on the identified call number categories, the module creates the following hierarchical structure of the archive:
+Based on the identified call number categories, the module creates the following hierarchical structure for the archive:
 + Fonds
     + Record group
         + Series
@@ -173,7 +178,7 @@ Example:
         + Number 5
         + Number 8
 
-In this example, the delimiter is the space character in the brackets, i.e. **( )**. However, the full pattern **Film( )Number** is used to find corresponding strings. Therefore, only space characters, which match the pattern, are identified as delimiter. Other space characters, are NOT identified as delimiter.
+In this example, the delimiter is the space character in the brackets, i.e. "**( )**". However, the full pattern "**Film( )Number**" is used to find corresponding strings. Therefore, only space characters, which match the pattern, are identified as delimiter. Other space characters, are NOT identified as delimiter.
 
 ### Use a set of regular expressions for the delimiter
 A set of regular expressions can be used by providing several regular expressions in the input form ("delimiter expression") separated by "**;**". It is also possible to mix simple delimiters (i.e. a single character or sequence of characters) with regular expressions.
@@ -182,7 +187,7 @@ Example:
 + Call numbers:
     + Fonds A, Biography Number 1
     + Fonds D, Photo Number 7
-+ Delimiter expression: **Fonds [A-D](, );( )Number**
++ Delimiter expression: **Fonds \[A-D](, );( )Number**
 + Repository Hierarchy:
     + Fonds A,
         + Biography
