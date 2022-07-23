@@ -146,7 +146,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_SET_AS_START_REPO = 'set as start repository';
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.0.0';
+    public const CUSTOM_VERSION = '1.0.1';
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
