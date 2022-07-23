@@ -139,10 +139,11 @@ The following table describes how the concepts from archive and library manageme
 |Archival Arrangement,<br>Library Classification|-|Hierarchy of call number categories|
 |Fonds,<br>Record group,<br>Series,<br>Folder|-|Call number category|
 |Item|Source|Source|
+|Call number|Call number|Call number|
 |Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
 <a name="Usage"></a>
-##  Usage of the module
+##  How to use the module?
 
 ###  Usage of a single delimiter
 A single delimiter is used by providing a single character or a sequence of characters in the related input form ("delimiter expression"). 
