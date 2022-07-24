@@ -1,12 +1,12 @@
 ##  Repository Hierarchy
-A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. The module uses delimiter expressions to extract call number categories from the call numbers of the sources. Based on the extracted categories, a hierarchical tree of call number categories and the related sources is constructed and shown.
+A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. The module uses delimiters to cut call numbers (of sources) into sub-strings and to extract call number categories. Based on the extracted categories, a hierarchical tree of call number categories and the related sources is constructed and shown.
 
 Example call numbers:
 + Fonds A / Record group X / Series 1 / Folder A23 / Source 11
 + Fonds A / Record group X / Series 1 / Folder A23 / Source 12
 + Fonds A / Record group X / Series 2 / Folder B82 / Source 51
 
-Delimiter expression: " / "
+Delimiter: " / "
 
 Resulting repository hierarchy:
 + Fonds A
@@ -18,7 +18,12 @@ Resulting repository hierarchy:
         + Series 2
             + Folder B82
                 + Source 51
-				
+
+To specify delimiters, the module can handle single characters as well as complex [regular expressions](https://en.wikipedia.org/wiki/Regular_expression):
++ In the easiest case, delimiters are single characters or strings, e.g.: "/" or " - "
++ For more complex string search, regular expressions can be used, which contain the delimiter in brackets: "Series( )Nr" or "\[a-z\](, )\[0-9\]"
++ Also, a set of delimiters or regular expressions can be used separated by ";", e.g.: "/;-" or "- ;Series( )Nr"
+
 <a name="Contents"></a>				
 ##  Table of Contents
 This README file contains the following main sections:
@@ -190,7 +195,7 @@ Example:
 I.e. the "-" delimiter in "Record-group" is not evaluated, because the "/" delimiter is evaluated first. After all matches of the "/" delimiter have been evaluated, the "-" delimiter is found in "Series A-Nr. 7".
 	
 ###  Usage of a regular expression for the delimiter
-A regular expression is used by providing it in the input form ("delimiter expression"). The regular expression needs to contain the delimiter in brackets. This provides a much more powerful way to specify delimiters.
+A [regular expression](https://en.wikipedia.org/wiki/Regular_expression) is used by providing it in the input form ("delimiter expression"). The regular expression needs to contain the delimiter in brackets. This provides a much more powerful way to specify delimiters.
 
 Please note, that the "full" regular expression will be used to find a certain pattern in the call numbers. However, **only the characters in the brackets** ("the match" of the regular expression) **will be used as the delimiter**.
 
