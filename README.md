@@ -1,12 +1,13 @@
 ##  Repository Hierarchy
-A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. The module uses delimiters to cut call numbers (of sources) into sub-strings and to extract call number categories. Based on the extracted categories, a hierarchical tree of call number categories and the related sources is constructed and shown.
+A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. The module uses delimiters to cut call numbers (of sources) into sub-strings and extracts call number categories. Based on the extracted categories, a hierarchical tree of call number categories with the related sources is constructed and shown.
 
 Example call numbers:
 + Fonds A / Record group X / Series 1 / Folder A23 / Source 11
 + Fonds A / Record group X / Series 1 / Folder A23 / Source 12
 + Fonds A / Record group X / Series 2 / Folder B82 / Source 51
 
-Delimiter: " / "
+Delimiter: 
+" / "
 
 Resulting repository hierarchy:
 + Fonds A
@@ -20,8 +21,8 @@ Resulting repository hierarchy:
                 + Source 51
 
 To specify delimiters, the module can handle single characters as well as complex [regular expressions](https://en.wikipedia.org/wiki/Regular_expression):
-+ In the easiest case, delimiters are single characters or strings, e.g.: "/" or " - "
-+ For more complex string search, regular expressions can be used, which contain the delimiter in brackets: "Series( )Nr" or "\[a-z\](, )\[0-9\]"
++ In the most simple case, delimiters are single characters or strings, e.g.: "/" or " - "
++ For more complex string pattern recognition, regular expressions can be used, which contain the delimiter in brackets: "Series( )Nr" or "\[a-z\](, )\[0-9\]"
 + Also, a set of delimiters or regular expressions can be used separated by ";", e.g.: "/;-" or "- ;Series( )Nr"
 
 <a name="Contents"></a>				
@@ -40,7 +41,7 @@ This README file contains the following main sections:
 
 <a name="Benefits"></a>
 ##  What are the benefits of using this module?
-+ Improve the overview of sources in repositories
++ Provide a better overview of sources in a repository
 + Improve the insight into repository structures and content
 + Find and remove inconsistencies between call numbers in repositories
 + Get additional features to rename call number categories (or groups of call numbers)
