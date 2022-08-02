@@ -63,8 +63,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function route;
-
+use SimpleXMLElement;
 	
+
 class RepositoryHierarchy   extends     AbstractModule 
                             implements  ModuleConfigInterface,
                                         ModuleCustomInterface,
@@ -130,6 +131,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_MODULE_VERSION = 'module_version';
     public const PREF_START_REPOSITORY = 'start_repository';
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
+    public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';    
@@ -141,6 +143,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_SAVE_DELIM = 'save_delimiter';    
     public const CMD_SAVE_REPO = 'save_repository';
     public const CMD_LOAD_REPO = 'load_repository';
+    public const CMD_DOWNLOAD_EAD_XML = 'download_ead_xml';
 
     //Comands for repositories
     public const CMD_SET_AS_START_REPO = 'set as start repository';
@@ -178,6 +181,9 @@ class RepositoryHierarchy   extends     AbstractModule
     //The name of the call number category to be fixed
     private string $data_fix_category_name = '';
 
+    //A service to download EAD XML
+    private DownloadEADxmlService $download_ead_xml_service;
+
 
     /**
      * Constructor
@@ -194,6 +200,9 @@ class RepositoryHierarchy   extends     AbstractModule
     {
         //Create data fix service
         $this->data_fix_service = new DataFixService;
+
+        //Create a download service for EAD XML;
+        $this->download_ead_xml_service = new DownloadEADxmlService($this->resourcesFolder() . 'xml/apeEAD_template.xml'); 
 
         $router = Registry::routeFactory()->routeMap();
 
@@ -231,6 +240,12 @@ class RepositoryHierarchy   extends     AbstractModule
 
         //Register a namespace for the views
 		View::registerNamespace($this->name(), $this->resourcesFolder() . 'views/');
+
+        //Register a custom view for facts in order to show additional source facts in citations
+        if (boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '1'))) {
+            View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
+        }
+
 	}
 	
     /**
@@ -864,6 +879,7 @@ class RepositoryHierarchy   extends     AbstractModule
 
         $options = [
             self::CMD_NONE              => I18N::translate('none'),
+            self::CMD_DOWNLOAD_EAD_XML  => I18N::translate('download EAD XML'),
             self::CMD_SAVE_REPO         => I18N::translate('save repository'),
             self::CMD_LOAD_REPO         => I18N::translate('load repository'),
             self::CMD_SAVE_DELIM        => I18N::translate('save delimiter expression'),
@@ -1088,6 +1104,13 @@ class RepositoryHierarchy   extends     AbstractModule
         } else {
             $this->root_category = new CallNumberCategory($tree, array() );
         }
+
+        //If download of EAD XML is requested, create and return download
+        if ($command === self::CMD_DOWNLOAD_EAD_XML) {
+
+            $this->download_ead_xml_service->createXML($this->root_category);
+            return $this->download_ead_xml_service->downloadResponse('apeEAD');
+        }         
 
         //Return the page view
         return $this->viewResponse($this->name() . '::page', [

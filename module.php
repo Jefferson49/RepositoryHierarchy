@@ -39,5 +39,6 @@ require __DIR__ . '/CallNumberCategory.php';
 require __DIR__ . '/RepositoryHierarchyHelpTexts.php';
 require __DIR__ . '/CallNumberFixAction.php';
 require __DIR__ . '/CreateSourceModalAction.php';
+require __DIR__ . '/DownloadEADxmlService.php';
 
 return new RepositoryHierarchy();

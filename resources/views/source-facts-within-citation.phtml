@@ -1,0 +1,29 @@
+<?php
+
+use Fisharebest\Webtrees\Elements\AbstractXrefElement;
+use Fisharebest\Webtrees\Elements\XrefSource;
+use Fisharebest\Webtrees\Gedcom;
+use Fisharebest\Webtrees\GedcomRecord;
+use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Source;
+use Fisharebest\Webtrees\Tree;
+
+/**
+ * @var Tree $tree
+ * @var Source $source
+ */
+?> 
+ 
+<?php $facts = $source->facts() ?>
+<?php foreach ($facts as $fact) : ?>
+    <?php if (in_array($fact->tag(), ['SOUR:REPO','SOUR:REFN','SOUR:NOTE'] )) : ?>
+		<?php $element = Registry::elementFactory()->make($fact->tag()); ?>
+		<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+		<?php if ($fact->tag() === 'SOUR:REPO') : ?>
+			<?php $caln_string = $fact->attribute('CALN') ?>
+			<?php $element = Registry::elementFactory()->make('SOUR:REPO:CALN'); ?>
+			<?= $element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
+		<?php endif ?>
+    <?php endif ?>
+<?php endforeach ?>
+
