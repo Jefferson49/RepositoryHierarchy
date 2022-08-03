@@ -149,7 +149,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_SET_AS_START_REPO = 'set as start repository';
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.0.1';
+    public const CUSTOM_VERSION = '1.1.0';
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
@@ -190,6 +190,11 @@ class RepositoryHierarchy   extends     AbstractModule
      */
     public function __construct()
     {
+        //Create data fix service
+        $this->data_fix_service = new DataFixService;
+
+        //Create a download service for EAD XML;
+        $this->download_ead_xml_service = new DownloadEADxmlService($this->resourcesFolder() . 'xml/apeEAD_template.xml');
     }
 
     /**
@@ -198,12 +203,6 @@ class RepositoryHierarchy   extends     AbstractModule
      */
     public function boot(): void
     {
-        //Create data fix service
-        $this->data_fix_service = new DataFixService;
-
-        //Create a download service for EAD XML;
-        $this->download_ead_xml_service = new DownloadEADxmlService($this->resourcesFolder() . 'xml/apeEAD_template.xml'); 
-
         $router = Registry::routeFactory()->routeMap();
 
         //Register a route for the class  
@@ -1108,7 +1107,7 @@ class RepositoryHierarchy   extends     AbstractModule
         //If download of EAD XML is requested, create and return download
         if ($command === self::CMD_DOWNLOAD_EAD_XML) {
 
-            $this->download_ead_xml_service->createXML($this->root_category);
+            $this->download_ead_xml_service->createXMLforCategory($this->download_ead_xml_service->getCollection(), $this->root_category);
             return $this->download_ead_xml_service->downloadResponse('apeEAD');
         }         
 

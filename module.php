@@ -41,4 +41,4 @@ require __DIR__ . '/CallNumberFixAction.php';
 require __DIR__ . '/CreateSourceModalAction.php';
 require __DIR__ . '/DownloadEADxmlService.php';
 
-return new RepositoryHierarchy();
+return app(RepositoryHierarchy::class);
