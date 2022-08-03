@@ -44,7 +44,7 @@ class DownloadEADxmlService
     //The xml object for EAD XML export
     private DOMDocument $ead_xml;
 
-    //The collection structure within the xml
+    //The top level collection node within the xml
     private DOMNode $collection;
 
     //The ResponseFactory used
@@ -149,6 +149,8 @@ class DownloadEADxmlService
      */
     public function addItem(DOMNode $dom, Source $source)
     {
+        $source_title = str_replace(['<bdi>','</bdi>'],['',''],$source->fullName());
+
         //<c>
         $dom = $dom->appendChild($this->ead_xml->createElement('c'));
 
@@ -157,14 +159,14 @@ class DownloadEADxmlService
         $dom->appendChild($attribute);
 
         $attribute = $this->ead_xml->createAttribute('id');
-        $attribute->value = $source->fullName();
+        $attribute->value = $source_title;
         $dom->appendChild($attribute);
 
             //<did>
             $dom = $dom->appendChild($this->ead_xml->createElement('did'));
 
             $attribute = $this->ead_xml->createAttribute('unittitle');
-            $attribute->value = $source->fullName();
+            $attribute->value = $source_title;
             $dom->appendChild($attribute);
     
             $attribute = $this->ead_xml->createAttribute('type');
