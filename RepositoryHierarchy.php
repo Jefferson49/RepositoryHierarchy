@@ -814,13 +814,13 @@ class RepositoryHierarchy   extends     AbstractModule
 	}
 
     /**
-     * Get date number for a source
+     * Get date range for a source
      *
 	 * @param Source
      *
      * @return string
      */
-    public function getDateRange(Source $source): string {	
+    public static function getDateRange(Source $source, string $date_format = null): string {	
 			
         $date_range = '';
 
@@ -832,9 +832,12 @@ class RepositoryHierarchy   extends     AbstractModule
             
             if (!empty($matches[0]) ) {
                 $match = $matches[0];
-                $date_range = (new Date($match[1]))->display();               
+                $date_range = (new Date($match[1]))->display(null, $date_format);               
             }       
         }
+
+        $date_range = str_replace(['<span class="date">', '</span>'], ['',''], $date_range);
+
         return $date_range;
     }
 

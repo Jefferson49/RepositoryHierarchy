@@ -87,7 +87,7 @@ use Fisharebest\Webtrees\I18N;
 								<?php if (($source->facts(['DATA'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1')))) : ?>
 									—
 									<?= I18N::translate('Date range') ?>:
-									<?= $repository_hierarchy->getDateRange($source)?>
+									<?= RepositoryHierarchy::getDateRange($source)?>
 								<?php endif ?>
 							</li>
 						<?php endforeach ?>	

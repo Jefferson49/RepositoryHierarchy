@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\Encodings\UTF8;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
 use Fisharebest\Webtrees\Source;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -34,7 +35,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use DOMDocument;
 use DOMNode;
+use DOMAttr;
 use RuntimeException;
+
 
 /**
  * Download Service for EAD XML files
@@ -110,6 +113,71 @@ class DownloadEADxmlService
         }
     }
 
+
+    /**
+     * Source value by tag
+     * 
+     * @param Source    $source
+     * 
+     * @return array    [$tag => $value]
+     */
+    public function sourceValuesByTag(Source $source): array
+    {
+        $source_values = [];
+        $level1_source_tags = [
+            'SOUR:DATA',
+            'SOUR:AUTH',
+            'SOUR:TITL',
+            'SOUR:ABBR',
+            'SOUR:PUBL',
+            'SOUR:TEXT',
+            'SOUR:REPO',
+            'SOUR:REFN',
+            'SOUR:RIN',
+        ];
+
+        foreach($source->facts() as $fact) {
+
+            if (in_array($fact->tag(), $level1_source_tags )) {
+ 
+                $source_values[$fact->tag()] = $fact->value();              
+                
+                switch($fact->tag()) {
+                    case 'SOUR:REPO':
+                        if($fact->attribute('CALN') !== '') {
+                            $source_values['SOUR:REPO:CALN'] = $fact->attribute('CALN');
+                        }
+                        break;
+
+                    case 'SOUR:DATA':
+                        $date_range = RepositoryHierarchy::getDateRange($source);
+                        if($date_range !== '') {
+                            $source_values['SOUR:DATA:EVEN:DATE'] = $date_range;
+                        }
+                        break;
+                }
+            }
+        }
+
+        //Substitue characters, which cause errors in XML/HTML
+        foreach($source_values as $key=>$value) {
+            $source_values[$key] = htmlspecialchars($value, ENT_XML1, 'UTF-8');
+        }
+
+        return $source_values;
+    }
+
+    /**
+     * Substitue special characters in URL
+     * 
+     * @param Source    $source
+     * 
+     * @return array    [$tag => $value]
+     */
+    public function substitueSpecialcharsInURL(string $text): string {
+        return $this->validateURL($text) ? htmlspecialchars($text, ENT_XML1, 'UTF-8') : $text;
+    }
+     
     /**
      * Add a series to EAD XML
      * 
@@ -149,29 +217,40 @@ class DownloadEADxmlService
      */
     public function addItem(DOMNode $dom, Source $source)
     {
-        $source_title = str_replace(['<bdi>','</bdi>'],['',''],$source->fullName());
+        $fact_values = $this->sourceValuesByTag($source);
 
         //<c>
         $dom = $dom->appendChild($this->ead_xml->createElement('c'));
+        $dom->appendChild(new DOMAttr('level', 'item'));
 
-        $attribute = $this->ead_xml->createAttribute('level');
-        $attribute->value = 'item';
-        $dom->appendChild($attribute);
-
-        $attribute = $this->ead_xml->createAttribute('id');
-        $attribute->value = $source_title;
-        $dom->appendChild($attribute);
+        if (isset($fact_values['SOUR:TITL'])) {
+            $dom->appendChild(new DOMAttr('id', $fact_values['SOUR:TITL']));
+        }
 
             //<did>
             $dom = $dom->appendChild($this->ead_xml->createElement('did'));
 
-            $attribute = $this->ead_xml->createAttribute('unittitle');
-            $attribute->value = $source_title;
-            $dom->appendChild($attribute);
-    
-            $attribute = $this->ead_xml->createAttribute('type');
-            $attribute->value = 'title';
-            $dom->appendChild($attribute);    
+            //<unitid>
+            if (isset($fact_values['SOUR:REPO:CALN'])) {
+                $dom->appendChild($this->ead_xml->createElement('unitid', $fact_values['SOUR:REPO:CALN']));
+            }
+
+            //<unittitle>
+            if (isset($fact_values['SOUR:TITL'])) {
+                $dom_node = $this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']);
+                $dom_node->appendChild(new DOMAttr('type', 'title'));
+
+                $dom->appendChild($dom_node);
+            }
+
+            //<unitdate>
+            //<unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
+            if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
+                $dom_node = $this->ead_xml->createElement('unitdate', I18N::translate("Date range"));
+                $dom_node->appendChild(new DOMAttr('normal', $fact_values['SOUR:DATA:EVEN:DATE']));
+
+                $dom->appendChild($dom_node);
+            }
    }    
 
     /**
@@ -219,4 +298,18 @@ class DownloadEADxmlService
         return $stream;
     }
 
+    /**
+     * Validate whether a string is an URL
+     *
+     * @param string  $url 
+     * 
+     * @return  bool
+     */
+    private function validateURL(string $url): bool {
+        $path = parse_url($url, PHP_URL_PATH);
+        $encoded_path = array_map('urlencode', explode('/', $path));
+        $url = str_replace($path, implode('/', $encoded_path), $url);
+    
+        return filter_var($url, FILTER_VALIDATE_URL) ? true : false;
+    }
 }
