@@ -836,8 +836,6 @@ class RepositoryHierarchy   extends     AbstractModule
             }       
         }
 
-        $date_range = str_replace(['<span class="date">', '</span>'], ['',''], $date_range);
-
         return $date_range;
     }
 

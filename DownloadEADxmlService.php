@@ -101,18 +101,17 @@ class DownloadEADxmlService
         foreach ($categories as $category) {
 
             //Add node to xml structure
-            $this->addSeries($dom, $category);
+            $series_dom = $this->addSeries($dom, $category);
 
             //Add sources to xml structure
             foreach ($category->getSources() as $source) {
-                $this->addItem($dom, $source);
+                $this->addItem($series_dom, $source);
             }
 
             //Call recursion for sub categories
-            $this->createXMLforCategory($dom, $category);
+            $this->createXMLforCategory($series_dom, $category);
         }
     }
-
 
     /**
      * Source value by tag
@@ -150,7 +149,9 @@ class DownloadEADxmlService
                         break;
 
                     case 'SOUR:DATA':
-                        $date_range = RepositoryHierarchy::getDateRange($source);
+                        $date_range = RepositoryHierarchy::getDateRange($source, '%Y-%m-%d');
+                        $date_range = $this->formatDateRange($date_range);
+
                         if($date_range !== '') {
                             $source_values['SOUR:DATA:EVEN:DATE'] = $date_range;
                         }
@@ -168,49 +169,85 @@ class DownloadEADxmlService
     }
 
     /**
-     * Substitue special characters in URL
+     * Format date range
      * 
-     * @param Source    $source
+     * @param string    $date_range
      * 
-     * @return array    [$tag => $value]
+     * @return string   
      */
-    public function substitueSpecialcharsInURL(string $text): string {
-        return $this->validateURL($text) ? htmlspecialchars($text, ENT_XML1, 'UTF-8') : $text;
-    }
+    public function formatDateRange(string $date_range): string {
+
+        $date_range = str_replace(['<span class="date">', '</span>'], ['',''], $date_range);
+        $date_range = str_replace(' ', '', $date_range);
+        $date_range = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range); 
+        $date_range = str_replace(I18N::translateContext('End of date range', 'To'), '/', $date_range); 
+
+        //pattern:  1659/
+        $pattern = '/\A(\d+)\/\Z/';  
+        preg_match_all($pattern, $date_range, $matches, PREG_SET_ORDER);
+
+        if (!empty($matches[0]) ) {
+            return $this->fixShortYearFormat($matches[0][1]);    
+        }
+
+        //pattern:  /1659
+        preg_match_all('/\A\/(\d+)\Z/', $date_range, $matches, PREG_SET_ORDER);
+
+        if (!empty($matches[0]) ) {
+            return $this->fixShortYearFormat($matches[0][1]);    
+        }
      
+        //pattern:  873/*
+        $pattern = '/\A(\d\d\d)\/(.*)/';
+        preg_match_all($pattern, $date_range, $matches, PREG_SET_ORDER);
+
+        if (!empty($matches[0]) ) {
+            return preg_replace($pattern, '0$1/$2', $date_range);     
+        }
+
+        //Default
+        return $date_range;
+    }    
+
     /**
-     * Add a series to EAD XML
+     * Fix short year format
+     * 
+     * @param string   $year
+     * 
+     * @return string   
+     */
+    public function fixShortYearFormat(string   $year): string {
+
+        while (strlen($year) < 4 ) {
+            $year = '0' . $year;
+        }
+
+        return $year;
+    }
+
+    /**
+     * Add a series (i.e. call number category) to EAD XML
      * 
      * @param DOMDocument           $dom
      * @param CallNumberCategory    $call_number_category
      */
-    public function addSeries(DOMNode $dom, CallNumberCategory $call_number_category)
+    public function addSeries(DOMNode $dom, CallNumberCategory $call_number_category): DOMNode
     {
          //<c>
          $dom = $dom->appendChild($this->ead_xml->createElement('c'));
-
-         $attribute = $this->ead_xml->createAttribute('level');
-         $attribute->value = 'series';
-         $dom->appendChild($attribute);
- 
-         $attribute = $this->ead_xml->createAttribute('id');
-         $attribute->value = $call_number_category->getName();
-         $dom->appendChild($attribute);
+         $series_dom = $dom;
+         $dom->appendChild(new DOMAttr('level', 'series'));
  
              //<did>
              $dom = $dom->appendChild($this->ead_xml->createElement('did'));
- 
-             $attribute = $this->ead_xml->createAttribute('unitid');
-             $attribute->value = $call_number_category->getFullName();
-             $dom->appendChild($attribute);
-     
-             $attribute = $this->ead_xml->createAttribute('unittitle');
-             $attribute->value = $call_number_category->getName();
-             $dom->appendChild($attribute);
+             $dom->appendChild($this->ead_xml->createElement('unitid', $call_number_category->getFullName()));
+             $dom->appendChild($this->ead_xml->createElement('unittitle', $call_number_category->getName()));
+
+        return $series_dom;
     }
   
     /**
-     * Add an item to EAD XML
+     * Add an item (i.e. source) to EAD XML
      * 
      * @param DOMDocument      $dom
      * @param Source           $source
@@ -222,10 +259,7 @@ class DownloadEADxmlService
         //<c>
         $dom = $dom->appendChild($this->ead_xml->createElement('c'));
         $dom->appendChild(new DOMAttr('level', 'item'));
-
-        if (isset($fact_values['SOUR:TITL'])) {
-            $dom->appendChild(new DOMAttr('id', $fact_values['SOUR:TITL']));
-        }
+        $dom->appendChild(new DOMAttr('id', $source->xref()));
 
             //<did>
             $dom = $dom->appendChild($this->ead_xml->createElement('did'));
@@ -305,7 +339,7 @@ class DownloadEADxmlService
      * 
      * @return  bool
      */
-    private function validateURL(string $url): bool {
+    private function validateWhetherURL(string $url): bool {
         $path = parse_url($url, PHP_URL_PATH);
         $encoded_path = array_map('urlencode', explode('/', $path));
         $url = str_replace($path, implode('/', $encoded_path), $url);
