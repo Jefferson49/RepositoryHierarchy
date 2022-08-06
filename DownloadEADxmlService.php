@@ -181,49 +181,42 @@ class DownloadEADxmlService
         $date_range = str_replace(' ', '', $date_range);
         $date_range = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range); 
         $date_range = str_replace(I18N::translateContext('End of date range', 'To'), '/', $date_range); 
-
-        //pattern:  1659/
-        $pattern = '/\A(\d+)\/\Z/';  
-        preg_match_all($pattern, $date_range, $matches, PREG_SET_ORDER);
-
-        if (!empty($matches[0]) ) {
-            return $this->fixShortYearFormat($matches[0][1]);    
-        }
-
-        //pattern:  /1659
-        preg_match_all('/\A\/(\d+)\Z/', $date_range, $matches, PREG_SET_ORDER);
-
-        if (!empty($matches[0]) ) {
-            return $this->fixShortYearFormat($matches[0][1]);    
-        }
-     
-        //pattern:  873/*
-        $pattern = '/\A(\d\d\d)\/(.*)/';
-        preg_match_all($pattern, $date_range, $matches, PREG_SET_ORDER);
-
-        if (!empty($matches[0]) ) {
-            return preg_replace($pattern, '0$1/$2', $date_range);     
-        }
-
-        //Default
-        return $date_range;
+        
+        $patterns = [
+            '/\A(\d+)\/\Z/',            //  1659/
+            '/\A\/(\d+)\Z/',            //  /1659
+            '/\A(\d\d\d)\/(.*)/',       //  873/*
+            '/\A(\d\d)\/(.*)/',         //  87/*
+            '/\A(\d)\/(.*)/',           //  7/*
+            '/\A(\d\d\d)-(.+?)\/(.*)/', //  873-*/*
+            '/\A(\d\d)-(.+?)\/(.*)/',   //  87-*/*
+            '/\A(\d)-(.+?)\/(.*)/',     //  7-*/*
+            '/(.*)\/(\d\d\d)\Z/',       //  */873
+            '/(.*)\/(\d\d)\Z/',         //  */87
+            '/(.*)\/(\d)\Z/',           //  */8
+            '/(.*)\/(\d\d\d)-(.+)/',    //  */873-
+            '/(.*)\/(\d\d)-(.+)/',      //  */87-
+            '/(.*)\/(\d)-(.+)/',        //  */8-
+        ];
+        $replacements = [
+            '$1',                       //  1659/
+            '$1',                       //  /1659
+            '0$1/$2',                   //  873/*
+            '00$1/$2',                  //  87/*
+            '000$1/$2',                 //  8/*
+            '0$1-$2/$3',                //  873-*/*
+            '00$1-$2/$3',               //  87-*/*
+            '000$1-$2/$3',              //  8-*/*
+            '$1/0$2',                   //  */873
+            '$1/00$2',                  //  */87
+            '$1/000$2',                 //  */8
+            '$1/0$2/$3',                //  */873-
+            '$1/00$2/$3',               //  */87-
+            '$1/000$2/$3',              //  */8-
+        ];
+        
+        return preg_replace($patterns, $replacements, $date_range);     
     }    
-
-    /**
-     * Fix short year format
-     * 
-     * @param string   $year
-     * 
-     * @return string   
-     */
-    public function fixShortYearFormat(string   $year): string {
-
-        while (strlen($year) < 4 ) {
-            $year = '0' . $year;
-        }
-
-        return $year;
-    }
 
     /**
      * Add a series (i.e. call number category) to EAD XML
