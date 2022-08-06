@@ -16,11 +16,18 @@
 			<titlestmt>
 				<titleproper>Findbuch Archiv Familienforschung Hemprich</titleproper>
 			</titlestmt>
+			<publicationstmt>
+				<publisher encodinganalog="publisher">Archiv Familienforschung Hemprich</publisher>
+				<date normal="2022-08-06" encodinganalog="date">2022-08-06</date>
+			</publicationstmt>
 		</filedesc>
 		<profiledesc>
 			<creation>
 				<date normal="2019-01-29">Erstellungsdatum des Findbuchs</date>
 			</creation>
+			<langusage>
+				<language langcode="ger">Deutsch</language>
+			</langusage>
 		</profiledesc>
 	</eadheader>
 	<archdesc level="fonds" type="Findbuch">

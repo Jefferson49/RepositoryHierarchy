@@ -37,6 +37,7 @@ use DOMDocument;
 use DOMNode;
 use DOMAttr;
 use RuntimeException;
+use Fisharebest\Webtrees\Repository;
 
 
 /**
@@ -47,7 +48,7 @@ class DownloadEADxmlService
     //The xml object for EAD XML export
     private DOMDocument $ead_xml;
 
-    //The top level collection node within the xml
+    //The top level collection within the xml
     private DOMNode $collection;
 
     //The ResponseFactory used
@@ -56,15 +57,21 @@ class DownloadEADxmlService
     //The StreamFactory used
     private StreamFactoryInterface $stream_factory;
 
+    //The repository, to which the service relates
+    private Repository $repository;
 
     /**
      * Constructor
      * 
-     * @param string    $template_filename    The path of the xml template file name with file extension 
+     * @param string        $template_filename    The path of the xml template file name with file extension 
+     * @param Repository    $repository    
      *
      */
-    public function __construct(string $template_filename)
+    public function __construct(string $template_filename, Repository $repository)
     {
+        //Set repository
+        $this->repository = $repository;
+
         //New DOM and settings for a nice xml format
         $this->ead_xml = new DOMDocument();
         $this->ead_xml->preserveWhiteSpace = false;
@@ -75,10 +82,10 @@ class DownloadEADxmlService
         $this->stream_factory   = new Psr17Factory();
         $this->linked_record_service = new LinkedRecordService();
 
-        //Get xml element for collection
+        //Set and initialize xml element for top level collection
         $dom = $this->ead_xml->getElementsByTagName('archdesc')->item(0);
         $dom = $dom->getElementsByTagName('dsc')->item(0);
-        $this->collection = $dom->getElementsByTagName('c')->item(0);
+        $this->collection = $this->addCollection($dom);
     }
 
     /**
@@ -89,6 +96,7 @@ class DownloadEADxmlService
     public function getCollection(): DOMNode {
         return $this->collection;
     }     
+
     /**
      * Create XML for a hierarchy of call numbers
      * 
@@ -219,6 +227,55 @@ class DownloadEADxmlService
     }    
 
     /**
+     * Add a collection (for the whole repository) to EAD XML
+     * 
+     * @param DOMDocument           $dom
+     */
+    public function addCollection(DOMNode $dom): DOMNode
+    {
+         //<c>
+         $collection_dom = $dom->appendChild($this->ead_xml->createElement('c'));
+            $collection_dom->appendChild(new DOMAttr('level', 'collection'));
+            $collection_dom->appendChild(new DOMAttr('id', 'REPO_ID_' . $this->repository->xref()));
+ 
+             //<did>
+             $did_dom = $collection_dom->appendChild($this->ead_xml->createElement('did'));
+
+                //<unittitle>
+                $dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $this->repository->fullName()));
+                    $dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+                
+                //<unitid>
+                $dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->repository->xref()));
+                    $dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
+
+                //<unitdate>
+                //TBD
+
+                //<langmaterial>
+                //TBD
+
+                //<origination>
+                $origination_dom = $did_dom->appendChild($this->ead_xml->createElement('origination'));
+                    $origination_dom->appendChild(new DOMAttr('label', 'final'));
+                    $origination_dom->appendChild(new DOMAttr('encodinganalog', '3.2.1'));
+
+                    //<name>
+                    $origination_dom->appendChild($this->ead_xml->createElement('name', $this->repository->fullName()));
+
+                //<scopecontent>
+                //TBD
+
+                //<accessrestrict>
+                //TBD
+
+                //<controlaccess>
+                //TBD
+
+        return $collection_dom;
+    }
+
+    /**
      * Add a series (i.e. call number category) to EAD XML
      * 
      * @param DOMDocument           $dom
@@ -229,12 +286,19 @@ class DownloadEADxmlService
          //<c>
          $dom = $dom->appendChild($this->ead_xml->createElement('c'));
          $series_dom = $dom;
-         $dom->appendChild(new DOMAttr('level', 'series'));
+            $dom->appendChild(new DOMAttr('level', 'series'));
+            $dom->appendChild(new DOMAttr('id', 'CN_ID_' . $call_number_category->getId()));
  
              //<did>
-             $dom = $dom->appendChild($this->ead_xml->createElement('did'));
-             $dom->appendChild($this->ead_xml->createElement('unitid', $call_number_category->getFullName()));
-             $dom->appendChild($this->ead_xml->createElement('unittitle', $call_number_category->getName()));
+             $did_dom = $series_dom->appendChild($this->ead_xml->createElement('did'));
+
+                //<unittitle>
+                $dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $call_number_category->getName()));
+                    $dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
+                
+                //<unitid>
+                $dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $call_number_category->getFullName()));
+                    $dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
 
         return $series_dom;
     }
@@ -251,8 +315,8 @@ class DownloadEADxmlService
 
         //<c>
         $dom = $dom->appendChild($this->ead_xml->createElement('c'));
-        $dom->appendChild(new DOMAttr('level', 'item'));
-        $dom->appendChild(new DOMAttr('id', $source->xref()));
+            $dom->appendChild(new DOMAttr('level', 'item'));
+            $dom->appendChild(new DOMAttr('id', $source->xref()));
 
             //<did>
             $dom = $dom->appendChild($this->ead_xml->createElement('did'));
@@ -265,7 +329,7 @@ class DownloadEADxmlService
             //<unittitle>
             if (isset($fact_values['SOUR:TITL'])) {
                 $dom_node = $this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']);
-                $dom_node->appendChild(new DOMAttr('type', 'title'));
+                    $dom_node->appendChild(new DOMAttr('type', 'title'));
 
                 $dom->appendChild($dom_node);
             }
@@ -274,7 +338,7 @@ class DownloadEADxmlService
             //<unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
             if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
                 $dom_node = $this->ead_xml->createElement('unitdate', I18N::translate("Date range"));
-                $dom_node->appendChild(new DOMAttr('normal', $fact_values['SOUR:DATA:EVEN:DATE']));
+                    $dom_node->appendChild(new DOMAttr('normal', $fact_values['SOUR:DATA:EVEN:DATE']));
 
                 $dom->appendChild($dom_node);
             }
