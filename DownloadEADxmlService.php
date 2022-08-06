@@ -177,72 +177,41 @@ class DownloadEADxmlService
     }
 
     /**
-     * Format date range
+     * Add a archive to EAD XML
      * 
-     * @param string    $date_range
+     * @param DOMDocument       $dom
      * 
-     * @return string   
+     * @return DOMDocument      
      */
-    public function formatDateRange(string $date_range): string {
+    public function addArchive(DOMNode $dom): DOMNode
+    {
+         //<archdesc>
+         $archive_dom = $dom->appendChild($this->ead_xml->createElement('c'));
+            $archive_dom->appendChild(new DOMAttr('level', 'collection'));
+            $archive_dom->appendChild(new DOMAttr('id', $this->repository->xref()));
 
-        $date_range = str_replace(['<span class="date">', '</span>'], ['',''], $date_range);
-        $date_range = str_replace(' ', '', $date_range);
-        $date_range = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range); 
-        $date_range = str_replace(I18N::translateContext('End of date range', 'To'), '/', $date_range); 
-        
-        $patterns = [
-            '/\A(\d+)\/\Z/',            //  1659/
-            '/\A\/(\d+)\Z/',            //  /1659
-            '/\A(\d\d\d)\/(.*)/',       //  873/*
-            '/\A(\d\d)\/(.*)/',         //  87/*
-            '/\A(\d)\/(.*)/',           //  7/*
-            '/\A(\d\d\d)-(.+?)\/(.*)/', //  873-*/*
-            '/\A(\d\d)-(.+?)\/(.*)/',   //  87-*/*
-            '/\A(\d)-(.+?)\/(.*)/',     //  7-*/*
-            '/(.*)\/(\d\d\d)\Z/',       //  */873
-            '/(.*)\/(\d\d)\Z/',         //  */87
-            '/(.*)\/(\d)\Z/',           //  */8
-            '/(.*)\/(\d\d\d)-(.+)/',    //  */873-
-            '/(.*)\/(\d\d)-(.+)/',      //  */87-
-            '/(.*)\/(\d)-(.+)/',        //  */8-
-        ];
-        $replacements = [
-            '$1',                       //  1659/
-            '$1',                       //  /1659
-            '0$1/$2',                   //  873/*
-            '00$1/$2',                  //  87/*
-            '000$1/$2',                 //  8/*
-            '0$1-$2/$3',                //  873-*/*
-            '00$1-$2/$3',               //  87-*/*
-            '000$1-$2/$3',              //  8-*/*
-            '$1/0$2',                   //  */873
-            '$1/00$2',                  //  */87
-            '$1/000$2',                 //  */8
-            '$1/0$2/$3',                //  */873-
-            '$1/00$2/$3',               //  */87-
-            '$1/000$2/$3',              //  */8-
-        ];
-        
-        return preg_replace($patterns, $replacements, $date_range);     
-    }    
+        return $archive_dom;
+    }
 
     /**
      * Add a collection (for the whole repository) to EAD XML
      * 
-     * @param DOMDocument           $dom
+     * @param DOMDocument       $dom
+     * 
+     * @return DOMDocument      
      */
     public function addCollection(DOMNode $dom): DOMNode
     {
          //<c>
          $collection_dom = $dom->appendChild($this->ead_xml->createElement('c'));
             $collection_dom->appendChild(new DOMAttr('level', 'collection'));
-            $collection_dom->appendChild(new DOMAttr('id', 'REPO_ID_' . $this->repository->xref()));
+            $collection_dom->appendChild(new DOMAttr('id', $this->repository->xref()));
  
              //<did>
              $did_dom = $collection_dom->appendChild($this->ead_xml->createElement('did'));
 
                 //<unittitle>
-                $dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $this->repository->fullName()));
+                $dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $this->removeHtmlTags($this->repository->fullName())));
                     $dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
                 
                 //<unitid>
@@ -261,7 +230,7 @@ class DownloadEADxmlService
                     $origination_dom->appendChild(new DOMAttr('encodinganalog', '3.2.1'));
 
                     //<name>
-                    $origination_dom->appendChild($this->ead_xml->createElement('name', $this->repository->fullName()));
+                    $origination_dom->appendChild($this->ead_xml->createElement('name', $this->removeHtmlTags($this->repository->fullName())));
 
                 //<scopecontent>
                 //TBD
@@ -280,6 +249,8 @@ class DownloadEADxmlService
      * 
      * @param DOMDocument           $dom
      * @param CallNumberCategory    $call_number_category
+     * 
+     * @return DOMDocument      
      */
     public function addSeries(DOMNode $dom, CallNumberCategory $call_number_category): DOMNode
     {
@@ -287,7 +258,7 @@ class DownloadEADxmlService
          $dom = $dom->appendChild($this->ead_xml->createElement('c'));
          $series_dom = $dom;
             $dom->appendChild(new DOMAttr('level', 'series'));
-            $dom->appendChild(new DOMAttr('id', 'CN_ID_' . $call_number_category->getId()));
+            $dom->appendChild(new DOMAttr('id', 'CN' . $call_number_category->getId()));
  
              //<did>
              $did_dom = $series_dom->appendChild($this->ead_xml->createElement('did'));
@@ -365,9 +336,11 @@ class DownloadEADxmlService
     /**
      * Write XML data to a stream
      *
+     * @param DOMDocument   $dom
+     * 
      * @return resource
      */
-    public function export(DOMDocument $dom, string $encoding = UTF8::NAME) 
+    public function export(DOMDocument $dom) 
     {
         $stream = fopen('php://memory', 'wb+');
 
@@ -390,6 +363,57 @@ class DownloadEADxmlService
     }
 
     /**
+     * Format date range
+     * 
+     * @param string    $date_range
+     * 
+     * @return string   
+     */
+    public function formatDateRange(string $date_range): string {
+
+        //$date_range = str_replace(['<span class="date">', '</span>'], ['',''], $date_range);
+        $date_range = $this->removeHtmlTags($date_range);
+        $date_range = str_replace(' ', '', $date_range);
+        $date_range = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range); 
+        $date_range = str_replace(I18N::translateContext('End of date range', 'To'), '/', $date_range); 
+        
+        $patterns = [
+            '/\A(\d+)\/\Z/',            //  1659/
+            '/\A\/(\d+)\Z/',            //  /1659
+            '/\A(\d\d\d)\/(.*)/',       //  873/*
+            '/\A(\d\d)\/(.*)/',         //  87/*
+            '/\A(\d)\/(.*)/',           //  7/*
+            '/\A(\d\d\d)-(.+?)\/(.*)/', //  873-*/*
+            '/\A(\d\d)-(.+?)\/(.*)/',   //  87-*/*
+            '/\A(\d)-(.+?)\/(.*)/',     //  7-*/*
+            '/(.*)\/(\d\d\d)\Z/',       //  */873
+            '/(.*)\/(\d\d)\Z/',         //  */87
+            '/(.*)\/(\d)\Z/',           //  */8
+            '/(.*)\/(\d\d\d)-(.+)/',    //  */873-
+            '/(.*)\/(\d\d)-(.+)/',      //  */87-
+            '/(.*)\/(\d)-(.+)/',        //  */8-
+        ];
+        $replacements = [
+            '$1',                       //  1659/
+            '$1',                       //  /1659
+            '0$1/$2',                   //  873/*
+            '00$1/$2',                  //  87/*
+            '000$1/$2',                 //  8/*
+            '0$1-$2/$3',                //  873-*/*
+            '00$1-$2/$3',               //  87-*/*
+            '000$1-$2/$3',              //  8-*/*
+            '$1/0$2',                   //  */873
+            '$1/00$2',                  //  */87
+            '$1/000$2',                 //  */8
+            '$1/0$2/$3',                //  */873-
+            '$1/00$2/$3',               //  */87-
+            '$1/000$2/$3',              //  */8-
+        ];
+        
+        return preg_replace($patterns, $replacements, $date_range);     
+    }    
+
+    /**
      * Validate whether a string is an URL
      *
      * @param string  $url 
@@ -403,4 +427,16 @@ class DownloadEADxmlService
     
         return filter_var($url, FILTER_VALIDATE_URL) ? true : false;
     }
+    
+    /**
+     * Remove html tags
+     *
+     * @param string  $text 
+     * 
+     * @return string
+     */
+    private function removeHtmlTags(string $text): string {
+            return preg_replace('/<[a-z]+[^<>]+?>([^<>]+?)<\/[a-z]+?>/', '$1', $text);
+    }
+
 }
