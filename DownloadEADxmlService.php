@@ -82,9 +82,10 @@ class DownloadEADxmlService
         $this->stream_factory   = new Psr17Factory();
         $this->linked_record_service = new LinkedRecordService();
 
-        //Set and initialize xml element for top level collection
-        $dom = $this->ead_xml->getElementsByTagName('archdesc')->item(0);
-        $dom = $dom->getElementsByTagName('dsc')->item(0);
+        //Initialize EAD xml
+        $dom = $this->ead_xml->getElementsByTagName('ead')->item(0);
+        $dom = $this->addArchive($dom);  
+        $dom = $dom->appendChild($this->ead_xml->createElement('dsc'));
         $this->collection = $this->addCollection($dom);
     }
 
@@ -122,62 +123,7 @@ class DownloadEADxmlService
     }
 
     /**
-     * Source value by tag
-     * 
-     * @param Source    $source
-     * 
-     * @return array    [$tag => $value]
-     */
-    public function sourceValuesByTag(Source $source): array
-    {
-        $source_values = [];
-        $level1_source_tags = [
-            'SOUR:DATA',
-            'SOUR:AUTH',
-            'SOUR:TITL',
-            'SOUR:ABBR',
-            'SOUR:PUBL',
-            'SOUR:TEXT',
-            'SOUR:REPO',
-            'SOUR:REFN',
-            'SOUR:RIN',
-        ];
-
-        foreach($source->facts() as $fact) {
-
-            if (in_array($fact->tag(), $level1_source_tags )) {
- 
-                $source_values[$fact->tag()] = $fact->value();              
-                
-                switch($fact->tag()) {
-                    case 'SOUR:REPO':
-                        if($fact->attribute('CALN') !== '') {
-                            $source_values['SOUR:REPO:CALN'] = $fact->attribute('CALN');
-                        }
-                        break;
-
-                    case 'SOUR:DATA':
-                        $date_range = RepositoryHierarchy::getDateRange($source, '%Y-%m-%d');
-                        $date_range = $this->formatDateRange($date_range);
-
-                        if($date_range !== '') {
-                            $source_values['SOUR:DATA:EVEN:DATE'] = $date_range;
-                        }
-                        break;
-                }
-            }
-        }
-
-        //Substitue characters, which cause errors in XML/HTML
-        foreach($source_values as $key=>$value) {
-            $source_values[$key] = htmlspecialchars($value, ENT_XML1, 'UTF-8');
-        }
-
-        return $source_values;
-    }
-
-    /**
-     * Add a archive to EAD XML
+     * Add an archive to EAD XML
      * 
      * @param DOMDocument       $dom
      * 
@@ -186,9 +132,54 @@ class DownloadEADxmlService
     public function addArchive(DOMNode $dom): DOMNode
     {
          //<archdesc>
-         $archive_dom = $dom->appendChild($this->ead_xml->createElement('c'));
-            $archive_dom->appendChild(new DOMAttr('level', 'collection'));
-            $archive_dom->appendChild(new DOMAttr('id', $this->repository->xref()));
+         $archive_dom = $dom->appendChild($this->ead_xml->createElement('archdesc'));
+            $archive_dom->appendChild(new DOMAttr('level', 'fonds'));
+            $archive_dom->appendChild(new DOMAttr('type','Findbuch'));
+            $archive_dom->appendChild(new DOMAttr('encodinganalog','3.1.4'));
+            $archive_dom->appendChild(new DOMAttr('relatedencoding','ISAD(G)v2'));
+
+             //<did>
+            $did_dom = $archive_dom->appendChild($this->ead_xml->createElement('did'));
+
+                //<unittitle>
+                $dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $this->removeHtmlTags($this->repository->fullName())));
+                    $dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+                
+                //<unitid>
+                $dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->removeHtmlTags($this->repository->fullName())));
+                    $dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
+
+                //<unitdate>
+                //TBD
+
+                //<physdesc>
+                //TBD
+
+                //<repository>
+                $repository_dom = $did_dom->appendChild($this->ead_xml->createElement('repository'));
+
+                    //<corpname>
+                    $corpname_dom = $repository_dom->appendChild($this->ead_xml->createElement('corpname', $this->removeHtmlTags($this->repository->fullName())));
+
+                    //<address>
+                    $address_lines = $this->getRepositoryAddressLines($this->repository);
+
+                    if(!empty($address_lines)){
+                        $address_dom = $repository_dom->appendChild($this->ead_xml->createElement('address'));
+
+                        foreach($address_lines as $line) {
+                            //<addressline>
+                            $address_dom->appendChild($this->ead_xml->createElement('addressline', $line));    
+                        }
+                    }
+
+                //<origination>
+                $origination_dom = $did_dom->appendChild($this->ead_xml->createElement('origination'));
+                    $origination_dom->appendChild(new DOMAttr('encodinganalog', '3.2.1'));
+
+                    //<persname>
+                    //TBD MY_NAME
+                    $origination_dom->appendChild($this->ead_xml->createElement('persname', 'MY_NAME'));
 
         return $archive_dom;
     }
@@ -363,6 +354,108 @@ class DownloadEADxmlService
     }
 
     /**
+     * Get address lines of a repository 
+     * 
+     * @param Repository    $repository
+     * 
+     * @return array    [string with adress line]
+     */
+    public function getRepositoryAddressLines(Repository $repository): array
+    {
+        $address_lines = [];
+        $level1_address_tags = [
+            'REPO:ADDR',
+            'REPO:PHON',
+            'REPO:EMAIL',
+            'REPO:FAX',
+            'REPO:WWW',
+        ];
+        $level2_address_tags = [
+            'ADR1',
+            'ADR2',
+            'ADR3',
+            'CITY',
+            'STAE',
+            'POST',
+            'CTRY',
+        ];       
+
+        foreach($repository->facts() as $fact) {
+
+            if (in_array($fact->tag(), $level1_address_tags)) {
+                $address_lines[$fact->tag()] = $fact->value();       
+            }
+
+            if ($fact->tag() === 'REPO:ADDR') {
+
+                foreach($level2_address_tags as $tag) {
+
+                    if($fact->attribute($tag) !== '') {
+                        $address_lines[$tag] = $fact->attribute($tag);
+                    }
+                }
+            }
+        }
+
+        return $address_lines;
+    }
+
+    /**
+     * Source value by tag
+     * 
+     * @param Source    $source
+     * 
+     * @return array    [$tag => $value]
+     */
+    public function sourceValuesByTag(Source $source): array
+    {
+        $source_values = [];
+        $level1_source_tags = [
+            'SOUR:DATA',
+            'SOUR:AUTH',
+            'SOUR:TITL',
+            'SOUR:ABBR',
+            'SOUR:PUBL',
+            'SOUR:TEXT',
+            'SOUR:REPO',
+            'SOUR:REFN',
+            'SOUR:RIN',
+        ];
+
+        foreach($source->facts() as $fact) {
+
+            if (in_array($fact->tag(), $level1_source_tags )) {
+ 
+                $source_values[$fact->tag()] = $fact->value();              
+                
+                switch($fact->tag()) {
+                    case 'SOUR:REPO':
+                        if($fact->attribute('CALN') !== '') {
+                            $source_values['SOUR:REPO:CALN'] = $fact->attribute('CALN');
+                        }
+                        break;
+
+                    case 'SOUR:DATA':
+                        $date_range = RepositoryHierarchy::getDateRange($source, '%Y-%m-%d');
+                        $date_range = $this->formatDateRange($date_range);
+
+                        if($date_range !== '') {
+                            $source_values['SOUR:DATA:EVEN:DATE'] = $date_range;
+                        }
+                        break;
+                }
+            }
+        }
+
+        //Substitue characters, which cause errors in XML/HTML
+        foreach($source_values as $key=>$value) {
+            $source_values[$key] = htmlspecialchars($value, ENT_XML1, 'UTF-8');
+        }
+
+        return $source_values;
+    }
+
+    /**
      * Format date range
      * 
      * @param string    $date_range
@@ -371,7 +464,6 @@ class DownloadEADxmlService
      */
     public function formatDateRange(string $date_range): string {
 
-        //$date_range = str_replace(['<span class="date">', '</span>'], ['',''], $date_range);
         $date_range = $this->removeHtmlTags($date_range);
         $date_range = str_replace(' ', '', $date_range);
         $date_range = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range); 
