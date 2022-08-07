@@ -1105,7 +1105,7 @@ class RepositoryHierarchy   extends     AbstractModule
         //If download of EAD XML is requested, create and return download
         if ($command === self::CMD_DOWNLOAD_EAD_XML) {
 
-            $this->download_ead_xml_service = new DownloadEADxmlService($this->resourcesFolder() . 'xml/atom_EAD_template2.xml', $this->repository);
+            $this->download_ead_xml_service = new DownloadEADxmlService($this->resourcesFolder() . 'xml/apeEAD_template2.xml', $this->repository);
             $this->download_ead_xml_service->createXMLforCategory($this->download_ead_xml_service->getCollection(), $this->root_category);
             return $this->download_ead_xml_service->downloadResponse('apeEAD');
         }         
