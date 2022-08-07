@@ -40,5 +40,6 @@ require __DIR__ . '/RepositoryHierarchyHelpTexts.php';
 require __DIR__ . '/CallNumberFixAction.php';
 require __DIR__ . '/CreateSourceModalAction.php';
 require __DIR__ . '/DownloadEADxmlService.php';
+require __DIR__ . '/vendor/matriphe/php-iso-639-master/src/ISO639.php';
 
 return app(RepositoryHierarchy::class);

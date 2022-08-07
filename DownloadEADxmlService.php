@@ -28,16 +28,19 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
+use Matriphe\ISO639\ISO639;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Fisharebest\Webtrees\Repository;
+
+use DOMAttr;
 use DOMDocument;
 use DOMNode;
-use DOMAttr;
 use RuntimeException;
-use Fisharebest\Webtrees\Repository;
 
 
 /**
@@ -60,6 +63,10 @@ class DownloadEADxmlService
     //The repository, to which the service relates
     private Repository $repository;
 
+    //The ISO ISO-639-2b language tag related to the webtrees session
+    private string $ISO_639_2b_language_tag;
+
+
     /**
      * Constructor
      * 
@@ -71,6 +78,11 @@ class DownloadEADxmlService
     {
         //Set repository
         $this->repository = $repository;
+
+        //Set language
+        $iso_table = new ISO639;
+        $language = $iso_table->languageByCode1(Session::get('language'));
+        $this->ISO_639_2b_language_tag = $iso_table->code2bByLanguage($language);
 
         //New DOM and settings for a nice xml format
         $this->ead_xml = new DOMDocument();
@@ -149,6 +161,14 @@ class DownloadEADxmlService
                 $dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->removeHtmlTags($this->repository->fullName())));
                     $dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
 
+                //<langmaterial>
+                $langmaterial_dom = $did_dom->appendChild($this->ead_xml->createElement('langmaterial'));
+
+                    //<language>
+                    $iso_table = new ISO639;
+                    $dom = $langmaterial_dom->appendChild($this->ead_xml->createElement('language', $iso_table->nativeByCode2b($this->ISO_639_2b_language_tag)));
+                        $dom->appendChild(new DOMAttr('langcode', $this->ISO_639_2b_language_tag));
+
                 //<unitdate>
                 //TBD
 
@@ -213,7 +233,12 @@ class DownloadEADxmlService
                 //TBD
 
                 //<langmaterial>
-                //TBD
+                $langmaterial_dom = $did_dom->appendChild($this->ead_xml->createElement('langmaterial'));
+
+                    //<language>
+                    $iso_table = new ISO639;
+                    $dom = $langmaterial_dom->appendChild($this->ead_xml->createElement('language', $iso_table->nativeByCode2b($this->ISO_639_2b_language_tag)));
+                        $dom->appendChild(new DOMAttr('langcode', $this->ISO_639_2b_language_tag));
 
                 //<origination>
                 $origination_dom = $did_dom->appendChild($this->ead_xml->createElement('origination'));
@@ -261,6 +286,14 @@ class DownloadEADxmlService
                 //<unitid>
                 $dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $call_number_category->getFullName()));
                     $dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+
+                //<langmaterial>
+                $langmaterial_dom = $did_dom->appendChild($this->ead_xml->createElement('langmaterial'));
+
+                    //<language>
+                    $iso_table = new ISO639;
+                    $dom = $langmaterial_dom->appendChild($this->ead_xml->createElement('language', $iso_table->nativeByCode2b($this->ISO_639_2b_language_tag)));
+                        $dom->appendChild(new DOMAttr('langcode', $this->ISO_639_2b_language_tag));
 
         return $series_dom;
     }
