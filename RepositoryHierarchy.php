@@ -132,6 +132,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_START_REPOSITORY = 'start_repository';
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
     public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
+    public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for-category';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';    
@@ -1165,11 +1166,19 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->root_category = new CallNumberCategory($tree, array() );
         }
 
+        //Calculate date ranges for the whole hierarchy of call number categories
+        $date_range = $this->getRootCategory()->calculateDateRange();
+
         //If download of EAD XML is requested, create and return download
         if ($command === self::CMD_DOWNLOAD_EAD_XML) {
 
-            $this->download_ead_xml_service = new DownloadEADxmlService($this->resourcesFolder() . 'xml/apeEAD_template2.xml', $this->repository);
+            //Initialize EAD XML
+            $this->download_ead_xml_service = new DownloadEADxmlService($this->resourcesFolder() . 'xml/apeEAD_template2.xml', $this->repository, $this->root_category);
+
+            //Create EAD XML export
             $this->download_ead_xml_service->createXMLforCategory($this->download_ead_xml_service->getCollection(), $this->root_category);
+ 
+            //Start download
             return $this->download_ead_xml_service->downloadResponse('apeEAD');
         }         
 

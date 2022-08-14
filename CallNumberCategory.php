@@ -82,9 +82,8 @@ class CallNumberCategory  {
 	//List of related sub categories. Provides a recursive structure for a hierarchy of sub categories
 	private array $sub_categories = [];	
 
-	//List of date ranges of the sources of the category
-	private array $date_ranges;	
-
+	//Overall date range of the category
+	private ?Date $overall_date_range = null;	
 
 
    /**
@@ -247,7 +246,16 @@ class CallNumberCategory  {
 		return $this->sub_categories;
 	}
 
-   /**
+	/**
+     * Get overall date range
+     *
+	 * @return Date
+     */
+	public function getOverallDateRange(): ?Date {
+		return $this->overall_date_range;
+	}
+
+	/**
      * Add source
      *
 	 * @param Source
@@ -276,4 +284,41 @@ class CallNumberCategory  {
 		array_push($this->sub_categories, $sub_category);
 	}
 
+   /**
+     * Calculate date range
+     *
+ 	 * @param CallNumberCategory
+	 *
+	 * @return Date
+    */
+	public function calculateDateRange(): ?Date {
+
+		$date_ranges = [];
+
+		//Collect all date ranges for sub categories
+		$sub_categories = $this->getSubCategories();
+
+		foreach($sub_categories as $sub_category){
+
+			$date_range = $sub_category->calculateDateRange();
+			if($date_range !== null) {
+				array_push($date_ranges, $date_range);
+			}
+		}
+
+		//Collect all date ranges for sources
+		$sources = $this->sources;
+
+		foreach($sources as $source) {
+
+			$date_range = RepositoryHierarchy::getDateRangeForSource($source);
+			if($date_range !== null) {
+				array_push($date_ranges, $date_range);
+			}
+		}
+
+		$this->overall_date_range = RepositoryHierarchy::getOverallDateRange($date_ranges);
+		
+		return $this->overall_date_range;
+	}
  }

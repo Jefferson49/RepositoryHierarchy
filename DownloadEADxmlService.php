@@ -74,7 +74,7 @@ class DownloadEADxmlService
      * @param Repository    $repository    
      *
      */
-    public function __construct(string $template_filename, Repository $repository)
+    public function __construct(string $template_filename, Repository $repository, CallNumberCategory $root_category)
     {
         //Set repository
         $this->repository = $repository;
@@ -99,9 +99,9 @@ class DownloadEADxmlService
         $eadheader_dom = $dom->getElementsByTagName('eadheader')->item(0);
         $dom->removeChild($eadheader_dom);
         $this->addHeader($dom);
-        $dom = $this->addArchive($dom);  
+        $dom = $this->addArchive($dom, $root_category);  
         $dom = $dom->appendChild($this->ead_xml->createElement('dsc'));
-        $this->collection = $this->addCollection($dom);
+        $this->collection = $this->addCollection($dom, $root_category);
     }
 
     /**
@@ -140,11 +140,11 @@ class DownloadEADxmlService
     /**
      * Add a header to EAD XML
      * 
-     * @param DOMDocument       $dom
+     * @param DOMNode       $dom
      * 
-     * @return DOMDocument      
+     * @return DOMNode      
      */
-    public function addHeader(DOMNode $dom): DOMNode
+    private function addHeader(DOMNode $dom): DOMNode
     {
         //<archdesc>
         $header_dom = $dom->appendChild($this->ead_xml->createElement('eadheader'));
@@ -217,11 +217,11 @@ class DownloadEADxmlService
     /**
      * Add an archive to EAD XML
      * 
-     * @param DOMDocument       $dom
+     * @param DOMNode       
      * 
-     * @return DOMDocument      
+     * @return DOMNode      
      */
-    public function addArchive(DOMNode $dom): DOMNode
+    private function addArchive(DOMNode $dom, CallNumberCategory $root_category): DOMNode
     {
          //<archdesc>
          $archive_dom = $dom->appendChild($this->ead_xml->createElement('archdesc'));
@@ -249,8 +249,17 @@ class DownloadEADxmlService
                     $dom = $langmaterial_dom->appendChild($this->ead_xml->createElement('language', $iso_table->nativeByCode2b($this->ISO_639_2b_language_tag)));
                         $dom->appendChild(new DOMAttr('langcode', $this->ISO_639_2b_language_tag));
 
-                //<unitdate>
-                //TBD
+                //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
+                $date_range = $root_category->getOverallDateRange();
+
+                if ( $date_range !== null) {
+
+                    $date_range_text = $date_range->display(null, '%Y-%m-%d');
+                    $date_range_text = $this->formatDateRange($date_range_text);
+                    
+                $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
+                    $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
+                }
 
                 //<physdesc>
                 //TBD
@@ -287,11 +296,11 @@ class DownloadEADxmlService
     /**
      * Add a collection (for the whole repository) to EAD XML
      * 
-     * @param DOMDocument       $dom
+     * @param DOMNode       $dom
      * 
-     * @return DOMDocument      
+     * @return DOMNode      
      */
-    public function addCollection(DOMNode $dom): DOMNode
+    private function addCollection(DOMNode $dom, CallNumberCategory $root_category): DOMNode
     {
          //<c>
          $collection_dom = $dom->appendChild($this->ead_xml->createElement('c'));
@@ -309,8 +318,17 @@ class DownloadEADxmlService
                 $dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->repository->xref()));
                     $dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
 
-                //<unitdate>
-                //TBD
+                //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
+                $date_range = $root_category->getOverallDateRange();
+
+                if ( $date_range !== null) {
+
+                    $date_range_text = $date_range->display(null, '%Y-%m-%d');
+                    $date_range_text = $this->formatDateRange($date_range_text);
+                    
+                $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
+                    $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
+                }
 
                 //<langmaterial>
                 $langmaterial_dom = $did_dom->appendChild($this->ead_xml->createElement('langmaterial'));
@@ -343,12 +361,12 @@ class DownloadEADxmlService
     /**
      * Add a series (i.e. call number category) to EAD XML
      * 
-     * @param DOMDocument           $dom
+     * @param DOMNode               $dom
      * @param CallNumberCategory    $call_number_category
      * 
-     * @return DOMDocument      
+     * @return DOMNode      
      */
-    public function addSeries(DOMNode $dom, CallNumberCategory $call_number_category): DOMNode
+    private function addSeries(DOMNode $dom, CallNumberCategory $call_number_category): DOMNode
     {
          //<c>
          $dom = $dom->appendChild($this->ead_xml->createElement('c'));
@@ -375,16 +393,28 @@ class DownloadEADxmlService
                     $dom = $langmaterial_dom->appendChild($this->ead_xml->createElement('language', $iso_table->nativeByCode2b($this->ISO_639_2b_language_tag)));
                         $dom->appendChild(new DOMAttr('langcode', $this->ISO_639_2b_language_tag));
 
+                //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
+                $date_range = $call_number_category->getOverallDateRange();
+
+                if ( $date_range !== null) {
+
+                $date_range_text = $date_range->display(null, '%Y-%m-%d');
+                $date_range_text = $this->formatDateRange($date_range_text);
+                    
+                $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
+                    $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
+                }
+
         return $series_dom;
-    }
-  
+    } 
+
     /**
      * Add an item (i.e. source) to EAD XML
      * 
      * @param DOMDocument      $dom
      * @param Source           $source
      */
-    public function addItem(DOMNode $dom, Source $source, Repository $repository)
+    private function addItem(DOMNode $dom, Source $source, Repository $repository)
     {
         $fact_values = $this->sourceValuesByTag($source, $repository);
 
@@ -449,7 +479,7 @@ class DownloadEADxmlService
      * 
      * @return resource
      */
-    public function export(DOMDocument $dom) 
+    private function export(DOMDocument $dom) 
     {
         $stream = fopen('php://memory', 'wb+');
 

@@ -27,8 +27,14 @@ use Fisharebest\Webtrees\I18N;
 			<?php else : ?>		
 				<b><?= $category->getFrontEndName(true) ?></b>
 			<?php endif ?>		
+			<?php if (($category->getOverallDateRange() !== null) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0')))) : ?>
+				(
+				<?= I18N::translate('Date range') ?>:
+				<?= $category->getOverallDateRange()->display() ?>
+				)
+			<?php endif ?>
 		</button>			
-				<?= view('icons/spacer') ?>
+		<?= view('icons/spacer') ?>
 		<?php if ((strpos($category->getFullName(), CallNumberCategory::EMPTY_CATEGORY_NAME) === false) AND (strpos($category->getFullName(), CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
 			<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
 				<a href="<?= e(route(CallNumberFixAction::class, [
