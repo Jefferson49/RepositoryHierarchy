@@ -26,6 +26,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
@@ -81,6 +82,10 @@ class CallNumberCategory  {
 	//List of related sub categories. Provides a recursive structure for a hierarchy of sub categories
 	private array $sub_categories = [];	
 
+	//List of date ranges of the sources of the category
+	private array $date_ranges;	
+
+
 
    /**
      * Constructor.
@@ -99,6 +104,7 @@ class CallNumberCategory  {
 		$this->hierarchy_level = $hierarchy_level;
 		$this->sources = $sources;
 		$this->sub_categories = $sub_categories;
+		$this->date_ranges = [];
 	}
  
  /**
@@ -248,6 +254,17 @@ class CallNumberCategory  {
      */
 	public function addSource(Source $source) {
 		array_push($this->sources, $source);
+	}
+
+   /**
+     * Add date range
+     *
+	 * @param Source
+     */
+	public function addDateRange(?Date $date) {
+		if($date !== null) {
+			array_push($this->date_ranges, $date);
+		}
 	}
 
    /**

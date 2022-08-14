@@ -64,7 +64,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function route;
-use SimpleXMLElement;
 	
 
 class RepositoryHierarchy   extends     AbstractModule 
@@ -748,6 +747,7 @@ class RepositoryHierarchy   extends     AbstractModule
         //if expression for delimiter not found in call_number_chunk, add source to category
 		else {
 			$category->addSource($source);
+			$category->addDateRange(self::getDateRangeForSource($source));
             $category->addTruncatedCallNumber($source, $call_number_chunk);
 		}						
 	}
@@ -815,11 +815,10 @@ class RepositoryHierarchy   extends     AbstractModule
      * Get the date range for a source
      *
 	 * @param Source
-     * @param string  date format
      *
-     * @return string
+     * @return Date
      */
-    public static function getDateRangeForSource(Source $source, string $date_format = null): string {	
+    public static function getDateRangeForSource(Source $source): ?Date {	
 			
         $dates = [];
         $dates_found = 0;
@@ -839,7 +838,26 @@ class RepositoryHierarchy   extends     AbstractModule
 
         $date_range = RepositoryHierarchy::getOverallDateRange($dates);
 
-        return ($dates_found > 0) ? $date_range->display(null, $date_format) : '';
+        return ($dates_found > 0) ? $date_range : null;
+    }
+
+    /**
+     * Display the date range for a source
+     *
+	 * @param Source
+     * @param string  date format
+     *
+     * @return string
+     */
+    public static function displayDateRangeForSource(Source $source, Tree $tree = null, string $date_format = null): string {	
+	
+        $date_range = self::getDateRangeForSource($source);
+
+        if(($date_range !== null) && $date_range->isOK()) {
+            return $date_range->display($tree, $date_format);
+        } else {
+            return '';
+        }
     }
 
     /**
@@ -849,7 +867,7 @@ class RepositoryHierarchy   extends     AbstractModule
      *
      * @return Date
      */
-    public static function getOverallDateRange(array $dates): Date {	
+    public static function getOverallDateRange(array $dates): ?Date {	
 
         $dates_found = 0;
 

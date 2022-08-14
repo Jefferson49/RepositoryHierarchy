@@ -413,7 +413,7 @@ class DownloadEADxmlService
             //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
             if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
                 $dom_node = $this->ead_xml->createElement('unitdate', I18N::translate("Date range"));
-                    $dom_node->appendChild(new DOMAttr('normal', $fact_values['SOUR:DATA:EVEN:DATE']));
+                    $dom_node->appendChild(new DOMAttr('normal', $this->removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
 
                 $dom->appendChild($dom_node);
             }
@@ -560,12 +560,12 @@ class DownloadEADxmlService
                         break;
 
                     case 'SOUR:DATA':
-                        $date_range = RepositoryHierarchy::getDateRangeForSource($source, '%Y-%m-%d');
-                        $date_range = $this->formatDateRange($date_range);
-
                         //Get date range
-                        if($date_range !== '') {
-                            $source_values['SOUR:DATA:EVEN:DATE'] = $date_range;
+                        $date_range = RepositoryHierarchy::displayDateRangeForSource($source, null, '%Y-%m-%d');
+                        $date_range_text = $this->formatDateRange($date_range);
+
+                        if($date_range_text !== '') {
+                            $source_values['SOUR:DATA:EVEN:DATE'] = $date_range_text;
                         }
                         break;
                 }
