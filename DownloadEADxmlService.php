@@ -129,7 +129,7 @@ class DownloadEADxmlService
 
             //Add sources to xml structure
             foreach ($category->getSources() as $source) {
-                $this->addItem($series_dom, $source);
+                $this->addItem($series_dom, $source, $this->repository);
             }
 
             //Call recursion for sub categories
@@ -384,9 +384,9 @@ class DownloadEADxmlService
      * @param DOMDocument      $dom
      * @param Source           $source
      */
-    public function addItem(DOMNode $dom, Source $source)
+    public function addItem(DOMNode $dom, Source $source, Repository $repository)
     {
-        $fact_values = $this->sourceValuesByTag($source);
+        $fact_values = $this->sourceValuesByTag($source, $repository);
 
         //<c>
         $dom = $dom->appendChild($this->ead_xml->createElement('c'));
@@ -410,14 +410,18 @@ class DownloadEADxmlService
                 $dom->appendChild($dom_node);
             }
 
-            //<unitdate>
-            //<unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
+            //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
             if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
                 $dom_node = $this->ead_xml->createElement('unitdate', I18N::translate("Date range"));
                     $dom_node->appendChild(new DOMAttr('normal', $fact_values['SOUR:DATA:EVEN:DATE']));
 
                 $dom->appendChild($dom_node);
             }
+
+            //<place>   within EVEN:PLAC
+            //TBD
+
+
    }    
 
     /**
@@ -521,7 +525,7 @@ class DownloadEADxmlService
      * 
      * @return array    [$tag => $value]
      */
-    public function sourceValuesByTag(Source $source): array
+    public function sourceValuesByTag(Source $source, Repository $repository): array
     {
         $source_values = [];
         $level1_source_tags = [
@@ -544,6 +548,12 @@ class DownloadEADxmlService
                 
                 switch($fact->tag()) {
                     case 'SOUR:REPO':
+
+                        //Do not continue if it doesn't matches the provided repository
+                        if ($fact->value() !== '@'. $repository->xref() . '@') {
+                            break;
+                        }
+                        //Get call number
                         if($fact->attribute('CALN') !== '') {
                             $source_values['SOUR:REPO:CALN'] = $fact->attribute('CALN');
                         }
@@ -553,6 +563,7 @@ class DownloadEADxmlService
                         $date_range = RepositoryHierarchy::getDateRange($source, '%Y-%m-%d');
                         $date_range = $this->formatDateRange($date_range);
 
+                        //Get date range
                         if($date_range !== '') {
                             $source_values['SOUR:DATA:EVEN:DATE'] = $date_range;
                         }
@@ -618,6 +629,32 @@ class DownloadEADxmlService
         
         return preg_replace($patterns, $replacements, $date_range);     
     }    
+
+    /**
+     * Get places for a source
+     *
+	 * @param Source
+     *
+     * @return array
+     */
+    public static function getPlacesForSource(Source $source): array {	
+			
+        $places = [];
+
+        if ($source->facts(['DATA'])->isNotEmpty() ) {
+
+            $data = $source->facts(['DATA'])->first(); 	
+
+            preg_match_all('/3 PLAC (.{1,32})/', $data->gedcom(), $matches, PREG_SET_ORDER);
+            
+            if (!empty($matches[0]) ) {
+                $match = $matches[0];
+                array_push($places, $match[1]);               
+            }       
+        }
+
+        return $places;
+    }
 
     /**
      * Validate whether a string is an URL

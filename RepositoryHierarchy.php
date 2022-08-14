@@ -31,6 +31,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Localization\Translation;
+use Fisharebest\Webtrees\Date\AbstractCalendarDate;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Date;
@@ -814,28 +815,51 @@ class RepositoryHierarchy   extends     AbstractModule
      * Get date range for a source
      *
 	 * @param Source
+     * @param string  date format
      *
      * @return string
      */
     public static function getDateRange(Source $source, string $date_format = null): string {	
 			
-        $date_range = '';
+        $dates_found = 0;
 
         if ($source->facts(['DATA'])->isNotEmpty() ) {
 
-            $data = $source->facts(['DATA'])->first(); 	
+            foreach($source->facts(['DATA']) as $data) {
 
-            preg_match_all('/3 DATE (.{1,32})/', $data->gedcom(), $matches, PREG_SET_ORDER);
-            
-            if (!empty($matches[0]) ) {
-                $match = $matches[0];
-                $date_range = (new Date($match[1]))->display(null, $date_format);               
-            }       
+                preg_match_all('/3 DATE (.{1,32})/', $data->gedcom(), $matches, PREG_PATTERN_ORDER);
+                
+                foreach($matches[1] as $match) {
+
+                    $date_match = new Date($match);  
+                    $dates_found++;
+
+                    //Calclulate new max/min values for date range if more than one date is found
+                    if ($dates_found > 1) {
+
+                        if(AbstractCalendarDate::compare($date_match->minimumDate(), $date_range->minimumDate()) < 1) {
+                            $min_date = $date_match->minimumDate();
+                        } else {
+                            $min_date = $date_range->minimumDate();
+                        }
+                        if(AbstractCalendarDate::compare($date_match->maximumDate(), $date_range->maximumDate()) > 0) {
+                            $max_date = $date_match->maximumDate();
+                        } else {
+                            $max_date = $date_range->maximumDate();
+                        }
+
+                        $date_range = new Date('FROM ' . $min_date->format('%A %O %E') . ' TO ' . $max_date->format('%A %O %E') );
+
+                    } else {
+                        $date_range = $date_match;
+                    }
+                }       
+            }
         }
 
-        return $date_range;
+        return ($dates_found > 0) ? $date_range->display(null, $date_format) : '';
     }
-
+	
     /**
      * Get xref of default repository
      * 
