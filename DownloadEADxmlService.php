@@ -404,6 +404,7 @@ class DownloadEADxmlService
             //<unittitle>
             if (isset($fact_values['SOUR:TITL'])) {
                 $dom_node = $this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']);
+                    $dom_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
                     $dom_node->appendChild(new DOMAttr('type', 'title'));
 
                 $dom->appendChild($dom_node);
