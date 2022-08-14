@@ -560,7 +560,7 @@ class DownloadEADxmlService
                         break;
 
                     case 'SOUR:DATA':
-                        $date_range = RepositoryHierarchy::getDateRange($source, '%Y-%m-%d');
+                        $date_range = RepositoryHierarchy::getDateRangeForSource($source, '%Y-%m-%d');
                         $date_range = $this->formatDateRange($date_range);
 
                         //Get date range
