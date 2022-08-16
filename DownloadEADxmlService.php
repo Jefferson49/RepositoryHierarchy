@@ -39,6 +39,7 @@ use Fisharebest\Webtrees\Repository;
 
 use DOMAttr;
 use DOMDocument;
+use DOMImplementation;
 use DOMNode;
 use RuntimeException;
 
@@ -60,6 +61,9 @@ class DownloadEADxmlService
     //The StreamFactory used
     private StreamFactoryInterface $stream_factory;
 
+    //The LinkedRecordService used
+    private LinkedRecordService $linked_record_service;
+
     //The repository, to which the service relates
     private Repository $repository;
 
@@ -74,7 +78,7 @@ class DownloadEADxmlService
      * @param Repository    $repository    
      *
      */
-    public function __construct(string $template_filename, Repository $repository, CallNumberCategory $root_category)
+    public function __construct(bool $AtoM_EAD, Repository $repository, CallNumberCategory $root_category)
     {
         //Set repository
         $this->repository = $repository;
@@ -84,22 +88,44 @@ class DownloadEADxmlService
         $language = $iso_table->languageByCode1(Session::get('language'));
         $this->ISO_639_2b_language_tag = $iso_table->code2bByLanguage($language);
 
-        //New DOM and settings for a nice xml format
-        $this->ead_xml = new DOMDocument('1.0', 'UTF-8');
+        //Create DOM document
+        $dom_implementation = new DOMImplementation();
+ 
+        //Include DTD if EAD XML is for AtoM
+        if ($AtoM_EAD) {
+            $dtd = $dom_implementation->createDocumentType('ead',
+            '+//ISBN 1-931666-00-8//DTD ead.dtd (Encoded Archival Description (EAD) Version 2002)//EN',
+            'http://lcweb2.loc.gov/xmlcommon/dtds/ead2002/ead.dtd');    
+
+            $this->ead_xml = $dom_implementation->createDocument('', '', $dtd);
+        } else {
+            $this->ead_xml = $dom_implementation->createDocument();
+        }
+                   
+        $this->ead_xml->encoding="UTF-8";
+
+        //Settings for a nice xml format
         $this->ead_xml->preserveWhiteSpace = false;
         $this->ead_xml->formatOutput = true;
 
-        $this->ead_xml->load($template_filename);
         $this->response_factory = app(ResponseFactoryInterface::class);
-        $this->stream_factory   = new Psr17Factory();
+        $this->stream_factory = new Psr17Factory();
         $this->linked_record_service = new LinkedRecordService();
 
         //Initialize EAD xml
-        $dom = $this->ead_xml->getElementsByTagName('ead')->item(0);
-        $eadheader_dom = $dom->getElementsByTagName('eadheader')->item(0);
-        $dom->removeChild($eadheader_dom);
-        $this->addHeader($dom);
-        $dom = $this->addArchive($dom, $root_category);  
+        $ead_dom = $this->ead_xml->appendChild($this->ead_xml->createElement('ead'));
+
+        if(!$AtoM_EAD) {
+
+            $ead_dom->appendChild(new DOMAttr('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance'));
+            $ead_dom->appendChild(new DOMAttr('xmlns', 'urn:isbn:1-931666-22-9'));            
+            $ead_dom->appendChild(new DOMAttr('xmlns:xlink', 'http://www.w3.org/1999/xlink'));            
+            $ead_dom->appendChild(new DOMAttr('xsi:schemaLocation', 'urn:isbn:1-931666-22-9 http://www.loc.gov/ead/ead.xsd http://www.w3.org/1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd'));            
+            $ead_dom->appendChild(new DOMAttr('audience', 'external'));     
+        }
+    
+        $dom = $this->addHeader($ead_dom);
+        $dom = $this->addArchive($ead_dom, $root_category);  
         $dom = $dom->appendChild($this->ead_xml->createElement('dsc'));
         $this->collection = $this->addCollection($dom, $root_category);
     }
@@ -138,15 +164,15 @@ class DownloadEADxmlService
     }
 
     /**
-     * Add a header to EAD XML
+     * Add the header to EAD XML
      * 
      * @param DOMNode       $dom
      * 
      * @return DOMNode      
      */
     private function addHeader(DOMNode $dom): DOMNode
-    {
-        //<archdesc>
+    {           
+        //<eadheader>
         $header_dom = $dom->appendChild($this->ead_xml->createElement('eadheader'));
             $header_dom->appendChild(new DOMAttr('countryencoding', 'iso3166-1'));
             $header_dom->appendChild(new DOMAttr('dateencoding', 'iso8601'));            
@@ -289,6 +315,9 @@ class DownloadEADxmlService
                     //<persname>
                     //TBD MY_NAME
                     $origination_dom->appendChild($this->ead_xml->createElement('persname', 'MY_NAME'));
+            
+            //<otherfindaid> //=http link to online finding aid of archive
+            //TBD
 
         return $archive_dom;
     }
@@ -435,7 +464,6 @@ class DownloadEADxmlService
             if (isset($fact_values['SOUR:TITL'])) {
                 $dom_node = $this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']);
                     $dom_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
-                    $dom_node->appendChild(new DOMAttr('type', 'title'));
 
                 $dom->appendChild($dom_node);
             }
