@@ -133,6 +133,8 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
     public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
     public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for-category';
+    public const PREF_ATOM_BASE_URL = "atom_base_url";
+    public const PREF_ATOM_REPOSITORIES = "atom_repositories";
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';    
@@ -144,7 +146,8 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_SAVE_DELIM = 'save_delimiter';    
     public const CMD_SAVE_REPO = 'save_repository';
     public const CMD_LOAD_REPO = 'load_repository';
-    public const CMD_DOWNLOAD_EAD_XML = 'download_ead_xml';
+    public const CMD_DOWNLOAD_APE_EAD_XML = 'download_ape_ead_xml';
+    public const CMD_DOWNLOAD_ATOM_EAD_XML = 'download_atom_ead_xml';
 
     //Comands for repositories
     public const CMD_SET_AS_START_REPO = 'set as start repository';
@@ -184,7 +187,6 @@ class RepositoryHierarchy   extends     AbstractModule
 
     //A service to download EAD XML
     private DownloadEADxmlService $download_ead_xml_service;
-
 
     /**
      * Constructor
@@ -421,6 +423,18 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
+     * get AtoM slug
+     * 
+     * @param string
+     *
+     * @return string
+     */
+    public static function getAtoMSlug(string $text): string
+    {
+		return strtolower(preg_replace('/[^A-Za-z0-9]+/', '-', $text));
+    }
+
+    /**
      * Admin, user settings
      * 
      * @param ServerRequestInterface $request
@@ -443,6 +457,8 @@ class RepositoryHierarchy   extends     AbstractModule
             self::PREF_SHOW_AUTHOR                  => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
             self::PREF_SHOW_DATE_RANGE              => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
             self::PREF_ALLOW_ADMIN_DELIMITER        => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
+            self::PREF_ATOM_BASE_URL                => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
+            self::PREF_ATOM_REPOSITORIES            => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
         ]);    
     }
 
@@ -469,6 +485,8 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_SHOW_AUTHOR, isset($params[self::PREF_SHOW_AUTHOR])? '1':'0');
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE])? '1':'0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER])? '1':'0');
+            $this->setPreference(self::PREF_ATOM_BASE_URL, isset($params[self::PREF_ATOM_BASE_URL])? $params[self::PREF_ATOM_BASE_URL]:'');
+            $this->setPreference(self::PREF_ATOM_REPOSITORIES, isset($params[self::PREF_ATOM_REPOSITORIES])? $params[self::PREF_ATOM_REPOSITORIES]:'');
 
             $message = I18N::translate('The preferences for the module “%s” were updated.', $this->title());
             FlashMessages::addMessage($message, 'success');
@@ -940,7 +958,6 @@ class RepositoryHierarchy   extends     AbstractModule
 
         $options = [
             self::CMD_NONE              => I18N::translate('none'),
-            self::CMD_DOWNLOAD_EAD_XML  => I18N::translate('download EAD XML'),
             self::CMD_SAVE_REPO         => I18N::translate('save repository'),
             self::CMD_LOAD_REPO         => I18N::translate('load repository'),
             self::CMD_SAVE_DELIM        => I18N::translate('save delimiter expression'),
@@ -949,6 +966,22 @@ class RepositoryHierarchy   extends     AbstractModule
 
         return $options + $admin_option;
     }
+
+    /**
+     * Options for xml download
+     *
+     * @return array<string>
+     */
+    public function getDownloadXmlOptions(): array
+    {
+        $options = [
+            self::CMD_DOWNLOAD_APE_EAD_XML  => I18N::translate('download apeEAD XML'),
+            self::CMD_DOWNLOAD_ATOM_EAD_XML  => I18N::translate('download AtoM EAD XML'),
+        ];
+
+        return $options;
+    }
+
 
     /**
      * Update the preferences (after new module version is detected)
@@ -1170,10 +1203,10 @@ class RepositoryHierarchy   extends     AbstractModule
         $date_range = $this->getRootCategory()->calculateDateRange();
 
         //If download of EAD XML is requested, create and return download
-        if ($command === self::CMD_DOWNLOAD_EAD_XML) {
+        if (($command === self::CMD_DOWNLOAD_APE_EAD_XML) OR ($command === self::CMD_DOWNLOAD_ATOM_EAD_XML)) {
 
             //Initialize EAD XML
-            $this->download_ead_xml_service = new DownloadEADxmlService($this->resourcesFolder() . 'xml/apeEAD_template2.xml', $this->repository, $this->root_category);
+            $this->download_ead_xml_service = new DownloadEADxmlService($command === self::CMD_DOWNLOAD_ATOM_EAD_XML, $this->repository, $this->root_category);
 
             //Create EAD XML export
             $this->download_ead_xml_service->createXMLforCategory($this->download_ead_xml_service->getCollection(), $this->root_category);
