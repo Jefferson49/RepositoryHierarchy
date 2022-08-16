@@ -1,10 +1,14 @@
 <?php
 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
 use Fisharebest\Webtrees\Elements\AbstractXrefElement;
 use Fisharebest\Webtrees\Elements\XrefSource;
 use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\GedcomRecord;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 
@@ -20,10 +24,30 @@ use Fisharebest\Webtrees\Tree;
 		<?php $element = Registry::elementFactory()->make($fact->tag()); ?>
 		<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
 		<?php if ($fact->tag() === 'SOUR:REPO') : ?>
-			<?php $caln_string = $fact->attribute('CALN') ?>
-			<?php $element = Registry::elementFactory()->make('SOUR:REPO:CALN'); ?>
+			<?php 	$xref = str_replace('@', '', $fact->value()) ?>
+			<?php 	$caln_string = $fact->attribute('CALN') ?>
+			<?php 	$element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
 			<?= $element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
-		<?php endif ?>
-    <?php endif ?>
-<?php endforeach ?>
 
+			<?php 	$module_service = new ModuleService() ?>
+			<?php 	$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME) ?>
+
+			<?php if ($repository_hierarchy !== null) : ?>
+				<?php $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, '')) ?>
+				<?php if (($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') && in_array($xref, $atom_repositories)) : ?>
+					<div>
+						<span class="label">AtoM</span>
+						: 
+						<span class="value align-top">
+							<a href="<?= $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') . '/index.php/' . RepositoryHierarchy::getAtoMSlug($caln_string) ?>">
+								<bdi>
+									<?= I18N::translate('Link to archival description in AtoM') ?>
+								</bdi>
+							</a>
+						</span>
+					</div>
+				<?php endif ?>
+			<?php endif ?>
+		<?php endif ?>
+	<?php endif ?>
+<?php endforeach ?>

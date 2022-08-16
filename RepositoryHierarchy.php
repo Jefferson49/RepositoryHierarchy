@@ -133,6 +133,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
     public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
     public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for-category';
+    public const PREF_WEBTREES_BASE_URL = "webtrees_base_url";
     public const PREF_ATOM_BASE_URL = "atom_base_url";
     public const PREF_ATOM_REPOSITORIES = "atom_repositories";
 
@@ -457,6 +458,7 @@ class RepositoryHierarchy   extends     AbstractModule
             self::PREF_SHOW_AUTHOR                  => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
             self::PREF_SHOW_DATE_RANGE              => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
             self::PREF_ALLOW_ADMIN_DELIMITER        => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
+            self::PREF_WEBTREES_BASE_URL            => $this->getPreference(self::PREF_WEBTREES_BASE_URL, ''),
             self::PREF_ATOM_BASE_URL                => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
             self::PREF_ATOM_REPOSITORIES            => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
         ]);    
@@ -485,6 +487,7 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_SHOW_AUTHOR, isset($params[self::PREF_SHOW_AUTHOR])? '1':'0');
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE])? '1':'0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER])? '1':'0');
+            $this->setPreference(self::PREF_WEBTREES_BASE_URL, isset($params[self::PREF_WEBTREES_BASE_URL])? $params[self::PREF_WEBTREES_BASE_URL]:'');
             $this->setPreference(self::PREF_ATOM_BASE_URL, isset($params[self::PREF_ATOM_BASE_URL])? $params[self::PREF_ATOM_BASE_URL]:'');
             $this->setPreference(self::PREF_ATOM_REPOSITORIES, isset($params[self::PREF_ATOM_REPOSITORIES])? $params[self::PREF_ATOM_REPOSITORIES]:'');
 
@@ -1205,11 +1208,26 @@ class RepositoryHierarchy   extends     AbstractModule
         //If download of EAD XML is requested, create and return download
         if (($command === self::CMD_DOWNLOAD_APE_EAD_XML) OR ($command === self::CMD_DOWNLOAD_ATOM_EAD_XML)) {
 
+            Switch($command) {
+
+                case self::CMD_DOWNLOAD_ATOM_EAD_XML :
+                    $xml_type = DownloadEADxmlService::EAD_XML_TYPE_ATOM;
+                    break;
+
+                case self::CMD_DOWNLOAD_ATOM_EAD_XML :
+                    $xml_type = DownloadEADxmlService::EAD_XML_TYPE_APE;
+                    break;
+
+                default:
+                    $xml_type = DownloadEADxmlService::EAD_XML_TYPE_APE;
+                    break;
+            }
+
             //Initialize EAD XML
-            $this->download_ead_xml_service = new DownloadEADxmlService($command === self::CMD_DOWNLOAD_ATOM_EAD_XML, $this->repository, $this->root_category);
+            $this->download_ead_xml_service = new DownloadEADxmlService($xml_type, $this->repository, $this->root_category);
 
             //Create EAD XML export
-            $this->download_ead_xml_service->createXMLforCategory($this->download_ead_xml_service->getCollection(), $this->root_category);
+            $this->download_ead_xml_service->createXMLforCategory($xml_type, $this->download_ead_xml_service->getCollection(), $this->root_category);
  
             //Start download
             return $this->download_ead_xml_service->downloadResponse('apeEAD');

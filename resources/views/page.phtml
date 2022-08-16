@@ -73,6 +73,7 @@ use Fisharebest\Webtrees\View;
 			<div class="col-form-label col-sm-3 wt-page-options-label"></div>
 			<div class="col-sm-9 wt-page-options-value">		
 				<input class="btn btn-primary" type="submit" value="<?= I18N::translate('view') ?>">
+				<?= view('components/radios-inline', ['name' => 'command', 'options' => $repository_hierarchy->getDownloadXmlOptions(), 'selected' => RepositoryHierarchy::CMD_NONE]) ?>
 			</div>
 		</div>
 

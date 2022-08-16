@@ -28,8 +28,10 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
+use Fisharebest\Webtrees\Validator;
 use Matriphe\ISO639\ISO639;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -49,6 +51,12 @@ use RuntimeException;
  */
 class DownloadEADxmlService
 {
+
+    //Types of EAD XML    
+    public const  EAD_XML_TYPE_ATOM = 'ead_xml_type_atom';
+    public const  EAD_XML_TYPE_APE = 'ead_xml_type_ape';
+
+
     //The xml object for EAD XML export
     private DOMDocument $ead_xml;
 
@@ -78,7 +86,7 @@ class DownloadEADxmlService
      * @param Repository    $repository    
      *
      */
-    public function __construct(bool $AtoM_EAD, Repository $repository, CallNumberCategory $root_category)
+    public function __construct(string $xml_type, Repository $repository, CallNumberCategory $root_category)
     {
         //Set repository
         $this->repository = $repository;
@@ -92,7 +100,7 @@ class DownloadEADxmlService
         $dom_implementation = new DOMImplementation();
  
         //Include DTD if EAD XML is for AtoM
-        if ($AtoM_EAD) {
+        if ($xml_type === self::EAD_XML_TYPE_ATOM) {
             $dtd = $dom_implementation->createDocumentType('ead',
             '+//ISBN 1-931666-00-8//DTD ead.dtd (Encoded Archival Description (EAD) Version 2002)//EN',
             'http://lcweb2.loc.gov/xmlcommon/dtds/ead2002/ead.dtd');    
@@ -115,8 +123,8 @@ class DownloadEADxmlService
         //Initialize EAD xml
         $ead_dom = $this->ead_xml->appendChild($this->ead_xml->createElement('ead'));
 
-        if(!$AtoM_EAD) {
-
+        if ($xml_type === self::EAD_XML_TYPE_ATOM) {
+ 
             $ead_dom->appendChild(new DOMAttr('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance'));
             $ead_dom->appendChild(new DOMAttr('xmlns', 'urn:isbn:1-931666-22-9'));            
             $ead_dom->appendChild(new DOMAttr('xmlns:xlink', 'http://www.w3.org/1999/xlink'));            
@@ -124,10 +132,10 @@ class DownloadEADxmlService
             $ead_dom->appendChild(new DOMAttr('audience', 'external'));     
         }
     
-        $dom = $this->addHeader($ead_dom);
-        $dom = $this->addArchive($ead_dom, $root_category);  
+        $dom = $this->addHeader($xml_type, $ead_dom);
+        $dom = $this->addArchive($xml_type,$ead_dom, $root_category);  
         $dom = $dom->appendChild($this->ead_xml->createElement('dsc'));
-        $this->collection = $this->addCollection($dom, $root_category);
+        $this->collection = $this->addCollection($xml_type, $dom, $root_category);
     }
 
     /**
@@ -144,22 +152,22 @@ class DownloadEADxmlService
      * 
      * @param CallNumberCategory  $call_number_category
      */
-    public function createXMLforCategory(DOMNode $dom, CallNumberCategory $call_number_category)
+    public function createXMLforCategory(string $xml_type, DOMNode $dom, CallNumberCategory $call_number_category)
     {
         $categories = $call_number_category->getSubCategories();
 
         foreach ($categories as $category) {
 
             //Add node to xml structure
-            $series_dom = $this->addSeries($dom, $category);
+            $series_dom = $this->addSeries($xml_type, $dom, $category);
 
             //Add sources to xml structure
             foreach ($category->getSources() as $source) {
-                $this->addItem($series_dom, $source, $this->repository);
+                $this->addItem($xml_type, $series_dom, $source, $this->repository);
             }
 
             //Call recursion for sub categories
-            $this->createXMLforCategory($series_dom, $category);
+            $this->createXMLforCategory($xml_type, $series_dom, $category);
         }
     }
 
@@ -170,7 +178,7 @@ class DownloadEADxmlService
      * 
      * @return DOMNode      
      */
-    private function addHeader(DOMNode $dom): DOMNode
+    private function addHeader(string $xml_type, DOMNode $dom): DOMNode
     {           
         //<eadheader>
         $header_dom = $dom->appendChild($this->ead_xml->createElement('eadheader'));
@@ -247,7 +255,7 @@ class DownloadEADxmlService
      * 
      * @return DOMNode      
      */
-    private function addArchive(DOMNode $dom, CallNumberCategory $root_category): DOMNode
+    private function addArchive(string $xml_type, DOMNode $dom, CallNumberCategory $root_category): DOMNode
     {
          //<archdesc>
          $archive_dom = $dom->appendChild($this->ead_xml->createElement('archdesc'));
@@ -329,7 +337,7 @@ class DownloadEADxmlService
      * 
      * @return DOMNode      
      */
-    private function addCollection(DOMNode $dom, CallNumberCategory $root_category): DOMNode
+    private function addCollection(string $xml_type, DOMNode $dom, CallNumberCategory $root_category): DOMNode
     {
          //<c>
          $collection_dom = $dom->appendChild($this->ead_xml->createElement('c'));
@@ -395,7 +403,7 @@ class DownloadEADxmlService
      * 
      * @return DOMNode      
      */
-    private function addSeries(DOMNode $dom, CallNumberCategory $call_number_category): DOMNode
+    private function addSeries(string $xml_type, DOMNode $dom, CallNumberCategory $call_number_category): DOMNode
     {
          //<c>
          $dom = $dom->appendChild($this->ead_xml->createElement('c'));
@@ -443,7 +451,7 @@ class DownloadEADxmlService
      * @param DOMDocument      $dom
      * @param Source           $source
      */
-    private function addItem(DOMNode $dom, Source $source, Repository $repository)
+    private function addItem(string $xml_type, DOMNode $dom, Source $source, Repository $repository)
     {
         $fact_values = $this->sourceValuesByTag($source, $repository);
 
@@ -453,33 +461,47 @@ class DownloadEADxmlService
             $dom->appendChild(new DOMAttr('id', $source->xref()));
 
             //<did>
-            $dom = $dom->appendChild($this->ead_xml->createElement('did'));
+            $did_dom = $dom->appendChild($this->ead_xml->createElement('did'));
 
-            //<unitid>
-            if (isset($fact_values['SOUR:REPO:CALN'])) {
-                $dom->appendChild($this->ead_xml->createElement('unitid', $fact_values['SOUR:REPO:CALN']));
-            }
+                //<unitid>
+                if (isset($fact_values['SOUR:REPO:CALN'])) {
+                    $did_dom->appendChild($this->ead_xml->createElement('unitid', $fact_values['SOUR:REPO:CALN']));
+                }
 
-            //<unittitle>
-            if (isset($fact_values['SOUR:TITL'])) {
-                $dom_node = $this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']);
-                    $dom_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+                //<unittitle>
+                if (isset($fact_values['SOUR:TITL'])) {
+                    $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']));
+                        $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+                }
 
-                $dom->appendChild($dom_node);
-            }
+                //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
+                if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
+                    $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
+                        $unitdate_node->appendChild(new DOMAttr('normal', $this->removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
+                }
 
-            //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
-            if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
-                $dom_node = $this->ead_xml->createElement('unitdate', I18N::translate("Date range"));
-                    $dom_node->appendChild(new DOMAttr('normal', $this->removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
+                
+                //<note>       
+                if ($xml_type === DownloadEADxmlService::EAD_XML_TYPE_ATOM) {
+                    $note_node = $did_dom->appendChild($this->ead_xml->createElement('note'));
+                        $note_node->appendChild(new DOMAttr('type', 'generalNote'));
 
-                $dom->appendChild($dom_node);
-            }
+                    //<p>    
+                    
+                    $module_service = new ModuleService();
+                    $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+        
+                    if ($repository_hierarchy !== null) {
+                        $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
+                    } else {
+                        $base_url = '';
+                    }
+        
+                    $note_node->appendChild($this->ead_xml->createElement('p', '[webtrees: ' .$source->xref() . '](' . $base_url . '/index.php?route=%2Fwebtrees%2Ftree%2F' . $source->tree()->name() . '%2Fsource%2F' . $source->xref() . ')'));
+                }
 
-            //<place>   within EVEN:PLAC
-            //TBD
-
-
+                //<place>   within EVEN:PLAC
+                //TBD
    }    
 
     /**
@@ -489,15 +511,15 @@ class DownloadEADxmlService
      *
      * @return ResponseInterface
      */
-     public function downloadResponse(string $filename): ResponseInterface 
-     {
-            $resource = $this->export($this->ead_xml);
-            $stream   = $this->stream_factory->createStreamFromResource($resource);
+    public function downloadResponse(string $filename): ResponseInterface 
+    {
+        $resource = $this->export($this->ead_xml);
+        $stream   = $this->stream_factory->createStreamFromResource($resource);
 
-            return $this->response_factory->createResponse()
-                ->withBody($stream)
-                ->withHeader('content-type', 'text/xml; charset=' . UTF8::NAME)
-                ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.xml"');
+         return $this->response_factory->createResponse()
+            ->withBody($stream)
+            ->withHeader('content-type', 'text/xml; charset=' . UTF8::NAME)
+            ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.xml"');
     }
 
     /**
