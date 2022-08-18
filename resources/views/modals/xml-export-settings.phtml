@@ -1,0 +1,43 @@
+<?php
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\Http\RequestHandlers\CreateSourceAction;
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Tree;
+
+/**
+ * @var Tree	$tree
+ * @var string	$xref
+ * @var string 	$main_agency_code
+ * @var string 	$country_code
+ */
+
+?>
+
+<form method="post" action="<?= e(route(XmlExportSettingsAction::class, [
+			'tree' 					=> $tree->name(),
+			'xref'			 		=> $xref,
+			'main_agency_code' 		=> $main_agency_code,
+			'country_code' 			=> $country_code,		
+		])) ?>" id="wt-modal-form">
+
+    <?= view('modals/header', ['title' => I18N::translate('EAD XML export settings')]) ?>
+
+    <div class="modal-body">
+        <?= view('_repository_hierarchy_' . '::modals/xml-export-fields', [
+			'tree' 					=> $tree, 
+			'xref' 					=> $xref,
+			'main_agency_code' 		=> $main_agency_code,
+			'country_code' 			=> $country_code,		
+			]) ?>
+    </div>
+
+    <?= view('modals/footer-save-cancel') ?>
+
+    <?= csrf_field() ?>
+</form>
+
+<script>
+  document.getElementById('wt-modal-form').addEventListener('submit', webtrees.createRecordModalSubmit);
+</script>

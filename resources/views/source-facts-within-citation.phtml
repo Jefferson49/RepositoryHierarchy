@@ -21,32 +21,39 @@ use Fisharebest\Webtrees\Tree;
 <?php $facts = $source->facts() ?>
 <?php foreach ($facts as $fact) : ?>
     <?php if (in_array($fact->tag(), ['SOUR:REPO','SOUR:REFN','SOUR:NOTE'] )) : ?>
+
+		<?php 	$module_service = new ModuleService() ?>
+		<?php 	$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME) ?>
 		<?php $element = Registry::elementFactory()->make($fact->tag()); ?>
-		<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+
+		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+			<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+		<?php endif ?>
+
 		<?php if ($fact->tag() === 'SOUR:REPO') : ?>
 			<?php 	$xref = str_replace('@', '', $fact->value()) ?>
 			<?php 	$caln_string = $fact->attribute('CALN') ?>
 			<?php 	$element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
-			<?= $element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
 
-			<?php 	$module_service = new ModuleService() ?>
-			<?php 	$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME) ?>
+			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+				<?= $element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
+			<?php endif ?>
 
-			<?php if ($repository_hierarchy !== null) : ?>
-				<?php $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, '')) ?>
-				<?php if (($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') && in_array($xref, $atom_repositories)) : ?>
-					<div>
-						<span class="label">AtoM</span>
-						: 
-						<span class="value align-top">
-							<a href="<?= $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') . '/index.php/' . RepositoryHierarchy::getAtoMSlug($caln_string) ?>">
-								<bdi>
-									<?= I18N::translate('Link to archival description in AtoM') ?>
-								</bdi>
-							</a>
-						</span>
-					</div>
-				<?php endif ?>
+			<?php $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, '')) ?>
+			<?php if (	($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') && 
+						(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) && 
+						in_array($tree->name() . ':' . $xref, $atom_repositories) ) : ?>
+				<div>
+					<span class="label">AtoM</span>
+					: 
+					<span class="value align-top">
+						<a href="<?= $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') . '/index.php/' . RepositoryHierarchy::getAtoMSlug($caln_string) ?>">
+							<bdi>
+								<?= I18N::translate('Link to archival description in AtoM') ?>
+							</bdi>
+						</a>
+					</span>
+				</div>
 			<?php endif ?>
 		<?php endif ?>
 	<?php endif ?>

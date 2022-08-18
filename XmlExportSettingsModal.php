@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,9 +35,9 @@ use function response;
 use function view;
 
 /**
- * Process a form to create a new source.
+ * Process a modal for EAD XML settings.
  */
-class CreateSourceModalAction implements RequestHandlerInterface
+class XmlExportSettingsModal implements RequestHandlerInterface
 {
     /**
      * @param ServerRequestInterface $request
@@ -46,13 +47,16 @@ class CreateSourceModalAction implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $tree = Validator::attributes($request)->tree();
-        $source_repository = Validator::attributes($request)->string('xref');
-		$source_call_number = Validator::attributes($request)->string('source_call_number');
+        $repository_xref = Validator::attributes($request)->string('xref');
 
-        return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/create-source', [
+        $module_service = new ModuleService();
+        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+
+        return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/xml-export-settings', [
             'tree' 					=> $tree,
-            'source_repository' 	=> $source_repository,
-            'source_call_number' 	=> $source_call_number,
+            'xref' 		            => $repository_xref,
+            'main_agency_code' 		=> $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref, ''),
+            'country_code' 			=> $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref, ''),	
         ]));
     }
 }

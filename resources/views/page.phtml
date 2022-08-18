@@ -73,10 +73,16 @@ use Fisharebest\Webtrees\View;
 			<div class="col-form-label col-sm-3 wt-page-options-label"></div>
 			<div class="col-sm-9 wt-page-options-value">		
 				<input class="btn btn-primary" type="submit" value="<?= I18N::translate('view') ?>">
+				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
+							data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
+								'tree' => $tree->name(), 
+								'xref' => $repository_hierarchy->getRepositoryXref(),
+								])) ?>">
+					<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
+				</a>
 				<?= view('components/radios-inline', ['name' => 'command', 'options' => $repository_hierarchy->getDownloadXmlOptions(), 'selected' => RepositoryHierarchy::CMD_NONE]) ?>
 			</div>
 		</div>
-
 		<?= csrf_field() ?>
 	</form>
 <?php endif ?>

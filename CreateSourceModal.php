@@ -5,14 +5,6 @@
  * Copyright (C) 2022 webtrees development team
  *					  <http://webtrees.net>
  *
- * Fancy Research Links (webtrees custom module):  
- * Copyright (C) 2022 Carmen Just
- *					  <https://justcarmen.nl>
- *
- * Extended Relationships (webtrees custom module):  
- * Copyright (C) 2022 Richard Cissee
- *					  <http://cissee.de>
- * 
  * RepositoryHierarchy (webtrees custom module):  
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
@@ -28,20 +20,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
- 
 
 declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
-require __DIR__ . '/CallNumberCategory.php';
-require __DIR__ . '/CallNumberDataFix.php';
-require __DIR__ . '/CreateSourceModal.php';
-require __DIR__ . '/DownloadEADxmlService.php';
-require __DIR__ . '/RepositoryHierarchy.php';
-require __DIR__ . '/RepositoryHierarchyHelpTexts.php';
-require __DIR__ . '/vendor/matriphe/php-iso-639-master/src/ISO639.php';
-require __DIR__ . '/XmlExportSettingsAction.php';
-require __DIR__ . '/XmlExportSettingsModal.php';
+use Fisharebest\Webtrees\Validator;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-return app(RepositoryHierarchy::class);
+use function response;
+use function view;
+
+/**
+ * Process a form to create a new source.
+ */
+class CreateSourceModal implements RequestHandlerInterface
+{
+    /**
+     * @param ServerRequestInterface $request
+     *
+     * @return ResponseInterface
+     */
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        $tree = Validator::attributes($request)->tree();
+        $source_repository = Validator::attributes($request)->string('xref');
+		$source_call_number = Validator::attributes($request)->string('source_call_number');
+
+        return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/create-source', [
+            'tree' 					=> $tree,
+            'source_repository' 	=> $source_repository,
+            'source_call_number' 	=> $source_call_number,
+        ]));
+    }
+}

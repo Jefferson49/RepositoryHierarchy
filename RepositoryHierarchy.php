@@ -89,6 +89,8 @@ class RepositoryHierarchy   extends     AbstractModule
     protected const CREATE_SOURCE_IN_ROUTE = 'repositoryhierarchy_create_source';
     protected const FIX_CALL_NUMBER_IN_ROUTE = 'repositoryhierarchy_fix_callnumbers';
     protected const REPO_ACTIONS_IN_ROUTE = 'repositoryhierarchy_repo_actions';
+    protected const XML_SETTINGS_MODAL_IN_ROUTE = 'repositoryhierarchy_xml_settings_modal';
+    protected const XML_SETTINGS_ACTION_IN_ROUTE = 'repositoryhierarchy_xml_settings_action';
     protected const TREE_ATTRIBUTE_DEFAULT = '{tree}';
     protected const XREF_ATTRIBUTE_DEFAULT = '{xref}';
     protected const DELIMITER_ATTRIBUTE_DEFAULT = '{delimiter_expression}';
@@ -133,9 +135,12 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
     public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
     public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for-category';
+    public const PREF_SHOW_ATOM_LINKS ='show_atom_links';
     public const PREF_WEBTREES_BASE_URL = "webtrees_base_url";
     public const PREF_ATOM_BASE_URL = "atom_base_url";
     public const PREF_ATOM_REPOSITORIES = "atom_repositories";
+    public const PREF_MAIN_AGENCY_CODE = "main_agency_code_";
+    public const PREF_COUNTRY_CODE = "country_code_";
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';    
@@ -213,7 +218,7 @@ class RepositoryHierarchy   extends     AbstractModule
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
                     '/delimiter_expression/'.self::DELIMITER_ATTRIBUTE_DEFAULT.
                     '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT, $this)
-                    ->allows(RequestMethodInterface::METHOD_POST);
+                ->allows(RequestMethodInterface::METHOD_POST);
         
         //Register a route for the help texts    
         $router->get(RepositoryHierarchyHelpTexts::class,     
@@ -222,7 +227,7 @@ class RepositoryHierarchy   extends     AbstractModule
                 ->allows(RequestMethodInterface::METHOD_POST);    
 
         //Register a route for the create source modal    
-        $router ->get(CreateSourceModalAction::class,   
+        $router ->get(CreateSourceModal::class,   
                     '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
                     '/'.self::CREATE_SOURCE_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
@@ -230,7 +235,7 @@ class RepositoryHierarchy   extends     AbstractModule
                 ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a route for the call number fix action
-        $router ->get(CallNumberFixAction::class,   
+        $router ->get(CallNumberDataFix::class,   
                     '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
                     '/'.self::FIX_CALL_NUMBER_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
@@ -238,11 +243,27 @@ class RepositoryHierarchy   extends     AbstractModule
                     '/category_full_name/'.self::CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT)
                 ->allows(RequestMethodInterface::METHOD_POST);
 
+        //Register a route for the XML export settings modal action
+        $router ->get(XmlExportSettingsModal::class,   
+                    '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+                    '/'.self::XML_SETTINGS_MODAL_IN_ROUTE.
+                    '/xref/'.self::XREF_ATTRIBUTE_DEFAULT)
+                ->allows(RequestMethodInterface::METHOD_POST);
+
+        //Register a route for the XML export settings processing
+        $router ->get(XmlExportSettingsAction::class,   
+                    '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+                    '/'.self::XML_SETTINGS_ACTION_IN_ROUTE.
+                    '/xref/'.self::XREF_ATTRIBUTE_DEFAULT)
+                ->allows(RequestMethodInterface::METHOD_POST);
+
         //Register a namespace for the views
 		View::registerNamespace($this->name(), $this->resourcesFolder() . 'views/');
 
         //Register a custom view for facts in order to show additional source facts in citations
-        if (boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '1'))) {
+        if( (boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) OR
+            (boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0'))))  {
+
             View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
         }
 
@@ -447,20 +468,22 @@ class RepositoryHierarchy   extends     AbstractModule
         $this->layout = 'layouts/administration';
 
         return $this->viewResponse($this->name() . '::settings', [
-            'title'                                 => $this->title(),
-            self::PREF_SHOW_CATEGORY_LABEL          => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
-            self::PREF_SHOW_HELP_ICON               => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
-            self::PREF_SHOW_HELP_LINK               => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
-            self::PREF_SHOW_TRUNCATED_CALL_NUMBER   => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
-            self::PREF_SHOW_TRUNCATED_CATEGORY      => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
-            self::PREF_SHOW_TITLE                   => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
-            self::PREF_SHOW_XREF                    => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
-            self::PREF_SHOW_AUTHOR                  => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
-            self::PREF_SHOW_DATE_RANGE              => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
-            self::PREF_ALLOW_ADMIN_DELIMITER        => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
-            self::PREF_WEBTREES_BASE_URL            => $this->getPreference(self::PREF_WEBTREES_BASE_URL, ''),
-            self::PREF_ATOM_BASE_URL                => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
-            self::PREF_ATOM_REPOSITORIES            => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
+            'title'                                         => $this->title(),
+            self::PREF_SHOW_CATEGORY_LABEL              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
+            self::PREF_SHOW_HELP_ICON                   => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
+            self::PREF_SHOW_HELP_LINK                   => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
+            self::PREF_SHOW_TRUNCATED_CALL_NUMBER       => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
+            self::PREF_SHOW_TRUNCATED_CATEGORY          => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
+            self::PREF_SHOW_TITLE                       => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
+            self::PREF_SHOW_XREF                        => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
+            self::PREF_SHOW_AUTHOR                      => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
+            self::PREF_SHOW_DATE_RANGE                  => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
+            self::PREF_ALLOW_ADMIN_DELIMITER            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
+            self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
+            self::PREF_SHOW_ATOM_LINKS                  => boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')),
+            self::PREF_WEBTREES_BASE_URL                => $this->getPreference(self::PREF_WEBTREES_BASE_URL, ''),
+            self::PREF_ATOM_BASE_URL                    => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
+            self::PREF_ATOM_REPOSITORIES                => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
         ]);    
     }
 
@@ -487,6 +510,8 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_SHOW_AUTHOR, isset($params[self::PREF_SHOW_AUTHOR])? '1':'0');
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE])? '1':'0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_ATOM_LINKS, isset($params[self::PREF_SHOW_ATOM_LINKS])? '1':'0');
             $this->setPreference(self::PREF_WEBTREES_BASE_URL, isset($params[self::PREF_WEBTREES_BASE_URL])? $params[self::PREF_WEBTREES_BASE_URL]:'');
             $this->setPreference(self::PREF_ATOM_BASE_URL, isset($params[self::PREF_ATOM_BASE_URL])? $params[self::PREF_ATOM_BASE_URL]:'');
             $this->setPreference(self::PREF_ATOM_REPOSITORIES, isset($params[self::PREF_ATOM_REPOSITORIES])? $params[self::PREF_ATOM_REPOSITORIES]:'');

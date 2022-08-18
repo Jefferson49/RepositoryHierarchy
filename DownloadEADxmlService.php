@@ -216,6 +216,7 @@ class DownloadEADxmlService
                 $publicationstmt_dom = $filedesc_dom->appendChild($this->ead_xml->createElement('publicationstmt'));
 
                     //<publisher>
+                    //TBD
                     $publisher_dom = $publicationstmt_dom->appendChild($this->ead_xml->createElement('publisher',
                         $this->removeHtmlTags($this->repository->fullName())));
                         $publisher_dom->appendChild(new DOMAttr('encodinganalog', 'publisher'));
@@ -305,7 +306,7 @@ class DownloadEADxmlService
                 $repository_dom = $did_dom->appendChild($this->ead_xml->createElement('repository'));
 
                     //<corpname>
-                    $corpname_dom = $repository_dom->appendChild($this->ead_xml->createElement('corpname', $this->removeHtmlTags($this->repository->fullName())));
+                    $repository_dom->appendChild($this->ead_xml->createElement('corpname', $this->removeHtmlTags($this->repository->fullName())));
 
                     //<address>
                     $address_lines = $this->getRepositoryAddressLines($this->repository);
@@ -490,8 +491,9 @@ class DownloadEADxmlService
                  }
                 
                 //<note>    
-                
-                
+                //TBD
+
+                //note AtoM link
                 if ($xml_type === DownloadEADxmlService::EAD_XML_TYPE_ATOM) {
                     $note_node = $did_dom->appendChild($this->ead_xml->createElement('note'));
                         $note_node->appendChild(new DOMAttr('type', 'generalNote'));

@@ -40,11 +40,9 @@ use function route;
 /**
  * Run data-fix for call number categories
  */
-class CallNumberFixAction implements RequestHandlerInterface
+class CallNumberDataFix implements RequestHandlerInterface
 {
     use ViewResponseTrait;
-
-    protected const MODULE_NAME = '_fix_call_numbers_';
 
     private ModuleService $module_service;
 
