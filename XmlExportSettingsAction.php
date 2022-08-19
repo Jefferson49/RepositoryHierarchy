@@ -52,8 +52,12 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
     
         //Save received values to preferences
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref, isset($params['main_agency_code'])? $params['main_agency_code'] : '');
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref, isset($params['finding_aid_title'])? $params['finding_aid_title'] : '');
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref, isset($params['country_code'])? $params['country_code'] : '');   
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref, isset($params['main_agency_code'])? $params['main_agency_code'] : '');
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref, isset($params['finding_aid_identifier'])? $params['finding_aid_identifier'] : '');
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref, isset($params['finding_aid_url'])? $params['finding_aid_url'] : '');
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref, isset($params['finding_aid_publisher'])? $params['finding_aid_publisher'] : '');
 
         return response([      
             'html'  => view(RepositoryHierarchy::MODULE_NAME . '::modals/message', [  

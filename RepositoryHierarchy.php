@@ -136,11 +136,15 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
     public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for-category';
     public const PREF_SHOW_ATOM_LINKS ='show_atom_links';
-    public const PREF_WEBTREES_BASE_URL = "webtrees_base_url";
-    public const PREF_ATOM_BASE_URL = "atom_base_url";
-    public const PREF_ATOM_REPOSITORIES = "atom_repositories";
-    public const PREF_MAIN_AGENCY_CODE = "main_agency_code_";
-    public const PREF_COUNTRY_CODE = "country_code_";
+    public const PREF_WEBTREES_BASE_URL = 'webtrees_base_url';
+    public const PREF_ATOM_BASE_URL = 'atom_base_url';
+    public const PREF_ATOM_REPOSITORIES = 'atom_repositories';
+    public const PREF_FINDING_AID_TITLE = 'finding_aid_title_';
+    public const PREF_COUNTRY_CODE = 'country_code_';
+    public const PREF_MAIN_AGENCY_CODE = 'main_agency_code_';
+    public const PREF_FINDING_AID_IDENTIFIER = 'finding_aid_identifier_';
+    public const PREF_FINDING_AID_URL = 'finding_aid_url';
+    public const PREF_FINDING_AID_PUBLISHER = 'finding_aid_publisher';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';    

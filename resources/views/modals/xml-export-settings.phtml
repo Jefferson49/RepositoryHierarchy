@@ -7,29 +7,41 @@ use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Tree;
 
 /**
- * @var Tree	$tree
- * @var string	$xref
- * @var string 	$main_agency_code
+ * @var Tree 	$tree
+ * @var string 	$xref
+ * @var string  $finding_aid_title
  * @var string 	$country_code
+ * @var string 	$main_agency_code
+ * @var string  $finding_aid_identifier
+ * @var string  $finding_aid_url
+ * @var string  $finding_aid_publisher
  */
 
 ?>
 
 <form method="post" action="<?= e(route(XmlExportSettingsAction::class, [
-			'tree' 					=> $tree->name(),
-			'xref'			 		=> $xref,
-			'main_agency_code' 		=> $main_agency_code,
-			'country_code' 			=> $country_code,		
+			'tree' 						=> $tree->name(),
+			'xref'			 			=> $xref,
+			'finding_aid_title'    		=> $finding_aid_title,
+			'country_code' 				=> $country_code,		
+			'main_agency_code' 			=> $main_agency_code,
+			'finding_aid_identifier'    => $finding_aid_identifier,
+			'finding_aid_url'    		=> $finding_aid_url,
+			'finding_aid_publisher'    	=> $finding_aid_publisher,
 		])) ?>" id="wt-modal-form">
 
     <?= view('modals/header', ['title' => I18N::translate('EAD XML export settings')]) ?>
 
     <div class="modal-body">
         <?= view('_repository_hierarchy_' . '::modals/xml-export-fields', [
-			'tree' 					=> $tree, 
-			'xref' 					=> $xref,
-			'main_agency_code' 		=> $main_agency_code,
-			'country_code' 			=> $country_code,		
+			'tree' 						=> $tree, 
+			'xref' 						=> $xref,
+			'finding_aid_title'    		=> $finding_aid_title,
+			'country_code' 				=> $country_code,		
+			'main_agency_code' 			=> $main_agency_code,
+			'finding_aid_identifier'    => $finding_aid_identifier,
+			'finding_aid_url'    		=> $finding_aid_url,
+			'finding_aid_publisher'    	=> $finding_aid_publisher,
 			]) ?>
     </div>
 
