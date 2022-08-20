@@ -203,7 +203,7 @@ class DownloadEADxmlService
 
             //<eadid>
             $eadid_dom = $header_dom->appendChild($this->ead_xml->createElement('eadid', 
-                I18N::translate('Finding aid') . ': ' . $this->removeHtmlTags($this->repository->fullName())));
+                $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '')));
                 
                 $pref = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '');
                 if($pref !== '') {
@@ -230,7 +230,7 @@ class DownloadEADxmlService
 
                     //<titleproper>
                     $titleproper_dom = $titlestmt_dom->appendChild($this->ead_xml->createElement('titleproper',
-                        I18N::translate('Finding aid') . ': ' . $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '')));
+                        $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '')));
                         $titleproper_dom->appendChild(new DOMAttr('encodinganalog', '245'));
 
                 //<publicationstmt>
