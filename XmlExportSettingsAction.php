@@ -58,7 +58,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
 
         return response([      
             'html'  => view(RepositoryHierarchy::MODULE_NAME . '::modals/message', [  
-                'title' => I18N::translate('EAD XML seetings'),
+                'title' => I18N::translate('EAD XML settings'),
                 'text'  => I18N::translate('The EAD XML seetings have been changed'),
                 ])
             ]);
