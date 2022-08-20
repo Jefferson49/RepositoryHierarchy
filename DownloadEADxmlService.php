@@ -55,9 +55,11 @@ class DownloadEADxmlService
 {
 
     //Types of EAD XML    
-    public const  EAD_XML_TYPE_ATOM = 'ead_xml_type_atom';
-    public const  EAD_XML_TYPE_APE = 'ead_xml_type_ape';
-
+    public const EAD_XML_TYPE_ATOM = 'ead_xml_type_atom';
+    public const EAD_XML_TYPE_APE = 'ead_xml_type_ape';
+    public const WEBTREES_ROUTE_TO_TREE = '/index.php?route=%2Fwebtrees%2Ftree%2F';
+    public const WEBTREES_TREE_TO_SOURCE = '%2Fsource%2F';
+    public const WEBTREES_TREE_TO_REPO = '%2Frepository%2F';
 
     //The xml object for EAD XML export
     private DOMDocument $ead_xml;
@@ -96,9 +98,12 @@ class DownloadEADxmlService
                                 CallNumberCategory $root_category,
                                 UserInterface $user)
     {
-        //Set repository and user
+        //Initialize variables
         $this->repository = $repository;
         $this->user = $user;
+        $this->response_factory = app(ResponseFactoryInterface::class);
+        $this->stream_factory = new Psr17Factory();
+        $this->linked_record_service = new LinkedRecordService();
 
         //Set language
         $iso_table = new ISO639;
@@ -108,39 +113,28 @@ class DownloadEADxmlService
         //Create DOM document
         $dom_implementation = new DOMImplementation();
  
-        //Include DTD if EAD XML is for AtoM
-        if ($xml_type === self::EAD_XML_TYPE_ATOM) {
-            $dtd = $dom_implementation->createDocumentType('ead',
-            '+//ISBN 1-931666-00-8//DTD ead.dtd (Encoded Archival Description (EAD) Version 2002)//EN',
-            'http://lcweb2.loc.gov/xmlcommon/dtds/ead2002/ead.dtd');    
+        //Include DTD
+        $dtd = $dom_implementation->createDocumentType('ead',
+        '+//ISBN 1-931666-00-8//DTD ead.dtd (Encoded Archival Description (EAD) Version 2002)//EN',
+        'http://lcweb2.loc.gov/xmlcommon/dtds/ead2002/ead.dtd');    
+        $this->ead_xml = $dom_implementation->createDocument('', '', $dtd);
 
-            $this->ead_xml = $dom_implementation->createDocument('', '', $dtd);
-        } else {
-            $this->ead_xml = $dom_implementation->createDocument();
-        }
-                   
+        //Set encoding
         $this->ead_xml->encoding="UTF-8";
 
         //Settings for a nice xml format
         $this->ead_xml->preserveWhiteSpace = false;
         $this->ead_xml->formatOutput = true;
 
-        $this->response_factory = app(ResponseFactoryInterface::class);
-        $this->stream_factory = new Psr17Factory();
-        $this->linked_record_service = new LinkedRecordService();
-
         //Initialize EAD xml
-        $ead_dom = $this->ead_xml->appendChild($this->ead_xml->createElement('ead'));
-
-        if ($xml_type !== self::EAD_XML_TYPE_ATOM) {
- 
+        $ead_dom = $this->ead_xml->appendChild($this->ead_xml->createElement('ead')); 
             $ead_dom->appendChild(new DOMAttr('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance'));
             $ead_dom->appendChild(new DOMAttr('xmlns', 'urn:isbn:1-931666-22-9'));            
             $ead_dom->appendChild(new DOMAttr('xmlns:xlink', 'http://www.w3.org/1999/xlink'));            
             $ead_dom->appendChild(new DOMAttr('xsi:schemaLocation', 'urn:isbn:1-931666-22-9 http://www.loc.gov/ead/ead.xsd http://www.w3.org/1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd'));            
             $ead_dom->appendChild(new DOMAttr('audience', 'external'));     
-        }
-    
+
+        //Create header, archive, and top level collection
         $this->addHeader($xml_type, $ead_dom);
         $archive_dom = $this->addArchive($xml_type,$ead_dom, $root_category);  
         $dsc_dom = $archive_dom->appendChild($this->ead_xml->createElement('dsc'));
@@ -365,6 +359,10 @@ class DownloadEADxmlService
      */
     private function addCollection(string $xml_type, DOMNode $dom, CallNumberCategory $root_category): DOMNode
     {
+        $module_service = new ModuleService();
+        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+        $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
+
          //<c>
          $collection_dom = $dom->appendChild($this->ead_xml->createElement('c'));
             $collection_dom->appendChild(new DOMAttr('level', 'collection'));
@@ -411,7 +409,12 @@ class DownloadEADxmlService
                     //<name>
                     $origination_dom->appendChild($this->ead_xml->createElement('name', $this->removeHtmlTags($this->repository->fullName())));
 
-                //<scopecontent>
+                //<dao>   
+                $dao_node =$did_dom->appendChild($this->ead_xml->createElement('dao'));
+                    $dao_node->appendChild(new DOMAttr('xlink:href', $base_url . self::WEBTREES_ROUTE_TO_TREE . $this->repository->tree()->name() . self::WEBTREES_TREE_TO_REPO . $this->repository->xref()));
+                    $dao_node->appendChild(new DOMAttr('xlink:title', $this->removeHtmlTags($this->repository->fullName())));                    
+
+                    //<scopecontent>
                 //TBD
 
                 //<accessrestrict>
@@ -482,6 +485,10 @@ class DownloadEADxmlService
      */
     private function addItem(string $xml_type, DOMNode $dom, Source $source, Repository $repository)
     {
+        $module_service = new ModuleService();
+        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+        $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
+
         $fact_values = $this->sourceValuesByTag($source, $repository);
 
         //<c>
@@ -499,10 +506,8 @@ class DownloadEADxmlService
                 }
 
                 //<unittitle>
-                if (isset($fact_values['SOUR:TITL'])) {
-                    $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']));
-                        $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
-                }
+                $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']));
+                    $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
 
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
                 if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
@@ -511,13 +516,13 @@ class DownloadEADxmlService
                         $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
                  }
                 
-                //<note>    
-                //TBD
+                //<dao>
+                $dao_node =$did_dom->appendChild($this->ead_xml->createElement('dao'));
+                    $dao_node->appendChild(new DOMAttr('xlink:href', $base_url . self::WEBTREES_ROUTE_TO_TREE . $source->tree()->name() . self::WEBTREES_TREE_TO_SOURCE . $source->xref()));
+                    $dao_node->appendChild(new DOMAttr('xlink:title', $fact_values['SOUR:TITL']));
+                    
 
-                //note AtoM link
-                $module_service = new ModuleService();
-                $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
-                $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
+                //<note> link to webtrees (for AtoM)
 
                 if (($xml_type === DownloadEADxmlService::EAD_XML_TYPE_ATOM) &&
                     ($repository_hierarchy !== null) &&
@@ -528,11 +533,13 @@ class DownloadEADxmlService
                         $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.6.1'));
 
                     //<p>                        
-                        $note_node->appendChild($this->ead_xml->createElement('p', '[webtrees: ' .$source->xref() . '](' . $base_url . '/index.php?route=%2Fwebtrees%2Ftree%2F' . $source->tree()->name() . '%2Fsource%2F' . $source->xref() . ')'));
+                        $note_node->appendChild($this->ead_xml->createElement('p', '[webtrees: ' .$source->xref() . '](' . $base_url . self::WEBTREES_ROUTE_TO_TREE . $source->tree()->name() . self::WEBTREES_TREE_TO_SOURCE . $source->xref() . ')'));
                 }
 
                 //<place>   within EVEN:PLAC
                 //TBD
+
+
    }    
 
     /**
