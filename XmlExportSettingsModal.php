@@ -66,6 +66,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/xml-export-settings', [
             'tree' 					    => $tree,
             'xref' 		                => $repository_xref,
+            'xml_version'               => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_XML_VERSION . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
             'finding_aid_title'         => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
             'country_code' 			    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
             'main_agency_code' 		    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),

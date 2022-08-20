@@ -22,6 +22,7 @@ use Fisharebest\Webtrees\Tree;
 <form method="post" action="<?= e(route(XmlExportSettingsAction::class, [
 			'tree' 						=> $tree->name(),
 			'xref'			 			=> $xref,
+			'xml_version'				=> $xml_version,
 			'finding_aid_title'    		=> $finding_aid_title,
 			'country_code' 				=> $country_code,		
 			'main_agency_code' 			=> $main_agency_code,
@@ -36,6 +37,7 @@ use Fisharebest\Webtrees\Tree;
         <?= view('_repository_hierarchy_' . '::modals/xml-export-fields', [
 			'tree' 						=> $tree, 
 			'xref' 						=> $xref,
+			'xml_version'				=> $xml_version,
 			'finding_aid_title'    		=> $finding_aid_title,
 			'country_code' 				=> $country_code,		
 			'main_agency_code' 			=> $main_agency_code,

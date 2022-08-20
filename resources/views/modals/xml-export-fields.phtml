@@ -1,12 +1,15 @@
 <?php
 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
 use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Tree;
-use Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace\RepositoryHierarchy;
 
 /**
  * @var Tree 	$tree
  * @var string 	$xref
+ * @var string 	$xml_version
  * @var string 	$finding_aid_titl
  * @var string 	$country_code
  * @var string 	$main_agency_code
@@ -15,6 +18,20 @@ use Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace\RepositoryHierarchy
  * @var string  $finding_aid_publisher
  */
 ?>
+
+<fieldset class="row mb-3">
+    <label class="col-form-label col-sm-2" for="finding_aid_title">
+        <?= I18N::translate('XML version') ?>
+    </label>
+
+    <div class="col-sm-10">
+        <?= view('components/radios-inline', [
+            'name' => 'xml_version', 
+            'options' => DownloadEADxmlService::getDownloadXmlOptions(),
+            'selected' => $xml_version,
+            ]) ?>
+    </div>
+</fieldset>	
 
 <div class="row mb-3">
     <label class="col-form-label col-sm-2" for="finding_aid_title">

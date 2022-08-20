@@ -85,19 +85,10 @@ use Fisharebest\Webtrees\View;
 						'tree'                              => $tree->name(),
 						'xref'								=> $repository_hierarchy->getRepositoryXref(),
 						'delimiter_expression'              => $delimiter_expression,
-						'command'                           => RepositoryHierarchy::CMD_DOWNLOAD_APE_EAD_XML,
+						'command'                           => RepositoryHierarchy::CMD_DOWNLOAD_XML,
 						])) ?>" 
 					class="btn btn-secondary">
-					<?= I18N::translate('Dowload apeEAD XML') ?>
-				</a>
-				<a href="<?= e(route(RepositoryHierarchy::class, [
-						'tree'                              => $tree->name(),
-						'xref'								=> $repository_hierarchy->getRepositoryXref(),
-						'delimiter_expression'              => $delimiter_expression,
-						'command'                           => RepositoryHierarchy::CMD_DOWNLOAD_ATOM_EAD_XML,
-						])) ?>" 
-					class="btn btn-secondary">
-					<?= I18N::translate('Dowload AtoM EAD XML') ?>
+					<?= I18N::translate('Download EAD XML') ?>
 				</a>
 				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
 							data-wt-href="<?= e(route(XmlExportSettingsModal::class, [

@@ -139,6 +139,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_WEBTREES_BASE_URL = 'webtrees_base_url';
     public const PREF_ATOM_BASE_URL = 'atom_base_url';
     public const PREF_ATOM_REPOSITORIES = 'atom_repositories';
+    public const PREF_XML_VERSION = 'xml_version_';
     public const PREF_FINDING_AID_TITLE = 'finding_aid_title_';
     public const PREF_COUNTRY_CODE = 'country_code_';
     public const PREF_MAIN_AGENCY_CODE = 'main_agency_code_';
@@ -157,6 +158,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_SAVE_DELIM = 'save_delimiter';    
     public const CMD_SAVE_REPO = 'save_repository';
     public const CMD_LOAD_REPO = 'load_repository';
+    public const CMD_DOWNLOAD_XML = 'download_xml';
     public const CMD_DOWNLOAD_APE_EAD_XML = 'download_ape_ead_xml';
     public const CMD_DOWNLOAD_ATOM_EAD_XML = 'download_atom_ead_xml';
     public const CMD_LOAD_ADMIN_XML_SETTINGS = 'load_admin_xml_settings';
@@ -1015,21 +1017,6 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
-     * Options for xml download
-     *
-     * @return array<string>
-     */
-    public function getDownloadXmlOptions(): array
-    {
-        $options = [
-            self::CMD_DOWNLOAD_APE_EAD_XML  => I18N::translate('apeEAD XML'),
-            self::CMD_DOWNLOAD_ATOM_EAD_XML  => I18N::translate('AtoM EAD XML'),
-        ];
-
-        return $options;
-    }
-
-    /**
      * Options for xml settings
      *
      * @return array<string>
@@ -1272,31 +1259,24 @@ class RepositoryHierarchy   extends     AbstractModule
         $date_range = $this->getRootCategory()->calculateDateRange();
 
         //If download of EAD XML is requested, create and return download
-        if (($command === self::CMD_DOWNLOAD_APE_EAD_XML) OR ($command === self::CMD_DOWNLOAD_ATOM_EAD_XML)) {
+        if ($command === self::CMD_DOWNLOAD_XML) {
+            
+            $xml_type = $this->getPreference(RepositoryHierarchy::PREF_XML_VERSION . $tree->id() . '_' . $xref . '_' . $user->id(), '');
+            $title = $this->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $xref . '_' . $user->id(), '');
 
-            Switch($command) {
+            if(($xml_type === '') OR ($title === '')) {
+                $error_text = $this->errorTextWithHeader('<b>'. I18N::translate('XML export settings not found. Please open EAD XML settings and provide settings') . '</b>' . '<p>');  
+            } 
+            else {
+                //Initialize EAD XML
+                $this->download_ead_xml_service = new DownloadEADxmlService($xml_type, $this->repository, $this->root_category, $user);
 
-                case self::CMD_DOWNLOAD_ATOM_EAD_XML :
-                    $xml_type = DownloadEADxmlService::EAD_XML_TYPE_ATOM;
-                    break;
-
-                case self::CMD_DOWNLOAD_ATOM_EAD_XML :
-                    $xml_type = DownloadEADxmlService::EAD_XML_TYPE_APE;
-                    break;
-
-                default:
-                    $xml_type = DownloadEADxmlService::EAD_XML_TYPE_APE;
-                    break;
+                //Create EAD XML export
+                $this->download_ead_xml_service->createXMLforCategory($xml_type, $this->download_ead_xml_service->getCollection(), $this->root_category);
+    
+                //Start download
+                return $this->download_ead_xml_service->downloadResponse('apeEAD');
             }
-
-            //Initialize EAD XML
-            $this->download_ead_xml_service = new DownloadEADxmlService($xml_type, $this->repository, $this->root_category, $user);
-
-            //Create EAD XML export
-            $this->download_ead_xml_service->createXMLforCategory($xml_type, $this->download_ead_xml_service->getCollection(), $this->root_category);
- 
-            //Start download
-            return $this->download_ead_xml_service->downloadResponse('apeEAD');
         }         
 
         //Return the page view

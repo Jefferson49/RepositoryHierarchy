@@ -87,6 +87,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
 
          //Save received values to preferences
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_XML_VERSION . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['xml_version']) ? $params['xml_version'] : '');
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['finding_aid_title']) ? $params['finding_aid_title'] : '');
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['country_code']) ? $params['country_code'] : '');   
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['main_agency_code']) ? $params['main_agency_code'] : '');

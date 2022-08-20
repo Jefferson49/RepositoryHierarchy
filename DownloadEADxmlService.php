@@ -795,4 +795,18 @@ class DownloadEADxmlService
             return preg_replace('/<[a-z]+[^<>]+?>([^<>]+?)<\/[a-z]+?>/', '$1', $text);
     }
 
+    /**
+     * Options for xml download
+     *
+     * @return array<string>
+     */
+    public static function getDownloadXmlOptions(): array
+    {
+        $options = [
+            self::EAD_XML_TYPE_APE  => I18N::translate('apeEAD XML'),
+            self::EAD_XML_TYPE_ATOM  => I18N::translate('AtoM EAD XML'),
+        ];
+
+        return $options;
+    }
 }
