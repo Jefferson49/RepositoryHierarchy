@@ -335,6 +335,12 @@ class DownloadEADxmlService
                             $address_dom->appendChild($this->ead_xml->createElement('addressline', $line));    
                         }
                     }
+                    //<extref> bzw. www
+                    if (isset($address_lines['REPO:WWW'])) {
+                        $extref_dom = $repository_dom->appendChild($this->ead_xml->createElement('extref'));
+                            $extref_dom->appendChild(new DOMAttr('xlink:href', $address_lines['REPO:WWW']));
+                            $extref_dom->appendChild(new DOMAttr('xlink:title', $this->removeHtmlTags($this->repository->fullName())));                    
+                    }
 
                 //<origination>
                 $origination_dom = $did_dom->appendChild($this->ead_xml->createElement('origination'));
