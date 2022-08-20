@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
@@ -76,6 +77,9 @@ class DownloadEADxmlService
     //The repository, to which the service relates
     private Repository $repository;
 
+    //The user, for which the service is executed
+    private UserInterface $user;
+
     //The ISO ISO-639-2b language tag related to the webtrees session
     private string $ISO_639_2b_language_tag;
 
@@ -87,10 +91,14 @@ class DownloadEADxmlService
      * @param Repository    $repository    
      *
      */
-    public function __construct(string $xml_type, Repository $repository, CallNumberCategory $root_category)
+    public function __construct(string $xml_type, 
+                                Repository $repository, 
+                                CallNumberCategory $root_category,
+                                UserInterface $user)
     {
-        //Set repository
+        //Set repository and user
         $this->repository = $repository;
+        $this->user = $user;
 
         //Set language
         $iso_table = new ISO639;
@@ -183,6 +191,7 @@ class DownloadEADxmlService
     {         
         $module_service = new ModuleService();
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+        $user_id = $this->user->id();
 
         //<eadheader>
         $header_dom = $dom->appendChild($this->ead_xml->createElement('eadheader'));
@@ -196,11 +205,22 @@ class DownloadEADxmlService
             $eadid_dom = $header_dom->appendChild($this->ead_xml->createElement('eadid', 
                 I18N::translate('Finding aid') . ': ' . $this->removeHtmlTags($this->repository->fullName())));
                 
-                //TBD mainagencycode
-                $eadid_dom->appendChild(new DOMAttr('mainagencycode', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $this->repository->tree()->id() . '_' . $this->repository->xref(), '')));
-                $eadid_dom->appendChild(new DOMAttr('identifier', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $this->repository->tree()->id() . '_' . $this->repository->xref(), '')));
-                $eadid_dom->appendChild(new DOMAttr('countrycode', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $this->repository->tree()->id() . '_' . $this->repository->xref(), '')));
-                $eadid_dom->appendChild(new DOMAttr('url', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $this->repository->tree()->id() . '_' . $this->repository->xref(), '')));
+                $pref = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '');
+                if($pref !== '') {
+                    $eadid_dom->appendChild(new DOMAttr('mainagencycode', $pref));
+                }
+                $pref = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '');
+                if($pref !== '') {
+                    $eadid_dom->appendChild(new DOMAttr('identifier', $pref));
+                }
+                $pref = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '');
+                if($pref !== '') {
+                    $eadid_dom->appendChild(new DOMAttr('countrycode', $pref));
+                }
+                $pref = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '');
+                if($pref !== '') {
+                    $eadid_dom->appendChild(new DOMAttr('url', $pref));
+                }
 
             //<filedesc>
             $filedesc_dom = $header_dom->appendChild($this->ead_xml->createElement('filedesc'));
@@ -210,17 +230,18 @@ class DownloadEADxmlService
 
                     //<titleproper>
                     $titleproper_dom = $titlestmt_dom->appendChild($this->ead_xml->createElement('titleproper',
-                        I18N::translate('Finding aid') . ': ' . $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $this->repository->tree()->id() . '_' . $this->repository->xref(), '')));
+                        I18N::translate('Finding aid') . ': ' . $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '')));
                         $titleproper_dom->appendChild(new DOMAttr('encodinganalog', '245'));
 
                 //<publicationstmt>
                 $publicationstmt_dom = $filedesc_dom->appendChild($this->ead_xml->createElement('publicationstmt'));
 
                     //<publisher>
-                    //TBD
-                    $publisher_dom = $publicationstmt_dom->appendChild($this->ead_xml->createElement('publisher',
-                        $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $this->repository->tree()->id() . '_' . $this->repository->xref(), '')));
-                        $publisher_dom->appendChild(new DOMAttr('encodinganalog', '260$b'));
+                    $pref = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '');
+                    if($pref !== '') {
+                        $publisher_dom = $publicationstmt_dom->appendChild($this->ead_xml->createElement('publisher', $pref));
+                            $publisher_dom->appendChild(new DOMAttr('encodinganalog', '260$b'));
+                    }
 
                     //<date>
                     $date_dom = $publicationstmt_dom->appendChild($this->ead_xml->createElement('date', date('Y-m-d')));
@@ -259,9 +280,6 @@ class DownloadEADxmlService
      */
     private function addArchive(string $xml_type, DOMNode $dom, CallNumberCategory $root_category): DOMNode
     {
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
-
          //<archdesc>
          $archive_dom = $dom->appendChild($this->ead_xml->createElement('archdesc'));
             $archive_dom->appendChild(new DOMAttr('level', 'fonds'));
@@ -497,23 +515,20 @@ class DownloadEADxmlService
                 //TBD
 
                 //note AtoM link
-                if ($xml_type === DownloadEADxmlService::EAD_XML_TYPE_ATOM) {
+                $module_service = new ModuleService();
+                $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+                $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
+
+                if (($xml_type === DownloadEADxmlService::EAD_XML_TYPE_ATOM) &&
+                    ($repository_hierarchy !== null) &&
+                    ($base_url !== ''))  
+                {
                     $note_node = $did_dom->appendChild($this->ead_xml->createElement('note'));
                         $note_node->appendChild(new DOMAttr('type', 'generalNote'));
                         $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.6.1'));
 
-                    //<p>    
-                    
-                    $module_service = new ModuleService();
-                    $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
-        
-                    if ($repository_hierarchy !== null) {
-                        $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
-                    } else {
-                        $base_url = '';
-                    }
-        
-                    $note_node->appendChild($this->ead_xml->createElement('p', '[webtrees: ' .$source->xref() . '](' . $base_url . '/index.php?route=%2Fwebtrees%2Ftree%2F' . $source->tree()->name() . '%2Fsource%2F' . $source->xref() . ')'));
+                    //<p>                        
+                        $note_node->appendChild($this->ead_xml->createElement('p', '[webtrees: ' .$source->xref() . '](' . $base_url . '/index.php?route=%2Fwebtrees%2Ftree%2F' . $source->tree()->name() . '%2Fsource%2F' . $source->xref() . ')'));
                 }
 
                 //<place>   within EVEN:PLAC

@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
@@ -46,21 +47,31 @@ class XmlExportSettingsModal implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $tree = Validator::attributes($request)->tree();
-        $repository_xref = Validator::attributes($request)->string('xref');
+        $tree               = Validator::attributes($request)->tree();
+        $user               = Validator::attributes($request)->user();
+        $repository_xref    = Validator::attributes($request)->string('xref');
+        $command            = Validator::attributes($request)->string('command');
 
         $module_service = new ModuleService();
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
 
+        //If XML settings shall be loaded from administrator
+        if( ($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) &&
+            ($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ALLOW_ADMIN_XML_SETTINGS))) {
+            $user_id = RepositoryHierarchy::ADMIN_USER_STRING;
+        } else {
+            $user_id = $user->id();
+        }
+
         return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/xml-export-settings', [
             'tree' 					    => $tree,
             'xref' 		                => $repository_xref,
-            'finding_aid_title'         => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref, ''),	
-            'country_code' 			    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref, ''),	
-            'main_agency_code' 		    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref, ''),
-            'finding_aid_identifier'    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref, ''),	
-            'finding_aid_url'           => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref, ''),	
-            'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref, ''),	
+            'finding_aid_title'         => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+            'country_code' 			    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+            'main_agency_code' 		    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),
+            'finding_aid_identifier'    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+            'finding_aid_url'           => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+            'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
         ]));
     }
 }

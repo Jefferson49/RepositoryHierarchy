@@ -72,7 +72,7 @@ class RepositoryHierarchy   extends     AbstractModule
                                         ModuleDataFixInterface,
                                         ModuleGlobalInterface, 
                                         ModuleListInterface, 
-                                        RequestHandlerInterface 
+                                        RequestHandlerInterface
 {
     use ModuleConfigTrait;
     use ModuleCustomTrait;
@@ -142,9 +142,10 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_FINDING_AID_TITLE = 'finding_aid_title_';
     public const PREF_COUNTRY_CODE = 'country_code_';
     public const PREF_MAIN_AGENCY_CODE = 'main_agency_code_';
-    public const PREF_FINDING_AID_IDENTIFIER = 'finding_aid_identifier_';
-    public const PREF_FINDING_AID_URL = 'finding_aid_url';
-    public const PREF_FINDING_AID_PUBLISHER = 'finding_aid_publisher';
+    public const PREF_FINDING_AID_IDENTIFIER = 'finding_aid_id_';
+    public const PREF_FINDING_AID_URL = 'finding_aid_url_';
+    public const PREF_FINDING_AID_PUBLISHER = 'finding_aid_publ_';
+    public const PREF_ALLOW_ADMIN_XML_SETTINGS = 'allow_admin_xml_settings';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';    
@@ -158,6 +159,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_LOAD_REPO = 'load_repository';
     public const CMD_DOWNLOAD_APE_EAD_XML = 'download_ape_ead_xml';
     public const CMD_DOWNLOAD_ATOM_EAD_XML = 'download_atom_ead_xml';
+    public const CMD_LOAD_ADMIN_XML_SETTINGS = 'load_admin_xml_settings';
 
     //Comands for repositories
     public const CMD_SET_AS_START_REPO = 'set as start repository';
@@ -221,13 +223,15 @@ class RepositoryHierarchy   extends     AbstractModule
                     '/'.self::MODULE_NAME_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
                     '/delimiter_expression/'.self::DELIMITER_ATTRIBUTE_DEFAULT.
-                    '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT, $this)
+                    '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
+                , $this)
                 ->allows(RequestMethodInterface::METHOD_POST);
         
         //Register a route for the help texts    
         $router->get(RepositoryHierarchyHelpTexts::class,     
                     '/'.self::HELP_TEXTS_IN_ROUTE.
-                    '/topic/'.self::TOPIC_ATTRIBUTE_DEFAULT)             
+                    '/topic/'.self::TOPIC_ATTRIBUTE_DEFAULT
+                    )             
                 ->allows(RequestMethodInterface::METHOD_POST);    
 
         //Register a route for the create source modal    
@@ -235,7 +239,8 @@ class RepositoryHierarchy   extends     AbstractModule
                     '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
                     '/'.self::CREATE_SOURCE_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-                    '/source_call_number/'.self::SOURCE_CALL_NUMBER_ATTRIBUTE_DEFAULT)
+                    '/source_call_number/'.self::SOURCE_CALL_NUMBER_ATTRIBUTE_DEFAULT
+                    )
                 ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a route for the call number fix action
@@ -244,21 +249,26 @@ class RepositoryHierarchy   extends     AbstractModule
                     '/'.self::FIX_CALL_NUMBER_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
                     '/category_name/'.self::CATEGORY_NAME_ATTRIBUTE_DEFAULT.
-                    '/category_full_name/'.self::CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT)
+                    '/category_full_name/'.self::CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT
+                    )
                 ->allows(RequestMethodInterface::METHOD_POST);
 
-        //Register a route for the XML export settings modal action
+        //Register a route for the XML export settings modal
         $router ->get(XmlExportSettingsModal::class,   
                     '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
                     '/'.self::XML_SETTINGS_MODAL_IN_ROUTE.
-                    '/xref/'.self::XREF_ATTRIBUTE_DEFAULT)
+                    '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+                    '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
+                    )
                 ->allows(RequestMethodInterface::METHOD_POST);
 
-        //Register a route for the XML export settings processing
+        //Register a route for the XML export settings ation
         $router ->get(XmlExportSettingsAction::class,   
                     '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
                     '/'.self::XML_SETTINGS_ACTION_IN_ROUTE.
-                    '/xref/'.self::XREF_ATTRIBUTE_DEFAULT)
+                    '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+                    '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
+                    )
                 ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a namespace for the views
@@ -472,7 +482,7 @@ class RepositoryHierarchy   extends     AbstractModule
         $this->layout = 'layouts/administration';
 
         return $this->viewResponse($this->name() . '::settings', [
-            'title'                                         => $this->title(),
+            'title'                                     => $this->title(),
             self::PREF_SHOW_CATEGORY_LABEL              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
             self::PREF_SHOW_HELP_ICON                   => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
             self::PREF_SHOW_HELP_LINK                   => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
@@ -484,6 +494,7 @@ class RepositoryHierarchy   extends     AbstractModule
             self::PREF_SHOW_DATE_RANGE                  => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
             self::PREF_ALLOW_ADMIN_DELIMITER            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
             self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
+            self::PREF_ALLOW_ADMIN_XML_SETTINGS         => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
             self::PREF_SHOW_ATOM_LINKS                  => boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')),
             self::PREF_WEBTREES_BASE_URL                => $this->getPreference(self::PREF_WEBTREES_BASE_URL, ''),
             self::PREF_ATOM_BASE_URL                    => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
@@ -515,6 +526,7 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE])? '1':'0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER])? '1':'0');
             $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS])? '1':'0');
+            $this->setPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, isset($params[self::PREF_ALLOW_ADMIN_XML_SETTINGS])? '1':'0');
             $this->setPreference(self::PREF_SHOW_ATOM_LINKS, isset($params[self::PREF_SHOW_ATOM_LINKS])? '1':'0');
             $this->setPreference(self::PREF_WEBTREES_BASE_URL, isset($params[self::PREF_WEBTREES_BASE_URL])? $params[self::PREF_WEBTREES_BASE_URL]:'');
             $this->setPreference(self::PREF_ATOM_BASE_URL, isset($params[self::PREF_ATOM_BASE_URL])? $params[self::PREF_ATOM_BASE_URL]:'');
@@ -684,7 +696,10 @@ class RepositoryHierarchy   extends     AbstractModule
             $match = str_replace(self::DELIMITER_ESCAPE, self::DELIMITER_SEPARATOR, $match);
 
             //If found regex is not valid, fill array with error message
-            if (@preg_match('/' . $match . '/', '') === false) {  
+            if ((@preg_match('/' . $match . '/', '') === false) OR 
+                ($delimiter_expression == '$') OR
+                ($delimiter_expression == '.') )             
+            {  
                 array_push($error_list, I18N::translate('Regular expression not accepted') . ': <b>' . $match . '</b>');
             }
             //If found regex is valid, add to list of delimitor expressions
@@ -1007,13 +1022,35 @@ class RepositoryHierarchy   extends     AbstractModule
     public function getDownloadXmlOptions(): array
     {
         $options = [
-            self::CMD_DOWNLOAD_APE_EAD_XML  => I18N::translate('download apeEAD XML'),
-            self::CMD_DOWNLOAD_ATOM_EAD_XML  => I18N::translate('download AtoM EAD XML'),
+            self::CMD_DOWNLOAD_APE_EAD_XML  => I18N::translate('apeEAD XML'),
+            self::CMD_DOWNLOAD_ATOM_EAD_XML  => I18N::translate('AtoM EAD XML'),
         ];
 
         return $options;
     }
 
+    /**
+     * Options for xml settings
+     *
+     * @return array<string>
+     */
+    public function getXmlSettingsOptions(): array
+    {
+
+        if (boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1'))) {
+            $admin_option = [
+                self::CMD_LOAD_ADMIN_XML_SETTINGS   => I18N::translate('load XML settings from administrator')
+            ];
+        } else {
+            $admin_option = [];
+        }
+
+        $options = [
+            self::CMD_NONE              => I18N::translate('none'),
+        ];
+
+        return $options + $admin_option;
+    }
 
     /**
      * Update the preferences (after new module version is detected)
@@ -1253,7 +1290,7 @@ class RepositoryHierarchy   extends     AbstractModule
             }
 
             //Initialize EAD XML
-            $this->download_ead_xml_service = new DownloadEADxmlService($xml_type, $this->repository, $this->root_category);
+            $this->download_ead_xml_service = new DownloadEADxmlService($xml_type, $this->repository, $this->root_category, $user);
 
             //Create EAD XML export
             $this->download_ead_xml_service->createXMLforCategory($xml_type, $this->download_ead_xml_service->getCollection(), $this->root_category);
@@ -1268,9 +1305,9 @@ class RepositoryHierarchy   extends     AbstractModule
             'title'                             => $this->getListTitle($repository),
             'repository_hierarchy'              => $this,
 			'delimiter_expression'              => $delimiter_expression,
-            'show_head'                         => true,
             'error'                             => $error_text,
             'command'                           => self::CMD_NONE,
+            'xml_command'                       => self::CMD_NONE,
         ]);
     }
 }

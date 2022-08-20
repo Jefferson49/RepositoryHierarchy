@@ -101,7 +101,9 @@ use Fisharebest\Webtrees\I18N;
 					</ul>
 				</div>
 				<?php foreach ($category->getSubCategories() as $sub_category) : ?>			
-					<?= view($repository_hierarchy->name() . '::tree', ['repository_hierarchy' => $repository_hierarchy, 'category' => $sub_category]) ?>
+					<?= view($repository_hierarchy->name() . '::tree', [
+						'repository_hierarchy' => $repository_hierarchy, 
+						'category' => $sub_category]) ?>
 				<?php endforeach ?>	
 			</div>	
 		</div>
