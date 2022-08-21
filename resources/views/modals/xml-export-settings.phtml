@@ -15,29 +15,39 @@ use Fisharebest\Webtrees\Tree;
  * @var string  $finding_aid_identifier
  * @var string  $finding_aid_url
  * @var string  $finding_aid_publisher
+ * @var bool	$show_load_from_admin
  */
-
 ?>
 
-<form method="post" action="<?= e(route(XmlExportSettingsAction::class, [
-			'tree' 						=> $tree->name(),
-			'xref'			 			=> $xref,
-			'xml_version'				=> $xml_version,
-			'finding_aid_title'    		=> $finding_aid_title,
-			'country_code' 				=> $country_code,		
-			'main_agency_code' 			=> $main_agency_code,
-			'finding_aid_identifier'    => $finding_aid_identifier,
-			'finding_aid_url'    		=> $finding_aid_url,
-			'finding_aid_publisher'    	=> $finding_aid_publisher,
-		])) ?>" id="wt-modal-form">
+<?= view('modals/header', ['title' => I18N::translate('EAD XML export settings')]) ?>
 
-    <?= view('modals/header', ['title' => I18N::translate('EAD XML export settings')]) ?>
+<form method="post" action="<?= e(route(XmlExportSettingsAction::class, [
+			'tree' 					=> $tree->name(),
+			'xref'					=> $xref,
+			'command'				=> RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS,
+			])) ?>" id="wt-modal-form2">
+
+	<?php if($show_load_from_admin) : ?>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-secondary">
+				<?= I18N::translate('Load settings from administrator') ?>
+			</button>
+		</div>
+	<?php endif ?>
+
+	<?= csrf_field() ?>
+</form>
+
+<form method="post" action="<?= e(route(XmlExportSettingsAction::class, [
+			'tree' 			=> $tree->name(),
+			'xref'			=> $xref,
+			'command'		=> RepositoryHierarchy::CMD_NONE,
+			])) ?>" id="wt-modal-form1">
 
     <div class="modal-body">
         <?= view('_repository_hierarchy_' . '::modals/xml-export-fields', [
 			'tree' 						=> $tree, 
 			'xref' 						=> $xref,
-			'xml_version'				=> $xml_version,
 			'finding_aid_title'    		=> $finding_aid_title,
 			'country_code' 				=> $country_code,		
 			'main_agency_code' 			=> $main_agency_code,
@@ -45,13 +55,14 @@ use Fisharebest\Webtrees\Tree;
 			'finding_aid_url'    		=> $finding_aid_url,
 			'finding_aid_publisher'    	=> $finding_aid_publisher,
 			]) ?>
-    </div>
+	</div>
 
-    <?= view('modals/footer-save-cancel') ?>
+	<?= view('modals/footer-save-cancel') ?>
 
     <?= csrf_field() ?>
 </form>
 
 <script>
-  document.getElementById('wt-modal-form').addEventListener('submit', webtrees.createRecordModalSubmit);
+  document.getElementById('wt-modal-form1').addEventListener('submit', webtrees.createRecordModalSubmit);
+  document.getElementById('wt-modal-form2').addEventListener('submit', webtrees.createRecordModalSubmit);
 </script>

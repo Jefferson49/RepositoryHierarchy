@@ -47,6 +47,30 @@ class XmlExportSettingsAction implements RequestHandlerInterface
     {
         $tree               = Validator::attributes($request)->tree();
         $user               = Validator::attributes($request)->user();
+        $repository_xref    = Validator::attributes($request)->string('xref');
+        $command            = Validator::attributes($request)->string('command');
+
+        if($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) {
+            
+
+            $user_id = RepositoryHierarchy::ADMIN_USER_STRING;
+            $module_service = new ModuleService();
+            $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+
+            return response([      
+                'html'  => view(RepositoryHierarchy::MODULE_NAME . '::modals/xml-export-settings', [
+                    'tree' 					    => $tree,
+                    'xref' 		                => $repository_xref,
+                    'finding_aid_title'         => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+                    'country_code' 			    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+                    'main_agency_code' 		    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),
+                    'finding_aid_identifier'    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+                    'finding_aid_url'           => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+                    'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),
+                    'show_load_from_admin'      => false,	
+                    ]),
+                ]);
+        }
 
         //Save received values to preferences
         $this->savePreferences($request, false);
@@ -87,12 +111,17 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
 
          //Save received values to preferences
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_XML_VERSION . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['xml_version']) ? $params['xml_version'] : '');
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['finding_aid_title']) ? $params['finding_aid_title'] : '');
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['country_code']) ? $params['country_code'] : '');   
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['main_agency_code']) ? $params['main_agency_code'] : '');
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['finding_aid_identifier']) ? $params['finding_aid_identifier'] : '');
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['finding_aid_url']) ? $params['finding_aid_url'] : '');
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, isset($params['finding_aid_publisher']) ? $params['finding_aid_publisher'] : '');
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['finding_aid_title']);
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['country_code']);
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['main_agency_code']);
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['finding_aid_identifier']);
+
+        if ($params['finding_aid_url'] !== '') {
+            $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['finding_aid_url']);
+        }
+
+        if ($params['finding_aid_publisher'] !== '') {
+            $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['finding_aid_publisher']);
+        }
     }
 }

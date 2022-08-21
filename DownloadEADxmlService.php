@@ -55,8 +55,14 @@ class DownloadEADxmlService
 {
 
     //Types of EAD XML    
-    public const EAD_XML_TYPE_ATOM = 'ead_xml_type_atom';
-    public const EAD_XML_TYPE_APE = 'ead_xml_type_ape';
+    public const DOWNLOAD_OPTION_APE_EAD = 'download_option_ape_ead';
+    public const DOWNLOAD_OPTION_ATOM = 'download_option_atom';
+    public const DOWNLOAD_OPTION_HTML = 'download_option_html';
+    public const DOWNLOAD_OPTION_PDF = 'download_option_pdf';
+    public const DOWNLOAD_OPTION_TEXT = 'download_option_text';
+    public const DOWNLOAD_OPTION_XML = 'download_option_xml';
+    public const DOWNLOAD_OPTION_ALL = 'download_option_all';
+
     public const WEBTREES_ROUTE_TO_TREE = '/index.php?route=%2Fwebtrees%2Ftree%2F';
     public const WEBTREES_TREE_TO_SOURCE = '%2Fsource%2F';
     public const WEBTREES_TREE_TO_REPO = '%2Frepository%2F';
@@ -420,7 +426,10 @@ class DownloadEADxmlService
                     $dao_node->appendChild(new DOMAttr('xlink:href', $base_url . self::WEBTREES_ROUTE_TO_TREE . $this->repository->tree()->name() . self::WEBTREES_TREE_TO_REPO . $this->repository->xref()));
                     $dao_node->appendChild(new DOMAttr('xlink:title', $this->removeHtmlTags($this->repository->fullName())));                    
 
-                    //<scopecontent>
+                //<otherfindaid>
+                //TBD
+
+                //<scopecontent>
                 //TBD
 
                 //<accessrestrict>
@@ -528,9 +537,8 @@ class DownloadEADxmlService
                     $dao_node->appendChild(new DOMAttr('xlink:title', $fact_values['SOUR:TITL']));
                     
 
-                //<note> link to webtrees (for AtoM)
-
-                if (($xml_type === DownloadEADxmlService::EAD_XML_TYPE_ATOM) &&
+                //<note> link to webtrees (for AtoM, only)
+                if (($xml_type === DownloadEADxmlService::DOWNLOAD_OPTION_ATOM) &&
                     ($repository_hierarchy !== null) &&
                     ($base_url !== ''))  
                 {
@@ -809,17 +817,41 @@ class DownloadEADxmlService
     }
 
     /**
-     * Options for xml download
+     * Options for downloads
      *
      * @return array<string>
      */
-    public static function getDownloadXmlOptions(): array
-    {
-        $options = [
-            self::EAD_XML_TYPE_APE  => I18N::translate('apeEAD XML'),
-            self::EAD_XML_TYPE_ATOM  => I18N::translate('AtoM EAD XML'),
+    public static function getDownloadOptions(string $selection = self::DOWNLOAD_OPTION_ALL): array
+    {        
+        $xml_options = [
+            self::DOWNLOAD_OPTION_APE_EAD   => I18N::translate('apeEAD XML'),
+            self::DOWNLOAD_OPTION_ATOM      => I18N::translate('AtoM EAD XML'),
         ];
+
+        $text_options = [
+            self::DOWNLOAD_OPTION_HTML      => I18N::translate('Finding aid as HTML'),
+            self::DOWNLOAD_OPTION_PDF       => I18N::translate('Finding aid as PDF'),
+        ];
+
+        switch($selection) {
+
+            case self::DOWNLOAD_OPTION_XML:
+                $options = $xml_options;
+                break;
+
+            case self::DOWNLOAD_OPTION_TEXT:
+                $options = $text_options;
+                break;
+
+            case self::DOWNLOAD_OPTION_ALL:
+                $options = $xml_options + $text_options;
+                break;
+
+            default:
+                $options = $xml_options + $text_options;
+            }
 
         return $options;
     }
+
 }

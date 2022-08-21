@@ -159,8 +159,6 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_SAVE_REPO = 'save_repository';
     public const CMD_LOAD_REPO = 'load_repository';
     public const CMD_DOWNLOAD_XML = 'download_xml';
-    public const CMD_DOWNLOAD_APE_EAD_XML = 'download_ape_ead_xml';
-    public const CMD_DOWNLOAD_ATOM_EAD_XML = 'download_atom_ead_xml';
     public const CMD_LOAD_ADMIN_XML_SETTINGS = 'load_admin_xml_settings';
 
     //Comands for repositories
@@ -1017,29 +1015,6 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
-     * Options for xml settings
-     *
-     * @return array<string>
-     */
-    public function getXmlSettingsOptions(): array
-    {
-
-        if (boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1'))) {
-            $admin_option = [
-                self::CMD_LOAD_ADMIN_XML_SETTINGS   => I18N::translate('load XML settings from administrator')
-            ];
-        } else {
-            $admin_option = [];
-        }
-
-        $options = [
-            self::CMD_NONE              => I18N::translate('none'),
-        ];
-
-        return $options + $admin_option;
-    }
-
-    /**
      * Update the preferences (after new module version is detected)
      *
      * @return string
@@ -1081,15 +1056,29 @@ class RepositoryHierarchy   extends     AbstractModule
 		$delimiter_expression   = Validator::attributes($request)->string('delimiter_expression');
         $command                = Validator::attributes($request)->string('command');
 
+        if($command === self::CMD_DOWNLOAD_XML) {
+            $download_command = Validator::parsedBody($request)->string('download_command');
+        }
+
         // Convert POST requests into GET requests for pretty URLs.
         if ($request->getMethod() === RequestMethodInterface::METHOD_POST) {
-            
-            return redirect(route(self::class, [
-                'tree'        	        => $tree->name(),
-                'xref'        	        => Validator::parsedBody($request)->isXref()->string('xref'),
-				'delimiter_expression'	=> Validator::parsedBody($request)->string('delimiter_expression'),
-                'command'               => Validator::parsedBody($request)->string('command'),
-            ]));
+
+            if($command === self::CMD_DOWNLOAD_XML) {
+                return redirect(route(self::class, [
+                    'tree'        	        => $tree->name(),
+                    'xref'        	        => $xref,
+                    'delimiter_expression'	=> $delimiter_expression,
+                    'command'               => $download_command,
+                ]));
+    
+            } else {
+                return redirect(route(self::class, [
+                    'tree'        	        => $tree->name(),
+                    'xref'        	        => Validator::parsedBody($request)->isXref()->string('xref'),
+                    'delimiter_expression'	=> Validator::parsedBody($request)->string('delimiter_expression'),
+                    'command'               => Validator::parsedBody($request)->string('command'),
+                ]));
+            }            
         }
 
         //Variable for error texts; default is empty
@@ -1259,13 +1248,13 @@ class RepositoryHierarchy   extends     AbstractModule
         $date_range = $this->getRootCategory()->calculateDateRange();
 
         //If download of EAD XML is requested, create and return download
-        if ($command === self::CMD_DOWNLOAD_XML) {
+        if (($command === DownloadEADxmlService::DOWNLOAD_OPTION_APE_EAD) OR ($command === DownloadEADxmlService::DOWNLOAD_OPTION_ATOM)) {
             
-            $xml_type = $this->getPreference(RepositoryHierarchy::PREF_XML_VERSION . $tree->id() . '_' . $xref . '_' . $user->id(), '');
+            $xml_type = $command;
             $title = $this->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $xref . '_' . $user->id(), '');
 
-            if(($xml_type === '') OR ($title === '')) {
-                $error_text = $this->errorTextWithHeader('<b>'. I18N::translate('XML export settings not found. Please open EAD XML settings and provide settings') . '</b>' . '<p>');  
+            if($title === '') {
+                $error_text = $this->errorTextWithHeader('<b>'. I18N::translate('XML export settings not found. Please open EAD XML settings and provide settings.') . '</b>' . '<p>');  
             } 
             else {
                 //Initialize EAD XML
@@ -1287,7 +1276,6 @@ class RepositoryHierarchy   extends     AbstractModule
 			'delimiter_expression'              => $delimiter_expression,
             'error'                             => $error_text,
             'command'                           => self::CMD_NONE,
-            'xml_command'                       => self::CMD_NONE,
         ]);
     }
 }

@@ -15,7 +15,7 @@ use Fisharebest\Webtrees\View;
  * @var string      		$delimiter_expression
  * @var string             	$error
  * @var string             	$command 
- * @var string             	$xml_command 
+ * @var string             	$downlaod_command 
  */
  
 ?>
@@ -30,7 +30,11 @@ use Fisharebest\Webtrees\View;
 	<?= $repository_hierarchy->getListTitle($repository_hierarchy->getRepository()) ?>
 </h2>
 
-<form method="post" class="wt-page-options wt-page-options-ancestors-chart d-print-none">
+<form method="post" action="<?= e(route(RepositoryHierarchy::class, [
+						'tree'		=> $tree->name(),
+						'xref'		=> $repository_hierarchy->getRepositoryXref(),
+						])) ?>" 
+	class="wt-page-options wt-page-options-ancestors-chart d-print-none">
 
 	<div class="row">
 		<label class="col-sm-3 col-form-label wt-page-options-label" for="xref">
@@ -63,52 +67,53 @@ use Fisharebest\Webtrees\View;
 		</div>
 	</div>
 
-	<fieldset class="row mb-3">
-		<legend class="col-form-label col-sm-3 wt-page-options-label">
-			<?= I18N::translate('Options') ?>
-		</legend>
-
+	<div class="row">
+		<label class="col-sm-3 col-form-label wt-page-options-label" for="view">
+			<?= I18N::translate('View and load/save options') ?>
+		</label>
 		<div class="col-sm-9 wt-page-options-value">
+			<input class="btn btn-primary" type="submit" value="<?= I18N::translate('view') ?>">
+			<?= view('icons/spacer') ?>
 			<?= view('components/radios-inline', [
 				'name' => 'command', 
 				'options' => $repository_hierarchy->getLoadSaveOptions(), 
 				'selected' => RepositoryHierarchy::CMD_NONE,
 				]) ?>
 		</div>
-	</fieldset>	
-	
-	<div class="row mb-3">
-		<div class="col-form-label col-sm-3 wt-page-options-label"><?= I18N::translate('View/Download') ?></div>
-			<div class="col-sm-9 wt-page-options-value">			
-				<input class="btn btn-primary" type="submit" value="<?= I18N::translate('view') ?>">
-				<a href="<?= e(route(RepositoryHierarchy::class, [
+
+	</div>
+
+	<?= csrf_field() ?>
+</form>	
+
+<form method="post" action="<?= e(route(RepositoryHierarchy::class, [
 						'tree'                              => $tree->name(),
 						'xref'								=> $repository_hierarchy->getRepositoryXref(),
 						'delimiter_expression'              => $delimiter_expression,
 						'command'                           => RepositoryHierarchy::CMD_DOWNLOAD_XML,
 						])) ?>" 
-					class="btn btn-secondary">
-					<?= I18N::translate('Download EAD XML') ?>
-				</a>
-				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
-							data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
-								'tree' 		=> $tree->name(),
-								'xref' 		=> $repository_hierarchy->getRepositoryXref(),
-								'command'	=> RepositoryHierarchy::CMD_NONE,
-								])) ?>">
-					<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
-				</a>
-				<?php if(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ALLOW_ADMIN_XML_SETTINGS, '0'))) : ?>
-					<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
-							data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
-								'tree' 		=> $tree->name(), 
-								'xref' 		=> $repository_hierarchy->getRepositoryXref(),
-								'command'	=> RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS,
-								])) ?>">
-						<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings (from admin)') ?>">
-					</a>
-				<?php endif ?>		
-			</div>
+		class="wt-page-options wt-page-options-ancestors-chart d-print-none">
+	<div class="row">
+		<label class="col-sm-3 col-form-label wt-page-options-label">
+			<?= I18N::translate('Download') ?>
+		</label>
+		<div class="col-sm-9 wt-page-options-value">			
+			<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('Download') ?>">
+			<?= view('icons/spacer') ?>
+			<?= view('components/radios-inline', [
+				'name' => 'download_command', 
+				'options' => DownloadEADxmlService::getDownloadOptions(DownloadEADxmlService::DOWNLOAD_OPTION_XML), 
+				'selected' => DownloadEADxmlService::DOWNLOAD_OPTION_APE_EAD,
+			]) ?>
+			<?= view('icons/spacer') ?>
+			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
+						data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
+							'tree'			=> $tree->name(),
+							'xref'			=> $repository_hierarchy->getRepositoryXref(),
+							'show_admin'	=> false,
+							])) ?>">
+				<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
+			</a>
 		</div>
 	</div>					
 
