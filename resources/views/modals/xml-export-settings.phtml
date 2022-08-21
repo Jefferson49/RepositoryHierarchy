@@ -25,6 +25,7 @@ use Fisharebest\Webtrees\Tree;
 			'tree' 					=> $tree->name(),
 			'xref'					=> $xref,
 			'command'				=> RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS,
+			'show_load_from_admin'	=> $show_load_from_admin,
 			])) ?>" id="wt-modal-form2">
 
 	<?php if($show_load_from_admin) : ?>
@@ -39,9 +40,10 @@ use Fisharebest\Webtrees\Tree;
 </form>
 
 <form method="post" action="<?= e(route(XmlExportSettingsAction::class, [
-			'tree' 			=> $tree->name(),
-			'xref'			=> $xref,
-			'command'		=> RepositoryHierarchy::CMD_NONE,
+			'tree' 					=> $tree->name(),
+			'xref'					=> $xref,
+			'command'				=> RepositoryHierarchy::CMD_NONE,
+			'show_load_from_admin'	=> $show_load_from_admin,
 			])) ?>" id="wt-modal-form1">
 
     <div class="modal-body">

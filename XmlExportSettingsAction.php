@@ -48,7 +48,8 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $tree               = Validator::attributes($request)->tree();
         $user               = Validator::attributes($request)->user();
         $repository_xref    = Validator::attributes($request)->string('xref');
-        $command            = Validator::attributes($request)->string('command');
+        $command            = Validator::attributes($request)->string('command');        
+        $params             = (array) $request->getQueryParams();
 
         if($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) {
             
@@ -80,12 +81,16 @@ class XmlExportSettingsAction implements RequestHandlerInterface
             $this->savePreferences($request, true);
         }
 
-        return response([      
-            'html'  => view(RepositoryHierarchy::MODULE_NAME . '::modals/message', [  
-                'title' => I18N::translate('EAD XML settings'),
-                'text'  => I18N::translate('The EAD XML seetings have been changed'),
-                ])
-            ]);
+        if($params['show_load_from_admin']) {
+            return response([      
+                'html'  => view(RepositoryHierarchy::MODULE_NAME . '::modals/message', [  
+                    'title' => I18N::translate('EAD XML settings'),
+                    'text'  => I18N::translate('The EAD XML seetings have been changed'),
+                    ])
+                ]);   
+        } else {
+            return response();
+        }
     }
 
     /**
