@@ -31,10 +31,10 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Localization\Translation;
-use Fisharebest\Webtrees\Date\AbstractCalendarDate;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Date;
+use Fisharebest\Webtrees\Date\AbstractCalendarDate;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\I18N;
@@ -313,38 +313,6 @@ class RepositoryHierarchy   extends     AbstractModule
 
     /**
      * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listMenuClass()
-     */
-    public function listMenuClass(): string {
-        return 'menu-list-repository-hierarchy';
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listIsEmpty()
-     */
-    public function listIsEmpty(Tree $tree): bool
-    {
-        return !DB::table('other')
-            ->where('o_file', '=', $tree->id())
-            ->where('o_type', '=', Repository::RECORD_TYPE)
-            ->exists();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listUrl()
-     */
-
-    public function listUrl(Tree $tree, array $parameters = []): string
-    {
-        $parameters['tree'] = $tree->name();
-
-        return route(RepositoryHierarchy::class, $parameters);
-    }
-
-    /**
-     * {@inheritDoc}
      * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleAuthorName()
      */
     public function customModuleAuthorName(): string
@@ -405,77 +373,7 @@ class RepositoryHierarchy   extends     AbstractModule
 
     /**
      * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleGlobalInterface::headContent()
-     */
-    public function headContent(): string {
-        return '<link href="' . $this->assetUrl('css/repository-hierarchy.css') . '" type="text/css" rel="stylesheet" />';
-    }    
-
-    /**
-     * Get related tree
-     * 
-     * @return Tree     $tree;
-     */
-    public function getTree(): Tree {
-        return $this->tree;
-    }
-    
-    /**
-     * Get repository
-     * 
-     * @return Repository
-     */
-    public function getRepository(): Repository {
-        return $this->repository;
-    }
-
-    /**
-     * Get xref of the related repository
-     * 
-     * @return string
-     */
-    public function getRepositoryXref(): string {
-        return $this->repository_xref;
-    }
-
-    /**
-     * Get root category
-     * 
-     * @return CallNumberCategory
-     */
-    public function getRootCategory(): CallNumberCategory {
-        return $this->root_category;
-    }
-
-    /**
-     * whether a string contains 'true'
-     * 
-     * @param string
-     * 
-     * @return bool
-     */
-    public function isTrue(string $value): bool {
-        return ($value === 'true' ? true : false);
-    }
-
-    /**
-     * get AtoM slug
-     * 
-     * @param string
-     *
-     * @return string
-     */
-    public static function getAtoMSlug(string $text): string
-    {
-		return strtolower(preg_replace('/[^A-Za-z0-9]+/', '-', $text));
-    }
-
-    /**
-     * Admin, user settings
-     * 
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
+     * @see \Fisharebest\Webtrees\Module\ModuleInterface::getAdminAction()
      */
     public function getAdminAction(ServerRequestInterface $request): ResponseInterface
     {
@@ -503,11 +401,8 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
-     * Save the user preference.
-     *
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleInterface::postAdminAction()
      */
     public function postAdminAction(ServerRequestInterface $request): ResponseInterface
     {
@@ -541,6 +436,49 @@ class RepositoryHierarchy   extends     AbstractModule
 
     /**
      * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listMenuClass()
+     */
+    public function listMenuClass(): string {
+
+        //Needed for Icon (in css file)
+        return 'menu-list-repository-hierarchy';
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listIsEmpty()
+     */
+    public function listIsEmpty(Tree $tree): bool
+    {
+        return !DB::table('other')
+            ->where('o_file', '=', $tree->id())
+            ->where('o_type', '=', Repository::RECORD_TYPE)
+            ->exists();
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listUrl()
+     */
+
+    public function listUrl(Tree $tree, array $parameters = []): string
+    {
+        $parameters['tree'] = $tree->name();
+
+        return route(RepositoryHierarchy::class, $parameters);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleGlobalInterface::headContent()
+     */
+    public function headContent(): string {
+        return '<link href="' . $this->assetUrl('css/repository-hierarchy.css') . '" type="text/css" rel="stylesheet" />';
+    }    
+
+    /**
+     * {@inheritDoc}
      * @see \Fisharebest\Webtrees\Module\ModuleDataFixInterface::fixOptions()
      */
     public function fixOptions(Tree $tree): string
@@ -556,28 +494,6 @@ class RepositoryHierarchy   extends     AbstractModule
             self::VAR_DATA_FIX_TYPES                    => [Source::RECORD_TYPE => I18N::translate('Sources')],
             ]
         );
-    }
-
-    /**
-     * A  list of all source records that might need fixing.
-     *
-     * @param Tree                 $tree
-     * @param array<string,string> $params
-     *
-     * @return Collection<int,object>
-     */
-    protected function sourcesToFix(Tree $tree, array $params): ?Collection
-    {
-        if ($params[CallNumberCategory::VAR_CATEGORY_NAME] === '' || $params[self::VAR_DATA_FIX_CATEGORY_NAME_REPLACE] === '') {
-            return null;
-        }
-
-        $search = '%' . addcslashes($params[CallNumberCategory::VAR_CATEGORY_FULL_NAME], '\\%_') . '%';
-
-        return  $this->sourcesToFixQuery($tree, $params)
-            ->where('s_file', '=', $tree->id())
-            ->where('s_gedcom', 'LIKE', $search)
-            ->pluck('s_id');
     }
 
     /**
@@ -638,6 +554,88 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
+     * A  list of all source records that might need fixing.
+     *
+     * @param Tree                 $tree
+     * @param array<string,string> $params
+     *
+     * @return Collection<int,object>
+     */
+    protected function sourcesToFix(Tree $tree, array $params): ?Collection
+    {
+        if ($params[CallNumberCategory::VAR_CATEGORY_NAME] === '' || $params[self::VAR_DATA_FIX_CATEGORY_NAME_REPLACE] === '') {
+            return null;
+        }
+
+        $search = '%' . addcslashes($params[CallNumberCategory::VAR_CATEGORY_FULL_NAME], '\\%_') . '%';
+
+        return  $this->sourcesToFixQuery($tree, $params)
+            ->where('s_file', '=', $tree->id())
+            ->where('s_gedcom', 'LIKE', $search)
+            ->pluck('s_id');
+    }
+
+    /**
+     * Get related tree
+     * 
+     * @return Tree     $tree;
+     */
+    public function getTree(): Tree {
+        return $this->tree;
+    }
+    
+    /**
+     * Get repository
+     * 
+     * @return Repository
+     */
+    public function getRepository(): Repository {
+        return $this->repository;
+    }
+
+    /**
+     * Get xref of the related repository
+     * 
+     * @return string
+     */
+    public function getRepositoryXref(): string {
+        return $this->repository_xref;
+    }
+
+    /**
+     * Get root category
+     * 
+     * @return CallNumberCategory
+     */
+    public function getRootCategory(): CallNumberCategory {
+        return $this->root_category;
+    }
+
+    /**
+     * get AtoM slug
+     * 
+     * @param string
+     *
+     * @return string
+     */
+    public static function getAtoMSlug(string $text): string
+    {
+		return strtolower(preg_replace('/[^A-Za-z0-9]+/', '-', $text));
+    }
+
+    /**
+     * Get stored repository for a user
+     *
+     * @param Tree      $tree
+     * @param string    $xref
+     * 
+     */
+    public function getStoredRepositoryXref(Tree $tree, UserInterface $user): string
+    {
+        return $this->getPreference(self::PREF_REPOSITORY . $tree->id() . '_' . $user->id(), '');
+    }
+
+    /**
      * Set data fix params
      *
      * @param Tree      $tree
@@ -660,8 +658,8 @@ class RepositoryHierarchy   extends     AbstractModule
      *
      * @return string
      */
-    public function getListTitle(Repository $repository = null): string {
-
+    public function getListTitle(Repository $repository = null): string 
+    {
         //In this module, repositories are listed
         if ($repository === null) {
             return I18N::translate('Repository Hierarchy');
