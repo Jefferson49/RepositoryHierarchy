@@ -291,11 +291,11 @@ class DownloadEADxmlService
             $did_dom = $archive_dom->appendChild($this->ead_xml->createElement('did'));
 
                 //<unittitle>
-                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $this->removeHtmlTags($this->repository->fullName())));
+                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', self::removeHtmlTags($this->repository->fullName())));
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
                 
                 //<unitid>
-                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->removeHtmlTags($this->repository->fullName())));
+                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', self::removeHtmlTags($this->repository->fullName())));
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
 
                 //<langmaterial>
@@ -313,7 +313,7 @@ class DownloadEADxmlService
                 if ( $date_range !== null) {
 
                     $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                    $date_range_text = $this->formatDateRange($date_range_text);
+                    $date_range_text = self::formatDateRange($date_range_text);
                     
                 $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
@@ -328,7 +328,7 @@ class DownloadEADxmlService
                 $repository_dom = $did_dom->appendChild($this->ead_xml->createElement('repository'));
 
                     //<corpname>
-                    $repository_dom->appendChild($this->ead_xml->createElement('corpname', $this->removeHtmlTags($this->repository->fullName())));
+                    $repository_dom->appendChild($this->ead_xml->createElement('corpname', self::removeHtmlTags($this->repository->fullName())));
 
                     //<address>
                     $address_lines = $this->getRepositoryAddressLines($this->repository);
@@ -345,7 +345,7 @@ class DownloadEADxmlService
                     if (isset($address_lines['REPO:WWW'])) {
                         $extref_dom = $repository_dom->appendChild($this->ead_xml->createElement('extref'));
                             $extref_dom->appendChild(new DOMAttr('xlink:href', $address_lines['REPO:WWW']));
-                            $extref_dom->appendChild(new DOMAttr('xlink:title', $this->removeHtmlTags($this->repository->fullName())));                    
+                            $extref_dom->appendChild(new DOMAttr('xlink:title', self::removeHtmlTags($this->repository->fullName())));                    
                     }
 
                 //<origination>
@@ -354,7 +354,7 @@ class DownloadEADxmlService
 
                     //<name>
                     $origination_dom->appendChild($this->ead_xml->createElement('name', 
-                        $this->removeHtmlTags($this->repository->fullName())));
+                        self::removeHtmlTags($this->repository->fullName())));
 
             //<otherfindaid> //=http link to online finding aid of archive
             //TBD
@@ -388,7 +388,7 @@ class DownloadEADxmlService
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
 
                 //<unittitle>
-                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $this->removeHtmlTags($this->repository->fullName())));
+                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', self::removeHtmlTags($this->repository->fullName())));
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
                 
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
@@ -397,7 +397,7 @@ class DownloadEADxmlService
                 if ( $date_range !== null) {
 
                     $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                    $date_range_text = $this->formatDateRange($date_range_text);
+                    $date_range_text = self::formatDateRange($date_range_text);
                     
                 $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
@@ -419,12 +419,12 @@ class DownloadEADxmlService
                     $origination_dom->appendChild(new DOMAttr('encodinganalog', '3.2.1'));
 
                     //<name>
-                    $origination_dom->appendChild($this->ead_xml->createElement('name', $this->removeHtmlTags($this->repository->fullName())));
+                    $origination_dom->appendChild($this->ead_xml->createElement('name', self::removeHtmlTags($this->repository->fullName())));
 
                 //<dao>   
                 $dao_node =$did_dom->appendChild($this->ead_xml->createElement('dao'));
                     $dao_node->appendChild(new DOMAttr('xlink:href', $base_url . self::WEBTREES_ROUTE_TO_TREE . $this->repository->tree()->name() . self::WEBTREES_TREE_TO_REPO . $this->repository->xref()));
-                    $dao_node->appendChild(new DOMAttr('xlink:title', $this->removeHtmlTags($this->repository->fullName())));                    
+                    $dao_node->appendChild(new DOMAttr('xlink:title', self::removeHtmlTags($this->repository->fullName())));                    
 
                 //<otherfindaid>
                 //TBD
@@ -482,7 +482,7 @@ class DownloadEADxmlService
                 if ( $date_range !== null) {
 
                 $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                $date_range_text = $this->formatDateRange($date_range_text);
+                $date_range_text = self::formatDateRange($date_range_text);
                     
                 $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
@@ -504,7 +504,7 @@ class DownloadEADxmlService
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
         $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
 
-        $fact_values = $this->sourceValuesByTag($source, $repository);
+        $fact_values =self::sourceValuesByTag($source, $repository);
 
         //<c>
         $c_dom = $dom->appendChild($this->ead_xml->createElement('c'));
@@ -527,7 +527,7 @@ class DownloadEADxmlService
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
                 if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
                     $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
-                        $unitdate_node->appendChild(new DOMAttr('normal', $this->removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
+                        $unitdate_node->appendChild(new DOMAttr('normal', self::removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
                         $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
                  }
                 
@@ -657,7 +657,7 @@ class DownloadEADxmlService
      * 
      * @return array    [$tag => $value]
      */
-    public function sourceValuesByTag(Source $source, Repository $repository): array
+    public static function sourceValuesByTag(Source $source, Repository $repository): array
     {
         $source_values = [];
         $level1_source_tags = [
@@ -695,12 +695,19 @@ class DownloadEADxmlService
                     case 'SOUR:DATA':
                         //Get date range
                         $date_range = RepositoryHierarchy::displayDateRangeForSource($source, null, '%Y-%m-%d');
-                        $date_range_text = $this->formatDateRange($date_range);
+                        $date_range_text = self::formatDateRange($date_range);
 
                         if($date_range_text !== '') {
                             $source_values['SOUR:DATA:EVEN:DATE'] = $date_range_text;
                         }
                         break;
+
+                    case 'SOUR:REFN':
+                        //Get reference number type
+                        if($fact->attribute('TYPE') !== '') {
+                            $source_values['SOUR:REFN:TYPE'] = $fact->attribute('TYPE');
+                        }
+                        break;                    
                 }
             }
         }
@@ -721,9 +728,9 @@ class DownloadEADxmlService
      * 
      * @return string   
      */
-    public function formatDateRange(string $date_range): string {
+    public static function formatDateRange(string $date_range): string {
 
-        $date_range = $this->removeHtmlTags($date_range);
+        $date_range = self::removeHtmlTags($date_range);
         $date_range = str_replace(' ', '', $date_range);
         $date_range = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range); 
         $date_range = str_replace(I18N::translateContext('End of date range', 'To'), '/', $date_range); 
@@ -812,7 +819,7 @@ class DownloadEADxmlService
      * 
      * @return string
      */
-    private function removeHtmlTags(string $text): string {
+    private static function removeHtmlTags(string $text): string {
             return preg_replace('/<[a-z]+[^<>]+?>([^<>]+?)<\/[a-z]+?>/', '$1', $text);
     }
 
