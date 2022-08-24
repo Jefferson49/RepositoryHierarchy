@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2022-08-21 13:50+0200\n"
-"PO-Revision-Date: 2022-08-21 13:53+0200\n"
+"POT-Creation-Date: 2022-08-23 05:24+0200\n"
+"PO-Revision-Date: 2022-08-23 05:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -23,7 +23,7 @@ msgstr "Quellen ohne Signatur"
 msgid "Default call number category"
 msgstr "Default Signatur-Kategorie"
 
-#: CallNumberDataFix.php:92
+#: CallNumberCategoryDataFix.php:96
 msgid "Data fixes"
 msgstr ""
 
@@ -37,29 +37,30 @@ msgstr "Erzeugt von webtrees"
 msgid "Date range"
 msgstr "Datumsbereich"
 
-#: DownloadEADxmlService.php:827
+#: DownloadEADxmlService.php:833
 msgid "apeEAD XML"
 msgstr "apeEAD XML"
 
-#: DownloadEADxmlService.php:828
+#: DownloadEADxmlService.php:834
 msgid "AtoM EAD XML"
 msgstr "AtoM EAD XML"
 
-#: DownloadEADxmlService.php:832
+#: DownloadEADxmlService.php:838
 msgid "Finding aid as HTML"
 msgstr "Findbuch als HTML"
 
-#: DownloadEADxmlService.php:833
+#: DownloadEADxmlService.php:839
 msgid "Finding aid as PDF"
 msgstr "Findbuch als PDF"
 
-#: RepositoryHierarchy.php:292 RepositoryHierarchy.php:667
+#: RepositoryHierarchy.php:292 RepositoryHierarchy.php:665
 #: RepositoryHierarchyHelpTexts.php:67 RepositoryHierarchyHelpTexts.php:77
 #: RepositoryHierarchyHelpTexts.php:87 RepositoryHierarchyHelpTexts.php:96
+#: RepositoryHierarchyList.php:292 RepositoryHierarchyList.php:665
 msgid "Repository Hierarchy"
 msgstr "Archiv Hierarchie"
 
-#: RepositoryHierarchy.php:302
+#: RepositoryHierarchy.php:302 RepositoryHierarchyList.php:302
 msgid ""
 "A hierarchical structured list of the sources of an archive based on the "
 "call numbers of the sources"
@@ -67,70 +68,71 @@ msgstr ""
 "Eine hierarchisch strukturierte Liste der Quellen in einem Archiv, basierend "
 "auf den Signaturen der Quellen"
 
-#: RepositoryHierarchy.php:535
+#: RepositoryHierarchy.php:430 RepositoryHierarchyList.php:430
 #, php-format
 msgid "The preferences for the module “%s” were updated."
 msgstr "Die Einstellungen für das Modul %s wurden aktualisiert."
 
-#: RepositoryHierarchy.php:556 resources/views/options.phtml:36
+#: RepositoryHierarchy.php:494 RepositoryHierarchyList.php:494
+#: resources/views/options.phtml:36
 msgid "Sources"
 msgstr ""
 
-#: RepositoryHierarchy.php:669
+#: RepositoryHierarchy.php:667 RepositoryHierarchyList.php:667
 #, php-format
 msgid "Repository Hierachy of: %s"
 msgstr "Archiv Hierarchie von: %s"
 
-#: RepositoryHierarchy.php:703
+#: RepositoryHierarchy.php:701 RepositoryHierarchyList.php:701
 msgid "Regular expression not accepted"
 msgstr "Regulärer Ausdruck nicht akzeptiert"
 
-#: RepositoryHierarchy.php:712
+#: RepositoryHierarchy.php:710 RepositoryHierarchyList.php:710
 msgid "No valid delimiter or valid regular expression for delimiter found."
 msgstr "Kein valider Delimiter oder valider Ausdruck für Delimiter gefunden."
 
-#: RepositoryHierarchy.php:1001
+#: RepositoryHierarchy.php:999 RepositoryHierarchyList.php:999
 msgid "load delimiter expression from administrator"
 msgstr "Delimiter Ausdruck von Administrator laden"
 
-#: RepositoryHierarchy.php:1007
+#: RepositoryHierarchy.php:1005 RepositoryHierarchyList.php:1005
 msgid "none"
 msgstr "Keine"
 
-#: RepositoryHierarchy.php:1008
+#: RepositoryHierarchy.php:1006 RepositoryHierarchyList.php:1006
 msgid "save repository"
 msgstr "Archiv speichern"
 
-#: RepositoryHierarchy.php:1009
+#: RepositoryHierarchy.php:1007 RepositoryHierarchyList.php:1007
 msgid "load repository"
 msgstr "Archiv laden"
 
-#: RepositoryHierarchy.php:1010
+#: RepositoryHierarchy.php:1008 RepositoryHierarchyList.php:1008
 msgid "save delimiter expression"
 msgstr "Delimiter Ausdruck speichern"
 
-#: RepositoryHierarchy.php:1011
+#: RepositoryHierarchy.php:1009 RepositoryHierarchyList.php:1009
 msgid "load delimiter expression"
 msgstr "Delimiter Ausdruck laden"
 
-#: RepositoryHierarchy.php:1040
+#: RepositoryHierarchy.php:1038 RepositoryHierarchyList.php:1038
 msgid "Custom module"
 msgstr ""
 
-#: RepositoryHierarchy.php:1097
+#: RepositoryHierarchy.php:1095 RepositoryHierarchyList.php:1095
 msgid "Error during update of preferences"
 msgstr "Fehler beim Aktualisieren der Einstellungen"
 
-#: RepositoryHierarchy.php:1110
+#: RepositoryHierarchy.php:1108 RepositoryHierarchyList.php:1108
 msgid "Could not load repository. No repository stored."
 msgstr "Archiv konnte nicht geladen werden. Kein Archiv gespeichert."
 
-#: RepositoryHierarchy.php:1133
+#: RepositoryHierarchy.php:1131 RepositoryHierarchyList.php:1131
 #, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "Der Stammbaum \"%s\" enthält kein Archiv"
 
-#: RepositoryHierarchy.php:1155
+#: RepositoryHierarchy.php:1153 RepositoryHierarchyList.php:1153
 msgid ""
 "Could not load delimiter expression from administrator. No administrator "
 "delimiter expression stored."
@@ -138,17 +140,18 @@ msgstr ""
 "Delimiter Ausdruck von Administrator konnte nicht geladen werden. Kein "
 "Delimiter Ausdruck von Administrator gespeichert."
 
-#: RepositoryHierarchy.php:1164
+#: RepositoryHierarchy.php:1162 RepositoryHierarchyList.php:1162
 msgid "Could not load delimiter expression. No delimiter expression stored."
 msgstr ""
 "Delimiter Ausdruck konnte nicht geladen werden. Kein Delimiter Ausdruck "
 "gespeichert."
 
-#: RepositoryHierarchy.php:1188
+#: RepositoryHierarchy.php:1186 RepositoryHierarchyList.php:1186
 msgid "Error in delimiter expression"
 msgstr "Fehler in Delimiter Ausdruck"
 
-#: RepositoryHierarchy.php:1195 RepositoryHierarchyHelpTexts.php:104
+#: RepositoryHierarchy.php:1193 RepositoryHierarchyHelpTexts.php:104
+#: RepositoryHierarchyList.php:1193
 msgid ""
 "Please note that the following characters need to be escaped if not used as "
 "meta characters in a regular expression"
@@ -157,26 +160,28 @@ msgstr ""
 "versehen werden müssen, falls sie nicht als Meta-Zeichen in einem regulären "
 "Ausdruck verwendet werden"
 
-#: RepositoryHierarchy.php:1198 RepositoryHierarchyHelpTexts.php:105
+#: RepositoryHierarchy.php:1196 RepositoryHierarchyHelpTexts.php:105
+#: RepositoryHierarchyList.php:1196
 msgid "For example, use"
 msgstr "Nutzen Sie zum Beispiel"
 
-#: RepositoryHierarchy.php:1198 RepositoryHierarchy.php:1199
-#: RepositoryHierarchyHelpTexts.php:105
+#: RepositoryHierarchy.php:1196 RepositoryHierarchy.php:1197
+#: RepositoryHierarchyHelpTexts.php:105 RepositoryHierarchyList.php:1196
+#: RepositoryHierarchyList.php:1197
 msgid "instead of"
 msgstr "statt"
 
-#: RepositoryHierarchy.php:1198 RepositoryHierarchyHelpTexts.php:58
+#: RepositoryHierarchy.php:1196 RepositoryHierarchyHelpTexts.php:58
 #: RepositoryHierarchyHelpTexts.php:59 RepositoryHierarchyHelpTexts.php:60
-#: RepositoryHierarchyHelpTexts.php:105
+#: RepositoryHierarchyHelpTexts.php:105 RepositoryHierarchyList.php:1196
 msgid "or"
 msgstr "oder"
 
-#: RepositoryHierarchy.php:1199
+#: RepositoryHierarchy.php:1197 RepositoryHierarchyList.php:1197
 msgid "if the characters shall be used as plain text."
 msgstr "wenn die Zeichen als reiner Text verwendet werden sollen."
 
-#: RepositoryHierarchy.php:1257
+#: RepositoryHierarchy.php:1255 RepositoryHierarchyList.php:1255
 msgid ""
 "XML export settings not found. Please open EAD XML settings and provide "
 "settings."
@@ -322,11 +327,11 @@ msgstr "Hilfe"
 msgid "The help text has not yet been written for this item."
 msgstr "Der Hilfetext wurde für diesen Punkt noch nicht geschrieben."
 
-#: XmlExportSettingsAction.php:85 resources/views/page.phtml:115
+#: XmlExportSettingsAction.php:87 resources/views/page.phtml:115
 msgid "EAD XML settings"
 msgstr "EAD XML Einstellungen"
 
-#: XmlExportSettingsAction.php:86
+#: XmlExportSettingsAction.php:88
 msgid "The EAD XML seetings have been changed"
 msgstr "Die EAD XML Einstellungen wurden gespeichert"
 
@@ -452,7 +457,7 @@ msgstr "Name der herausgebenden Institution oder der veröffentlichenden Firma."
 msgid "EAD XML export settings"
 msgstr "EAD XML Export Einstellungen"
 
-#: resources/views/modals/xml-export-settings.phtml:33
+#: resources/views/modals/xml-export-settings.phtml:34
 msgid "Load settings from administrator"
 msgstr "Einstellungen von Administrator laden"
 
