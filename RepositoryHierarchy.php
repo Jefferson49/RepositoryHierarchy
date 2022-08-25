@@ -63,9 +63,19 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function route;
 	
-
-class RepositoryHierarchy
+class RepositoryHierarchy   extends     AbstractModule 
+                            implements  ModuleConfigInterface,
+                                        ModuleCustomInterface,
+                                        ModuleDataFixInterface,
+                                        ModuleGlobalInterface, 
+                                        ModuleListInterface, 
+                                        RequestHandlerInterface
 {
+    use ModuleConfigTrait;
+    use ModuleCustomTrait;
+    use ModuleListTrait;
+    use ModuleGlobalTrait;
+    use ModuleDataFixTrait;
 
     //Module name
     public const MODULE_NAME = '_repository_hierarchy_';
@@ -87,6 +97,14 @@ class RepositoryHierarchy
     protected const CATEGORY_NAME_ATTRIBUTE_DEFAULT = '{category_name}';
     protected const CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT = '{category_full_name}';
 
+    //Strings cooresponding to variable names
+    public const VAR_DATA_FIX = 'data_fix';
+    public const VAR_DATA_FIXES = 'data_fixes';
+    public const VAR_DATA_FIX_TITLE = 'title';
+    public const VAR_DATA_FIX_TYPES = 'types';
+    public const VAR_DATA_FIX_CATEGORY_NAME_REPLACE = 'category_name_replace';
+    public const VAR_DATA_FIX_PENDING_URL = 'pending_url';     
+    
     //The separator for delimiter expressions and its substitue
     public const DELIMITER_SEPARATOR = ';';
     public const DELIMITER_ESCAPE = '{delimiter_escape}';
@@ -186,7 +204,6 @@ class RepositoryHierarchy
     }
 
     /**
-<<<<<<< HEAD
      * {@inheritDoc}
      * @see \Fisharebest\Webtrees\Module\AbstractModule::boot()
      */
@@ -257,7 +274,6 @@ class RepositoryHierarchy
 
             View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
         }
-
 	}
 	
     /**
@@ -581,8 +597,6 @@ class RepositoryHierarchy
     }
 
     /**
-=======
->>>>>>> develop
      * Get related tree
      * 
      * @return Tree     $tree;
@@ -619,7 +633,6 @@ class RepositoryHierarchy
     }
 
     /**
-<<<<<<< HEAD
      * Get stored repository for a user
      *
      * @param Tree      $tree
@@ -646,17 +659,6 @@ class RepositoryHierarchy
         } else {
             return $error_text;
         }
-=======
-     * get AtoM slug
-     * 
-     * @param string
-     *
-     * @return string
-     */
-    public static function getAtoMSlug(string $text): string
-    {
-		return strtolower(preg_replace('/[^A-Za-z0-9]+/', '-', $text));
->>>>>>> develop
     }
 
     /**
@@ -824,7 +826,6 @@ class RepositoryHierarchy
 	}
 
     /**
-<<<<<<< HEAD
      * Options for load/save delimiter expressions
      *
      * @return array<string>
@@ -1101,151 +1102,5 @@ class RepositoryHierarchy
             'error'                             => $error_text,
             'command'                           => self::CMD_NONE,
         ]);
-=======
-     * Sorting sources by call number
-     *
-	 * @param Collection $sources
-     *
-     * @return Collection
-     */
-    public function sortSourcesByCallNumber(Collection $sources): Collection {
-		
-        return $sources->sortBy(function (Source $source) {
-            return $this->getCallNumber($source);
-        });
-    }
-
-    /**
-     * Get call number for a source
-     *
-	 * @param Source
-	 * @param CallNumberCategory
-	 * @param bool $truncated
-     *
-     * @return string
-     */
-    public function getCallNumber(Source $source, CallNumberCategory $category = null, bool $truncated = false): string{	
-	
-        $call_number = '';
-
-        foreach($source->facts(['REPO']) as $repository) {
-
-            preg_match_all('/1 REPO @(.*)@/', $repository->gedcom(), $matches, PREG_SET_ORDER);
-                    
-            if (!empty($matches[0]) ) {
-                $match = $matches[0];
-                $xref = $match[1];
-            }
-            else $xref = '';
-
-            //only if it is the requested repository
-            if ($xref === $this->repository_xref) {
-
-                preg_match_all('/\n2 CALN (.*)/', $repository->gedcom(), $matches, PREG_SET_ORDER);
-                
-                if (!empty($matches[0]) ) {
-                    $match = $matches[0];
-                    $call_number = $match[1];
-                }
-
-                break;
-            }
-        }    
-
-        //If activated, take truncated call number
-        if ($truncated) {
-            $call_number = $category->getTruncatedCallNumber($source);
-        }
-
-        return $call_number;
-	}
-
-    /**
-     * Get the date range for a source
-     *
-	 * @param Source
-     *
-     * @return Date
-     */
-    public static function getDateRangeForSource(Source $source): ?Date {	
-			
-        $dates = [];
-        $dates_found = 0;
-
-        if ($source->facts(['DATA'])->isNotEmpty() ) {
-
-            foreach($source->facts(['DATA']) as $data) {
-
-                preg_match_all('/3 DATE (.{1,32})/', $data->gedcom(), $matches, PREG_PATTERN_ORDER);
-                
-                foreach($matches[1] as $match) {
-                    array_push($dates, new Date($match));
-                    $dates_found++;
-                }       
-            }
-        }
-
-        $date_range = RepositoryHierarchy::getOverallDateRange($dates);
-
-        return ($dates_found > 0) ? $date_range : null;
-    }
-
-    /**
-     * Display the date range for a source
-     *
-	 * @param Source
-     * @param string  date format
-     *
-     * @return string
-     */
-    public static function displayDateRangeForSource(Source $source, Tree $tree = null, string $date_format = null): string {	
-	
-        $date_range = self::getDateRangeForSource($source);
-
-        if(($date_range !== null) && $date_range->isOK()) {
-            return $date_range->display($tree, $date_format);
-        } else {
-            return '';
-        }
-    }
-
-    /**
-     * Get overall date range for a set of date ranges, i.e. minimum and maximum dates of all the date ranges
-     *
-	 * @param array   [Date]
-     *
-     * @return Date
-     */
-    public static function getOverallDateRange(array $dates): ?Date {	
-
-        $dates_found = 0;
-
-        foreach($dates as $date) {
-
-            $dates_found++;
-
-            //Calclulate new max/min values for date range if more than one date is found
-            if ($dates_found > 1) {
-
-                if(AbstractCalendarDate::compare($date->minimumDate(), $date_range->minimumDate()) < 1) {
-                    $min_date = $date->minimumDate();
-                } else {
-                    $min_date = $date_range->minimumDate();
-                }
-                if(AbstractCalendarDate::compare($date->maximumDate(), $date_range->maximumDate()) > 0) {
-                    $max_date = $date->maximumDate();
-                } else {
-                    $max_date = $date_range->maximumDate();
-                }
-
-                $date_range = new Date('FROM ' . $min_date->format('%A %O %E') . ' TO ' . $max_date->format('%A %O %E') );
-
-            } else {
-                $date_range = $date;
-            }
-        }    
-
-        return ($dates_found > 0) ? $date_range : null; 
->>>>>>> develop
     }
 }

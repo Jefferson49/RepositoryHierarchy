@@ -37,7 +37,7 @@ use Fisharebest\Webtrees\I18N;
 		<?= view('icons/spacer') ?>
 		<?php if ((strpos($category->getFullName(), CallNumberCategory::EMPTY_CATEGORY_NAME) === false) AND (strpos($category->getFullName(), CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
 			<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
-				<a href="<?= e(route(CallNumberCategoryDataFix::class, [
+				<a href="<?= e(route(CallNumberDataFix::class, [
 						'tree' => $repository_hierarchy->getTree()->name(), 
 						'xref' => $repository_hierarchy->getRepositoryXref(), 
 						'category_name' => $category->getName(), 
