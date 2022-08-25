@@ -102,7 +102,7 @@ use Fisharebest\Webtrees\View;
 			<?= view('icons/spacer') ?>
 			<?= view('components/radios-inline', [
 				'name' => 'download_command', 
-				'options' => DownloadEADxmlService::getDownloadOptions(DownloadEADxmlService::DOWNLOAD_OPTION_XML), 
+				'options' => DownloadEADxmlService::getDownloadOptions(DownloadEADxmlService::DOWNLOAD_OPTION_ALL), 
 				'selected' => DownloadEADxmlService::DOWNLOAD_OPTION_APE_EAD,
 			]) ?>
 			<?= view('icons/spacer') ?>

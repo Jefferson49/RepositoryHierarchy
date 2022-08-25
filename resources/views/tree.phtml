@@ -68,7 +68,7 @@ use Fisharebest\Webtrees\I18N;
 					<ul>
 						<?php foreach ($category->getSources() as $source) : ?>
 							<li>
-								<a href="<?= e($source->url()) ?>"><?= $repository_hierarchy->getCallNumber($source, $category, boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))) ?></a>
+								<a href="<?= e($source->url()) ?>"><?= Functions::getCallNumber($source, $repository_hierarchy->getRepository(), boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))) ?></a>
 
 								<?php if (($source->fullName() != '') && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TITLE, '1')))) : ?>
 									—
@@ -94,7 +94,7 @@ use Fisharebest\Webtrees\I18N;
 								<?php if (($source->facts(['DATA'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1')))) : ?>
 									—
 									<?= I18N::translate('Date range') ?>:
-									<?= RepositoryHierarchy::displayDateRangeForSource($source, $repository_hierarchy->getTree())?>
+									<?= Functions::displayDateRangeForSource($source, $repository_hierarchy->getTree())?>
 								<?php endif ?>
 							</li>
 						<?php endforeach ?>	

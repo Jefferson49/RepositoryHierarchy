@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
-use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;

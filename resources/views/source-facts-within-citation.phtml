@@ -47,7 +47,7 @@ use Fisharebest\Webtrees\Tree;
 					<span class="label">AtoM</span>
 					: 
 					<span class="value align-top">
-						<a href="<?= $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') . '/index.php/' . RepositoryHierarchy::getAtoMSlug($caln_string) ?>">
+						<a href="<?= $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') . '/index.php/' . DownloadEADxmlService::getAtoMSlug($caln_string) ?>">
 							<bdi>
 								<?= I18N::translate('Link to archival description in AtoM') ?>
 							</bdi>

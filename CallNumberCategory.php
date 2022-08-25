@@ -32,6 +32,7 @@ use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 
 use function md5;
+use Fisharebest\Webtrees\Repository;
 	
 class CallNumberCategory  {
 
@@ -211,32 +212,6 @@ class CallNumberCategory  {
 		return $this->sources;
 	}
 
-   /**
-     * Add truncated call number for a source to the truncated call numbers list
-     *
-	 * @param Source
-	 * @param string
-	 */
-	public function addTruncatedCallNumber(Source $source, string $truncated_call_number) {
-		$this->truncated_call_numbers[$source->xref()] = $truncated_call_number;
-	}
-
-   /**
-     * Get truncated call number for a source
-     *
-	 * @param Source 
-	 * 
-	 * @return string
-     */
-	public function getTruncatedCallNumber(Source $source): string {
-		if (array_key_exists($source->xref(), $this->truncated_call_numbers)) {
-			return $this->truncated_call_numbers[$source->xref()];
-		}
-		else {
-			return '';
-		}
-	}
-
 	/**
      * Get sub categories
      *
@@ -311,14 +286,58 @@ class CallNumberCategory  {
 
 		foreach($sources as $source) {
 
-			$date_range = RepositoryHierarchy::getDateRangeForSource($source);
+			$date_range = Functions::getDateRangeForSource($source);
 			if($date_range !== null) {
 				array_push($date_ranges, $date_range);
 			}
 		}
 
-		$this->overall_date_range = RepositoryHierarchy::getOverallDateRange($date_ranges);
+		$this->overall_date_range = Functions::getOverallDateRange($date_ranges);
 		
 		return $this->overall_date_range;
+	}
+
+	/**
+     * Add truncated call number for a source to the truncated call numbers list
+     *
+	 * @param Source
+	 * @param string
+	 */
+	public function addTruncatedCallNumber(Source $source, string $truncated_call_number) {
+		$this->truncated_call_numbers[$source->xref()] = $truncated_call_number;
+	}
+
+   /**
+     * Get truncated call number for a source
+     *
+	 * @param Source 
+	 * 
+	 * @return string
+     */
+	public function getTruncatedCallNumber(Source $source): string {
+		if (array_key_exists($source->xref(), $this->truncated_call_numbers)) {
+			return $this->truncated_call_numbers[$source->xref()];
+		}
+		else {
+			return '';
+		}
+	}
+
+	/**
+     * Get call number for a source in a repository
+     *
+	 * @param Source		$source
+	 * @param Repository	$repository
+	 * @param bool 			$truncated
+     *
+     * @return string
+     */
+    public function getCallNumber(Source $source, Repository $repository, bool $truncated = false): string{	
+	
+        if($truncated) {
+			return $this->getTruncatedCallNumber($source);
+		} else {
+			return Functions::getCallNumber($source, $repository);
+		}
 	}
  }

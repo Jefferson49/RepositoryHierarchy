@@ -1,0 +1,28 @@
+<?php
+ 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\View;
+
+/**
+ * @var CallNumberCategory      $category
+ */
+
+?>
+<h3><?= e($category->getFullName()) ?></h3>
+<ul>
+    <?php foreach ($category->getSources() as $source) : ?>
+        <li>
+            <a href="<?= e($source->url()) ?>">	
+                <?= $source->fullName()	?>				
+            </a>
+        </li>
+    <?php endforeach ?>	
+</ul>
+
+<?php foreach ($category->getSubCategories() as $sub_category) : ?>
+    <?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
+            'category' => $sub_category,
+            ]) ?>
+<?php endforeach ?>	

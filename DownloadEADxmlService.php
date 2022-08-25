@@ -25,26 +25,22 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use DOMAttr;
+use DOMDocument;
+use DOMImplementation;
+use DOMNode;
 use Fisharebest\Webtrees\Contracts\UserInterface;
-use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
-use Fisharebest\Webtrees\Validator;
 use Matriphe\ISO639\ISO639;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Fisharebest\Webtrees\Repository;
-
-use DOMAttr;
-use DOMDocument;
-use DOMImplementation;
-use DOMNode;
-use RuntimeException;
 
 use function date;
 
@@ -54,7 +50,7 @@ use function date;
 class DownloadEADxmlService
 {
 
-    //Types of EAD XML    
+    //Download and EAD XML types    
     public const DOWNLOAD_OPTION_APE_EAD = 'download_option_ape_ead';
     public const DOWNLOAD_OPTION_ATOM = 'download_option_atom';
     public const DOWNLOAD_OPTION_HTML = 'download_option_html';
@@ -95,9 +91,11 @@ class DownloadEADxmlService
     /**
      * Constructor
      * 
-     * @param string        $template_filename    The path of the xml template file name with file extension 
-     * @param Repository    $repository    
-     *
+     * @param string            	$xml_type 
+     * @param Repository            $repository    
+     * @param CallNumberCategory    $root_category
+     * @param UserInterface         $user
+     * 
      */
     public function __construct(string $xml_type, 
                                 Repository $repository, 
@@ -107,9 +105,6 @@ class DownloadEADxmlService
         //Initialize variables
         $this->repository = $repository;
         $this->user = $user;
-        $this->response_factory = app(ResponseFactoryInterface::class);
-        $this->stream_factory = new Psr17Factory();
-        $this->linked_record_service = new LinkedRecordService();
 
         //Set language
         $iso_table = new ISO639;
@@ -291,11 +286,11 @@ class DownloadEADxmlService
             $did_dom = $archive_dom->appendChild($this->ead_xml->createElement('did'));
 
                 //<unittitle>
-                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', self::removeHtmlTags($this->repository->fullName())));
+                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', Functions::removeHtmlTags($this->repository->fullName())));
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
                 
                 //<unitid>
-                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', self::removeHtmlTags($this->repository->fullName())));
+                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', Functions::removeHtmlTags($this->repository->fullName())));
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
 
                 //<langmaterial>
@@ -313,7 +308,7 @@ class DownloadEADxmlService
                 if ( $date_range !== null) {
 
                     $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                    $date_range_text = self::formatDateRange($date_range_text);
+                    $date_range_text = Functions::formatDateRange($date_range_text);
                     
                 $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
@@ -328,10 +323,10 @@ class DownloadEADxmlService
                 $repository_dom = $did_dom->appendChild($this->ead_xml->createElement('repository'));
 
                     //<corpname>
-                    $repository_dom->appendChild($this->ead_xml->createElement('corpname', self::removeHtmlTags($this->repository->fullName())));
+                    $repository_dom->appendChild($this->ead_xml->createElement('corpname', Functions::removeHtmlTags($this->repository->fullName())));
 
                     //<address>
-                    $address_lines = $this->getRepositoryAddressLines($this->repository);
+                    $address_lines = Functions::getRepositoryAddressLines($this->repository);
 
                     if(!empty($address_lines)){
                         $address_dom = $repository_dom->appendChild($this->ead_xml->createElement('address'));
@@ -345,7 +340,7 @@ class DownloadEADxmlService
                     if (isset($address_lines['REPO:WWW'])) {
                         $extref_dom = $repository_dom->appendChild($this->ead_xml->createElement('extref'));
                             $extref_dom->appendChild(new DOMAttr('xlink:href', $address_lines['REPO:WWW']));
-                            $extref_dom->appendChild(new DOMAttr('xlink:title', self::removeHtmlTags($this->repository->fullName())));                    
+                            $extref_dom->appendChild(new DOMAttr('xlink:title', Functions::removeHtmlTags($this->repository->fullName())));                    
                     }
 
                 //<origination>
@@ -354,7 +349,7 @@ class DownloadEADxmlService
 
                     //<name>
                     $origination_dom->appendChild($this->ead_xml->createElement('name', 
-                        self::removeHtmlTags($this->repository->fullName())));
+                    Functions::removeHtmlTags($this->repository->fullName())));
 
             //<otherfindaid> //=http link to online finding aid of archive
             //TBD
@@ -388,7 +383,7 @@ class DownloadEADxmlService
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
 
                 //<unittitle>
-                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', self::removeHtmlTags($this->repository->fullName())));
+                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', Functions::removeHtmlTags($this->repository->fullName())));
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
                 
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
@@ -397,7 +392,7 @@ class DownloadEADxmlService
                 if ( $date_range !== null) {
 
                     $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                    $date_range_text = self::formatDateRange($date_range_text);
+                    $date_range_text = Functions::formatDateRange($date_range_text);
                     
                 $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
@@ -419,12 +414,12 @@ class DownloadEADxmlService
                     $origination_dom->appendChild(new DOMAttr('encodinganalog', '3.2.1'));
 
                     //<name>
-                    $origination_dom->appendChild($this->ead_xml->createElement('name', self::removeHtmlTags($this->repository->fullName())));
+                    $origination_dom->appendChild($this->ead_xml->createElement('name', Functions::removeHtmlTags($this->repository->fullName())));
 
                 //<dao>   
                 $dao_node =$did_dom->appendChild($this->ead_xml->createElement('dao'));
                     $dao_node->appendChild(new DOMAttr('xlink:href', $base_url . self::WEBTREES_ROUTE_TO_TREE . $this->repository->tree()->name() . self::WEBTREES_TREE_TO_REPO . $this->repository->xref()));
-                    $dao_node->appendChild(new DOMAttr('xlink:title', self::removeHtmlTags($this->repository->fullName())));                    
+                    $dao_node->appendChild(new DOMAttr('xlink:title', Functions::removeHtmlTags($this->repository->fullName())));                    
 
                 //<otherfindaid>
                 //TBD
@@ -482,7 +477,7 @@ class DownloadEADxmlService
                 if ( $date_range !== null) {
 
                 $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                $date_range_text = self::formatDateRange($date_range_text);
+                $date_range_text = Functions::formatDateRange($date_range_text);
                     
                 $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
@@ -504,7 +499,7 @@ class DownloadEADxmlService
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
         $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
 
-        $fact_values =self::sourceValuesByTag($source, $repository);
+        $fact_values =Functions::sourceValuesByTag($source, $repository);
 
         //<c>
         $c_dom = $dom->appendChild($this->ead_xml->createElement('c'));
@@ -527,7 +522,7 @@ class DownloadEADxmlService
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
                 if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
                     $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
-                        $unitdate_node->appendChild(new DOMAttr('normal', self::removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
+                        $unitdate_node->appendChild(new DOMAttr('normal', Functions::removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
                         $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
                  }
                 
@@ -565,6 +560,9 @@ class DownloadEADxmlService
      */
     public function downloadResponse(string $filename): ResponseInterface 
     {
+<<<<<<< HEAD
+        return Functions::responseForDOMDownload($this->ead_xml, $filename);
+=======
         $resource = $this->export($this->ead_xml);
         $stream   = $this->stream_factory->createStreamFromResource($resource);
 
@@ -820,6 +818,7 @@ class DownloadEADxmlService
      */
     private static function removeHtmlTags(string $text): string {
             return preg_replace('/<[a-z]+[^<>]+?>([^<>]+?)<\/[a-z]+?>/', '$1', $text);
+>>>>>>> develop
     }
 
     /**
@@ -858,6 +857,17 @@ class DownloadEADxmlService
             }
 
         return $options;
+    }    
+    
+    /**
+     * get AtoM slug
+     * 
+     * @param string
+     *
+     * @return string
+     */
+    public static function getAtoMSlug(string $text): string
+    {
+		return strtolower(preg_replace('/[^A-Za-z0-9]+/', '-', $text));
     }
-
 }
