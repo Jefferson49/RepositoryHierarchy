@@ -471,7 +471,7 @@ class Functions {
      *
      * @return string
      */
-    public function getDefaultRepositoryXref(AbstractModule $module, Tree $tree, UserInterface $user): string 
+    public static function getDefaultRepositoryXref(AbstractModule $module, Tree $tree, UserInterface $user): string 
     {
         Auth::checkComponentAccess($module, ModuleListInterface::class, $tree, $user);
 

@@ -3,26 +3,60 @@
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\View;
 
 /**
  * @var CallNumberCategory      $category
+ * @var Repository				$repository
  */
 
 ?>
-<h3><?= e($category->getFullName()) ?></h3>
-<ul>
-    <?php foreach ($category->getSources() as $source) : ?>
-        <li>
-            <a href="<?= e($source->url()) ?>">	
-                <?= $source->fullName()	?>				
-            </a>
-        </li>
-    <?php endforeach ?>	
-</ul>
+<table >
+
+    <style>
+        table           {width: 100%; border-spacing: 2px;} 
+        caption         {font-weight: 700; background-color: #c0c0c0; border: 1px solid black; text-align: left;}
+        td              {font-weight: normal; padding: 5px;}
+        #first_column   {width: 100px;}
+        #last_column    {width: 400px;}
+    </style>
+
+    <caption>
+        <h4><?= I18N::translate('Fonds') ?>/<?= I18N::translate('Call number') ?>: <?= e($category->getFullName()) ?></h4>
+    </caption>
+
+    <tbody>
+        <?php foreach ($category->getSources() as $source) : ?>
+            <?php $source_facts = Functions::sourceValuesByTag($source, $repository) ?>
+            <tr> 
+                <td id="first_column"><?= I18N::translate('Source') ?>/<?= I18N::translate('Title') ?><?= view('icons/spacer') ?></td>               
+                <td><?= $source->fullName()	?></td>
+                <td id="last_column">
+                    <a href="<?= e($source->url()) ?>"><?= I18N::translate('Gedcom-ID') ?>: <?= $source->xref() ?></a>
+                </td>            
+            </tr>
+            <tr> 
+                <td><?= I18N::translate('Call Number') ?><?= view('icons/spacer') ?></td>               
+                <td><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></td>
+                <td></td>               
+            </tr>
+            <tr> 
+                <td><?= I18N::translate('Author') ?><?= view('icons/spacer') ?></td>               
+                <td><?= isset($source_facts['SOUR:AUTH']) ?	$source_facts['SOUR:AUTH'] : '' ?></td>
+                <td><?= I18N::translate('Date range') ?>:<?= Functions::displayDateRangeForSource($source, $repository->tree())?></td>               
+            </tr>
+            <tr>
+                <td colspan="3"></td>      
+            </tr>
+        <?php endforeach ?>	
+    </tbody>
+</table>
 
 <?php foreach ($category->getSubCategories() as $sub_category) : ?>
     <?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
             'category' => $sub_category,
+            'repository' 	=> $repository,
             ]) ?>
-<?php endforeach ?>	
+<?php endforeach ?>
+
