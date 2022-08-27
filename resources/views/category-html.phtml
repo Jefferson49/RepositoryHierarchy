@@ -14,7 +14,7 @@ use Fisharebest\Webtrees\View;
 ?>
 <table class="finding-aid-table">
     <caption class="finding-aid-table-caption">
-        <h4><?= I18N::translate('Fonds') ?>/<?= I18N::translate('Call number') ?>:<span class="tab"><?= e($category->getFullName()) ?></h4>
+        <h4><?= I18N::translate('Fonds') ?>/<?= I18N::translate('Call number') ?>:&emsp;<?= e($category->getFullName()) ?></h4>
     </caption>
     <tbody>
         <tr class="finding-aid-first-row"> 
@@ -55,11 +55,7 @@ use Fisharebest\Webtrees\View;
             </tr>
         <?php endforeach ?>	
     </tbody>
-    <tfoot class="finding-aid-table-foot">
-        <tr>
-            <td colspan="3" ><?= view('icons/spacer') ?></td>      
-        </tr>
-    </tfoot>
+
 </table>
 
 <?php foreach ($category->getSubCategories() as $sub_category) : ?>
