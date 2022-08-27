@@ -191,8 +191,7 @@ class Functions {
 
                     case 'SOUR:DATA':
                         //Get date range
-                        $date_range = self::displayDateRangeForSource($source, null, '%Y-%m-%d');
-                        $date_range_text = self::formatDateRange($date_range);
+                        $date_range_text = self::displayISODateRangeForSource($source);
 
                         if($date_range_text !== '') {
                             $source_values['SOUR:DATA:EVEN:DATE'] = $date_range_text;
@@ -219,54 +218,99 @@ class Functions {
     }
 
     /**
-     * Format date range
-     * 
-     * @param string    $date_range
-     * 
-     * @return string   
+     * Display the date range for a source
+     *
+	 * @param Source    $source 
+     * @param Tree      $tree
+     * @param string    $date format
+     *
+     * @return string
      */
-    public static function formatDateRange(string $date_range): string {
+    public static function displayDateRangeForSource(Source $source, Tree $tree = null, string $date_format = null): string {	
+	
+        $date_range = self::getDateRangeForSource($source);
 
-        $date_range = self::removeHtmlTags($date_range);
-        $date_range = str_replace(' ', '', $date_range);
-        $date_range = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range); 
-        $date_range = str_replace(I18N::translateContext('End of date range', 'To'), '/', $date_range); 
+        if(($date_range !== null) && $date_range->isOK()) {
+            return $date_range->display($tree, $date_format);
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * Display the date range for a source in ISO format 
+     *
+	 * @param Source    $source 
+     *
+     * @return string
+     */
+    public static function displayISODateRangeForSource(Source $source): string {	
+	
+        $date_range = self::getDateRangeForSource($source);
+
+        if(($date_range !== null) && $date_range->isOK()) 
+        {
+            return self::getISOformatForDateRange($date_range);
+        }
         
-        $patterns = [
-            '/\A(\d+)\/\Z/',            //  1659/
-            '/\A\/(\d+)\Z/',            //  /1659
-            '/\A(\d\d\d)\/(.*)/',       //  873/*
-            '/\A(\d\d)\/(.*)/',         //  87/*
-            '/\A(\d)\/(.*)/',           //  7/*
-            '/\A(\d\d\d)-(.+?)\/(.*)/', //  873-*/*
-            '/\A(\d\d)-(.+?)\/(.*)/',   //  87-*/*
-            '/\A(\d)-(.+?)\/(.*)/',     //  7-*/*
-            '/(.*)\/(\d\d\d)\Z/',       //  */873
-            '/(.*)\/(\d\d)\Z/',         //  */87
-            '/(.*)\/(\d)\Z/',           //  */8
-            '/(.*)\/(\d\d\d)-(.+)/',    //  */873-
-            '/(.*)\/(\d\d)-(.+)/',      //  */87-
-            '/(.*)\/(\d)-(.+)/',        //  */8-
-        ];
-        $replacements = [
-            '$1',                       //  1659/
-            '$1',                       //  /1659
-            '0$1/$2',                   //  873/*
-            '00$1/$2',                  //  87/*
-            '000$1/$2',                 //  8/*
-            '0$1-$2/$3',                //  873-*/*
-            '00$1-$2/$3',               //  87-*/*
-            '000$1-$2/$3',              //  8-*/*
-            '$1/0$2',                   //  */873
-            '$1/00$2',                  //  */87
-            '$1/000$2',                 //  */8
-            '$1/0$2/$3',                //  */873-
-            '$1/00$2/$3',               //  */87-
-            '$1/000$2/$3',              //  */8-
-        ];
-        
-        return preg_replace($patterns, $replacements, $date_range);     
+        return '';
     }    
+
+    /**
+     * Display a date range in ISO format 
+     *
+	 * @param Date  $date_range
+     *
+     * @return string
+     */
+    public static function getISOformatForDateRange(Date $date_range): string {	
+
+        if(($date_range !== null) && $date_range->isOK()) 
+        {
+            $date_range_text = $date_range->display(null, '%Y-%m-%d');
+            $date_range_text = self::removeHtmlTags($date_range_text);
+            $date_range_text = str_replace(' ', '', $date_range_text);
+            $date_range_text = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range_text); 
+            $date_range_text = str_replace(I18N::translateContext('End of date range', 'To'), '/', $date_range_text); 
+            
+            $patterns = [
+                '/\A(\d+)\/\Z/',            //  1659/
+                '/\A\/(\d+)\Z/',            //  /1659
+                '/\A(\d\d\d)\/(.*)/',       //  873/*
+                '/\A(\d\d)\/(.*)/',         //  87/*
+                '/\A(\d)\/(.*)/',           //  7/*
+                '/\A(\d\d\d)-(.+?)\/(.*)/', //  873-*/*
+                '/\A(\d\d)-(.+?)\/(.*)/',   //  87-*/*
+                '/\A(\d)-(.+?)\/(.*)/',     //  7-*/*
+                '/(.*)\/(\d\d\d)\Z/',       //  */873
+                '/(.*)\/(\d\d)\Z/',         //  */87
+                '/(.*)\/(\d)\Z/',           //  */8
+                '/(.*)\/(\d\d\d)-(.+)/',    //  */873-
+                '/(.*)\/(\d\d)-(.+)/',      //  */87-
+                '/(.*)\/(\d)-(.+)/',        //  */8-
+            ];
+            $replacements = [
+                '$1',                       //  1659/
+                '$1',                       //  /1659
+                '0$1/$2',                   //  873/*
+                '00$1/$2',                  //  87/*
+                '000$1/$2',                 //  8/*
+                '0$1-$2/$3',                //  873-*/*
+                '00$1-$2/$3',               //  87-*/*
+                '000$1-$2/$3',              //  8-*/*
+                '$1/0$2',                   //  */873
+                '$1/00$2',                  //  */87
+                '$1/000$2',                 //  */8
+                '$1/0$2/$3',                //  */873-
+                '$1/00$2/$3',               //  */87-
+                '$1/000$2/$3',              //  */8-
+            ];
+            
+            return preg_replace($patterns, $replacements, $date_range_text);             
+        }
+
+        return '';
+    }	
 
     /**
      * Get places for a source
@@ -400,7 +444,7 @@ class Functions {
     public static function sortSourcesByCallNumber(Collection $sources): Collection {
 		
         return $sources->sortBy(function (Source $source) {
-            return self::getCallNumber($source);
+            return self::getCallNumberForSource($source);
         });
     }
 
@@ -412,7 +456,7 @@ class Functions {
      *
      * @return string
      */
-    public static function getCallNumber(Source $source, Repository $repository = null): string{	
+    public static function getCallNumberForSource(Source $source, Repository $repository = null): string{	
 	
         $call_number = '';
 
@@ -443,25 +487,6 @@ class Functions {
         return $call_number;
 
 	}
-
-    /**
-     * Display the date range for a source
-     *
-	 * @param Source
-     * @param string  date format
-     *
-     * @return string
-     */
-    public static function displayDateRangeForSource(Source $source, Tree $tree = null, string $date_format = null): string {	
-	
-        $date_range = self::getDateRangeForSource($source);
-
-        if(($date_range !== null) && $date_range->isOK()) {
-            return $date_range->display($tree, $date_format);
-        } else {
-            return '';
-        }
-    }
 
     /**
      * Get xref of default repository

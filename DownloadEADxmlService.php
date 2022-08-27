@@ -306,9 +306,7 @@ class DownloadEADxmlService
                 $date_range = $root_category->getOverallDateRange();
 
                 if ( $date_range !== null) {
-
-                    $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                    $date_range_text = Functions::formatDateRange($date_range_text);
+                    $date_range_text = Functions::getISOformatForDateRange($date_range);
                     
                 $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
@@ -390,10 +388,8 @@ class DownloadEADxmlService
                 $date_range = $root_category->getOverallDateRange();
 
                 if ( $date_range !== null) {
-
-                    $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                    $date_range_text = Functions::formatDateRange($date_range_text);
-                    
+                    $date_range_text = Functions::getISOformatForDateRange($date_range);
+                                        
                 $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
                     $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
@@ -475,10 +471,8 @@ class DownloadEADxmlService
                 $date_range = $call_number_category->getOverallDateRange();
 
                 if ( $date_range !== null) {
-
-                $date_range_text = $date_range->display(null, '%Y-%m-%d');
-                $date_range_text = Functions::formatDateRange($date_range_text);
-                    
+                    $date_range_text = Functions::getISOformatForDateRange($date_range);
+                                        
                 $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
                     $unitdate_dom->appendChild(new DOMAttr('encodinganalog', '3.1.3'));

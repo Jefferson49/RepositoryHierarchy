@@ -1032,7 +1032,7 @@ class RepositoryHierarchy   extends     AbstractModule
             //Generate the (recursive) hierarchy of call numbers
             foreach ($linked_sources as $source) {
     
-                $call_number = Functions::getCallNumber($source, $this->repository);
+                $call_number = Functions::getCallNumberForSource($source, $this->repository);
 
                 //If call number is empty, assign empty category and default delimiter
                 if ($call_number === '') {

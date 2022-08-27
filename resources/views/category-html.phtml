@@ -15,11 +15,35 @@ use Fisharebest\Webtrees\View;
 <table >
 
     <style>
-        table           {width: 100%; border-spacing: 2px;} 
-        caption         {font-weight: 700; background-color: #c0c0c0; border: 1px solid black; text-align: left;}
-        td              {font-weight: normal; padding: 5px;}
-        #first_column   {width: 100px;}
-        #last_column    {width: 400px;}
+        body  {
+            font-size:9pt;
+        }
+        table {
+            width: 100%; 
+            border-spacing: 2px;
+        } 
+        caption {
+            font-weight: 700; 
+            background-color: #c0c0c0; 
+            border: 1px solid black; 
+            text-align: left;
+        }
+        td {
+            font-weight: normal; 
+            padding: 3px;
+        }
+        #first_column {
+            width: 80px;
+        }
+        #last_column {
+            width: 120px;
+            text-align: left;
+        }
+        #last_row {
+            border: 1px solid black;
+            border-spacing: 1px;
+            padding: 1px;
+        }
     </style>
 
     <caption>
@@ -37,17 +61,21 @@ use Fisharebest\Webtrees\View;
                 </td>            
             </tr>
             <tr> 
-                <td><?= I18N::translate('Call Number') ?><?= view('icons/spacer') ?></td>               
+                <td id="first_column"><?= I18N::translate('Call Number') ?><?= view('icons/spacer') ?></td>               
                 <td><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></td>
-                <td></td>               
+                <?php if (Functions::displayDateRangeForSource($source, $repository->tree()) !== '') : ?>
+                    <td id="last_column"><?= I18N::translate('Date range') ?>:</td>
+                <?php endif ?>
             </tr>
             <tr> 
-                <td><?= I18N::translate('Author') ?><?= view('icons/spacer') ?></td>               
+                <td id="first_column"><?= I18N::translate('Author') ?><?= view('icons/spacer') ?></td>               
                 <td><?= isset($source_facts['SOUR:AUTH']) ?	$source_facts['SOUR:AUTH'] : '' ?></td>
-                <td><?= I18N::translate('Date range') ?>:<?= Functions::displayDateRangeForSource($source, $repository->tree())?></td>               
+                <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
+                    <td id="last_column"><?= Functions::displayISODateRangeForSource($source)?></td>               
+                <?php endif ?>
             </tr>
             <tr>
-                <td colspan="3"></td>      
+                <td id="last_row" colspan="3"></td>      
             </tr>
         <?php endforeach ?>	
     </tbody>
