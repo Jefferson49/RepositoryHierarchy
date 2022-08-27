@@ -494,6 +494,9 @@ class RepositoryHierarchy   extends     AbstractModule
      */
     protected function sourcesToFix(Tree $tree, array $params): ?Collection
     {
+        //If data fix is called from wrong context, return
+        if (!isset($this->repository_xref)) return null;
+
         if ($params[CallNumberCategory::VAR_CATEGORY_NAME] === '' || $params[self::VAR_DATA_FIX_CATEGORY_NAME_REPLACE] === '') {
             return null;
         }
