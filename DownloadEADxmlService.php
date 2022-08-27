@@ -571,7 +571,7 @@ class DownloadEADxmlService
 
         $text_options = [
             self::DOWNLOAD_OPTION_HTML      => I18N::translate('Finding aid as HTML'),
-            self::DOWNLOAD_OPTION_PDF       => I18N::translate('Finding aid as PDF'),
+            //self::DOWNLOAD_OPTION_PDF       => I18N::translate('Finding aid as PDF'),
         ];
 
         switch($selection) {
@@ -585,11 +585,11 @@ class DownloadEADxmlService
                 break;
 
             case self::DOWNLOAD_OPTION_ALL:
-                $options = $xml_options + $text_options;
+                $options = $text_options + $xml_options;
                 break;
 
             default:
-                $options = $xml_options + $text_options;
+                $options = $text_options + $xml_options;
             }
 
         return $options;

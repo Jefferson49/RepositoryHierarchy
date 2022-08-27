@@ -15,7 +15,6 @@ use Fisharebest\Webtrees\View;
  * @var string      		$delimiter_expression
  * @var string             	$error
  * @var string             	$command 
- * @var string             	$downlaod_command 
  */
  
 ?>
@@ -103,7 +102,7 @@ use Fisharebest\Webtrees\View;
 			<?= view('components/radios-inline', [
 				'name' => 'download_command', 
 				'options' => DownloadEADxmlService::getDownloadOptions(DownloadEADxmlService::DOWNLOAD_OPTION_ALL), 
-				'selected' => DownloadEADxmlService::DOWNLOAD_OPTION_APE_EAD,
+				'selected' => DownloadEADxmlService::DOWNLOAD_OPTION_HTML,
 			]) ?>
 			<?= view('icons/spacer') ?>
 			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
