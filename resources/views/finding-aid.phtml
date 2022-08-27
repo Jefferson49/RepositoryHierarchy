@@ -21,17 +21,6 @@ use Fisharebest\Webtrees\View;
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<title><?= $title ?></title>
 
-		<?php if (false) : ?>
-			<?php $module_service = new ModuleService() ?>
-			<?php $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME) ?>
-			<?php $route = route('module', [
-				'module' => $repository_hierarchy->name(),
-				'action' => 'Asset',
-				'asset'  => 'css/finding-aid.css',
-			]); ?>
-			<link href="<?= $route ?>" type="text/css" rel="stylesheet" />
-        <?php endif ?>
-
 		<style>
 			.finding-aid-body {
 				font-size:10pt;
