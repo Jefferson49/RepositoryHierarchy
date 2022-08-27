@@ -592,7 +592,7 @@ class RepositoryHierarchy   extends     AbstractModule
         if ($repository === null) {
             return I18N::translate('Repository Hierarchy');
         } else {
-            return I18N::translate('Repository Hierachy of: %s', $repository->fullName());
+            return I18N::translate('Repository Hierarchy of: %s', $repository->fullName());
         }
     }
 
