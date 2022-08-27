@@ -193,6 +193,7 @@ class DownloadFindingAidService
         $html = $this->generateHtml();
         $pdf->tcpdf->AddPage();
         $pdf->tcpdf->writeHTML($html);
+        $pdf->tcpdf->lastPage();
 
         return $pdf;
     }

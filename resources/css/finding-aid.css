@@ -1,0 +1,32 @@
+body {
+    font-size:18pt;
+}
+table {
+    width: 50%; 
+    border-spacing: 2px;
+} 
+tr.finding-aid-caption {
+    font-weight: 700; 
+    background-color: #c0c0c0; 
+    border: 1px solid black; 
+    text-align: left;
+}
+tr.finding-aid-first-row {
+    border-spacing: 0px;
+    padding: 0px;
+}
+tr.finding-aid-last-row {
+    border: 1px solid black;
+    border-spacing: 1px;
+    padding: 1px;
+}
+td.finding-aid-td {
+    font-weight: normal; 
+    padding: 3px;
+}
+td.finding-aid-first_column {
+    width: 80px;
+}
+td.finding-aid-last_column {
+    width: 120px;
+}

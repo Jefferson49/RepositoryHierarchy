@@ -4,6 +4,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\View;
 
 /**
@@ -19,42 +20,64 @@ use Fisharebest\Webtrees\View;
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<title><?= $title ?></title>
+
+		<?php if (false) : ?>
+			<?php $module_service = new ModuleService() ?>
+			<?php $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME) ?>
+			<?php $route = route('module', [
+				'module' => $repository_hierarchy->name(),
+				'action' => 'Asset',
+				'asset'  => 'css/finding-aid.css',
+			]); ?>
+			<link href="<?= $route ?>" type="text/css" rel="stylesheet" />
+        <?php endif ?>
+
 		<style>
-			body  {
+			.finding-aid-body {
 				font-size:10pt;
+				font-family: Arial,Verdana,sans-serif;
 			}
-			table {
+			.finding-aid-table {
 				width: 100%; 
-				border-spacing: 2px;
+				padding: 5px;
+				vertical-align: top;
+				border: none; 
 			} 
-			caption {
+			.finding-aid-table-caption {
 				font-weight: 700; 
 				background-color: #c0c0c0; 
 				border: 1px solid black; 
+				padding-left: 5px;
 				text-align: left;
 			}
-			td {
-				font-weight: normal; 
-				padding: 3px;
+			.finding-aid-table-foot {
+				height: 10px;
+				border: 1px solid black; 
 			}
-			td.first_column {
-				width: 80px;
-			}
-			td.last_column {
-				width: 120px;
-			}
-			tr.first_row {
+			.finding-aid-first-row {
 				border-spacing: 0px;
 				padding: 0px;
 			}
-			tr.last_row {
+			.finding-aid-last-row {
 				border: 1px solid black;
-				border-spacing: 1px;
-				padding: 1px;
 			}
-    	</style>
+			.finding-aid-first-column {
+				width: 100px;
+			}
+			.finding-aid-last-column {
+				width: 160px;
+			}
+			td {
+				vertical-align: top;	
+			}
+			.tab { 
+				display:inline-block; 
+				margin-left: 40px; 
+			}
+		</style>
+
 	</head>
-	<body>
+	<body class="finding-aid-body">
 		<h1><?= $title ?></h1>
 		<?php foreach ($root_category->getSubCategories() as $sub_category) : ?>
 			<?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
