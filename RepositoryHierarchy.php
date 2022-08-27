@@ -625,7 +625,10 @@ class RepositoryHierarchy   extends     AbstractModule
             $match = str_replace(self::DELIMITER_ESCAPE, self::DELIMITER_SEPARATOR, $match);
 
             //If found regex is not valid, fill array with error message
-            if (@preg_match('/' . $match . '/', '') === false) {  
+            if ((@preg_match('/' . $match . '/', '') === false) OR 
+                ($delimiter_expression == '$') OR
+                ($delimiter_expression == '.') )             
+            {  
                 array_push($error_list, I18N::translate('Regular expression not accepted') . ': <b>' . $match . '</b>');
             }
             //If found regex is valid, add to list of delimitor expressions
