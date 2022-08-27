@@ -436,16 +436,48 @@ class Functions {
     /**
      * Sorting sources by call number
      *
-	 * @param Source $sources
-	 * @param Repository $repository
+	 * @param Collection    $sources
+	 * @param Repository    $repository
      *
      * @return Collection
      */
     public static function sortSourcesByCallNumber(Collection $sources): Collection {
 		
-        return $sources->sortBy(function (Source $source) {
-            return self::getCallNumberForSource($source);
+        return $sources->sortBy(function (Source $source1, Source $source2) {
+            return self::getCallNumberForSource($source1) < self::getCallNumberForSource($source2) ? -1 : 1;
         });
+    }
+
+    /**
+     * Get collection for an array
+     *
+	 * @param array $items
+     *
+     * @return Collection
+     */
+    public static function getCollectionForArray(array $items): Collection {
+		
+        $collection = new Collection();
+        
+        foreach($items as $item){
+                $collection->push($item);
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Sorting call number categories by call number
+     *
+	 * @param Collection $categories
+     *
+     * @return Collection
+     */
+    public static function sortCallNumberCategoriesByCallNumber(Collection $categories): Collection {
+		
+        return $categories->sortBy(function (CallNumberCategory $category1, CallNumberCategory $category2) {
+                return $category1->getFullName() < $category2->getFullName() ? -1 : 1;
+            });
     }
 
     /**

@@ -12,56 +12,59 @@ use Fisharebest\Webtrees\View;
  */
 
 ?>
-<table class="finding-aid-table">
-    <caption class="finding-aid-table-caption">
-        <h4><?= I18N::translate('Fonds') ?>/<?= I18N::translate('Call number') ?>:&emsp;<?= e($category->getFullName()) ?></h4>
-    </caption>
-    <tbody>
-        <tr class="finding-aid-first-row"> 
-            <td class="finding-aid-first-column"></td>               
-            <td></td>
-            <td class="finding-aid-last-column"></td>            
-        </tr>        
-        <?php foreach ($category->getSources() as $source) : ?>
-            <?php $source_facts = Functions::sourceValuesByTag($source, $repository) ?>
-            <tr> 
-                <td><?= I18N::translate('Source') ?>/<?= I18N::translate('Title') ?><?= view('icons/spacer') ?></td>               
-                <td><?= $source->fullName()	?></td>
-                <td>
-                    <?= I18N::translate('Gedcom-ID') ?>: 
-                    <a href="<?= e($source->url()) ?>"><?= $source->xref() ?></a>
-                </td>            
-            </tr>
-            <tr> 
-                <td><?= I18N::translate('Call number') ?><?= view('icons/spacer') ?></td>               
-                <td><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></td>
-                <?php if (Functions::displayDateRangeForSource($source, $repository->tree()) !== '') : ?>
-                    <td><?= I18N::translate('Date range') ?>:</td>
-                <?php else : ?>
-                    <td></td>      
-                <?php endif ?>
-            </tr>
-            <tr> 
-                <td><?= I18N::translate('Author') ?><?= view('icons/spacer') ?></td>               
-                <td><?= isset($source_facts['SOUR:AUTH']) ?	$source_facts['SOUR:AUTH'] : '' ?></td>
-                <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
-                    <td><?= Functions::displayISODateRangeForSource($source)?></td>      
-                <?php else : ?>
-                    <td></td>                 
-                <?php endif ?>
-            </tr>
-            <tr>
-                <td class="finding-aid-last-row" colspan="3"></td>      
-            </tr>
-        <?php endforeach ?>	
-    </tbody>
 
-</table>
+<?php if (!$is_root_category) : ?>
+    <table class="finding-aid-table">
+        <caption class="finding-aid-table-caption">
+            <h4 id="<?= $category->getId() ?>"><?= I18N::translate('Fonds') ?>/<?= I18N::translate('Call number') ?>:&emsp;<?= e($category->getFullName()) ?></h4>
+        </caption>
+        <tbody>
+            <tr class="finding-aid-first-row"> 
+                <td class="finding-aid-first-column"></td>               
+                <td></td>
+                <td class="finding-aid-last-column"></td>            
+            </tr>        
+            <?php foreach ($category->getSources() as $source) : ?>
+                <?php $source_facts = Functions::sourceValuesByTag($source, $repository) ?>
+                <tr> 
+                    <td><?= I18N::translate('Source') ?>/<?= I18N::translate('Title') ?><?= view('icons/spacer') ?></td>               
+                    <td><?= $source->fullName()	?></td>
+                    <td>
+                        <?= I18N::translate('Gedcom-ID') ?>: 
+                        <a href="<?= e($source->url()) ?>"><?= $source->xref() ?></a>
+                    </td>            
+                </tr>
+                <tr> 
+                    <td><?= I18N::translate('Call number') ?><?= view('icons/spacer') ?></td>               
+                    <td><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></td>
+                    <?php if (Functions::displayDateRangeForSource($source, $repository->tree()) !== '') : ?>
+                        <td><?= I18N::translate('Date range') ?>:</td>
+                    <?php else : ?>
+                        <td></td>      
+                    <?php endif ?>
+                </tr>
+                <tr> 
+                    <td><?= I18N::translate('Author') ?><?= view('icons/spacer') ?></td>               
+                    <td><?= isset($source_facts['SOUR:AUTH']) ?	$source_facts['SOUR:AUTH'] : '' ?></td>
+                    <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
+                        <td><?= Functions::displayISODateRangeForSource($source)?></td>      
+                    <?php else : ?>
+                        <td></td>                 
+                    <?php endif ?>
+                </tr>
+                <tr>
+                    <td class="finding-aid-last-row" colspan="3"></td>      
+                </tr>
+            <?php endforeach ?>	
+        </tbody>
+    </table>
+<?php endif ?>
 
 <?php foreach ($category->getSubCategories() as $sub_category) : ?>
     <?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
-            'category' => $sub_category,
-            'repository' 	=> $repository,
+            'category'          => $sub_category,
+            'repository' 	    => $repository,
+            'is_root_category'	=> false,
             ]) ?>
 <?php endforeach ?>
 
