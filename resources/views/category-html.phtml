@@ -14,68 +14,46 @@ use Fisharebest\Webtrees\View;
 ?>
 <table >
 
-    <style>
-        body  {
-            font-size:9pt;
-        }
-        table {
-            width: 100%; 
-            border-spacing: 2px;
-        } 
-        caption {
-            font-weight: 700; 
-            background-color: #c0c0c0; 
-            border: 1px solid black; 
-            text-align: left;
-        }
-        td {
-            font-weight: normal; 
-            padding: 3px;
-        }
-        #first_column {
-            width: 80px;
-        }
-        #last_column {
-            width: 120px;
-            text-align: left;
-        }
-        #last_row {
-            border: 1px solid black;
-            border-spacing: 1px;
-            padding: 1px;
-        }
-    </style>
-
     <caption>
         <h4><?= I18N::translate('Fonds') ?>/<?= I18N::translate('Call number') ?>: <?= e($category->getFullName()) ?></h4>
     </caption>
 
     <tbody>
+            <tr class="first_row"> 
+                <td class="first_column"></td>               
+                <td></td>
+                <td class="last_column"></td>            
+            </tr>        
         <?php foreach ($category->getSources() as $source) : ?>
             <?php $source_facts = Functions::sourceValuesByTag($source, $repository) ?>
             <tr> 
-                <td id="first_column"><?= I18N::translate('Source') ?>/<?= I18N::translate('Title') ?><?= view('icons/spacer') ?></td>               
+                <td><?= I18N::translate('Source') ?>/<?= I18N::translate('Title') ?><?= view('icons/spacer') ?></td>               
                 <td><?= $source->fullName()	?></td>
-                <td id="last_column">
-                    <a href="<?= e($source->url()) ?>"><?= I18N::translate('Gedcom-ID') ?>: <?= $source->xref() ?></a>
+                <td>
+                    <?= I18N::translate('Gedcom-ID') ?>: 
+                    <a href="<?= e($source->url()) ?>"><?= $source->xref() ?></a>
                 </td>            
             </tr>
             <tr> 
-                <td id="first_column"><?= I18N::translate('Call Number') ?><?= view('icons/spacer') ?></td>               
+                <td><?= I18N::translate('Call Number') ?><?= view('icons/spacer') ?></td>               
                 <td><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></td>
                 <?php if (Functions::displayDateRangeForSource($source, $repository->tree()) !== '') : ?>
-                    <td id="last_column"><?= I18N::translate('Date range') ?>:</td>
+                    <td><?= I18N::translate('Date range') ?>:</td>
+                <?php else : ?>
+                    <td></td>      
                 <?php endif ?>
             </tr>
             <tr> 
-                <td id="first_column"><?= I18N::translate('Author') ?><?= view('icons/spacer') ?></td>               
+                <td><?= I18N::translate('Author') ?><?= view('icons/spacer') ?></td>               
                 <td><?= isset($source_facts['SOUR:AUTH']) ?	$source_facts['SOUR:AUTH'] : '' ?></td>
                 <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
-                    <td id="last_column"><?= Functions::displayISODateRangeForSource($source)?></td>               
+                    <td><?= Functions::displayISODateRangeForSource($source)?></td>      
+                <?php else : ?>
+                    <td></td>                 
                 <?php endif ?>
             </tr>
-            <tr>
-                <td id="last_row" colspan="3"></td>      
+            <tr class="last_row">
+                <td colspan="3"></td>      
             </tr>
         <?php endforeach ?>	
     </tbody>

@@ -31,6 +31,7 @@ use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Report\PdfRenderer;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
+use Fisharebest\Webtrees\Session;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -92,6 +93,7 @@ class DownloadFindingAidService
     {
         return view(RepositoryHierarchy::MODULE_NAME . '::finding-aid', [  
             'title'         => I18N::translate('Finding aid'),
+            'language_tag'  => Session::get('language'),
             'root_category' => $this->root_category,
             'repository'    => $this->repository,
             ]);
@@ -182,13 +184,14 @@ class DownloadFindingAidService
      */
     public function createPDF(): PdfRenderer 
     {
-        // create new PDF document
+        //Create PDF document and settings
         $pdf = new PdfRenderer();
+        $pdf->default_font_size = 10;
         $pdf->setup();
-        $pdf->body();
 
-        // Set content and print
+        //Load HTML and render
         $html = $this->generateHtml();
+        $pdf->tcpdf->AddPage();
         $pdf->tcpdf->writeHTML($html);
 
         return $pdf;

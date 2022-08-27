@@ -8,16 +8,51 @@ use Fisharebest\Webtrees\View;
 
 /**
  * @var string					$title
+ * @var string					$language_tag
  * @var CallNumberCategory      $root_category
  * @var Repository				$repository
  */
 
 ?>
 <!DOCTYPE HTML>
-<html>
+<html lang="<?= $language_tag	?>">
 	<head>
-		<title><?= $title ?></title>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title><?= $title ?></title>
+		<style>
+			body  {
+				font-size:10pt;
+			}
+			table {
+				width: 100%; 
+				border-spacing: 2px;
+			} 
+			caption {
+				font-weight: 700; 
+				background-color: #c0c0c0; 
+				border: 1px solid black; 
+				text-align: left;
+			}
+			td {
+				font-weight: normal; 
+				padding: 3px;
+			}
+			td.first_column {
+				width: 80px;
+			}
+			td.last_column {
+				width: 120px;
+			}
+			tr.first_row {
+				border-spacing: 0px;
+				padding: 0px;
+			}
+			tr.last_row {
+				border: 1px solid black;
+				border-spacing: 1px;
+				padding: 1px;
+			}
+    	</style>
 	</head>
 	<body>
 		<h1><?= $title ?></h1>
