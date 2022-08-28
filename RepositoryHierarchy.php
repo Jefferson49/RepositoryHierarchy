@@ -487,7 +487,7 @@ class RepositoryHierarchy   extends     AbstractModule
      */
     public function fixOptions(Tree $tree): string
     {
-        //If data fix is called from wrong context
+        //If data fix is called from wrong context, show error text
         if (!isset($this->repository_xref)) {
             $error_text =   I18N::translate('The Repository Hierarchy data fix cannot be used in the "control panel".') . '<br>' . 
                             I18N::translate('The data fix can be called from the user front end by clicking on the link to rename a call number category.');
@@ -497,6 +497,18 @@ class RepositoryHierarchy   extends     AbstractModule
                 ]
             );
         }
+
+        //If ser is not manager for this tree, show error text
+        if (!Auth::isManager($tree)) {
+            $error_text =   I18N::translate('Currently, you do not have the user rights to change call number categories.') . '<br>' . 
+                            I18N::translate('In order to change call number categories, you need to have a "Manager" role for the corresponding tree.');
+
+            return view($this->name() . '::error', [
+                'text' => $error_text,
+                ]
+            );
+        }
+
 
         return view($this->name() . '::options', [
             CallNumberCategory::VAR_REPOSITORY_XREF     => $this->repository_xref,
