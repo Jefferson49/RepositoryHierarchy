@@ -184,6 +184,8 @@ class RepositoryHierarchy   extends     AbstractModule
      */
     public function __construct()
     {
+        //Create data fix service
+        $this->data_fix_service = new DataFixService;
     }
 
     /**
@@ -192,9 +194,6 @@ class RepositoryHierarchy   extends     AbstractModule
      */
     public function boot(): void
     {
-        //Create data fix service
-        $this->data_fix_service = new DataFixService;
-
         $router = Registry::routeFactory()->routeMap();
 
         //Register a route for the class  
