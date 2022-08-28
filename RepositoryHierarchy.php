@@ -146,7 +146,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_SET_AS_START_REPO = 'set as start repository';
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.0.1';
+    public const CUSTOM_VERSION = '1.0.2';
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
@@ -480,7 +480,7 @@ class RepositoryHierarchy   extends     AbstractModule
                 ]
             );
         }
-        
+
         return view($this->name() . '::options', [
             CallNumberCategory::VAR_REPOSITORY_XREF     => $this->repository_xref,
             CallNumberCategory ::VAR_CATEGORY_FULL_NAME => $this->data_fix_category_full_name,
