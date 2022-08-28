@@ -10,102 +10,107 @@ use Fisharebest\Webtrees\I18N;
  */
 ?>
 
-	<div class="d-flex">
-	    <span class="wt-chart-horizontal-spacer d-inline-block"></span>
- 		<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" data-bs-toggle="collapse" data-bs-target="#category_id-<?= e($category->getId()) ?>" aria-controls="category_id-<?= e($category->getId()) ?>" aria-expanded="true">
-            <span class="chart-expand">
-                <?= view('icons/expand') ?>
-            </span>
-            <span class="chart-collapse">
-                <?= view('icons/collapse') ?>
-            </span>
-			<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_LABEL, '1'))) : ?>
-				<b><?= I18N::translate('Call Number Category') . ': ' ?></b>
-			<?php endif ?>		
-			<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CATEGORY, '1'))) : ?>
-				<b><?= $category->getFrontEndName() ?></b>
-			<?php else : ?>		
-				<b><?= $category->getFrontEndName(true) ?></b>
-			<?php endif ?>		
-			<?php if (($category->getOverallDateRange() !== null) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0')))) : ?>
-				(
-				<?= I18N::translate('Date range') ?>:
-				<?= $category->getOverallDateRange()->display() ?>
-				)
-			<?php endif ?>
-		</button>			
-		<?= view('icons/spacer') ?>
-		<?php if ((strpos($category->getFullName(), CallNumberCategory::EMPTY_CATEGORY_NAME) === false) AND (strpos($category->getFullName(), CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
-			<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
-				<a href="<?= e(route(CallNumberDataFix::class, [
-						'tree' => $repository_hierarchy->getTree()->name(), 
-						'xref' => $repository_hierarchy->getRepositoryXref(), 
-						'category_name' => $category->getName(), 
-						'category_full_name' => $category->getFullName() 
-						])) ?>">
-					<?= view('icons/edit') ?>
-					<?= I18N::translate('Rename') ?>	
-				</a>
-				<?= view('icons/spacer') ?>
-				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
-							data-wt-href="<?= e(route(CreateSourceModal::class, [
-								'tree' => $repository_hierarchy->getTree()->name(), 
-								'xref' => $repository_hierarchy->getRepositoryXref(), 
-								'source_call_number' => $category->getFullName()
-								])) ?>">
-					<?= view('icons/source') ?>
-					<?= I18N::translate('Add new source') ?>	
-				</a>
-			</button>
+<div class="d-flex">
+	<span class="wt-chart-horizontal-spacer d-inline-block"></span>
+	<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" data-bs-toggle="collapse" data-bs-target="#category_id-<?= e($category->getId()) ?>" aria-controls="category_id-<?= e($category->getId()) ?>" aria-expanded="true">
+		<span class="chart-expand">
+			<?= view('icons/expand') ?>
+		</span>
+		<span class="chart-collapse">
+			<?= view('icons/collapse') ?>
+		</span>
+		<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_LABEL, '1'))) : ?>
+			<b><?= I18N::translate('Call Number Category') . ': ' ?></b>
 		<?php endif ?>		
-	</div>
-    <div id="category_id-<?= e($category->getId()) ?>" class="collapse show mb-4">
-	    <div class="d-flex">
-            <div class="wt-chart-horizontal-indent position-relative">
-			</div>
-			<div>
-				<div class="d-flex">	
-					<ul>
-						<?php foreach ($category->getSources() as $source) : ?>
-							<li>
-								<a href="<?= e($source->url()) ?>"><?= Functions::getCallNumberForSource($source, $repository_hierarchy->getRepository(), boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))) ?></a>
-
-								<?php if (($source->fullName() != '') && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TITLE, '1')))) : ?>
-									—
-									<?= I18N::translate('Title') ?>:						
-									<a href="<?= e($source->url()) ?>">	
-									<?= $source->fullName()	?>				
-									</a>
-								<?php endif ?>
-
-								<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_XREF, '1'))) : ?>							
-									—
-									<a href="<?= e($source->url()) ?>">	
-									<?= '('. $source->xref() . ')' ?>
-									</a>
-								<?php endif ?>							
-
-								<?php if (($source->facts(['AUTH'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_AUTHOR, '1')))) : ?>
-									—
-									<?= I18N::translate('Author') ?>:
-									<?= $source->facts(['AUTH'])->first()->value() ?>
-								<?php endif ?>	
-
-								<?php if (($source->facts(['DATA'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1')))) : ?>
-									—
-									<?= I18N::translate('Date range') ?>:
-									<?= Functions::displayDateRangeForSource($source, $repository_hierarchy->getTree())?>
-								<?php endif ?>
-							</li>
-						<?php endforeach ?>	
-					</ul>
-				</div>
-				<?php foreach ($category->getSubCategories() as $sub_category) : ?>			
-					<?= view($repository_hierarchy->name() . '::tree', [
-						'repository_hierarchy' => $repository_hierarchy, 
-						'category' => $sub_category]) ?>
-				<?php endforeach ?>	
-			</div>	
+		<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CATEGORY, '1'))) : ?>
+			<b><?= $category->getFrontEndName() ?></b>
+		<?php else : ?>		
+			<b><?= $category->getFrontEndName(true) ?></b>
+		<?php endif ?>		
+		<?php if (($category->getOverallDateRange() !== null) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0')))) : ?>
+			(
+			<?= I18N::translate('Date range') ?>:
+			<?= $category->getOverallDateRange()->display() ?>
+			)
+		<?php endif ?>
+	</button>			
+	<?= view('icons/spacer') ?>
+	<?php if ((strpos($category->getFullName(), CallNumberCategory::EMPTY_CATEGORY_NAME) === false) AND (strpos($category->getFullName(), CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
+		<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
+			<a href="<?= e(route(CallNumberDataFix::class, [
+					'tree' => $repository_hierarchy->getTree()->name(), 
+					'xref' => $repository_hierarchy->getRepositoryXref(), 
+					'category_name' => $category->getName(), 
+					'category_full_name' => $category->getFullName() 
+					])) ?>">
+				<?= view('icons/edit') ?>
+				<?= I18N::translate('Rename') ?>	
+			</a>
+			<?= view('icons/spacer') ?>
+			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
+						data-wt-href="<?= e(route(CreateSourceModal::class, [
+							'tree' => $repository_hierarchy->getTree()->name(), 
+							'xref' => $repository_hierarchy->getRepositoryXref(), 
+							'source_call_number' => $category->getFullName()
+							])) ?>">
+				<?= view('icons/source') ?>
+				<?= I18N::translate('Add new source') ?>	
+			</a>
+		</button>
+	<?php endif ?>		
+</div>
+<div id="category_id-<?= e($category->getId()) ?>" class="collapse show mb-4">
+	<div class="d-flex">
+		<div class="wt-chart-horizontal-indent position-relative">
 		</div>
-	</div>	
+		<div>
+			<div class="d-flex">	
+				<ul>
+					<?php $sources = Functions::getCollectionForArray($category->getSources()) ?>
+            		<?php $sources = Functions::sortSourcesByCallNumber($sources) ?>
+					<?php foreach ($sources as $source) : ?>
+						<li>
+							<a href="<?= e($source->url()) ?>"><?= Functions::getCallNumberForSource($source, $repository_hierarchy->getRepository(), boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))) ?></a>
+
+							<?php if (($source->fullName() != '') && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TITLE, '1')))) : ?>
+								—
+								<?= I18N::translate('Title') ?>:						
+								<a href="<?= e($source->url()) ?>">	
+								<?= $source->fullName()	?>				
+								</a>
+							<?php endif ?>
+
+							<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_XREF, '1'))) : ?>							
+								—
+								<a href="<?= e($source->url()) ?>">	
+								<?= '('. $source->xref() . ')' ?>
+								</a>
+							<?php endif ?>							
+
+							<?php if (($source->facts(['AUTH'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_AUTHOR, '1')))) : ?>
+								—
+								<?= I18N::translate('Author') ?>:
+								<?= $source->facts(['AUTH'])->first()->value() ?>
+							<?php endif ?>	
+
+							<?php if (($source->facts(['DATA'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1')))) : ?>
+								—
+								<?= I18N::translate('Date range') ?>:
+								<?= Functions::displayDateRangeForSource($source, $repository_hierarchy->getTree())?>
+							<?php endif ?>
+						</li>
+					<?php endforeach ?>	
+				</ul>
+			</div>
+
+			<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
+			<?php $categories = Functions::sortCallNumberCategoriesByName($categories) ?>
+			<?php foreach ($categories as $sub_category) : ?>			
+				<?= view($repository_hierarchy->name() . '::tree', [
+					'repository_hierarchy' => $repository_hierarchy, 
+					'category' => $sub_category]) ?>
+			<?php endforeach ?>	
+		</div>	
+	</div>
+</div>	
     

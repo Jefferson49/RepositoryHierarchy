@@ -1042,7 +1042,7 @@ class RepositoryHierarchy   extends     AbstractModule
                 }
             }
         
-            //Find all sources linked to the repository
+            //Find and sort all sources linked to the repository
             $linked_sources = (new LinkedRecordService())->linkedSources($repository);
             $linked_sources = Functions::sortSourcesByCallNumber($linked_sources);
 
