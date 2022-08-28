@@ -20,8 +20,9 @@ use Illuminate\Support\Collection;
     <a href="#<?= $category->getId() ?>"><?= $category->getFullName() ?></a>
 <?php endif ?>	
 
-<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
-<?php $categories = Functions::sortCallNumberCategoriesByCallNumber($categories) ?>
+<!-- $categories = Functions::getCollectionForArray($category->getSubCategories()) -->
+<!-- $categories = Functions::sortCallNumberCategoriesByCallNumber($categories) -->
+
 <?php foreach ($category->getSubCategories() as $sub_category) : ?>
     <?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
             'category'              => $sub_category,

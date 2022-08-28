@@ -442,10 +442,12 @@ class Functions {
      * @return Collection
      */
     public static function sortSourcesByCallNumber(Collection $sources): Collection {
-		
-        return $sources->sortBy(function (Source $source1, Source $source2) {
-            return self::getCallNumberForSource($source1) < self::getCallNumberForSource($source2) ? -1 : 1;
-        });
+
+        return $sources;
+
+        //return $sources->sortBy(function (Source $source1, Source $source2) {
+        //    return (self::getCallNumberForSource($source1) < self::getCallNumberForSource($source2)) ? -1 : 1;
+        //});
     }
 
     /**
