@@ -23,8 +23,11 @@ use Fisharebest\Webtrees\View;
                 <td class="finding-aid-first-column"></td>               
                 <td></td>
                 <td class="finding-aid-last-column"></td>            
-            </tr>        
-            <?php foreach ($category->getSources() as $source) : ?>
+            </tr>
+
+            <?php $sources = Functions::getCollectionForArray($category->getSources()) ?>
+            <?php $sources = Functions::sortSourcesByCallNumber($sources) ?>
+            <?php foreach ($sources as $source) : ?>
                 <?php $source_facts = Functions::sourceValuesByTag($source, $repository) ?>
                 <tr> 
                     <td><?= I18N::translate('Source') ?>/<?= I18N::translate('Title') ?><?= view('icons/spacer') ?></td>               
@@ -60,7 +63,10 @@ use Fisharebest\Webtrees\View;
     </table>
 <?php endif ?>
 
-<?php foreach ($category->getSubCategories() as $sub_category) : ?>
+<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
+<?php $categories = Functions::sortCallNumberCategoriesByName($categories) ?>
+
+<?php foreach ($categories as $sub_category) : ?>
     <?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
             'category'          => $sub_category,
             'repository' 	    => $repository,

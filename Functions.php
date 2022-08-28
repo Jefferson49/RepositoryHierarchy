@@ -154,7 +154,7 @@ class Functions {
      * 
      * @return array    [$tag => $value]
      */
-    public static function sourceValuesByTag(Source $source, Repository $repository): array
+    public static function sourceValuesByTag(Source $source, Repository $repository = null): array
     {
         $source_values = [];
         $level1_source_tags = [
@@ -179,10 +179,13 @@ class Functions {
                 switch($fact->tag()) {
                     case 'SOUR:REPO':
 
-                        //Do not continue if it doesn't matches the provided repository
-                        if ($fact->value() !== '@'. $repository->xref() . '@') {
-                            break;
+                        //If repository is provided, do not continue if it doesn't match
+                        if (isset($repository)) {
+                            if ($fact->value() !== '@'. $repository->xref() . '@') {
+                                break;
+                            }
                         }
+
                         //Get call number
                         if($fact->attribute('CALN') !== '') {
                             $source_values['SOUR:REPO:CALN'] = $fact->attribute('CALN');
@@ -434,23 +437,6 @@ class Functions {
     }
 
     /**
-     * Sorting sources by call number
-     *
-	 * @param Collection    $sources
-	 * @param Repository    $repository
-     *
-     * @return Collection
-     */
-    public static function sortSourcesByCallNumber(Collection $sources): Collection {
-
-        return $sources;
-
-        //return $sources->sortBy(function (Source $source1, Source $source2) {
-        //    return (self::getCallNumberForSource($source1) < self::getCallNumberForSource($source2)) ? -1 : 1;
-        //});
-    }
-
-    /**
      * Get collection for an array
      *
 	 * @param array $items
@@ -469,16 +455,31 @@ class Functions {
     }
 
     /**
+     * Sorting sources by call number
+     *
+	 * @param Collection    $sources
+	 * @param Repository    $repository
+     *
+     * @return Collection
+     */
+    public static function sortSourcesByCallNumber(Collection $sources): Collection {
+
+        return $sources->sort(function (Source $source1, Source $source2) {
+            return strnatcasecmp(self::getCallNumberForSource($source1), self::getCallNumberForSource($source2));
+        });
+    }
+
+    /**
      * Sorting call number categories by call number
      *
 	 * @param Collection $categories
      *
      * @return Collection
      */
-    public static function sortCallNumberCategoriesByCallNumber(Collection $categories): Collection {
+    public static function sortCallNumberCategoriesByName(Collection $categories): Collection {
 		
-        return $categories->sortBy(function (CallNumberCategory $category1, CallNumberCategory $category2) {
-                return $category1->getFullName() < $category2->getFullName() ? -1 : 1;
+        return $categories->sort(function (CallNumberCategory $category1, CallNumberCategory $category2) {
+                return strnatcasecmp($category1->getFullName(), $category2->getFullName());
             });
     }
 
@@ -492,34 +493,9 @@ class Functions {
      */
     public static function getCallNumberForSource(Source $source, Repository $repository = null): string{	
 	
-        $call_number = '';
+        $source_facts = self::sourceValuesByTag($source, $repository);
 
-        foreach($source->facts(['REPO']) as $found_repository) {
-
-            preg_match_all('/1 REPO @(.*)@/', $found_repository->gedcom(), $matches, PREG_SET_ORDER);
-                    
-            if (!empty($matches[0]) ) {
-                $match = $matches[0];
-                $xref = $match[1];
-            }
-            else $xref = '';
-
-            //only if it is the requested repository (or repository is not relevant)
-            if (($repository === null) OR ($xref === $repository->xref())) {
-
-                preg_match_all('/\n2 CALN (.*)/', $found_repository->gedcom(), $matches, PREG_SET_ORDER);
-                
-                if (!empty($matches[0]) ) {
-                    $match = $matches[0];
-                    $call_number = $match[1];
-                }
-
-                break;
-            }
-        }   
-        
-        return $call_number;
-
+        return isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '';
 	}
 
     /**
