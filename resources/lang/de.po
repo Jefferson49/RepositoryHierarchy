@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2022-08-27 15:43+0200\n"
-"PO-Revision-Date: 2022-08-27 15:43+0200\n"
+"POT-Creation-Date: 2022-08-28 19:50+0200\n"
+"PO-Revision-Date: 2022-08-28 19:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -33,7 +33,7 @@ msgstr "Erzeugt von webtrees"
 
 #: DownloadEADxmlService.php:311 DownloadEADxmlService.php:393
 #: DownloadEADxmlService.php:476 DownloadEADxmlService.php:518
-#: resources/views/category-html.phtml:39 resources/views/tree.phtml:32
+#: resources/views/category-html.phtml:41 resources/views/tree.phtml:32
 #: resources/views/tree.phtml:96
 msgid "Date range"
 msgstr "Datumsbereich"
@@ -50,16 +50,12 @@ msgstr "AtoM EAD XML"
 msgid "Finding aid as HTML"
 msgstr "Findbuch als HTML"
 
-#: DownloadEADxmlService.php:574
-msgid "Finding aid as PDF"
-msgstr "Findbuch als PDF"
-
-#: DownloadFindingAidService.php:95 RepositoryHierarchy.php:1079
-#: RepositoryHierarchy.php:1088
+#: DownloadFindingAidService.php:95 RepositoryHierarchy.php:1087
+#: RepositoryHierarchy.php:1096
 msgid "Finding aid"
 msgstr "Findbuch"
 
-#: RepositoryHierarchy.php:285 RepositoryHierarchy.php:593
+#: RepositoryHierarchy.php:285 RepositoryHierarchy.php:601
 #: RepositoryHierarchyHelpTexts.php:67 RepositoryHierarchyHelpTexts.php:77
 #: RepositoryHierarchyHelpTexts.php:87 RepositoryHierarchyHelpTexts.php:96
 msgid "Repository Hierarchy"
@@ -78,65 +74,80 @@ msgstr ""
 msgid "The preferences for the module “%s” were updated."
 msgstr "Die Einstellungen für das Modul %s wurden aktualisiert."
 
-#: RepositoryHierarchy.php:498 resources/views/options.phtml:36
+#: RepositoryHierarchy.php:492
+msgid ""
+"The Repository Hierarchy data fix cannot be used in the \"control panel\"."
+msgstr ""
+"Die Datenkorrektur für Archiv Hierarchie kann unter \"Verwaltung\" nicht "
+"genutzt werden."
+
+#: RepositoryHierarchy.php:493
+msgid ""
+"The data fix can be called from the user front end by clicking on the link "
+"to rename a call number category."
+msgstr ""
+"Die Datenkorrektur kann aus der Bentutzeroberfläche aufgerufen werden, indem "
+"der Link für die Umbenennung einer Signatur-Kategorie angeclickt wird."
+
+#: RepositoryHierarchy.php:506 resources/views/options.phtml:36
 msgid "Sources"
 msgstr ""
 
-#: RepositoryHierarchy.php:595
+#: RepositoryHierarchy.php:603
 #, php-format
 msgid "Repository Hierachy of: %s"
 msgstr "Archiv Hierarchie von: %s"
 
-#: RepositoryHierarchy.php:658
+#: RepositoryHierarchy.php:666
 msgid "Custom module"
 msgstr ""
 
-#: RepositoryHierarchy.php:710
+#: RepositoryHierarchy.php:718
 msgid "Regular expression not accepted"
 msgstr "Regulärer Ausdruck nicht akzeptiert"
 
-#: RepositoryHierarchy.php:719
+#: RepositoryHierarchy.php:727
 msgid "No valid delimiter or valid regular expression for delimiter found."
 msgstr "Kein valider Delimiter oder valider Ausdruck für Delimiter gefunden."
 
-#: RepositoryHierarchy.php:836
+#: RepositoryHierarchy.php:844
 msgid "load delimiter expression from administrator"
 msgstr "Delimiter Ausdruck von Administrator laden"
 
-#: RepositoryHierarchy.php:842
+#: RepositoryHierarchy.php:850
 msgid "none"
 msgstr "Keine"
 
-#: RepositoryHierarchy.php:843
+#: RepositoryHierarchy.php:851
 msgid "save repository"
 msgstr "Archiv speichern"
 
-#: RepositoryHierarchy.php:844
+#: RepositoryHierarchy.php:852
 msgid "load repository"
 msgstr "Archiv laden"
 
-#: RepositoryHierarchy.php:845
+#: RepositoryHierarchy.php:853
 msgid "save delimiter expression"
 msgstr "Delimiter Ausdruck speichern"
 
-#: RepositoryHierarchy.php:846
+#: RepositoryHierarchy.php:854
 msgid "load delimiter expression"
 msgstr "Delimiter Ausdruck laden"
 
-#: RepositoryHierarchy.php:903
+#: RepositoryHierarchy.php:911
 msgid "Error during update of preferences"
 msgstr "Fehler beim Aktualisieren der Einstellungen"
 
-#: RepositoryHierarchy.php:916
+#: RepositoryHierarchy.php:924
 msgid "Could not load repository. No repository stored."
 msgstr "Archiv konnte nicht geladen werden. Kein Archiv gespeichert."
 
-#: RepositoryHierarchy.php:939
+#: RepositoryHierarchy.php:947
 #, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "Der Stammbaum \"%s\" enthält kein Archiv"
 
-#: RepositoryHierarchy.php:961
+#: RepositoryHierarchy.php:969
 msgid ""
 "Could not load delimiter expression from administrator. No administrator "
 "delimiter expression stored."
@@ -144,17 +155,17 @@ msgstr ""
 "Delimiter Ausdruck von Administrator konnte nicht geladen werden. Kein "
 "Delimiter Ausdruck von Administrator gespeichert."
 
-#: RepositoryHierarchy.php:970
+#: RepositoryHierarchy.php:978
 msgid "Could not load delimiter expression. No delimiter expression stored."
 msgstr ""
 "Delimiter Ausdruck konnte nicht geladen werden. Kein Delimiter Ausdruck "
 "gespeichert."
 
-#: RepositoryHierarchy.php:994
+#: RepositoryHierarchy.php:1002
 msgid "Error in delimiter expression"
 msgstr "Fehler in Delimiter Ausdruck"
 
-#: RepositoryHierarchy.php:1001 RepositoryHierarchyHelpTexts.php:104
+#: RepositoryHierarchy.php:1009 RepositoryHierarchyHelpTexts.php:104
 msgid ""
 "Please note that the following characters need to be escaped if not used as "
 "meta characters in a regular expression"
@@ -163,26 +174,26 @@ msgstr ""
 "versehen werden müssen, falls sie nicht als Meta-Zeichen in einem regulären "
 "Ausdruck verwendet werden"
 
-#: RepositoryHierarchy.php:1004 RepositoryHierarchyHelpTexts.php:105
+#: RepositoryHierarchy.php:1012 RepositoryHierarchyHelpTexts.php:105
 msgid "For example, use"
 msgstr "Nutzen Sie zum Beispiel"
 
-#: RepositoryHierarchy.php:1004 RepositoryHierarchy.php:1005
+#: RepositoryHierarchy.php:1012 RepositoryHierarchy.php:1013
 #: RepositoryHierarchyHelpTexts.php:105
 msgid "instead of"
 msgstr "statt"
 
-#: RepositoryHierarchy.php:1004 RepositoryHierarchyHelpTexts.php:58
+#: RepositoryHierarchy.php:1012 RepositoryHierarchyHelpTexts.php:58
 #: RepositoryHierarchyHelpTexts.php:59 RepositoryHierarchyHelpTexts.php:60
 #: RepositoryHierarchyHelpTexts.php:105
 msgid "or"
 msgstr "oder"
 
-#: RepositoryHierarchy.php:1005
+#: RepositoryHierarchy.php:1013
 msgid "if the characters shall be used as plain text."
 msgstr "wenn die Zeichen als reiner Text verwendet werden sollen."
 
-#: RepositoryHierarchy.php:1063
+#: RepositoryHierarchy.php:1071
 msgid ""
 "XML export settings not found. Please open EAD XML settings and provide "
 "settings."
@@ -232,7 +243,7 @@ msgstr ""
 #: RepositoryHierarchyHelpTexts.php:75 RepositoryHierarchyHelpTexts.php:78
 #: RepositoryHierarchyHelpTexts.php:93 RepositoryHierarchyHelpTexts.php:94
 #: RepositoryHierarchyHelpTexts.php:95 RepositoryHierarchyHelpTexts.php:97
-#: RepositoryHierarchyHelpTexts.php:100 resources/views/category-html.phtml:17
+#: RepositoryHierarchyHelpTexts.php:100 resources/views/category-html.phtml:19
 msgid "Fonds"
 msgstr "Bestand"
 
@@ -320,7 +331,7 @@ msgstr "Detaillierte Beschreibung"
 msgid "Information about regular expressions"
 msgstr "Informationen zu Regulären Ausdrücken"
 
-#: RepositoryHierarchyHelpTexts.php:118 resources/views/page.phtml:61
+#: RepositoryHierarchyHelpTexts.php:118 resources/views/page.phtml:60
 msgid "Help"
 msgstr "Hilfe"
 
@@ -328,7 +339,7 @@ msgstr "Hilfe"
 msgid "The help text has not yet been written for this item."
 msgstr "Der Hilfetext wurde für diesen Punkt noch nicht geschrieben."
 
-#: XmlExportSettingsAction.php:87 resources/views/page.phtml:115
+#: XmlExportSettingsAction.php:87 resources/views/page.phtml:114
 msgid "EAD XML settings"
 msgstr "EAD XML Einstellungen"
 
@@ -336,28 +347,28 @@ msgstr "EAD XML Einstellungen"
 msgid "The EAD XML seetings have been changed"
 msgstr "Die EAD XML Einstellungen wurden gespeichert"
 
-#: resources/views/category-html.phtml:17
-#: resources/views/category-html.phtml:36
+#: resources/views/category-html.phtml:19
+#: resources/views/category-html.phtml:38
 #: resources/views/modals/source-fields.phtml:53
 #: resources/views/options.phtml:42
 msgid "Call number"
 msgstr "Signatur"
 
-#: resources/views/category-html.phtml:28
+#: resources/views/category-html.phtml:30
 #: resources/views/fact-gedcom-fields.phtml:64
 msgid "Source"
 msgstr ""
 
-#: resources/views/category-html.phtml:28
+#: resources/views/category-html.phtml:30
 #: resources/views/modals/source-fields.phtml:17 resources/views/tree.phtml:75
 msgid "Title"
 msgstr ""
 
-#: resources/views/category-html.phtml:31
+#: resources/views/category-html.phtml:33
 msgid "Gedcom-ID"
 msgstr "Gedcom-ID"
 
-#: resources/views/category-html.phtml:45
+#: resources/views/category-html.phtml:47
 #: resources/views/modals/source-fields.phtml:33 resources/views/tree.phtml:90
 msgid "Author"
 msgstr "Autor"
@@ -366,6 +377,14 @@ msgstr "Autor"
 #, php-format
 msgid "%1$s: %2$s"
 msgstr ""
+
+#: resources/views/finding-aid.phtml:74
+msgid "Table of contents"
+msgstr ""
+
+#: resources/views/finding-aid.phtml:80
+msgid "List of sources"
+msgstr "Quellenliste"
 
 #: resources/views/modals/create-source.phtml:22
 msgid "Create a source"
@@ -381,7 +400,7 @@ msgstr "Veröffentlichung"
 
 #: resources/views/modals/source-fields.phtml:47
 #: resources/views/options.phtml:22 resources/views/options.phtml:62
-#: resources/views/page.phtml:41
+#: resources/views/page.phtml:40
 msgid "Repository"
 msgstr ""
 
@@ -487,19 +506,19 @@ msgstr "Vollständiger Kategorie-Name"
 msgid "Replace by"
 msgstr "Ersetzen durch"
 
-#: resources/views/page.phtml:54
+#: resources/views/page.phtml:53
 msgid "Delimiter Expression for Call Numbers"
 msgstr "Delimiter Ausdruck für Signatur"
 
-#: resources/views/page.phtml:72
+#: resources/views/page.phtml:71
 msgid "View and load/save options"
 msgstr "Anzeigen und Optionen zum Laden/Speichern"
 
-#: resources/views/page.phtml:75
+#: resources/views/page.phtml:74
 msgid "view"
 msgstr "Anzeigen"
 
-#: resources/views/page.phtml:98 resources/views/page.phtml:101
+#: resources/views/page.phtml:97 resources/views/page.phtml:100
 msgid "Download"
 msgstr ""
 
@@ -627,6 +646,9 @@ msgstr "Umbenennen"
 #: resources/views/tree.phtml:57
 msgid "Add new source"
 msgstr "Neue Quelle hinzufügen"
+
+#~ msgid "Finding aid as PDF"
+#~ msgstr "Findbuch als PDF"
 
 #, fuzzy
 #~| msgid "Call number"

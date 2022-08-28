@@ -488,7 +488,15 @@ class RepositoryHierarchy   extends     AbstractModule
     public function fixOptions(Tree $tree): string
     {
         //If data fix is called from wrong context
-        if (!isset($this->repository_xref)) return '';
+        if (!isset($this->repository_xref)) {
+            $error_text =   I18N::translate('The Repository Hierarchy data fix cannot be used in the "control panel".') . '<br>' . 
+                            I18N::translate('The data fix can be called from the user front end by clicking on the link to rename a call number category.');
+
+            return view($this->name() . '::error', [
+                'text' => $error_text,
+                ]
+            );
+        }
 
         return view($this->name() . '::options', [
             CallNumberCategory::VAR_REPOSITORY_XREF     => $this->repository_xref,
