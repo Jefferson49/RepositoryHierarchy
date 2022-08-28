@@ -22,7 +22,7 @@ Resulting repository hierarchy:
 
 To specify delimiters, the module can handle single characters as well as complex [regular expressions](https://en.wikipedia.org/wiki/Regular_expression):
 + In the most simple case, delimiters are single characters or strings, e.g.: "/" or " - "
-+ For more complex string pattern recognition, regular expressions can be used, which contain the delimiter in brackets: "Series( )Nr" or "\[a-z\](, )\[0-9\]"
++ For more complex string pattern recognition, regular expressions can be used, which contain the delimiter in brackets, e.g.: "Series( )Nr" or "\[a-z\](, )\[0-9\]"
 + Also, a set of delimiters or regular expressions can be used separated by ";", e.g.: "/;-" or "- ;Series( )Nr"
 
 <a name="Contents"></a>				
