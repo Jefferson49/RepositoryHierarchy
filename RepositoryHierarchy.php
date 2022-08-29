@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Auth;
@@ -515,7 +516,7 @@ class RepositoryHierarchy   extends     AbstractModule
             CallNumberCategory ::VAR_CATEGORY_FULL_NAME => $this->data_fix_category_full_name,
             CallNumberCategory::VAR_CATEGORY_NAME       => $this->data_fix_category_name,
             self::VAR_DATA_FIX_CATEGORY_NAME_REPLACE    => $this->data_fix_category_name,
-            self::VAR_DATA_FIX_TYPES                    => [Source::RECORD_TYPE => I18N::translate('Sources')],
+            self::VAR_DATA_FIX_TYPES                    => [Source::RECORD_TYPE => MoreI18N::xlate('Sources')],
             ]
         );
     }
@@ -675,7 +676,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public function errorTextWithHeader(string $error_text = '', bool $show_module_name = false): string
     {
         if ($show_module_name) {
-            return I18N::translate('Custom module') . ': ' . $this->name() . '<br>' . $error_text;        
+            return MoreI18N::xlate('Custom module') . ': ' . $this->name() . '<br>' . $error_text;        
         } else {
             return $error_text;
         }

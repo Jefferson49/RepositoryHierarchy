@@ -26,6 +26,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Source;
@@ -168,7 +169,7 @@ class CallNumberCategory  {
 		}
 
 		if (strpos($name, CallNumberCategory::EMPTY_CATEGORY_NAME) !== false) {
-			return I18N::translate('Sources without call number');
+			return MoreI18N::xlate('Sources without call number');
 		} elseif (strpos($name, CallNumberCategory::DEFAULT_CATEGORY_NAME) !== false) {
 			return I18N::translate('Default call number category');
 		} else {

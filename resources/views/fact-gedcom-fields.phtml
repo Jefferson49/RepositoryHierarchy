@@ -1,5 +1,6 @@
 <?php
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Elements\AbstractXrefElement;
 use Fisharebest\Webtrees\Elements\XrefSource;
 use Fisharebest\Webtrees\Gedcom;
@@ -61,9 +62,9 @@ foreach ($keys as $key) {
                 <?= view('icons/collapse') ?>
              </a>
 
-            <?php $label = '<span class="label">' . I18N::translate('Source') . '</span>' ?>
+            <?php $label = '<span class="label">' . MoreI18N::xlate('Source') . '</span>' ?>
             <?php $value = '<span class="field" dir="auto"><a href="' . e($source->url()) . '">' . $source->fullName() . '</a></span>' ?>
-            <?= I18N::translate('%1$s: %2$s', $label, $value) ?>
+            <?= MOreI18N::xlate('%1$s: %2$s', $label, $value) ?>
         </div>
 
         <div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">

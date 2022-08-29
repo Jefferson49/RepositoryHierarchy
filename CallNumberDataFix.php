@@ -25,11 +25,12 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
-use Fisharebest\Webtrees\Http\ViewResponseTrait;
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Http\RequestHandlers\PendingChanges;
+use Fisharebest\Webtrees\Http\ViewResponseTrait;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Module\ModuleDataFixInterface;
 use Fisharebest\Webtrees\Services\ModuleService;
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -89,7 +90,7 @@ class CallNumberDataFix implements RequestHandlerInterface
         }
         
         //Default: continue with general data fix selection
-        $title = I18N::translate('Data fixes') . ' — ' . e($tree->title());
+        $title = MoreI18N::xlate('Data fixes') . ' — ' . e($tree->title());
         $data_fixes = $this->module_service->findByInterface(ModuleDataFixInterface::class, false, true);
 
         return $this->viewResponse('admin/data-fix-select', [
