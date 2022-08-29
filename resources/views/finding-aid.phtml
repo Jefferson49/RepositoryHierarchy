@@ -2,10 +2,15 @@
  
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\View;
+use Matriphe\ISO639\ISO639;
+
+use function date;
 
 /**
  * @var string					$title
@@ -70,6 +75,26 @@ use Fisharebest\Webtrees\View;
 	</head>
 	<body class="finding-aid-body">
 		<h1><?= $title ?></h1>
+		<p><?= I18N::translate('Generated on: ') . date('Y-m-d') ?></p>
+
+		<?php $iso_table = new ISO639 ?>
+        <?php $language = $iso_table->nativeByCode1(Session::get('language')) ?>
+		<p><?= I18N::translate('Language of description: ') . $language ?></p>
+
+		<h4><?= MoreI18N::xlate('Repository') ?></h4>
+		<p><?= $repository->fullName() ?></p>
+		<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
+		<?php if (!empty($address_lines)) : ?>
+			<?php foreach($address_lines as $line) : ?>
+				<p><?= $line?></p>
+			<?php endforeach ?>
+		<?php endif ?>
+
+		<?php foreach($repository->facts() as $fact) : ?>
+			<?php if ($fact->tag() === 'REPO:ADDR') : ?>
+				<?= view('fact', ['fact' => $fact, 'record' => $repository]) ?>
+			<?php endif ?>
+		<?php endforeach ?>
 
 		<h2><?= I18N::translate('Table of contents') ?></h2>
 		<?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [

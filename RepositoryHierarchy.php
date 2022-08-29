@@ -499,7 +499,7 @@ class RepositoryHierarchy   extends     AbstractModule
             );
         }
 
-        //If ser is not manager for this tree, show error text
+        //If user is not a manager for this tree, show error text
         if (!Auth::isManager($tree)) {
             $error_text =   I18N::translate('Currently, you do not have the user rights to change call number categories.') . '<br>' . 
                             I18N::translate('In order to change call number categories, you need to have a "Manager" role for the corresponding tree.');
@@ -509,7 +509,6 @@ class RepositoryHierarchy   extends     AbstractModule
                 ]
             );
         }
-
 
         return view($this->name() . '::options', [
             CallNumberCategory::VAR_REPOSITORY_XREF     => $this->repository_xref,

@@ -92,7 +92,7 @@ class DownloadFindingAidService
     public function generateHtml(): string 
     {
         return view(RepositoryHierarchy::MODULE_NAME . '::finding-aid', [  
-            'title'         => I18N::translate('Finding aid'),
+            'title'         => I18N::translate('Finding aid') . ': ' . $this->repository->fullName(),
             'language_tag'  => Session::get('language'),
             'root_category' => $this->root_category,
             'repository'    => $this->repository,
