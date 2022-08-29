@@ -43,6 +43,7 @@ require __DIR__ . '/Functions.php';
 require __DIR__ . '/RepositoryHierarchy.php';
 require __DIR__ . '/RepositoryHierarchyHelpTexts.php';
 require __DIR__ . '/vendor/matriphe/php-iso-639-master/src/ISO639.php';
+require __DIR__ . '/vendor/vesta-webtrees-2-custom-modules/vesta_common/tree/master/patchedWebtrees/MoreI18N.php';
 require __DIR__ . '/XmlExportSettingsAction.php';
 require __DIR__ . '/XmlExportSettingsModal.php';
 
