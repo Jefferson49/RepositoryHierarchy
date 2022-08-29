@@ -17,7 +17,7 @@ use Illuminate\Support\Collection;
 <?php if (!$is_root_category) : ?>
 <ul>
     <li>
-    <a href="#<?= $category->getId() ?>"><?= $category->getFullName() ?></a>
+    <a href="#<?= $category->getId() ?>"><?= $category->getFrontEndName() ?></a>
 <?php endif ?>	
 
 <?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2022-08-28 21:46+0200\n"
-"PO-Revision-Date: 2022-08-28 21:46+0200\n"
+"POT-Creation-Date: 2022-08-29 05:31+0200\n"
+"PO-Revision-Date: 2022-08-29 05:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr "Quellen ohne Signatur"
 
 #: CallNumberCategory.php:173
 msgid "Default call number category"
-msgstr "Default Signatur-Kategorie"
+msgstr "Defaultwert für Signatur-Kategorie"
 
 #: CallNumberDataFix.php:92
 msgid "Data fixes"
@@ -33,8 +33,8 @@ msgstr "Erzeugt von webtrees"
 
 #: DownloadEADxmlService.php:311 DownloadEADxmlService.php:393
 #: DownloadEADxmlService.php:476 DownloadEADxmlService.php:518
-#: resources/views/category-html.phtml:41 resources/views/tree.phtml:32
-#: resources/views/tree.phtml:96
+#: resources/views/category-html.phtml:44 resources/views/tree.phtml:32
+#: resources/views/tree.phtml:98
 msgid "Date range"
 msgstr "Datumsbereich"
 
@@ -363,28 +363,28 @@ msgid "The EAD XML seetings have been changed"
 msgstr "Die EAD XML Einstellungen wurden gespeichert"
 
 #: resources/views/category-html.phtml:19
-#: resources/views/category-html.phtml:38
+#: resources/views/category-html.phtml:41
 #: resources/views/modals/source-fields.phtml:53
 #: resources/views/options.phtml:42
 msgid "Call number"
 msgstr "Signatur"
 
-#: resources/views/category-html.phtml:30
+#: resources/views/category-html.phtml:33
 #: resources/views/fact-gedcom-fields.phtml:64
 msgid "Source"
 msgstr ""
 
-#: resources/views/category-html.phtml:30
-#: resources/views/modals/source-fields.phtml:17 resources/views/tree.phtml:75
+#: resources/views/category-html.phtml:33
+#: resources/views/modals/source-fields.phtml:17 resources/views/tree.phtml:77
 msgid "Title"
 msgstr ""
 
-#: resources/views/category-html.phtml:33
+#: resources/views/category-html.phtml:36
 msgid "Gedcom-ID"
 msgstr "Gedcom-ID"
 
-#: resources/views/category-html.phtml:47
-#: resources/views/modals/source-fields.phtml:33 resources/views/tree.phtml:90
+#: resources/views/category-html.phtml:50
+#: resources/views/modals/source-fields.phtml:33 resources/views/tree.phtml:92
 msgid "Author"
 msgstr "Autor"
 

@@ -16,7 +16,7 @@ use Fisharebest\Webtrees\View;
 <?php if (!$is_root_category) : ?>
     <table class="finding-aid-table">
         <caption class="finding-aid-table-caption">
-            <h4 id="<?= $category->getId() ?>"><?= I18N::translate('Fonds') ?>/<?= I18N::translate('Call number') ?>:&emsp;<?= e($category->getFullName()) ?></h4>
+            <h4 id="<?= $category->getId() ?>"><?= I18N::translate('Fonds') ?>/<?= I18N::translate('Call number') ?>:&emsp;<?= e($category->getFrontEndName()) ?></h4>
         </caption>
         <tbody>
             <tr class="finding-aid-first-row"> 
