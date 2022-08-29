@@ -465,7 +465,7 @@ class Functions {
     public static function sortSourcesByCallNumber(Collection $sources): Collection {
 
         return $sources->sort(function (Source $source1, Source $source2) {
-            return strnatcasecmp(self::getCallNumberForSource($source1), self::getCallNumberForSource($source2));
+            return strnatcmp(self::getCallNumberForSource($source1), self::getCallNumberForSource($source2));
         });
     }
 
@@ -479,7 +479,7 @@ class Functions {
     public static function sortCallNumberCategoriesByName(Collection $categories): Collection {
 		
         return $categories->sort(function (CallNumberCategory $category1, CallNumberCategory $category2) {
-                return strnatcasecmp($category1->getFullName(), $category2->getFullName());
+                return strnatcmp($category1->getFullName(), $category2->getFullName());
             });
     }
 
