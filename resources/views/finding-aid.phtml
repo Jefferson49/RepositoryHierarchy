@@ -38,30 +38,31 @@ use function date;
 				border: none; 
 			} 
 			.finding-aid-table-caption {
-				font-weight: 700; 
+				font-weight: 400; 
 				background-color: #c0c0c0; 
-				border: 1px solid black; 
+				border-color: #c0c0c0;
+				outline: 1px solid black;
 				padding-left: 5px;
 				padding-top: 20px;
 				padding-bottom: 20px;
 				text-align: left;
-			}
+			}		
 			.finding-aid-table-foot {
 				height: 10px;
 				border: 1px solid black; 
 			}
-			.finding-aid-first-row {
+			.finding-aid-table-first-row {
 				border-spacing: 0px;
 				padding: 0px;
 			}
-			.finding-aid-last-row {
+			.finding-aid-table-last-row {
 				border: 1px solid black;
 				padding: 1px;
 			}
-			.finding-aid-first-column {
+			.finding-aid-table-first-column {
 				width: 100px;
 			}
-			.finding-aid-last-column {
+			.finding-aid-table-last-column {
 				width: 160px;
 			}
 			td {
@@ -75,23 +76,17 @@ use function date;
 	</head>
 	<body class="finding-aid-body">
 		<h1><?= $title ?></h1>
-		<p><?= I18N::translate('Generated on: ') . date('Y-m-d') ?></p>
+		<p><?= I18N::translate('Generated on') . ': ' . date('Y-m-d') ?></p>
 
 		<?php $iso_table = new ISO639 ?>
         <?php $language = $iso_table->nativeByCode1(Session::get('language')) ?>
-		<p><?= I18N::translate('Language of description: ') . $language ?></p>
+		<p><?= I18N::translate('Language of description') . ': ' . $language ?></p>
 
 		<h4><?= MoreI18N::xlate('Repository') ?></h4>
 		<p><?= $repository->fullName() ?></p>
-		<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
-		<?php if (!empty($address_lines)) : ?>
-			<?php foreach($address_lines as $line) : ?>
-				<p><?= $line?></p>
-			<?php endforeach ?>
-		<?php endif ?>
 
 		<?php foreach($repository->facts() as $fact) : ?>
-			<?php if ($fact->tag() === 'REPO:ADDR') : ?>
+			<?php if (in_array($fact->tag(), Functions::getGedcomAddressTags(1))) : ?>
 				<?= view('fact', ['fact' => $fact, 'record' => $repository]) ?>
 			<?php endif ?>
 		<?php endforeach ?>

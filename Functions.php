@@ -101,31 +101,51 @@ class Functions {
     }
 
     /**
+     * Get level 1 address tags for repositories in GEDCOM  
+     * 
+     * @return array    [string with address tags]
+     */
+    public static function getGedcomAddressTags(int $level): array
+    {
+        switch($level) {
+
+            case 1:
+                return [
+                    'REPO:ADDR',
+                    'REPO:PHON',
+                    'REPO:EMAIL',
+                    'REPO:FAX',
+                    'REPO:WWW',
+                ];
+
+            case 2:
+                return [
+                    'ADR1',
+                    'ADR2',
+                    'ADR3',
+                    'CITY',
+                    'STAE',
+                    'POST',
+                    'CTRY',
+                ];
+
+            default:
+                return [];                
+        }
+    }
+
+    /**
      * Get address lines of a repository 
      * 
      * @param Repository    $repository
      * 
-     * @return array    [string with adress line]
+     * @return array    [string with address line]
      */
     public static function getRepositoryAddressLines(Repository $repository): array
     {
         $address_lines = [];
-        $level1_address_tags = [
-            'REPO:ADDR',
-            'REPO:PHON',
-            'REPO:EMAIL',
-            'REPO:FAX',
-            'REPO:WWW',
-        ];
-        $level2_address_tags = [
-            'ADR1',
-            'ADR2',
-            'ADR3',
-            'CITY',
-            'STAE',
-            'POST',
-            'CTRY',
-        ];       
+        $level1_address_tags = self::getGedcomAddressTags(1);
+        $level2_address_tags = self::getGedcomAddressTags(2);     
 
         foreach($repository->facts() as $fact) {
 
