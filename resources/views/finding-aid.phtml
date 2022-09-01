@@ -85,10 +85,9 @@ use function date;
 		<h4><?= MoreI18N::xlate('Repository') ?></h4>
 		<p><?= $repository->fullName() ?></p>
 
-		<?php foreach($repository->facts() as $fact) : ?>
-			<?php if (in_array($fact->tag(), Functions::getGedcomAddressTags(1))) : ?>
-				<?= view('fact', ['fact' => $fact, 'record' => $repository]) ?>
-			<?php endif ?>
+		<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
+		<?php foreach($address_lines as $line) : ?>
+			<p><?= $line?></p>
 		<?php endforeach ?>
 
 		<h2><?= I18N::translate('Table of contents') ?></h2>

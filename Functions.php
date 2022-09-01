@@ -145,22 +145,28 @@ class Functions {
     {
         $address_lines = [];
         $level1_address_tags = self::getGedcomAddressTags(1);
-        $level2_address_tags = self::getGedcomAddressTags(2);     
+        $level2_address_tags = self::getGedcomAddressTags(2);   
+
 
         foreach($repository->facts() as $fact) {
 
-            if (in_array($fact->tag(), $level1_address_tags)) {
-                $address_lines[$fact->tag()] = $fact->value();       
-            }
-
             if ($fact->tag() === 'REPO:ADDR') {
+                if ($fact->value() !== '') {
+                    $address_lines[$fact->tag()] = $fact->value();       
+                }   
 
                 foreach($level2_address_tags as $tag) {
 
                     if($fact->attribute($tag) !== '') {
-                        $address_lines[$tag] = $fact->attribute($tag);
+                        
+                        $address_lines[$tag] = Registry::elementFactory()->make('REPO:ADDR:' . $tag)->label() . ': ' . $fact->attribute($tag);
                     }
                 }
+            } 
+            else {
+                if (in_array($fact->tag(), $level1_address_tags)) {
+                    $address_lines[$fact->tag()] = $fact->label() . ': ' . $fact->value();       
+                }    
             }
         }
 

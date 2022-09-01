@@ -571,7 +571,7 @@ class DownloadEADxmlService
 
         $text_options = [
             self::DOWNLOAD_OPTION_HTML      => I18N::translate('Finding aid as HTML'),
-            //self::DOWNLOAD_OPTION_PDF       => I18N::translate('Finding aid as PDF'),
+            self::DOWNLOAD_OPTION_PDF       => I18N::translate('Finding aid as PDF'),
         ];
 
         switch($selection) {
