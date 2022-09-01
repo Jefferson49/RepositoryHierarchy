@@ -68,10 +68,7 @@ use function date;
 			td {
 				vertical-align: top;	
 			}
-			.tab { 
-				display:inline-block; 
-				margin-left: 40px; 
-			}
+
 		</style>
 	</head>
 	<body class="finding-aid-body">
@@ -85,11 +82,12 @@ use function date;
 		<h4><?= MoreI18N::xlate('Repository') ?></h4>
 		<p><?= $repository->fullName() ?></p>
 
-		<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
-		<?php foreach($address_lines as $line) : ?>
-			<p><?= $line?></p>
-		<?php endforeach ?>
-
+		<p>
+			<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
+			<?php foreach($address_lines as $line) : ?>
+				<?= $line?><br>
+			<?php endforeach ?>
+		</p>
 		<h2><?= I18N::translate('Table of contents') ?></h2>
 		<?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
             'category'              => $root_category,

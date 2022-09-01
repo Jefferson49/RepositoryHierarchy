@@ -152,7 +152,12 @@ class Functions {
 
             if ($fact->tag() === 'REPO:ADDR') {
                 if ($fact->value() !== '') {
-                    $address_lines[$fact->tag()] = $fact->value();       
+                    $matches = preg_split('/\n/', $fact->value(), -1, PREG_SPLIT_NO_EMPTY); 
+                    $line = 1;
+                    foreach ($matches as $match) {
+                        $address_lines[$fact->tag() . ':LINE' . $line] = $match;
+                        $line++;
+                    } 
                 }   
 
                 foreach($level2_address_tags as $tag) {
