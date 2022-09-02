@@ -9,33 +9,33 @@
     border: none; 
 } 
 .finding-aid-table-caption {
-    font-weight: 700; 
+    font-weight: 400; 
     background-color: #c0c0c0; 
-    border: 1px solid black; 
+    border-color: #c0c0c0;
+    outline: 1px solid black;
     padding-left: 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     text-align: left;
-}
+}		
 .finding-aid-table-foot {
     height: 10px;
     border: 1px solid black; 
 }
-.finding-aid-first-row {
+.finding-aid-table-first-row {
     border-spacing: 0px;
     padding: 0px;
 }
-.finding-aid-last-row {
+.finding-aid-table-last-row {
     border: 1px solid black;
+    padding: 1px;
 }
-.finding-aid-first-column {
+.finding-aid-table-first-column {
     width: 100px;
 }
-.finding-aid-last-column {
+.finding-aid-table-last-column {
     width: 160px;
 }
 td {
     vertical-align: top;	
-}
-.tab { 
-    display:inline-block; 
-    margin-left: 40px; 
 }

@@ -62,7 +62,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
             $user_id = $user->id();
         }
 
-        return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/xml-export-settings', [
+        return response(view($repository_hierarchy->name() . '::modals/xml-export-settings', [
             'tree' 					    => $tree,
             'xref' 		                => $repository_xref,
             'finding_aid_title'         => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	

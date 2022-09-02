@@ -15,9 +15,9 @@ use Illuminate\Support\Collection;
 ?>
 
 <?php if (!$is_root_category) : ?>
-<ul>
-    <li>
-    <a href="#<?= $category->getId() ?>"><?= $category->getFrontEndName() ?></a>
+    <ul>
+        <li>
+        <a href="#<?= $category->getId() ?>"><?= $category->getFrontEndName(true) ?></a>
 <?php endif ?>	
 
 <?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
@@ -31,6 +31,6 @@ use Illuminate\Support\Collection;
 <?php endforeach ?>
 
 <?php if (!$is_root_category) : ?>
-    </li>
-</ul>
+        </li>
+    </ul>
 <?php endif ?>	

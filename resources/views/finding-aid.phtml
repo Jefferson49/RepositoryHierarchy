@@ -79,10 +79,10 @@ use function date;
         <?php $language = $iso_table->nativeByCode1(Session::get('language')) ?>
 		<p><?= I18N::translate('Language of description') . ': ' . $language ?></p>
 
-		<h4><?= MoreI18N::xlate('Repository') ?></h4>
+		<h3><?= MoreI18N::xlate('Repository') ?></h3>
 		<p><?= $repository->fullName() ?></p>
-
 		<p>
+			<b><?= MoreI18N::xlate('Address') ?>:</b><br>
 			<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
 			<?php foreach($address_lines as $line) : ?>
 				<?= $line?><br>

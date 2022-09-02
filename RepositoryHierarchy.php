@@ -446,7 +446,7 @@ class RepositoryHierarchy   extends     AbstractModule
      */
     public function listMenuClass(): string {
 
-        //Needed for Icon (in css file)
+        //CSS class for module Icon (included in CSS file) is returned to be shown in the list menu
         return 'menu-list-repository-hierarchy';
     }
 
@@ -479,6 +479,7 @@ class RepositoryHierarchy   extends     AbstractModule
      * @see \Fisharebest\Webtrees\Module\ModuleGlobalInterface::headContent()
      */
     public function headContent(): string {
+        //Include CSS file in head of webtrees HTML to make sure it is always found
         return '<link href="' . $this->assetUrl('css/repository-hierarchy.css') . '" type="text/css" rel="stylesheet" />';
     }    
 
