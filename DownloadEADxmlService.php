@@ -51,6 +51,7 @@ class DownloadEADxmlService
 {
 
     //Download and EAD XML types    
+    public const DOWNLOAD_OPTION_EAD_XML = 'download_option_ead_xml';
     public const DOWNLOAD_OPTION_APE_EAD = 'download_option_ape_ead';
     public const DOWNLOAD_OPTION_ATOM = 'download_option_atom';
     public const DOWNLOAD_OPTION_HTML = 'download_option_html';
@@ -526,8 +527,8 @@ class DownloadEADxmlService
                     $dao_node->appendChild(new DOMAttr('xlink:title', $fact_values['SOUR:TITL']));
                     
 
-                //<note> link to webtrees (for AtoM, only)
-                if (($xml_type === DownloadEADxmlService::DOWNLOAD_OPTION_ATOM) &&
+                //<note> link to webtrees, needed for AtoM, only. For simplicity reasons, always include to XML
+                if (//($xml_type === DownloadEADxmlService::DOWNLOAD_OPTION_ATOM) &&
                     ($repository_hierarchy !== null) &&
                     ($base_url !== ''))  
                 {
@@ -541,8 +542,6 @@ class DownloadEADxmlService
 
                 //<place>   within EVEN:PLAC
                 //TBD
-
-
    }    
 
     /**
@@ -565,6 +564,11 @@ class DownloadEADxmlService
     public static function getDownloadOptions(string $selection = self::DOWNLOAD_OPTION_ALL): array
     {        
         $xml_options = [
+            self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
+        ];
+
+        $specific_xml_options = [
+            self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
             self::DOWNLOAD_OPTION_APE_EAD   => I18N::translate('apeEAD XML'),
             self::DOWNLOAD_OPTION_ATOM      => I18N::translate('AtoM EAD XML'),
         ];
