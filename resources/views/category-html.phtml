@@ -24,6 +24,9 @@ use Fisharebest\Webtrees\View;
             <td><b><?= e($category->getFrontEndName(true)) ?></b></td>      
             <td class="finding-aid-table-last-column"></td>          
         </tr>
+        <tr>
+            <td class="finding-aid-table-empty-row" colspan="3"></td>      
+        </tr>        
         <?php $sources = Functions::getCollectionForArray($category->getSources()) ?>
         <?php $sources = Functions::sortSourcesByCallNumber($sources) ?>
         <?php foreach ($sources as $source) : ?>
@@ -55,7 +58,7 @@ use Fisharebest\Webtrees\View;
                 <?php endif ?>
             </tr>
             <tr>
-                <td class="finding-aid-table-last-row" colspan="3"></td>      
+                <td class="finding-aid-table-empty-row" colspan="3"></td>      
             </tr>
         <?php endforeach ?>	
     </table>

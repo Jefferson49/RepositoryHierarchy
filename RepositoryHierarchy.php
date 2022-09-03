@@ -422,8 +422,33 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, isset($params[self::PREF_ALLOW_ADMIN_XML_SETTINGS])? '1':'0');
             $this->setPreference(self::PREF_SHOW_ATOM_LINKS, isset($params[self::PREF_SHOW_ATOM_LINKS])? '1':'0');
             $this->setPreference(self::PREF_ATOM_SLUG, isset($params[self::PREF_ATOM_SLUG])? $params[self::PREF_ATOM_SLUG]: self::PREF_ATOM_SLUG_CALL_NUMBER);
-            $this->setPreference(self::PREF_WEBTREES_BASE_URL, isset($params[self::PREF_WEBTREES_BASE_URL])? $params[self::PREF_WEBTREES_BASE_URL]:'');
-            $this->setPreference(self::PREF_ATOM_BASE_URL, isset($params[self::PREF_ATOM_BASE_URL])? $params[self::PREF_ATOM_BASE_URL]:'');
+
+            //Remove slashes at the end of the URL
+            if(isset($params[self::PREF_WEBTREES_BASE_URL])) {
+                
+                $webtrees_base_url = $params[self::PREF_WEBTREES_BASE_URL];
+
+                if(substr($webtrees_base_url, -1) === '/') {
+                    $webtrees_base_url = substr($webtrees_base_url, 0, -1);
+                } 
+            } else {
+                $webtrees_base_url = '';
+            }
+
+            //Remove slashes at the end of the URL
+            if(isset($params[self::PREF_ATOM_BASE_URL])) {
+
+                $atom_base_url = $params[self::PREF_ATOM_BASE_URL];
+
+                if(substr($atom_base_url, -1) === '/') {
+                    $atom_base_url = substr($atom_base_url, 0, -1);
+                } 
+            } else {
+                $atom_base_url = '';
+            }
+            
+            $this->setPreference(self::PREF_WEBTREES_BASE_URL, $webtrees_base_url);
+            $this->setPreference(self::PREF_ATOM_BASE_URL, $atom_base_url);
             $this->setPreference(self::PREF_ATOM_REPOSITORIES, isset($params[self::PREF_ATOM_REPOSITORIES])? $params[self::PREF_ATOM_REPOSITORIES]:'');
 
             $message = I18N::translate('The preferences for the module “%s” were updated.', $this->title());

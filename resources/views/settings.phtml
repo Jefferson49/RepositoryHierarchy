@@ -91,19 +91,24 @@ use Fisharebest\Webtrees\View;
             <div class="row"><?= view('icons/spacer') ?></div> 
             <h3><?= I18N::translate('Settings for linking to external archive management tools') ?></h3>
             <div class="row">
-                <?= view('components/checkbox', ['label' => I18N::translate('Show link to AtoM records within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, 'checked' => $show_atom_links]) ?>
-            </div>  
+                <?= view('components/checkbox', ['label' => I18N::translate('Show link to AtoM records within source citations').'.', 'name' => RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, 'checked' => $show_atom_links]) ?>
+            </div> 
             <div class="row">
+                <p></p>
+                <?= I18N::translate('Settings for the creation of AtoM REST links ("AtoM slugs"), which can be used to link a webtrees source citation to the source view in an external AtoM archive management system. Only applies if the option "%s" is activated.', I18N::translate('Show link to AtoM records within source citations')) ?>
+            <div class="row">
+                <p></p>
                 <?= view('components/radios', [
                     'name' => 'atom_slug', 
                     'selected' => $atom_slug,
                     'options' => [
-                        RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER => I18N::translate('Use call number as AtoM slug, i.e. permalink or REST link'),
-                        RepositoryHierarchy::PREF_ATOM_SLUG_TITLE => I18N::translate('Use source title as AtoM slug, i.e. permalink or REST link'),
+                        RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER => I18N::translate('Use call numbers to create AtoM REST links ("AtoM slugs")'),
+                        RepositoryHierarchy::PREF_ATOM_SLUG_TITLE => I18N::translate('Use source titles to create AtoM REST links ("AtoM slugs")'),
                         ],
                     ]) ?>
             </div>            
             <div class="row">
+                <p></p>
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="webtrees_base_url">
                     <?= I18N::translate('Base URL for webtrees') ?>
                 </label>
@@ -121,11 +126,12 @@ use Fisharebest\Webtrees\View;
             </div>
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="atom_repositories">
-                    <?= I18N::translate('Tree names and XREFs of repositories, for which AtoM is used. Format treename:xref. A list of several entries can be separated by comma, e.g. "my_tree:X1765,my_tree:X2987"') ?>
+                    <?= I18N::translate('Repositories, for which AtoM linking is used.') ?>
                 </label>    			
                 <div class="col-sm-9 wt-page-options-value">
 	    			<input class="form-control" id="atom_repositories" name="atom_repositories" type="text" value="<?= e($atom_repositories) ?>">
 			    </div>
+                <p><?= I18N::translate('Format treename:xref. A list of several entries can be separated by comma, e.g. "my_tree:X1765,my_tree:X2987"') ?></p>
             </div>
         </div>
 			
