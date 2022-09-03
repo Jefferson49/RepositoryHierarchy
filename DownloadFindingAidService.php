@@ -89,13 +89,14 @@ class DownloadFindingAidService extends DownloadService
      * 
      * @return string
      */
-    public function generateHtml(): string 
+    public function generateHtml(bool $forPDF = false): string 
     {
         return view(RepositoryHierarchy::MODULE_NAME . '::finding-aid', [  
-            'title'         => I18N::translate('Finding aid') . ': ' . $this->repository->fullName(),
-            'language_tag'  => Session::get('language'),
-            'root_category' => $this->root_category,
-            'repository'    => $this->repository,
+            'title'             => I18N::translate('Finding aid') . ': ' . $this->repository->fullName(),
+            'language_tag'      => Session::get('language'),
+            'root_category'     => $this->root_category,
+            'repository'        => $this->repository,
+            'forPDF'            => $forPDF,
             ]);
     }
 
@@ -194,7 +195,7 @@ class DownloadFindingAidService extends DownloadService
         $pdf->tcpdf->setFontSize(10);
 
         //Load HTML and render
-        $html = $this->generateHtml();
+        $html = $this->generateHtml(true);
         $pdf->tcpdf->AddPage();
         $pdf->tcpdf->writeHTML($html);
         $pdf->tcpdf->lastPage();

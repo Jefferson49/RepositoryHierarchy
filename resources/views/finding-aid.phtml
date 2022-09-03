@@ -17,6 +17,7 @@ use function date;
  * @var string								$language_tag
  * @var CallNumberCategory      			$root_category
  * @var \Fisharebest\Webtrees\Repository	$repository
+ * @var bool								$forPDF
  */
 
 ?>
@@ -53,15 +54,17 @@ use function date;
 			.finding-aid-table-first-column {
 				width: 75pt;
 			}
-			.finding-aid-table-middle-column {
-				width: 300pt;
-			}
 			.finding-aid-table-last-column {
 				width: 125pt;
 			}
 			td {
 				vertical-align: top;	
 			}
+			<?php if($forPDF) : ?>
+			.finding-aid-table-middle-column {
+				width: 300pt;
+			}
+			<?php endif ?>
 		</style>
 	</head>
 	<body class="finding-aid-body">
