@@ -1120,7 +1120,7 @@ class RepositoryHierarchy   extends     AbstractModule
                 $download_ead_xml_service->createXMLforCategory($xml_type, $download_ead_xml_service->getCollection(), $this->root_category);
     
                 //Start download
-                return $download_ead_xml_service->downloadResponse('apeEAD');
+                return $download_ead_xml_service->downloadResponse('EAD');
             }
         }         
 

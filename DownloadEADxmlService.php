@@ -567,6 +567,7 @@ class DownloadEADxmlService
             self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
         ];
 
+        //Currently not used
         $specific_xml_options = [
             self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
             self::DOWNLOAD_OPTION_APE_EAD   => I18N::translate('apeEAD XML'),
