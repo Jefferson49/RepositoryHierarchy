@@ -275,16 +275,17 @@ class Functions {
      * Display the date range for a source in ISO format 
      *
 	 * @param Source    $source 
+     * @param string    $delimiter  [ISO 8601 allows: '/' odr '--']
      *
      * @return string
      */
-    public static function displayISODateRangeForSource(Source $source): string {	
+    public static function displayISODateRangeForSource(Source $source, string $delimiter = '/'): string {	
 	
         $date_range = self::getDateRangeForSource($source);
 
         if(($date_range !== null) && $date_range->isOK()) 
         {
-            return self::getISOformatForDateRange($date_range);
+            return self::getISOformatForDateRange($date_range, $delimiter );
         }
         
         return '';
@@ -293,11 +294,12 @@ class Functions {
     /**
      * Display a date range in ISO format 
      *
-	 * @param Date  $date_range
+	 * @param Date      $date_range
+     * @param string    $delimiter  [ISO 8601 allows: '/' odr '--']
      *
      * @return string
      */
-    public static function getISOformatForDateRange(Date $date_range): string {	
+    public static function getISOformatForDateRange(Date $date_range, string $delimiter = '/'): string {	
 
         if(($date_range !== null) && $date_range->isOK()) 
         {
@@ -305,7 +307,7 @@ class Functions {
             $date_range_text = self::removeHtmlTags($date_range_text);
             $date_range_text = str_replace(' ', '', $date_range_text);
             $date_range_text = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range_text); 
-            $date_range_text = str_replace(I18N::translateContext('End of date range', 'To'), '/', $date_range_text); 
+            $date_range_text = str_replace(I18N::translateContext('End of date range', 'To'), $delimiter, $date_range_text); 
             
             $patterns = [
                 '/\A(\d+)\/\Z/',            //  1659/

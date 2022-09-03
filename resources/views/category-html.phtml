@@ -52,7 +52,7 @@ use Fisharebest\Webtrees\View;
                 <td><?= I18N::translate('Author') ?><?= view('icons/spacer') ?></td>               
                 <td><?= isset($source_facts['SOUR:AUTH']) ?	$source_facts['SOUR:AUTH'] : '' ?></td>
                 <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
-                    <td><?= Functions::displayISODateRangeForSource($source)?></td>      
+                    <td><?= Functions::displayISODateRangeForSource($source, '--')?></td>      
                 <?php else : ?>
                     <td></td>                 
                 <?php endif ?>
