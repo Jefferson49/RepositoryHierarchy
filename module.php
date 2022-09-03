@@ -37,6 +37,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 require __DIR__ . '/CallNumberCategory.php';
 require __DIR__ . '/CallNumberDataFix.php';
 require __DIR__ . '/CreateSourceModal.php';
+require __DIR__ . '/DownloadService.php';
 require __DIR__ . '/DownloadEADxmlService.php';
 require __DIR__ . '/DownloadFindingAidService.php';
 require __DIR__ . '/Functions.php';

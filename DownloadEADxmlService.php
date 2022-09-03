@@ -47,19 +47,9 @@ use function date;
 /**
  * Download Service for EAD XML files
  */
-class DownloadEADxmlService
+class DownloadEADxmlService extends DownloadService
 {
-
-    //Download and EAD XML types    
-    public const DOWNLOAD_OPTION_EAD_XML = 'download_option_ead_xml';
-    public const DOWNLOAD_OPTION_APE_EAD = 'download_option_ape_ead';
-    public const DOWNLOAD_OPTION_ATOM = 'download_option_atom';
-    public const DOWNLOAD_OPTION_HTML = 'download_option_html';
-    public const DOWNLOAD_OPTION_PDF = 'download_option_pdf';
-    public const DOWNLOAD_OPTION_TEXT = 'download_option_text';
-    public const DOWNLOAD_OPTION_XML = 'download_option_xml';
-    public const DOWNLOAD_OPTION_ALL = 'download_option_all';
-
+    //Routes to webtrees views
     public const WEBTREES_ROUTE_TO_TREE = '/index.php?route=%2Fwebtrees%2Ftree%2F';
     public const WEBTREES_TREE_TO_SOURCE = '%2Fsource%2F';
     public const WEBTREES_TREE_TO_REPO = '%2Frepository%2F';
@@ -554,51 +544,7 @@ class DownloadEADxmlService
     public function downloadResponse(string $filename): ResponseInterface 
     {
         return Functions::responseForDOMDownload($this->ead_xml, $filename);
-    }
-
-    /**
-     * Options for downloads
-     *
-     * @return array<string>
-     */
-    public static function getDownloadOptions(string $selection = self::DOWNLOAD_OPTION_ALL): array
-    {        
-        $xml_options = [
-            self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
-        ];
-
-        //Currently not used
-        $specific_xml_options = [
-            self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
-            self::DOWNLOAD_OPTION_APE_EAD   => I18N::translate('apeEAD XML'),
-            self::DOWNLOAD_OPTION_ATOM      => I18N::translate('AtoM EAD XML'),
-        ];
-
-        $text_options = [
-            self::DOWNLOAD_OPTION_HTML      => I18N::translate('Finding aid as HTML'),
-            self::DOWNLOAD_OPTION_PDF       => I18N::translate('Finding aid as PDF'),
-        ];
-
-        switch($selection) {
-
-            case self::DOWNLOAD_OPTION_XML:
-                $options = $xml_options;
-                break;
-
-            case self::DOWNLOAD_OPTION_TEXT:
-                $options = $text_options;
-                break;
-
-            case self::DOWNLOAD_OPTION_ALL:
-                $options = $text_options + $xml_options;
-                break;
-
-            default:
-                $options = $text_options + $xml_options;
-            }
-
-        return $options;
-    }    
+    } 
     
     /**
      * get AtoM slug

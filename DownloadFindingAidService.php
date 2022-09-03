@@ -44,7 +44,7 @@ use function date;
 /**
  * Download Service for EAD XML files
  */
-class DownloadFindingAidService
+class DownloadFindingAidService extends DownloadService
 {
 
     //The ResponseFactory used
@@ -203,7 +203,7 @@ class DownloadFindingAidService
     }
 
     /**
-     * Return response with PDF values
+     * Return response with PDF values (for debugging purposes)
      * 
      * @param string    $filename       Name of download file without extension
      *
