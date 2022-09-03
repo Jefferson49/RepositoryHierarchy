@@ -29,33 +29,39 @@ use function date;
 		<style>
 			.finding-aid-body {
 				font-size:10pt;
-				font-family: Arial,Verdana,sans-serif;
 			}
 			.finding-aid-table {
-				width: 100%; 
-				padding: 5px;
-				border: none; 
+				border: 0pt white;
+				width: 100%;
+				break-inside: avoid;
 			} 
 			.finding-aid-table-caption {
 				font-weight: 400; 
 				background-color: #d0d0d0; 
 				text-align: left;
+				padding: 0pt;
 			}		
 			.finding-aid-table-empty-row {
-				border-bottom: 1px solid black;
-				padding: 0px;
-				height: 0px;
+				font-size:3pt;
+				height: 3pt;
+			}
+			.finding-aid-table-separator-row {
+				font-size:3pt;
+				height: 3pt;
+				border-top: 1pt solid black; 
 			}
 			.finding-aid-table-first-column {
-				width: 100px;
+				width: 75pt;
+			}
+			.finding-aid-table-middle-column {
+				width: 300pt;
 			}
 			.finding-aid-table-last-column {
-				width: 160px;
+				width: 125pt;
 			}
 			td {
 				vertical-align: top;	
 			}
-
 		</style>
 	</head>
 	<body class="finding-aid-body">

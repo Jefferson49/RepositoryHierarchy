@@ -148,6 +148,10 @@ class DownloadFindingAidService
     public function downloadPDFResponse(string $filename): ResponseInterface 
     {
         $pdf = $this->createPDF();
+        
+        //Show PDF values (for debugging)
+        //return $this->getPDFvalues($pdf);
+
         $stream = fopen('php://memory', 'wb+');
 
         if ($stream === false) {
@@ -186,8 +190,8 @@ class DownloadFindingAidService
     {
         //Create PDF document and settings
         $pdf = new PdfRenderer();
-        $pdf->default_font_size = 10;
         $pdf->setup();
+        $pdf->tcpdf->setFontSize(10);
 
         //Load HTML and render
         $html = $this->generateHtml();
@@ -197,5 +201,50 @@ class DownloadFindingAidService
 
         return $pdf;
     }
+
+    /**
+     * Return response with PDF values
+     * 
+     * @param string    $filename       Name of download file without extension
+     *
+     * @return ResponseInterface
+     */
+    public function getPDFvalues(PdfRenderer $pdf): ResponseInterface 
+    {
+        //Get settings
+        $margins = $pdf->tcpdf->getMargins();
+        $original_margins = $pdf->tcpdf->getOriginalMargins();
+        $scale_factor = $pdf->tcpdf->getScaleFactor();
+        $width_page_current_units = $pdf->tcpdf->getPageWidth();
+        $height_page_current_units = $pdf->tcpdf->getPageHeight();
+        $left_margin = $margins['left'];
+        $right_margin =  $margins['right'];
+        $original_left_margin = $original_margins['left'];
+        $original_right_margin =  $original_margins['right'];
+        $font_size = $pdf->tcpdf->getFontSize();
+        $font_size_pt = $pdf->tcpdf->getFontSizePt();
+        $font_family = $pdf->tcpdf-> getFontFamily();
+        $font_style = $pdf->tcpdf-> getFontStyle();
+        
+        //Create modal HTML text
+        $text = 
+        '<p>scale_factor: ' . $scale_factor . '</p>'.
+        '<p>width_page_current_units: ' . $width_page_current_units . '</p>'.
+        '<p>height_page_current_units: ' . $height_page_current_units . '</p>'.
+        '<p>left_margin: ' . $left_margin . '</p>'.
+        '<p>right_margin: ' . $right_margin . '</p>' .
+        '<p>original_left_margin: ' . $original_left_margin . '</p>'.
+        '<p>original_right_margin: ' . $original_right_margin . '</p>' .
+        '<p>font_size: ' . $font_size . '</p>' .
+        '<p>font_size_pt: ' . $font_size_pt . '</p>' .
+        '<p>font_family: ' . $font_family . '</p>' .
+        '<p>font_style: ' . $font_style . '</p>' .
+        '';
+
+        //Return modal with text
+        return response(view(RepositoryHierarchy::MODULE_NAME . '::error', [  
+            'text'  => $text,
+            ]));              
+    } 
 
 }
