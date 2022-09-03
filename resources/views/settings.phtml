@@ -23,6 +23,7 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_source_facts_in_citations
  * @var  bool		$allow_admin_xml_settings
  * @var  bool		$show_atom_links
+ * @var  string		$atom_slug
  * @var  string		$webtrees_base_url
  * @var  string		$atom_base_url
  * @var  string		$atom_repositories
@@ -91,6 +92,16 @@ use Fisharebest\Webtrees\View;
             <h3><?= I18N::translate('Settings for linking to external archive management tools') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show link to AtoM records within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, 'checked' => $show_atom_links]) ?>
+            </div>  
+            <div class="row">
+                <?= view('components/radios', [
+                    'name' => 'atom_slug', 
+                    'selected' => $atom_slug,
+                    'options' => [
+                        RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER => I18N::translate('Use call number as AtoM slug, i.e. permalink or REST link'),
+                        RepositoryHierarchy::PREF_ATOM_SLUG_TITLE => I18N::translate('Use source title as AtoM slug, i.e. permalink or REST link'),
+                        ],
+                    ]) ?>
             </div>            
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="webtrees_base_url">

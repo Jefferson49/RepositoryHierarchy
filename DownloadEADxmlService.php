@@ -603,7 +603,10 @@ class DownloadEADxmlService
      * @return string
      */
     public static function getAtoMSlug(string $text): string
-    {
-		return strtolower(preg_replace('/[^A-Za-z0-9]+/', '-', $text));
+    {        
+        $text = Functions::removeHtmlTags($text);
+        $text = str_replace(['Ä','Ö','Ü','ä','ö','ü','ß'], ['AE','OE','UE','ae','oe','ue','ss'], $text);
+
+        return strtolower(preg_replace('/[^A-Za-z0-9]+/', '-', $text));
     }
 }
