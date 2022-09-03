@@ -105,7 +105,6 @@ class CallNumberCategory  {
 		$this->hierarchy_level = $hierarchy_level;
 		$this->sources = $sources;
 		$this->sub_categories = $sub_categories;
-		$this->date_ranges = [];
 	}
  
  /**
@@ -238,17 +237,6 @@ class CallNumberCategory  {
      */
 	public function addSource(Source $source) {
 		array_push($this->sources, $source);
-	}
-
-   /**
-     * Add date range
-     *
-	 * @param Source
-     */
-	public function addDateRange(?Date $date) {
-		if($date !== null) {
-			array_push($this->date_ranges, $date);
-		}
 	}
 
    /**

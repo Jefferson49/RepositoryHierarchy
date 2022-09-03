@@ -839,7 +839,7 @@ class RepositoryHierarchy   extends     AbstractModule
                 $pos_end = $pos_start + strlen($matched_part);                    
                 $length = strlen($call_number_chunk);
                 $left   = substr($call_number_chunk, 0, $pos_start);
-                $right  = substr($call_number_chunk, -($length - $pos_end), $length - $pos_end);
+                $right  = substr($call_number_chunk, -($length - (int) $pos_end), $length - (int) $pos_end);
 
                 //If found category name is empty, take default
                 if ($left === '') {
@@ -871,7 +871,6 @@ class RepositoryHierarchy   extends     AbstractModule
         //if expression for delimiter not found in call_number_chunk, add source to category
 		else {
 			$category->addSource($source);
-			$category->addDateRange(Functions::getDateRangeForSource($source));
             $category->addTruncatedCallNumber($source, $call_number_chunk);
 		}						
 	}
@@ -1130,8 +1129,8 @@ class RepositoryHierarchy   extends     AbstractModule
             $title = I18N::translate('Finding aid');
 
             //Create finding aid and download
-            $this->download_finding_aid_service = new DownloadFindingAidService($this->repository, $this->root_category, $user);
-            return $this->download_finding_aid_service->downloadHtmlResponse('finding_aid');
+            $download_finding_aid_service = new DownloadFindingAidService($this->repository, $this->root_category, $user);
+            return $download_finding_aid_service->downloadHtmlResponse('finding_aid');
         }
 
         //If download of PDF finding aid is requested, create and return download
@@ -1139,8 +1138,8 @@ class RepositoryHierarchy   extends     AbstractModule
             $title = I18N::translate('Finding aid');
 
             //Create finding aid and download
-            $this->download_finding_aid_service = new DownloadFindingAidService($this->repository, $this->root_category, $user);
-            return $this->download_finding_aid_service->downloadPDFResponse('finding_aid');
+            $download_finding_aid_service = new DownloadFindingAidService($this->repository, $this->root_category, $user);
+            return $download_finding_aid_service->downloadPDFResponse('finding_aid');
         }
 
 
