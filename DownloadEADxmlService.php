@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
 use DOMAttr;
 use DOMDocument;
 use DOMImplementation;
@@ -299,7 +300,7 @@ class DownloadEADxmlService extends DownloadService
                 if ( $date_range !== null) {
                     $date_range_text = Functions::getISOformatForDateRange($date_range);
                     
-                $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
+                $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
                     $unitdate_dom->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
                 }
@@ -381,7 +382,7 @@ class DownloadEADxmlService extends DownloadService
                 if ( $date_range !== null) {
                     $date_range_text = Functions::getISOformatForDateRange($date_range);
                                         
-                $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
+                $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
                     $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
                     $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
                 }
@@ -464,7 +465,7 @@ class DownloadEADxmlService extends DownloadService
                 if ( $date_range !== null) {
                     $date_range_text = Functions::getISOformatForDateRange($date_range);
                                         
-                $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
+                $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
                     $unitdate_dom->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
                 }
@@ -506,7 +507,7 @@ class DownloadEADxmlService extends DownloadService
 
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
                 if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
-                    $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', I18N::translate("Date range")));
+                    $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
                         $unitdate_node->appendChild(new DOMAttr('normal', Functions::removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
                         $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
                  }

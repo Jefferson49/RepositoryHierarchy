@@ -30,7 +30,7 @@ use Fisharebest\Webtrees\I18N;
 		<?php endif ?>		
 		<?php if (($category->getOverallDateRange() !== null) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0')))) : ?>
 			(
-			<?= I18N::translate('Date range') ?>:
+			<?= MoreI18N::xlate('Date range') ?>:
 			<?= $category->getOverallDateRange()->display() ?>
 			)
 		<?php endif ?>
@@ -96,7 +96,7 @@ use Fisharebest\Webtrees\I18N;
 
 							<?php if (($source->facts(['DATA'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1')))) : ?>
 								—
-								<?= I18N::translate('Date range') ?>:
+								<?= MoreI18N::xlate('Date range') ?>:
 								<?= Functions::displayDateRangeForSource($source, $repository_hierarchy->getTree())?>
 							<?php endif ?>
 						</li>
