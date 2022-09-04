@@ -52,7 +52,7 @@ use function date;
 				border-top: 1pt solid black; 
 			}
 			.finding-aid-table-first-column {
-				width: 75pt;
+				width: 65pt;
 			}
 			.finding-aid-table-last-column {
 				width: 125pt;
@@ -62,7 +62,7 @@ use function date;
 			}
 			<?php if($forPDF) : ?>
 			.finding-aid-table-middle-column {
-				width: 300pt;
+				width: 310pt;
 			}
 			<?php endif ?>
 		</style>
@@ -84,12 +84,13 @@ use function date;
 				<?= $line?><br>
 			<?php endforeach ?>
 		</p>
-		<h2><?= I18N::translate('Table of Contents - Archival Arrangement') ?></h2>
-		<?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
-            'category'              => $root_category,
-            'is_root_category'      => true,
-            ]) ?>
-
+		<?php if(!$forPDF) : ?>
+			<h2><?= I18N::translate('Table of Contents - Archival Arrangement') ?></h2>
+			<?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
+				'category'              => $root_category,
+				'is_root_category'      => true,
+				]) ?>
+		<?php endif ?>
 		<h2><?= I18N::translate('List of Sources') ?></h2>
 		<?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
 			'category' 			=> $root_category,
