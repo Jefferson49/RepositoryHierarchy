@@ -329,4 +329,22 @@ class CallNumberCategory  {
 			return Functions::getCallNumberForSource($source, $repository);
 		}
 	}
+
+	/**
+     * Display date range
+     *
+     * @param string    $delimiter  [ISO 8601 allows: '/' odr '--']
+	 * 
+	 * @return string
+     */
+    public function displayISODateRange(string $delimiter = '/'): string {	
+	
+        if(($this->overall_date_range !== null) && $this->overall_date_range->isOK()) {
+			{
+				return Functions::getISOformatForDateRange($this->overall_date_range, $delimiter );
+			}
+		}
+		return '';
+    }
+
  }

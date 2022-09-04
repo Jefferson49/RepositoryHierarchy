@@ -22,7 +22,11 @@ use Fisharebest\Webtrees\View;
                 <?= I18N::translate('Call number') ?>
             </td>
             <td class="finding-aid-table-middle-column"><b><?= e($category->getFrontEndName(true)) ?></b></td>      
-            <td class="finding-aid-table-last-column"></td>          
+            <?php if ($category->displayISODateRange() !== '') : ?>
+                <td class="finding-aid-table-last-column"><?= MoreI18N::xlate('Date range') ?>:<br><?= $category->displayISODateRange('--')?></td>          
+            <?php else : ?>
+                <td class="finding-aid-table-last-column"></td>          
+            <?php endif ?>        
         </tr>
         <tr>
             <td class="finding-aid-table-empty-row" colspan="3"></td>      
@@ -44,8 +48,8 @@ use Fisharebest\Webtrees\View;
         <tr> 
             <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>               
             <td><?= $source->fullName()	?></td>                    
-            <?php if (Functions::displayDateRangeForSource($source, $repository->tree()) !== '') : ?>
-                <td><?= I18N::translate('Date range') ?>:</td>
+            <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
+                <td><?= MoreI18N::xlate('Date range') ?>:</td>
             <?php else : ?>
                 <td></td>
             <?php endif ?>
