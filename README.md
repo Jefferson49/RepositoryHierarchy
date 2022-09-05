@@ -48,8 +48,6 @@ This README file contains the following main sections:
 *   [Preferences](#Preferences)
 *   [Github Repository](#Github)
 
-Show additional source and repository information in source citations
-
 <a name="Benefits"></a>
 ##  What are the benefits of using this module?
 + Provide a better overview of sources in a repository
