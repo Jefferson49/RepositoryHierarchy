@@ -46,7 +46,10 @@ This README file contains the following main sections:
 + Find and remove inconsistencies between call numbers in repositories
 + Get additional features to rename call number categories (or groups of call numbers)
 + Get better support to design an archive arrangement/classification for your own archive and manage the corresponding call numbers
-+ Use the generated hierarchical repository list as a finding aid (i.e. table of content or catalog) for repositories
++ Generate a finding aid document (i.e. table of content or catalog) for a repository
++ Generate a standardized archive EAD xml file to export the data of a repository to an archive portal
++ Export the data of a repository to an external archive management system by using the EAD xml export
++ Create links between webtrees and an external archive management system
 
 <a name="Screenshot"></a>
 ##  Screenshot
@@ -63,7 +66,7 @@ This README file contains the following main sections:
 
 <a name="Version"></a>
 ##  Webtrees version  
-The latest release of the module was developed and tested with [webtrees 2.1.6](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
+The latest release of the module was developed and tested with [webtrees 2.1.7](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
 
 <a name="Background"></a>
 ##  Some background about archive and library management
@@ -253,9 +256,29 @@ By opening the "Add new source" link close to a call number category, a form is 
 
 While the "{new}" placeholder should be modified, the rest of the call number, which consists of the call number category hierarchy should only be modified if the "route" or "path" of the call number category shall also be changed. If the intention is to simple add a new source to an existing call number category, only the "{new}" placeholder should be changed.
 
+### Generate a finding aid document
+<TBD>
+
+### Generate an EAD xml export
+<TBD>
+
+### Settings for EAD xml exports
+<TBD>
+
+### Export data to an external archive management system
+<TBD>
+
+### Create links between webtrees and an external archive management system
+<TBD>
+
+### Show additional source and repository information in source citations
+<TBD>
+
 <a name="Prefences"></a>
 ##  Preferences
-The following preferences can be activated/deactivated by administrators in the control panel:
+The following preferences can be activated/deactivated by administrators in the control panel.
+
+### Preferences for the main Repository Hierarchy list
 + Show label before call number category.
 + Show help icon after label for delimiter expression.
 + Show help link after label for delimiter expression.
@@ -267,7 +290,18 @@ The following preferences can be activated/deactivated by administrators in the 
 + Show the date range of the sources.
 + Allow users to load stored delimiter expressions from administrator.
 
-Select/Unselect preferences by hitting the related radio buttons.
+### Preferences for source citations
++ Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.
+
+### Preferences for EAD xml exports
++ Allow users to load stored XML settings from administrator.
+
+### Preferences for linking to external archive management tools
++ Use call numbers to create AtoM REST links ("AtoM slugs")
++ Use source titles to create AtoM REST links ("AtoM slugs")
++ Webtrees base URL to be used for the generation of links
++ [AtoM](https://www.accesstomemory.org/) base ULR to be used for the generation of links to an [AtoM](https://www.accesstomemory.org/) archive management system.
++ Repositories, for which [AtoM](https://www.accesstomemory.org/) linking is used.
 
 <a name="Github"></a>
 ##  Github repository  

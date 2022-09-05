@@ -90,13 +90,18 @@ use Fisharebest\Webtrees\View;
 
             <div class="row"><?= view('icons/spacer') ?></div> 
             <h3><?= I18N::translate('Settings for linking to external archive management tools') ?></h3>
+            <div class="row">            
+                <?= I18N::translate('The following settings apply if AtoM (https://www.accesstomemory.org) is used as an external archive management system.') ?>
+            </div>                
             <div class="row">
+                <p></p>
                 <?= view('components/checkbox', ['label' => I18N::translate('Show link to AtoM records within source citations').'.', 'name' => RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, 'checked' => $show_atom_links]) ?>
             </div> 
             <div class="row">
                 <p></p>
                 <?= I18N::translate('Settings for the creation of AtoM REST links ("AtoM slugs"), which can be used to link a webtrees source citation to the source view in an external AtoM archive management system. Only applies if the option "%s" is activated.', I18N::translate('Show link to AtoM records within source citations')) ?>
-            <div class="row">
+
+                <div class="row">
                 <p></p>
                 <?= view('components/radios', [
                     'name' => 'atom_slug', 
@@ -135,14 +140,13 @@ use Fisharebest\Webtrees\View;
             </div>
         </div>
 			
-            <div class="col">
-				<p></p>
-				<button type="submit" class="btn btn-primary">
-					<?= view('icons/save') ?>
-					<?= I18N::translate('save') ?>
-				</button>
-			</div>
-		</div>
+        <div class="col">
+            <p></p>
+            <button type="submit" class="btn btn-primary">
+                <?= view('icons/save') ?>
+                <?= I18N::translate('save') ?>
+            </button>
+        </div>
     </form>	
 </div>
 
