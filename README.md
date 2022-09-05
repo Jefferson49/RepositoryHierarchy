@@ -36,8 +36,19 @@ This README file contains the following main sections:
 *   [Concepts of the Repository Hierarchy Module](#Concepts)
 *   [How the module maps to Gedcom and to archive management concepts](#Mapping)
 *   [**How to use the module?**](#Usage)
+    *   [**Using delimiters**](#Using-delimiters)
+    *   [**Save and load options**](#Using-save-load)
+    *   [**Rename a call number category**](#Using-rename)
+    *   [**Generate a finding aid document**](#Using-finding-aid)
+    *   [**Generate an EAD xml export**](#Using-EAD-xml)
+    *   [**Settings for EAD xml exports**](#Using-xml-settings)
+    *   [**Export data to an external archive management system**](#Using-export)
+    *   [**Create links between webtrees and an external archive management system**](#Using-links)
+    *   [**Show additional source and repository information in source citations**](#Using-citations)
 *   [Preferences](#Preferences)
 *   [Github Repository](#Github)
+
+Show additional source and repository information in source citations
 
 <a name="Benefits"></a>
 ##  What are the benefits of using this module?
@@ -156,6 +167,7 @@ The following table describes how the concepts from archive and library manageme
 <a name="Usage"></a>
 ##  How to use the module?
 
+<a name="Using-delimiters"></a>
 ###  Usage of a single delimiter
 A single delimiter is used by providing a single character or a sequence of characters in the related input form ("delimiter expression"). 
 
@@ -233,6 +245,7 @@ Example:
 
 Like for a set of simple delimiters, the delimiter expressions are evaluated from left to right. Please refer to the description and example for a set of simple delimiters.
 
+<a name="Using-save-load"></a>
 ###  Save and load options
 By pressing certain radio buttons in the front end, certain load and save operations can be executed while pressing the "view" button. 
 
@@ -248,29 +261,37 @@ If the "load delimiter expression" radio button is activated while the "view" bu
 
 If the "load delimiter expression from administrator" radio button is activated while the "view" button is pressed, the module will load a stored delimiter expression of the administrator(s) if available.
 
+<a name="Using-rename"></a>
 ###  Rename a call number category
 By opening the "Rename" link close to a call number category, a data fix page with a search/replace form is opened, where the name of the chosen call number can be modified.
 
+<a name="Using-add-source"></a>
 ###  Add a new source to a call number category
 By opening the "Add new source" link close to a call number category, a form is opened, which allows to add a new source to the chosen call number. When opening the form, a "{new}" placeholder is inserted, which should be modified by the user.
 
 While the "{new}" placeholder should be modified, the rest of the call number, which consists of the call number category hierarchy should only be modified if the "route" or "path" of the call number category shall also be changed. If the intention is to simple add a new source to an existing call number category, only the "{new}" placeholder should be changed.
 
+<a name="Using-finding-aid"></a>
 ### Generate a finding aid document
 <TBD>
 
+<a name="Using-EAD-xml"></a>
 ### Generate an EAD xml export
 <TBD>
 
+<a name="Using-xml-settings"></a>
 ### Settings for EAD xml exports
 <TBD>
 
+<a name="Using-export"></a>
 ### Export data to an external archive management system
 <TBD>
 
+<a name="Using-links"></a>
 ### Create links between webtrees and an external archive management system
 <TBD>
 
+<a name="Using-citations"></a>
 ### Show additional source and repository information in source citations
 <TBD>
 
