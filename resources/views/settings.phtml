@@ -21,6 +21,9 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_date_range
  * @var  bool		$allow_admin_delimiter
  * @var  bool		$show_source_facts_in_citations
+ * @var  bool		$show_finding_aid_wt_links
+ * @var  bool		$show_finding_aid_toc
+ * @var  bool		$show_finding_aid_toc_links
  * @var  bool		$allow_admin_xml_settings
  * @var  bool		$show_atom_links
  * @var  string		$atom_slug
@@ -80,6 +83,18 @@ use Fisharebest\Webtrees\View;
             <h3><?= I18N::translate('Settings for source citations') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'checked' => $show_source_facts_in_citations]) ?>
+            </div>
+
+            <div class="row"><?= view('icons/spacer') ?></div> 
+            <h3><?= I18N::translate('Settings for finding aid exports') ?></h3>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Include links to webtrees sources within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, 'checked' => $show_finding_aid_wt_links]) ?>
+            </div>            
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Include table of contents within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_TOC, 'checked' => $show_finding_aid_toc]) ?>
+            </div>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show links within table of contents in finding aid export (not available for PDF export).'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, 'checked' => $show_finding_aid_toc_links]) ?>
             </div>
 
             <div class="row"><?= view('icons/spacer') ?></div> 

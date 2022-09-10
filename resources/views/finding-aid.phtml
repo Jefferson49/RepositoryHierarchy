@@ -5,6 +5,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\View;
 use Matriphe\ISO639\ISO639;
@@ -83,18 +84,25 @@ use function date;
 				<?= $line?><br>
 			<?php endforeach ?>
 		</p>
-		<?php if(!$forPDF) : ?>
+
+		<?php $module_service = new ModuleService(); ?>
+        <?php $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME); ?>
+
+		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC, '0'))) : ?>
 			<h2><?= I18N::translate('Table of Contents - Archival Arrangement') ?></h2>
 			<?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
 				'category'              => $root_category,
 				'is_root_category'      => true,
+				'show_links'			=> !$forPDF && boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, '0')),
 				]) ?>
 		<?php endif ?>
+
 		<h2><?= I18N::translate('List of Sources') ?></h2>
 		<?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
 			'category' 			=> $root_category,
 			'repository' 		=> $repository,
 			'is_root_category'	=> true,
+			'show_wt_links'		=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, '0')),
 			]) ?>
 	</body>
 </html>

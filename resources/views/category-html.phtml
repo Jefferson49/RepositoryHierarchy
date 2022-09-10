@@ -10,12 +10,15 @@ use Fisharebest\Webtrees\View;
 /**
  * @var CallNumberCategory                  $category
  * @var \Fisharebest\Webtrees\Repository    $repository
+ * @var bool                                $is_root_category
+ * @var bool                                $show_wt_links
  */
 
 ?>
 
 <?php if (!$is_root_category) : ?>
-    <table class="finding-aid-table" id="<?= $category->getId() ?>">
+    <a name="<?= $category->getId() ?>"></a>
+    <table class="finding-aid-table" >
         <tr class="finding-aid-table-caption">
             <td class="finding-aid-table-first-column">
                 <?= I18N::translate('Fonds') ?>/<br>
@@ -43,7 +46,11 @@ use Fisharebest\Webtrees\View;
         <tr> 
             <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>               
             <td class="finding-aid-table-middle-column"><b><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></b></td>
-            <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>"><?= $source->xref() ?></a></td>            
+            <?php if ($show_wt_links) : ?>
+                <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>"><?= $source->xref() ?></a></td>            
+            <?php else : ?>
+                <td class="finding-aid-table-last-column"></td>
+            <?php endif ?>        
         </tr>
         <tr> 
             <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>               
@@ -78,5 +85,6 @@ use Fisharebest\Webtrees\View;
             'category'          => $sub_category,
             'repository' 	    => $repository,
             'is_root_category'	=> false,
+            'show_wt_links'		=> $show_wt_links,
             ]) ?>
 <?php endforeach ?>
