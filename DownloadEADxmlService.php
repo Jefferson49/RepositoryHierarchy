@@ -50,11 +50,6 @@ use function date;
  */
 class DownloadEADxmlService extends DownloadService
 {
-    //Routes to webtrees views
-    public const WEBTREES_ROUTE_TO_TREE = '/index.php?route=%2Fwebtrees%2Ftree%2F';
-    public const WEBTREES_TREE_TO_SOURCE = '%2Fsource%2F';
-    public const WEBTREES_TREE_TO_REPO = '%2Frepository%2F';
-
     //The xml object for EAD XML export
     private DOMDocument $ead_xml;
 
@@ -356,10 +351,6 @@ class DownloadEADxmlService extends DownloadService
      */
     private function addCollection(string $xml_type, DOMNode $dom, CallNumberCategory $root_category): DOMNode
     {
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
-        $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
-
          //<c>
          $collection_dom = $dom->appendChild($this->ead_xml->createElement('c'));
             $collection_dom->appendChild(new DOMAttr('level', 'collection'));
@@ -406,7 +397,7 @@ class DownloadEADxmlService extends DownloadService
 
                 //<dao>   
                 $dao_node =$did_dom->appendChild($this->ead_xml->createElement('dao'));
-                    $dao_node->appendChild(new DOMAttr('xlink:href', $base_url . self::WEBTREES_ROUTE_TO_TREE . $this->repository->tree()->name() . self::WEBTREES_TREE_TO_REPO . $this->repository->xref()));
+                    $dao_node->appendChild(new DOMAttr('xlink:href', $this->repository->url()));
                     $dao_node->appendChild(new DOMAttr('xlink:title', Functions::removeHtmlTags($this->repository->fullName())));                    
 
                 //<otherfindaid>
@@ -481,10 +472,6 @@ class DownloadEADxmlService extends DownloadService
      */
     private function addItem(string $xml_type, DOMNode $dom, Source $source, Repository $repository)
     {
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
-        $base_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_WEBTREES_BASE_URL, ''); 
-
         $fact_values =Functions::sourceValuesByTag($source, $repository);
 
         //<c>
@@ -514,22 +501,17 @@ class DownloadEADxmlService extends DownloadService
                 
                 //<dao>
                 $dao_node =$did_dom->appendChild($this->ead_xml->createElement('dao'));
-                    $dao_node->appendChild(new DOMAttr('xlink:href', $base_url . self::WEBTREES_ROUTE_TO_TREE . $source->tree()->name() . self::WEBTREES_TREE_TO_SOURCE . $source->xref()));
+                    $dao_node->appendChild(new DOMAttr('xlink:href', $source->url()));
                     $dao_node->appendChild(new DOMAttr('xlink:title', $fact_values['SOUR:TITL']));
                     
 
                 //<note> link to webtrees, needed for AtoM, only. For simplicity reasons, always include to XML
-                if (//($xml_type === DownloadEADxmlService::DOWNLOAD_OPTION_ATOM) &&
-                    ($repository_hierarchy !== null) &&
-                    ($base_url !== ''))  
-                {
-                    $note_node = $did_dom->appendChild($this->ead_xml->createElement('note'));
-                        $note_node->appendChild(new DOMAttr('type', 'generalNote'));
-                        $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.6.1'));
+                $note_node = $did_dom->appendChild($this->ead_xml->createElement('note'));
+                    $note_node->appendChild(new DOMAttr('type', 'generalNote'));
+                    $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.6.1'));
 
-                    //<p>                        
-                        $note_node->appendChild($this->ead_xml->createElement('p', '[webtrees: ' .$source->xref() . '](' . $base_url . self::WEBTREES_ROUTE_TO_TREE . $source->tree()->name() . self::WEBTREES_TREE_TO_SOURCE . $source->xref() . ')'));
-                }
+                //<p>                        
+                    $note_node->appendChild($this->ead_xml->createElement('p', '[webtrees: ' .$source->xref() . '](' . $source->url() . ')'));
 
                 //<place>   within EVEN:PLAC
                 //TBD

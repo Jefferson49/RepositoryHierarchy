@@ -400,7 +400,6 @@ class RepositoryHierarchy   extends     AbstractModule
             self::PREF_ALLOW_ADMIN_XML_SETTINGS         => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
             self::PREF_ATOM_SLUG                        => $this->getPreference(self::PREF_ATOM_SLUG, self::PREF_ATOM_SLUG_CALL_NUMBER),
             self::PREF_SHOW_ATOM_LINKS                  => boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')),
-            self::PREF_WEBTREES_BASE_URL                => $this->getPreference(self::PREF_WEBTREES_BASE_URL, ''),
             self::PREF_ATOM_BASE_URL                    => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
             self::PREF_ATOM_REPOSITORIES                => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
         ]);    
@@ -436,18 +435,6 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_ATOM_SLUG, isset($params[self::PREF_ATOM_SLUG])? $params[self::PREF_ATOM_SLUG]: self::PREF_ATOM_SLUG_CALL_NUMBER);
 
             //Remove slashes at the end of the URL
-            if(isset($params[self::PREF_WEBTREES_BASE_URL])) {
-                
-                $webtrees_base_url = $params[self::PREF_WEBTREES_BASE_URL];
-
-                if(substr($webtrees_base_url, -1) === '/') {
-                    $webtrees_base_url = substr($webtrees_base_url, 0, -1);
-                } 
-            } else {
-                $webtrees_base_url = '';
-            }
-
-            //Remove slashes at the end of the URL
             if(isset($params[self::PREF_ATOM_BASE_URL])) {
 
                 $atom_base_url = $params[self::PREF_ATOM_BASE_URL];
@@ -459,7 +446,6 @@ class RepositoryHierarchy   extends     AbstractModule
                 $atom_base_url = '';
             }
             
-            $this->setPreference(self::PREF_WEBTREES_BASE_URL, $webtrees_base_url);
             $this->setPreference(self::PREF_ATOM_BASE_URL, $atom_base_url);
             $this->setPreference(self::PREF_ATOM_REPOSITORIES, isset($params[self::PREF_ATOM_REPOSITORIES])? $params[self::PREF_ATOM_REPOSITORIES]:'');
 

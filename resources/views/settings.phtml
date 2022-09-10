@@ -28,7 +28,6 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$allow_admin_xml_settings
  * @var  bool		$show_atom_links
  * @var  string		$atom_slug
- * @var  string		$webtrees_base_url
  * @var  string		$atom_base_url
  * @var  string		$atom_repositories
  */
@@ -130,15 +129,6 @@ use Fisharebest\Webtrees\View;
                         ],
                     ]) ?>
             </div>            
-            <div class="row">
-                <p></p>
-                <label class="col-sm-3 col-form-label wt-page-options-label" for="webtrees_base_url">
-                    <?= I18N::translate('Base URL for webtrees') ?>
-                </label>
-                <div class="col-sm-9 wt-page-options-value">
-                    <input class="form-control" id="webtrees_base_url" name="webtrees_base_url" type="text" value="<?= e($webtrees_base_url) ?>">
-                </div>
-            </div>
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="atom_base_url">
                     <?= I18N::translate('Base URL for AtoM') ?>
