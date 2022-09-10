@@ -147,6 +147,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_FINDING_AID_URL = 'finding_aid_url_';
     public const PREF_FINDING_AID_PUBLISHER = 'finding_aid_publ_';
     public const PREF_ALLOW_ADMIN_XML_SETTINGS = 'allow_admin_xml_settings';
+    public const PREF_SHOW_FINDING_AID_ADDRESS  = 'show_finding_aid_address';
     public const PREF_SHOW_FINDING_AID_TOC  = 'show_finding_aid_toc';
     public const PREF_SHOW_FINDING_AID_TOC_LINKS  = 'show_finding_aid_toc_links';
     public const PREF_SHOW_FINDING_AID_WT_LINKS  = 'show_finding_aid_wt_links';
@@ -392,6 +393,7 @@ class RepositoryHierarchy   extends     AbstractModule
             self::PREF_SHOW_DATE_RANGE                  => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
             self::PREF_ALLOW_ADMIN_DELIMITER            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
             self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
+            self::PREF_SHOW_FINDING_AID_ADDRESS         => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
             self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
             self::PREF_SHOW_FINDING_AID_TOC             => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
             self::PREF_SHOW_FINDING_AID_TOC_LINKS       => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
@@ -425,6 +427,7 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE])? '1':'0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER])? '1':'0');
             $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, isset($params[self::PREF_SHOW_FINDING_AID_ADDRESS])? '1':'0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS])? '1':'0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC, isset($params[self::PREF_SHOW_FINDING_AID_TOC])? '1':'0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_TOC_LINKS])? '1':'0');

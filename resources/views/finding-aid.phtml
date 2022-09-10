@@ -21,6 +21,10 @@ use function date;
  */
 
 ?>
+
+<?php $module_service = new ModuleService(); ?>
+<?php $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME); ?>
+
 <!DOCTYPE HTML>
 <html lang="<?= $language_tag	?>">
 	<head>
@@ -77,23 +81,23 @@ use function date;
 
 		<h3><?= MoreI18N::xlate('Repository') ?></h3>
 		<p><?= $repository->fullName() ?></p>
-		<p>
-			<b><?= MoreI18N::xlate('Address') ?>:</b><br>
-			<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
-			<?php foreach($address_lines as $line) : ?>
-				<?= $line?><br>
-			<?php endforeach ?>
-		</p>
 
-		<?php $module_service = new ModuleService(); ?>
-        <?php $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME); ?>
+		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_ADDRESS, '1'))) : ?>
+			<p>
+				<b><?= MoreI18N::xlate('Address') ?>:</b><br>
+				<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
+				<?php foreach($address_lines as $line) : ?>
+					<?= $line?><br>
+				<?php endforeach ?>
+			</p>
+		<?php endif ?>
 
-		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC, '0'))) : ?>
+		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC, '1'))) : ?>
 			<h2><?= I18N::translate('Table of Contents - Archival Arrangement') ?></h2>
 			<?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
 				'category'              => $root_category,
 				'is_root_category'      => true,
-				'show_links'			=> !$forPDF && boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, '0')),
+				'show_links'			=> !$forPDF && boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
 				]) ?>
 		<?php endif ?>
 
@@ -102,7 +106,7 @@ use function date;
 			'category' 			=> $root_category,
 			'repository' 		=> $repository,
 			'is_root_category'	=> true,
-			'show_wt_links'		=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, '0')),
+			'show_wt_links'		=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
 			]) ?>
 	</body>
 </html>

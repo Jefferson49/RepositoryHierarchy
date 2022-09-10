@@ -21,6 +21,7 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_date_range
  * @var  bool		$allow_admin_delimiter
  * @var  bool		$show_source_facts_in_citations
+ * @var  bool		$show_finding_aid_address
  * @var  bool		$show_finding_aid_wt_links
  * @var  bool		$show_finding_aid_toc
  * @var  bool		$show_finding_aid_toc_links
@@ -33,7 +34,6 @@ use Fisharebest\Webtrees\View;
  */
 
 ?>
-
 
 <?= view('components/breadcrumbs', ['links' => [route(ControlPanel::class) => MoreI18N::xlate('Control panel'), $title]]) ?>
 
@@ -87,6 +87,9 @@ use Fisharebest\Webtrees\View;
 
             <div class="row"><?= view('icons/spacer') ?></div> 
             <h3><?= I18N::translate('Settings for finding aid exports') ?></h3>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Include repository address within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_ADDRESS, 'checked' => $show_finding_aid_address]) ?>
+            </div>            
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Include links to webtrees sources within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, 'checked' => $show_finding_aid_wt_links]) ?>
             </div>            
