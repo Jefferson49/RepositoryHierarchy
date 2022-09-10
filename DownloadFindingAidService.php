@@ -248,4 +248,14 @@ class DownloadFindingAidService extends DownloadService
             ]));              
     } 
 
+    /**
+     * Generate test HTML (for debugging)
+     * 
+     * @return string
+     */
+    public function generateTestHtml(bool $forPDF = false): string 
+    {
+        return view(RepositoryHierarchy::MODULE_NAME . '::test', []);
+    }
+
 }
