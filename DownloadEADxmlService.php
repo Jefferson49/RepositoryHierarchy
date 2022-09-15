@@ -74,6 +74,9 @@ class DownloadEADxmlService extends DownloadService
     //The ISO ISO-639-2b language tag related to the webtrees session
     private string $ISO_639_2b_language_tag;
 
+    //A flag, whether 'encodinganalog' tags are included in EAD XML 
+    private bool $use_encoding_analog;
+
 
     /**
      * Constructor
@@ -92,6 +95,7 @@ class DownloadEADxmlService extends DownloadService
         //Initialize variables
         $this->repository = $repository;
         $this->user = $user;
+        $this->use_encoding_analog = ($xml_type !== self::DOWNLOAD_OPTION_DDB_EAD);
 
         //Set language
         $iso_table = new ISO639;
@@ -213,7 +217,9 @@ class DownloadEADxmlService extends DownloadService
                     //<titleproper>
                     $titleproper_dom = $titlestmt_dom->appendChild($this->ead_xml->createElement('titleproper',
                         $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '')));
-                        $titleproper_dom->appendChild(new DOMAttr('encodinganalog', '245'));
+                        if($this->use_encoding_analog) {
+                            $titleproper_dom->appendChild(new DOMAttr('encodinganalog', '245'));
+                        }
 
                 //<publicationstmt>
                 $publicationstmt_dom = $filedesc_dom->appendChild($this->ead_xml->createElement('publicationstmt'));
@@ -222,13 +228,17 @@ class DownloadEADxmlService extends DownloadService
                     $pref = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $this->repository->tree()->id() . '_' . $this->repository->xref() . '_' . $user_id, '');
                     if($pref !== '') {
                         $publisher_dom = $publicationstmt_dom->appendChild($this->ead_xml->createElement('publisher', $pref));
+                        if($this->use_encoding_analog) {
                             $publisher_dom->appendChild(new DOMAttr('encodinganalog', '260$b'));
+                        }
                     }
 
                     //<date>
                     $date_dom = $publicationstmt_dom->appendChild($this->ead_xml->createElement('date', date('Y-m-d')));
                         $date_dom->appendChild(new DOMAttr('normal', date('Y-m-d')));
-                        $date_dom->appendChild(new DOMAttr('encodinganalog', '260$c'));
+                        if($this->use_encoding_analog) {
+                            $date_dom->appendChild(new DOMAttr('encodinganalog', '260$c'));
+                        }
   
             //<profiledesc>
             $profiledesc_dom = $header_dom->appendChild($this->ead_xml->createElement('profiledesc'));
@@ -248,7 +258,9 @@ class DownloadEADxmlService extends DownloadService
                     $iso_table = new ISO639;
                     $language_dom = $langusage_dom->appendChild($this->ead_xml->createElement('language', $iso_table->nativeByCode2b($this->ISO_639_2b_language_tag)));
                         $language_dom->appendChild(new DOMAttr('langcode', $this->ISO_639_2b_language_tag));
-                        $date_dom->appendChild(new DOMAttr('encodinganalog', '041'));
+                        if($this->use_encoding_analog) {
+                            $date_dom->appendChild(new DOMAttr('encodinganalog', '041'));
+                        }
 
         return $header_dom;
     }
@@ -265,7 +277,9 @@ class DownloadEADxmlService extends DownloadService
          //<archdesc>
          $archive_dom = $dom->appendChild($this->ead_xml->createElement('archdesc'));
             $archive_dom->appendChild(new DOMAttr('level', 'fonds'));
-            $archive_dom->appendChild(new DOMAttr('encodinganalog','3.1.4'));
+            if($this->use_encoding_analog) {
+                $archive_dom->appendChild(new DOMAttr('encodinganalog','3.1.4'));
+            }
             $archive_dom->appendChild(new DOMAttr('relatedencoding','ISAD(G)v2'));
 
              //<did>
@@ -273,15 +287,21 @@ class DownloadEADxmlService extends DownloadService
 
                 //<unittitle>
                 $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', Functions::removeHtmlTags($this->repository->fullName())));
+                if($this->use_encoding_analog) {
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
-                
+                }
+                    
                 //<unitid>
                 $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', Functions::removeHtmlTags($this->repository->fullName())));
+                if($this->use_encoding_analog) {
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
+                }
 
                 //<langmaterial>
                 $langmaterial_dom = $did_dom->appendChild($this->ead_xml->createElement('langmaterial'));
+                if($this->use_encoding_analog) {
                     $langmaterial_dom->appendChild(new DOMAttr('encodinganalog', '3.4.3'));
+                }
 
                     //<language>
                     $iso_table = new ISO639;
@@ -296,7 +316,9 @@ class DownloadEADxmlService extends DownloadService
                     
                 $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
-                    $unitdate_dom->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
+                    if($this->use_encoding_analog) {
+                        $unitdate_dom->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
+                    }
                 }
 
                 //<physdesc>
@@ -329,7 +351,9 @@ class DownloadEADxmlService extends DownloadService
 
                 //<origination>
                 $origination_dom = $did_dom->appendChild($this->ead_xml->createElement('origination'));
+                if($this->use_encoding_analog) {
                     $origination_dom->appendChild(new DOMAttr('encodinganalog', '3.2.1'));
+                }
 
                     //<name>
                     $origination_dom->appendChild($this->ead_xml->createElement('name', 
@@ -360,12 +384,16 @@ class DownloadEADxmlService extends DownloadService
 
                 //<unitid>
                 $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->repository->xref()));
+                if($this->use_encoding_analog) {
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
+                }
 
                 //<unittitle>
                 $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', Functions::removeHtmlTags($this->repository->fullName())));
+                if($this->use_encoding_analog) {
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
-                
+                }
+
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
                 $date_range = $root_category->getOverallDateRange();
 
@@ -374,12 +402,16 @@ class DownloadEADxmlService extends DownloadService
                                         
                 $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
                     $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
-                    $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
+                    if($this->use_encoding_analog) {
+                        $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
+                    }
                 }
 
                 //<langmaterial>
                 $langmaterial_dom = $did_dom->appendChild($this->ead_xml->createElement('langmaterial'));
+                if($this->use_encoding_analog) {
                     $langmaterial_dom->appendChild(new DOMAttr('encodinganalog', '3.4.3'));
+                }
 
                     //<language>
                     $iso_table = new ISO639;
@@ -389,7 +421,9 @@ class DownloadEADxmlService extends DownloadService
                 //<origination>
                 $origination_dom = $did_dom->appendChild($this->ead_xml->createElement('origination'));
                     $origination_dom->appendChild(new DOMAttr('label', 'final'));
-                    $origination_dom->appendChild(new DOMAttr('encodinganalog', '3.2.1'));
+                    if($this->use_encoding_analog) {
+                        $origination_dom->appendChild(new DOMAttr('encodinganalog', '3.2.1'));
+                    }
 
                     //<name>
                     $origination_dom->appendChild($this->ead_xml->createElement('name', Functions::removeHtmlTags($this->repository->fullName())));
@@ -434,15 +468,21 @@ class DownloadEADxmlService extends DownloadService
 
                 //<unittitle>
                 $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $call_number_category->getName()));
+                if($this->use_encoding_analog) {
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+                }
                 
                 //<unitid>
                 $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $call_number_category->getFullName()));
+                if($this->use_encoding_analog) {
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
+                }
 
                 //<langmaterial>
                 $langmaterial_dom = $did_dom->appendChild($this->ead_xml->createElement('langmaterial'));
+                if($this->use_encoding_analog) {
                     $langmaterial_dom->appendChild(new DOMAttr('encodinganalog', '3.4.3'));
+                }
 
                     //<language>
                     $iso_table = new ISO639;
@@ -457,7 +497,9 @@ class DownloadEADxmlService extends DownloadService
                                         
                 $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
                     $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
-                    $unitdate_dom->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
+                    if($this->use_encoding_analog) {
+                        $unitdate_dom->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
+                    }
                 }
 
         return $series_dom;
@@ -484,18 +526,24 @@ class DownloadEADxmlService extends DownloadService
                 //<unitid>
                 if (isset($fact_values['SOUR:REPO:CALN'])) {
                     $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $fact_values['SOUR:REPO:CALN']));
+                    if($this->use_encoding_analog) {
                         $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
+                    }
                 }
 
                 //<unittitle>
                 $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']));
+                if($this->use_encoding_analog) {
                     $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+                }
 
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
                 if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
                     $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
                         $unitdate_node->appendChild(new DOMAttr('normal', Functions::removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
-                        $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
+                        if($this->use_encoding_analog) {
+                            $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
+                        }
                  }
                 
                 //<dao>
@@ -507,7 +555,9 @@ class DownloadEADxmlService extends DownloadService
                 //<note> link to webtrees, needed for AtoM, only. For simplicity reasons, always include to XML
                 $note_node = $did_dom->appendChild($this->ead_xml->createElement('note'));
                     $note_node->appendChild(new DOMAttr('type', 'generalNote'));
-                    $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.6.1'));
+                    if($this->use_encoding_analog) {
+                        $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.6.1'));
+                    }
 
                 //<p>                        
                     $note_node->appendChild($this->ead_xml->createElement('p', '[webtrees: ' .$source->xref() . '](' . $source->url() . ')'));

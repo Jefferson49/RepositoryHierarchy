@@ -36,6 +36,7 @@ class DownloadService
     //Download and EAD XML types    
     public const DOWNLOAD_OPTION_EAD_XML = 'download_option_ead_xml';
     public const DOWNLOAD_OPTION_APE_EAD = 'download_option_ape_ead';
+    public const DOWNLOAD_OPTION_DDB_EAD = 'download_option_ddb_ead';
     public const DOWNLOAD_OPTION_ATOM = 'download_option_atom';
     public const DOWNLOAD_OPTION_HTML = 'download_option_html';
     public const DOWNLOAD_OPTION_PDF = 'download_option_pdf';
@@ -53,12 +54,8 @@ class DownloadService
     {        
         $xml_options = [
             self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
-        ];
-
-        //Currently not used
-        $specific_xml_options = [
-            self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
             self::DOWNLOAD_OPTION_APE_EAD   => I18N::translate('apeEAD XML'),
+            self::DOWNLOAD_OPTION_DDB_EAD   => I18N::translate('DDB EAD XML'),
             self::DOWNLOAD_OPTION_ATOM      => I18N::translate('AtoM EAD XML'),
         ];
 
@@ -88,4 +85,16 @@ class DownloadService
         return $options;
     }    
 
+    /**
+     * Is XML download command
+     *
+     * @return bool
+     */
+    public static function isXmlDownloadCommand(string $command): bool
+    {
+        $xml_options = self::getDownloadOptions(self::DOWNLOAD_OPTION_XML);
+
+        return  array_key_exists($command, $xml_options); 
+    }
+      
 }

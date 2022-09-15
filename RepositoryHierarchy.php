@@ -1102,7 +1102,7 @@ class RepositoryHierarchy   extends     AbstractModule
         $date_range = $this->getRootCategory()->calculateDateRange();
 
         //If download of EAD XML is requested, create and return download
-        if ($command === DownloadEADxmlService::DOWNLOAD_OPTION_EAD_XML) {
+        if (DownloadService::isXmlDownloadCommand($command)) {
             
             $xml_type = $command;
             $title = $this->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $xref . '_' . $user->id(), '');
