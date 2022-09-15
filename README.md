@@ -32,20 +32,27 @@ This README file contains the following main sections:
 *   [Screenshot](#Screenshot)
 *   [Installation](#Installation)
 *   [Webtrees Version](#Version)
-*   [Some background about archive and library management](#Background)
+*   [**How to use the module?**](#Usage)
+    *   [Using delimiters](#Using-delimiters)
+    *   [Save and load options](#Using-save-load)
+    *   [Rename a call number category](#Using-rename)
+    *   [Generate and download a finding aid document](#Using-finding-aid)
+    *   [Generate and download an EAD XML export](#Using-EAD-xml)
+    *   [Settings for EAD XML exports](#Using-xml-settings)
+    *   [Export data to an external archive management system](#Using-export)
+    *   [Create links between webtrees and an external archive management system](#Using-links)
+    *   [Show additional source and repository information in source citations](#Using-citations)
+    *   [Preferences](#Preferences)
+*   [Some more background about archive and library management](#Background)
+    *   [Archival Arrangement](#Arrangement)
+    *   [Library classification](#Classification)
+    *   [Finding Aids](#Finding_aids)
+    *   [Call numbers](#Call_numbers)
+    *   [Relationship between Archival Arrangement and Call numbers](#Relationship)
+    *   [EAD standard](#EAD)
+    *   [apeEAD standard](#apeEAD)
 *   [Concepts of the Repository Hierarchy Module](#Concepts)
 *   [How the module maps to Gedcom and to archive management concepts](#Mapping)
-*   [**How to use the module?**](#Usage)
-    *   [*Using delimiters*](#Using-delimiters)
-    *   [*Save and load options*](#Using-save-load)
-    *   [*Rename a call number category*](#Using-rename)
-    *   [*Generate a finding aid document*](#Using-finding-aid)
-    *   [*Generate an EAD xml export*](#Using-EAD-xml)
-    *   [*Settings for EAD xml exports*](#Using-xml-settings)
-    *   [*Export data to an external archive management system*](#Using-export)
-    *   [*Create links between webtrees and an external archive management system*](#Using-links)
-    *   [*Show additional source and repository information in source citations*](#Using-citations)
-*   [Preferences](#Preferences)
 *   [Github Repository](#Github)
 
 <a name="Benefits"></a>
@@ -56,8 +63,8 @@ This README file contains the following main sections:
 + Get additional features to rename call number categories (or groups of call numbers)
 + Get better support to design an archive arrangement/classification for your own archive and manage the corresponding call numbers
 + Generate a finding aid document (i.e. table of content or catalog) for a repository
-+ Generate a standardized archive EAD xml file to export the data of a repository to an archive portal
-+ Export the data of a repository to an external archive management system by using the EAD xml export
++ Generate a standardized archive EAD XML file to export the data of a repository to an archive portal
++ Export the data of a repository to an external archive management system by using the EAD XML export
 + Create links between webtrees and an external archive management system
 
 <a name="Screenshot"></a>
@@ -76,91 +83,6 @@ This README file contains the following main sections:
 <a name="Version"></a>
 ##  Webtrees version  
 The latest release of the module was developed and tested with [webtrees 2.1.7](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
-
-<a name="Background"></a>
-##  Some background about archive and library management
-In archive (or library) management, archival arrangements, library classifications, finding aids, and call numbers are frequently used to:
-+ define a structure for an archive
-+ assign item numbers to the sources in the archive
-+ provide a catalog or finding aid for the archive
-
-In the following, some of the typical concepts are briefly described.
-
-###  Archival Arrangement
-[Wikipedia](https://en.wikipedia.org/wiki/Finding_aid): "Arrangement is the manner in which \[the archive] has been ordered \[...]. Hierarchical levels of arrangement are typically composed of record groups containing series, which in turn contain boxes, folders, and items."
-
-###  Library classification
-[Wikipedia](https://en.wikipedia.org/wiki/Library_classification): "A library classification is a system of knowledge distribution by which library resources are arranged and ordered systematically."
-
-###  Finding Aids
-[Wikipedia](https://en.wikipedia.org/wiki/Finding_aid): "A finding aid for an archive is an organization tool, a document containing detailed, indexed, and processed metadata and other information about a specific collection of records within an archive."
-
-###  Call numbers
-[Wikipedia](https://en.wikipedia.org/wiki/Library_classification): "\[...] a call number (essentially a book's address) based on the classification system in use at the particular library will be assigned to the work using the notation of the system."
-
-###  Relationship between Archival Arrangement and Call numbers
-A lot of archives (and libraries) map the archival arrangement (or library classification) into the call numbers of the sources. 
-
-For example, the archive might have the following arrangement:
-+ Fonds
-    + Record group
-        + Series
-            + Folder
-                + Source
-
-In this case, the call numbers might have the following structure:
-
-**"Fonds/Record group/Series/Folder/Source"**
-
-Therefore, the hierarchy of the archival arrangement is represented in the "route" or the "path" of the call number. 
-
-<a name="Concepts"></a>
-##  Concepts of the Repository Hierarchy Module
-In the following, the concepts of the RepositoryHierarchy module are described. 
-
-###  Call number categories
-In the module, a new concept "Call numbers category" is introduced. Call number categories are defined as hierarchical elements, which constitute the structure of an archival arrangement.
-
-###  Relationship between call number categories, call numbers, and delimiters
-Call number categories are extracted form call numbers. The module identifies sub-strings in call numbers as call number categories by using delimiters. A chosen delimiter (or a set of delimiters) cuts the full call number into sub-strings of call number categories.
-
-Example call number structure:
-"Fonds/Record group/Series/Folder/Source"
-
-In this case, the module identifies the following strings as **call number categories**:
-+ Fonds
-+ Record group
-+ Series
-+ Folder
-+ Source
-
-Based on the identified call number categories, the module creates the following hierarchical structure for the archive:
-+ Fonds
-    + Record group
-        + Series
-            + Folder
-                + Source
-				
-###  Delimiter expressions for call numbers
-A delimiter is a sequence of one or more characters for specifying the boundary between separate, independent regions in a text. In the RepositoryHierarchy module, delimiters are used to cut call numbers into sub-strings of call number categories. The call number categories will be used to construct a hierarchy of call numbers.
-
-<a name="Mapping"></a>
-##  How the module maps to Gedcom and to archive management concepts
-In order to manage archives and sources, Gedcom and webtrees basically provide the following data structures:
-+ Repository
-+ Source
-+ Call number (of a source within a repository)
-
-The following table describes how the concepts from archive and library management are mapped to Gedcom/webtrees and the Repository Hierarchy custom module:
-
-|Archive/Library Concept|Gedcom/webtrees data structures|Repository Hierarchy Module|
-|:------|:--------------|:---------------------------|
-|Archive,<br>Library|Repository|Repository|
-|Archival Arrangement,<br>Library Classification|-|Hierarchy of call number categories|
-|Fonds,<br>Record group,<br>Series,<br>Folder|-|Call number category|
-|Item,<br>file,<br>book|Source|Source|
-|Call number|Call number|Call number|
-|Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
 <a name="Usage"></a>
 ##  How to use the module?
@@ -270,16 +192,51 @@ By opening the "Add new source" link close to a call number category, a form is 
 While the "{new}" placeholder should be modified, the rest of the call number, which consists of the call number category hierarchy should only be modified if the "route" or "path" of the call number category shall also be changed. If the intention is to simple add a new source to an existing call number category, only the "{new}" placeholder should be changed.
 
 <a name="Using-finding-aid"></a>
-### Generate a finding aid document
-<TBD>
+### Generate and download a finding aid document
+A [finding aid](https://en.wikipedia.org/wiki/Finding_aid) document contains detailed, indexed, and processed metadata and other information about a specific collection of source records within an archive. More simple, it is a (hiearchical) list of sources in an archive with additional metadata. 
+
+The **benefit of a finding aid document** is to provide a fast overview of the available sources for a user/visitor of an archive. It also provides insights about the structure of the archive and the kind of sources, which can be expected to be found in the archive.
+
+With the Repository Hierarchy module, webtrees can generate a finding aid document for a chosen repository. After selecting the Repository Hierarchy module from the list menu, a repository can be chosen and a [delimiter expression](#Using-delimiters) needs to be provided. The chosen delimiter expression will be used to generate and view a hierarchical structure for the repository.
+
+Based on the generated repository and call number structure, a finding aid document can be generated and downloaded by **clicking** the **"Download" button** and selecting one of the options **"Finding aid as HTML"** or **"Finding aid as PDF"**. 
+
+The generated finding aid document contains the following meta data for each of the sources:
++ Call number
++ Title
++ Author
++ Date range
++ Gedcom-ID and webtrees link (optional)
 
 <a name="Using-EAD-xml"></a>
-### Generate an EAD xml export
-<TBD>
+### Generate and download an EAD XML export
+With the Repository Hierarchy module, webtrees can generate an EAD XML export for a chosen repository. The export is provided in [apeEAD](#apeEAD) XML. 
+
+After selecting the Repository Hierarchy module from the list menu, a repository can be chosen and a [delimiter expression](#Using-delimiters) needs to be provided. The chosen delimiter expression will be used to generate and view a hierarchical structure for the repository.
+
+Based on the generated repository and call number structure, an EAD XML export can be generated and downloaded by **clicking** the **"Download" button** and selecting the option **"EAD XML"**. 
 
 <a name="Using-xml-settings"></a>
-### Settings for EAD xml exports
-<TBD>
+### Settings for EAD XML exports
+In order to generate EAD XML exports, some settings need to be provided. 
+
+The EAD XML settings can be provided by **clicking** the **"EAD XML settings" button**. A specific window will open to enter the values.
+
+Within the EAD XML settings window, a button is available to load the settings from an administrator. Hence, if an administrator provided values for the EAD XML settings, they can be loaded and used.
+
+The [apeEAD](#apeEAD) standard requires to provide at least the following values:
++ Finding aid title
++ Country code
++ Main agency code
++ Finding aid identifier
+
+Additionally, the following values can be provided:
++ URL of the online finding aid
++ Publisher
+
+The Repository Hierarchy module will provide a default proposal for the values.
+
+The **main agency code** is an unique code identifying the archival institution maintaining the described collection; encoded according to ISO 15511 (ISIL). The main agency code is officially assigned to archives by a national authority. As a substitute value (e.g. for a private or inofficial archive), the country code and "-XXXXX" might be chosen, e.g. FR-XXXXX.
 
 <a name="Using-export"></a>
 ### Export data to an external archive management system
@@ -294,10 +251,10 @@ While the "{new}" placeholder should be modified, the rest of the call number, w
 <TBD>
 
 <a name="Prefences"></a>
-##  Preferences
+###  Preferences
 The following preferences can be activated/deactivated by administrators in the control panel.
 
-### Preferences for the main Repository Hierarchy list
+#### Preferences for the main Repository Hierarchy list
 + Show label before call number category.
 + Show help icon after label for delimiter expression.
 + Show help link after label for delimiter expression.
@@ -309,18 +266,129 @@ The following preferences can be activated/deactivated by administrators in the 
 + Show the date range of the sources.
 + Allow users to load stored delimiter expressions from administrator.
 
-### Preferences for source citations
+#### Preferences for source citations
 + Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.
 
-### Preferences for EAD xml exports
+#### Preferences for finding aid export
++ Include repository address within finding aid export.
++ Include links to webtrees sources within finding aid export.
++ Include table of contents within finding aid export.
++ Show links within table of contents in finding aid export (not available for PDF export).
+
+#### Preferences for EAD XML exports
 + Allow users to load stored XML settings from administrator.
 
-### Preferences for linking to external archive management tools
+#### Preferences for linking to external archive management tools
 + Use call numbers to create AtoM REST links ("AtoM slugs")
 + Use source titles to create AtoM REST links ("AtoM slugs")
-+ Webtrees base URL to be used for the generation of links
 + [AtoM](https://www.accesstomemory.org/) base ULR to be used for the generation of links to an [AtoM](https://www.accesstomemory.org/) archive management system.
 + Repositories, for which [AtoM](https://www.accesstomemory.org/) linking is used.
+
+<a name="Background"></a>
+##  Some more background about archive and library management
+In archive (or library) management, archival arrangements, library classifications, finding aids, and call numbers are frequently used to:
++ define a structure for an archive
++ assign item numbers to the sources in the archive
++ provide a catalog or finding aid for the archive
+
+In the following, some of the typical concepts are briefly described.
+
+<a name="Arrangement"></a>
+###  Archival Arrangement
+[Wikipedia](https://en.wikipedia.org/wiki/Finding_aid): "Arrangement is the manner in which \[the archive] has been ordered \[...]. Hierarchical levels of arrangement are typically composed of record groups containing series, which in turn contain boxes, folders, and items."
+
+<a name="Classification"></a>
+###  Library classification
+[Wikipedia](https://en.wikipedia.org/wiki/Library_classification): "A library classification is a system of knowledge distribution by which library resources are arranged and ordered systematically."
+
+<a name="Finding_aids"></a>
+###  Finding Aids
+[Archive Portal Europe](https://www.archivesportaleurope.net/?show=help): "A finding aid is a structured description of archival materials per collection or fonds up to item level"
+
+[Wikipedia](https://en.wikipedia.org/wiki/Finding_aid): "A finding aid for an archive is an organization tool, a document containing detailed, indexed, and processed metadata and other information about a specific collection of records within an archive."
+
+<a name="Call_numbers"></a>
+###  Call numbers
+[Wikipedia](https://en.wikipedia.org/wiki/Library_classification): "\[...] a call number (essentially a book's address) based on the classification system in use at the particular library will be assigned to the work using the notation of the system."
+
+<a name="Relationship"></a>
+###  Relationship between Archival Arrangement and Call numbers
+A lot of archives (and libraries) map the archival arrangement (or library classification) into the call numbers of the sources. 
+
+For example, the archive might have the following arrangement:
++ Fonds
+    + Record group
+        + Series
+            + Folder
+                + Source
+
+In this case, the call numbers might have the following structure:
+
+**"Fonds/Record group/Series/Folder/Source"**
+
+Therefore, the hierarchy of the archival arrangement is represented in the "route" or the "path" of the call number. 
+
+<a name="EAD"></a>
+###  EAD standard
+Encoded Archival Description ([EAD](https://www.loc.gov/ead/)) is a standard for encoding descriptive information regarding archival records. The EAD standard provides a **XML export format**, which allows to describe and export the content and structure of archives and sources. It also provides data structures to describe and export finding aids.
+
+See also: [Wikipedia](https://en.wikipedia.org/wiki/Encoded_Archival_Description)
+
+<a name="apeEAD"></a>
+###  apeEAD standard
+[apeEAD](https://www.archivesportaleurope.net/tools/for-content-providers/standards/apeead/) is a standard, which was designed and published by the [Archive Portal Europe](https://www.archivesportaleurope.net/). As a sub-set of [EAD](#EAD), apeEAD was specifically designed for encoding archival finding aids.
+
+The Archive Portal Europe also provides a validation tool. With the [apeEAD data preparation tool](https://github.com/ArchivesPortalEuropeFoundation/ape-dpt), EAD XML exports can be validated against the apeEAD standard. 
+
+The XML exports of the Repository Hiararchy module were developed and tested to pass the validation of the apeEAD data preparation tool.
+
+<a name="Concepts"></a>
+##  Concepts of the Repository Hierarchy Module
+In the following, the concepts of the Repository Hierarchy module are described. 
+
+###  Call number categories
+In the module, a new concept "Call numbers category" is introduced. Call number categories are defined as hierarchical elements, which constitute the structure of an archival arrangement.
+
+###  Relationship between call number categories, call numbers, and delimiters
+Call number categories are extracted form call numbers. The module identifies sub-strings in call numbers as call number categories by using delimiters. A chosen delimiter (or a set of delimiters) cuts the full call number into sub-strings of call number categories.
+
+Example call number structure:
+"Fonds/Record group/Series/Folder/Source"
+
+In this case, the module identifies the following strings as **call number categories**:
++ Fonds
++ Record group
++ Series
++ Folder
++ Source
+
+Based on the identified call number categories, the module creates the following hierarchical structure for the archive:
++ Fonds
+    + Record group
+        + Series
+            + Folder
+                + Source
+				
+###  Delimiter expressions for call numbers
+A delimiter is a sequence of one or more characters for specifying the boundary between separate, independent regions in a text. In the Repository Hierarchy module, delimiters are used to cut call numbers into sub-strings of call number categories. The call number categories will be used to construct a hierarchy of call numbers.
+
+<a name="Mapping"></a>
+##  How the module maps to Gedcom and to archive management concepts
+In order to manage archives and sources, Gedcom and webtrees basically provide the following data structures:
++ Repository
++ Source
++ Call number (of a source within a repository)
+
+The following table describes how the concepts from archive and library management are mapped to Gedcom/webtrees and the Repository Hierarchy custom module:
+
+|Archive/Library Concept|Gedcom/webtrees data structures|Repository Hierarchy Module|
+|:------|:--------------|:---------------------------|
+|Archive,<br>Library|Repository|Repository|
+|Archival Arrangement,<br>Library Classification|-|Hierarchy of call number categories|
+|Fonds,<br>Record group,<br>Series,<br>Folder|-|Call number category|
+|Item,<br>file,<br>book|Source|Source|
+|Call number|Call number|Call number|
+|Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
 <a name="Github"></a>
 ##  Github repository  
