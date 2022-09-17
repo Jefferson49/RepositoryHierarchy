@@ -54,9 +54,9 @@ class DownloadService
     {        
         $xml_options = [
             self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
-            self::DOWNLOAD_OPTION_APE_EAD   => I18N::translate('apeEAD XML'),
-            self::DOWNLOAD_OPTION_DDB_EAD   => I18N::translate('DDB EAD XML'),
-            self::DOWNLOAD_OPTION_ATOM      => I18N::translate('AtoM EAD XML'),
+            //self::DOWNLOAD_OPTION_APE_EAD   => I18N::translate('apeEAD XML'),
+            //self::DOWNLOAD_OPTION_DDB_EAD   => I18N::translate('DDB EAD XML'),
+            //self::DOWNLOAD_OPTION_ATOM      => I18N::translate('AtoM EAD XML'),
         ];
 
         $text_options = [

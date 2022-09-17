@@ -1123,7 +1123,7 @@ class RepositoryHierarchy   extends     AbstractModule
         }         
 
         //If download of HTML finding aid is requested, create and return download
-        if ($command === DownloadEADxmlService::DOWNLOAD_OPTION_HTML) {
+        if ($command === DownloadService::DOWNLOAD_OPTION_HTML) {
             $title = I18N::translate('Finding aid');
 
             //Create finding aid and download
@@ -1132,7 +1132,7 @@ class RepositoryHierarchy   extends     AbstractModule
         }
 
         //If download of PDF finding aid is requested, create and return download
-        if ($command === DownloadEADxmlService::DOWNLOAD_OPTION_PDF) {
+        if ($command === DownloadService::DOWNLOAD_OPTION_PDF) {
             $title = I18N::translate('Finding aid');
 
             //Create finding aid and download

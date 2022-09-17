@@ -101,7 +101,7 @@ class Functions {
     }
 
     /**
-     * Get level 1 address tags for repositories in GEDCOM  
+     * Get level 1 or 2 address tags for repositories in GEDCOM  
      * 
      * @return array    [string with address tags]
      */
@@ -176,6 +176,26 @@ class Functions {
         }
 
         return $address_lines;
+    }
+
+    /**
+     * Get URL of a repository
+     * 
+     * @param Repository    $repository
+     * 
+     * @return string
+     */
+    public static function getRepositoryUrl(Repository $repository): string
+    {
+        foreach($repository->facts() as $fact) {
+            if ($fact->tag() === 'REPO:WWW') {
+                if ($fact->value() !== '') {
+                    $matches = preg_split('/\n/', $fact->value(), -1, PREG_SPLIT_NO_EMPTY); 
+                    return $matches[0];
+                } 
+            }   
+        }
+        return '';
     }
 
     /**
