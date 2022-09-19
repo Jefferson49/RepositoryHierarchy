@@ -260,6 +260,7 @@ class RepositoryHierarchy   extends     AbstractModule
                     '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
                     '/'.self::XML_SETTINGS_MODAL_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+                    '/delimiter_expression/'.self::DELIMITER_ATTRIBUTE_DEFAULT.
                     '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
                     )
                 ->allows(RequestMethodInterface::METHOD_POST);

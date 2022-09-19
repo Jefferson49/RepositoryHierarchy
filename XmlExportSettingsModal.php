@@ -48,10 +48,11 @@ class XmlExportSettingsModal implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $tree               = Validator::attributes($request)->tree();
-        $user               = Validator::attributes($request)->user();
-        $repository_xref    = Validator::attributes($request)->string('xref');
-        $command            = Validator::attributes($request)->string('command');
+        $tree                   = Validator::attributes($request)->tree();
+        $user                   = Validator::attributes($request)->user();
+        $repository_xref        = Validator::attributes($request)->string('xref');
+        $delimiter_expression   = Validator::attributes($request)->string('delimiter_expression');
+        $command                = Validator::attributes($request)->string('command');
 
         $module_service = new ModuleService();
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
@@ -72,8 +73,13 @@ class XmlExportSettingsModal implements RequestHandlerInterface
             'country_code' 			    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, 'XX'),	
             'main_agency_code' 		    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, 'XX-XXXXX'),
             'finding_aid_identifier'    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $user_id, I18N::translate('Finding aid')),	
-            'finding_aid_url'           => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
-            'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, ''),	
+            'finding_aid_url'           => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, 
+                route(RepositoryHierarchy::class, [
+                    'tree'                  => $tree->name(),
+                    'xref'                  => $repository_xref,
+                    'delimiter_expression'  => $delimiter_expression,
+                ])),	
+            'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, Functions::removeHtmlTags($repository->fullName())),	
             'show_load_from_admin'      => true,
             ]));
     }

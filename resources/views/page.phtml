@@ -108,9 +108,9 @@ use Fisharebest\Webtrees\View;
 			<?= view('icons/spacer') ?>
 			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
 						data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
-							'tree'			=> $tree->name(),
-							'xref'			=> $repository_hierarchy->getRepositoryXref(),
-							'show_admin'	=> false,
+							'tree'					=> $tree->name(),
+							'xref'					=> $repository_hierarchy->getRepositoryXref(),
+							'delimiter_expression'	=> $delimiter_expression,
 							])) ?>">
 				<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
 			</a>
