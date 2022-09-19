@@ -78,6 +78,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                     'tree'                  => $tree->name(),
                     'xref'                  => $repository_xref,
                     'delimiter_expression'  => $delimiter_expression,
+                    'command'               => DownloadService::DOWNLOAD_OPTION_PDF,
                 ])),	
             'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, Functions::removeHtmlTags($repository->fullName())),	
             'show_load_from_admin'      => true,
