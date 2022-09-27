@@ -36,6 +36,7 @@ use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Repository;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -315,7 +316,7 @@ class Functions {
      * Display a date range in ISO format 
      *
 	 * @param Date      $date_range
-     * @param string    $delimiter  [ISO 8601 allows: '/' odr '--']
+     * @param string    $delimiter  [ISO 8601 allows: '/' or '--']
      *
      * @return string
      */
@@ -323,11 +324,10 @@ class Functions {
 
         if(($date_range !== null) && $date_range->isOK()) 
         {
-            $date_range_text = $date_range->display(null, '%Y-%m-%d');
-            $date_range_text = self::removeHtmlTags($date_range_text);
-            $date_range_text = str_replace(' ', '', $date_range_text);
-            $date_range_text = str_replace(I18N::translateContext('Start of date range', 'From'), '', $date_range_text); 
-            $date_range_text = str_replace(I18N::translateContext('End of date range', 'To'), $delimiter, $date_range_text); 
+            $min_date = $date_range->minimumDate();
+            $max_date = $date_range->maximumDate();
+
+            $date_range_text = $min_date->format('%Y-%m-%d') . $delimiter . $max_date->format('%Y-%m-%d');
             
             $patterns = [
                 '/\A(\d+)\/\Z/',            //  1659/

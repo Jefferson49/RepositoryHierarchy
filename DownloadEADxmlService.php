@@ -97,9 +97,15 @@ class DownloadEADxmlService extends DownloadService
         $this->user = $user;
         $this->use_encoding_analog = ($xml_type !== self::DOWNLOAD_OPTION_DDB_EAD);
 
+        //Get language
+        $language_tag = Session::get('language');
+
+        //Convert different English 'en-*' tags to simple 'en' tag
+        $language_tag = substr($language_tag, 0, 2) === 'en' ? 'en' : $language_tag;
+
         //Set language
         $iso_table = new ISO639;
-        $language = $iso_table->languageByCode1(Session::get('language'));
+        $language = $iso_table->languageByCode1($language_tag);
         $this->ISO_639_2b_language_tag = $iso_table->code2bByLanguage($language);
 
         //Create DOM document
