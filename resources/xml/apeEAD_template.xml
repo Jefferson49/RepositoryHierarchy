@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Findbuch EAD(DDB) 1.2 (Findbuch-Optimalbeispiel)
+	Autor: Oliver Götze, Matthias Forster, Martin Reisacher
+	Version: Findbuch EAD(DDB) 1.2
+	Datum: 20190218
+-->
+<ead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:isbn:1-931666-22-9"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xsi:schemaLocation="urn:isbn:1-931666-22-9 http://www.loc.gov/ead/ead.xsd http://www.w3.org/1999/xlink http://www.loc.gov/standards/xlink/xlink.xsd"
+	audience="external">
+	<eadheader countryencoding="iso3166-1" dateencoding="iso8601" langencoding="iso639-2b"
+		repositoryencoding="iso15511" scriptencoding="iso15924">
+		<eadid mainagencycode="DE-XXXXX" identifier="Findbuch" countrycode="DE" url="http://www.familienforschung-hemprich.de">Findbuch Archiv Familienforschung Hemprich</eadid>
+		<filedesc>
+			<titlestmt>
+				<titleproper>Findbuch Archiv Familienforschung Hemprich</titleproper>
+			</titlestmt>
+			<publicationstmt>
+				<publisher encodinganalog="publisher">Archiv Familienforschung Hemprich</publisher>
+				<date normal="2022-08-06" encodinganalog="date">2022-08-06</date>
+			</publicationstmt>
+		</filedesc>
+		<profiledesc>
+			<creation>
+				<date normal="2019-01-29">Erstellungsdatum des Findbuchs</date>
+			</creation>
+			<langusage>
+				<language langcode="ger">Deutsch</language>
+			</langusage>
+		</profiledesc>
+	</eadheader>
+	<archdesc level="fonds" type="Findbuch">
+		<did>
+			<unitid>Familienforschung Hemprich</unitid>
+			<unittitle>Familienforschung Hemprich</unittitle>
+			<repository>
+				<corpname>Archiv Familienforschung Hemprich</corpname>
+				<!-- neu in EAD(DDB) 1.2: ISIL in @id - wird durch die DDB automatisch befüllt -->
+				<address>
+					<addressline>Hornberger Str. 25, D-71034 Böblingen, Germany, webmaster@familienforschung-hemprich.de</addressline>
+				</address>
+				<extref xlink:role="url_archive" xlink:href="http://www.familienforschung-hemprich.de">Archiv Familienforschung Hemprich</extref>
+			</repository>
+		</did>
+		<!-- 
+			neu in EAD(DDB) 1.2: Rechteauszeichnung- und hinweis: Die Werte können an dieser Stelle global für den Bestand definiert werden. 
+			Sollte es Abweichungen auf Objektebene geben, so können diese Angaben auch auf Verzeichnungsebene angegeben werden (s. Ebene c[@level='file']. 
+			Falls auf Objektebene Angaben zur Rechteauszeichnung vorhanden sind, werden diese gegenüber den bestandsbezogenen Angaben bevorzugt.
+		-->
+		<userestrict>
+			<!-- neu in EAD(DDB) 1.2: Rechtehinweis kann in den Daten hinterlegt werden (fakultativ) -->
+			<p>Rechtehinweis</p>
+		</userestrict>
+		<userestrict type="ead">
+			<!-- neu in EAD(DDB) 1.2: Lizenzauszeichnung (Metadaten) kann in den Metadaten hinterlegt werden (fakultativ) -->
+			<head>Creative Commons</head>
+			<p><extref xlink:href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0
+					Universal (CC0 1.0) Public Domain Dedication</extref>
+				<!-- wenn kein URI vorhanden, textlichen Hinweis direkt in <p> hinterlegen -->
+			</p>
+		</userestrict>
+		<userestrict type="dao">
+			<!-- neu in EAD(DDB) 1.2: Lizenzauszeichnung (Digitalisate) kann in den Metadaten hinterlegt werden (fakultativ) -->
+			<head>Creative Commons</head>
+			<p><extref xlink:href="http://creativecommons.org/licenses/by/3.0/de/">CC-BY
+					3.0</extref>
+				<!-- wenn kein URI vorhanden, textlichen Hinweis direkt in <p> hinterlegen -->
+			</p>
+		</userestrict>
+		<dsc>
+			<c level="collection" id="Identifier_des_Findbuchs">
+				<did>			
+					<unitid>Signatur der Collection</unitid>
+					<unittitle>Titel der Collection</unittitle>
+					<unitdate normal="1900-01-01/1905-01-01">Bestandslaufzeit</unitdate>
+					<langmaterial>
+						<language langcode="ger" scriptcode="Latn">Sprache der Unterlagen</language>
+					</langmaterial>
+					<origination label="final">
+						<name authfilenumber="link to this authority file"
+							>Archiv Familienforschung Hemprich</name>
+					</origination>
+				</did>
+				<otherfindaid>
+					<p>
+					<extref xlink:role="url_archivalunit"
+						xlink:href="Permalink_zur_Anzeige_im_Herkunftssystem"
+						>Titelaufnahme im Angebot des Archivs</extref>
+					</p>
+				</otherfindaid>
+				<scopecontent encodinganalog="Zusammenfassung">
+					<head>Familienforschung Hemprich</head>
+					<p>Beschreibung Bestand ...</p>
+				</scopecontent>
+				<accessrestrict>
+					<head>Zugangsbeschränkung</head>
+					<p>Beschreibung Zugangsbeschränkung ...</p>
+				</accessrestrict>
+				<controlaccess>						
+					<head>Übersicht Indices etc.</head>
+					<p>Beschreibung Indices ...</p>
+					<persname>Nachname, Vorname</persname> 
+					<famname>Nachname, Vorname</famname> 
+					<geogname>Ortsname</geogname> 
+				</controlaccess>
+				<userestrict>
+					<!-- neu in EAD(DDB) 1.2: Rechtehinweis kann in den Daten hinterlegt werden (fakultativ) -->
+					<p>Rechtehinweis</p>
+				</userestrict>
+				<userestrict type="ead">
+					<!-- neu in EAD(DDB) 1.2: Lizenzauszeichnung (Metadaten) kann in den Metadaten hinterlegt werden (fakultativ) -->
+					<head>Creative Commons</head>
+					<p><extref
+						xlink:href="http://creativecommons.org/publicdomain/zero/1.0/"
+							>CC0 1.0 Universal (CC0 1.0) Public Domain
+							Dedication</extref></p>
+				</userestrict>
+				<userestrict type="dao">
+					<!-- neu in EAD(DDB) 1.2: Lizenzauszeichnung (Digitalisate) kann in den Metadaten hinterlegt werden (fakultativ) -->
+					<head>Creative Commons</head>
+					<p><extref
+						xlink:href="http://creativecommons.org/licenses/by/3.0/de/"
+							>CC-BY 3.0</extref></p>
+				</userestrict>
+				<c level="series" id="Identifier_der_Serie">
+					<!-- neu in EAD(DDB) 1.2: Angleichung der Feldinhalte auf Ebene Klassifikation/Serie an Archivale/Vorgang -->
+						<!-- Pflichtelement ist weiterhin nur did/unittitle -->
+					<did>
+						<unitid>Signatur der Serie</unitid>
+						<unittitle>Serientitel</unittitle>
+						<!-- hier sind alle Elemente der class-Ebene wiederverwendbar -->
+					</did>
+					<c level="item" id="Identifier_Item">
+						<!-- Pflichtelement: did/unittitle und did/unitid -->
+						<did>
+							<unitid>Signatur</unitid>
+							<unittitle type="title">Titel der Archivalie</unittitle>
+							<unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
+							<origination label="Provenienz">
+								<name authfilenumber="Normvokabular_Nummer">Provenienz</name>
+							</origination>
+							<origination label="Autor">Urheber</origination>
+							<langmaterial>
+								<language langcode="ger" scriptcode="Latn">Sprache der
+									Unterlagen</language>
+							</langmaterial>
+							<note>
+								<p>Unspezifische_Bemerkungen</p>
+							</note>
+							<dao xlink:role="IMAGE" 
+								xlink:title="Titel" 
+								xlink:href="http://www.link.org"/>
+						</did>
+						<otherfindaid>
+							<p>
+								<extref xlink:role="url_archivalunit"
+									xlink:href="Permalink_zur_Anzeige_im_Herkunftssystem"
+									>Titelaufnahme im Angebot des Archivs</extref>
+							</p>
+						</otherfindaid>
+						<accessrestrict>
+							<head>Zugangsbeschränkung Überschrift</head>
+							<p>Zugangsbeschränkung Text</p>
+						</accessrestrict>
+						<userestrict>
+							<!-- neu in EAD(DDB) 1.2: Rechtehinweis kann in den Daten hinterlegt werden (fakultativ) -->
+							<p>Rechtehinweis</p>
+						</userestrict>
+						<userestrict type="ead">
+							<!-- neu in EAD(DDB) 1.2: Lizenzauszeichnung (Metadaten) kann in den Metadaten hinterlegt werden (fakultativ) -->
+							<head>Creative Commons</head>
+							<p><extref
+								xlink:href="http://creativecommons.org/publicdomain/zero/1.0/"
+								>CC0 1.0 Universal (CC0 1.0) Public Domain
+								Dedication</extref></p>
+						</userestrict>
+						<userestrict type="dao">
+							<!-- neu in EAD(DDB) 1.2: Lizenzauszeichnung (Digitalisate) kann in den Metadaten hinterlegt werden (fakultativ) -->
+							<head>Creative Commons</head>
+							<p><extref
+								xlink:href="http://creativecommons.org/licenses/by/3.0/de/"
+								>CC-BY 3.0</extref></p>
+						</userestrict>
+						<controlaccess>						
+							<persname>Nachname, Vorname</persname> 
+							<famname>Nachname, Vorname</famname> 
+							<geogname>Ortsname</geogname> 
+						</controlaccess>
+					</c>
+				</c>
+			</c>
+		</dsc>
+	</archdesc>
+</ead>

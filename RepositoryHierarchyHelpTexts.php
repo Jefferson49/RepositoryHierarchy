@@ -28,6 +28,7 @@
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Factories\MarkdownFactory;
@@ -57,28 +58,28 @@ public function handle(ServerRequestInterface $request): ResponseInterface
 I18N::translate('A delimiter is a sequence of one or more characters for specifying the boundary between separate, independent regions in a text. Use delimiters to cut call numbers into chunks of call number categories. The call number categories will be used to construct a hierarchy of call numbers.').'
 1. '. I18N::translate('Use a single delimiter, e.g.').' "**/**" '. I18N::translate('or').' "**-**"
 2. '. I18N::translate('Use a set of delimiters separated by').' "**'. RepositoryHierarchy::DELIMITER_SEPARATOR . '**" ' .  I18N::translate('e.g.') . ' "**/;-**"'.  I18N::translate('or') .' "**#;,**"'.'
-3. '. I18N::translate('Use a regular expressions, which contain the delimiter in brackets, e.g.').' **'. I18N::translate('Fonds').'(/)** ' . I18N::translate('or').' **(-)'.I18N::translate('Item').'**
-4. '. I18N::translate('Use a set of regular expressions separated by') .' "**'. RepositoryHierarchy::DELIMITER_SEPARATOR . '**" '.I18N::translate('e.g.'). ' **'.I18N::translate('Fonds').'(/)'.I18N::translate('Series').RepositoryHierarchy::DELIMITER_SEPARATOR.I18N::translate('Series').'(-)'.I18N::translate('Item').'**
+3. '. I18N::translate('Use a regular expressions, which contain the delimiter in brackets, e.g.').' **'. I18N::translate('Fonds').'(/)** ' . I18N::translate('or').' **(-)'.MoreI18N::xlate('Item').'**
+4. '. I18N::translate('Use a set of regular expressions separated by') .' "**'. RepositoryHierarchy::DELIMITER_SEPARATOR . '**" '.I18N::translate('e.g.'). ' **'.I18N::translate('Fonds').'(/)'.I18N::translate('Series').RepositoryHierarchy::DELIMITER_SEPARATOR.I18N::translate('Series').'(-)'.MoreI18N::xlate('Item').'**
 ###### '.I18N::translate('Example').' 1:
 + '. I18N::translate('Call numbers').':
-    + '. I18N::translate('Fonds').'/'.I18N::translate('Series').'/'.I18N::translate('Item') . ' 1
-    + '. I18N::translate('Fonds').'/'.I18N::translate('Series').'/'.I18N::translate('Item') . ' 2
+    + '. I18N::translate('Fonds').'/'.I18N::translate('Series').'/'.MoreI18N::xlate('Item') . ' 1
+    + '. I18N::translate('Fonds').'/'.I18N::translate('Series').'/'.MoreI18N::xlate('Item') . ' 2
 + '. I18N::translate('Delimiter expression'). ': **/**'.'
 + '. I18N::translate('Repository Hierarchy').':
     + '.I18N::translate('Fonds').'/
         + '.I18N::translate('Series').'/
-            + '.I18N::translate('Item').' 1
-            + '.I18N::translate('Item').' 2
+            + '.MoreI18N::xlate('Item').' 1
+            + '.MoreI18N::xlate('Item').' 2
 ###### '.I18N::translate('Example').' 2:
 + '. I18N::translate('Call numbers').':
-    + '. I18N::translate('Fonds').'/'.I18N::translate('Series').'-'.I18N::translate('Item') . ' 1
-    + '. I18N::translate('Fonds').'/'.I18N::translate('Series').'-'.I18N::translate('Item') . ' 2
+    + '. I18N::translate('Fonds').'/'.I18N::translate('Series').'-'.MoreI18N::xlate('Item') . ' 1
+    + '. I18N::translate('Fonds').'/'.I18N::translate('Series').'-'.MoreI18N::xlate('Item') . ' 2
 + '. I18N::translate('Delimiter expression'). ': **/;-**'.'
 + '. I18N::translate('Repository Hierarchy').':
     + '.I18N::translate('Fonds').'/
         + '.I18N::translate('Series').'-
-            + '.I18N::translate('Item').' 1
-            + '.I18N::translate('Item').' 2
+            + '.MoreI18N::xlate('Item').' 1
+            + '.MoreI18N::xlate('Item').' 2
 ###### '.I18N::translate('Example').' 3:
 + '. I18N::translate('Call numbers').':
     + '. I18N::translate('Film Number'). ' 5

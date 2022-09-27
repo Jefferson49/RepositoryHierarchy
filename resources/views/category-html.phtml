@@ -1,0 +1,90 @@
+<?php
+ 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Cissee\WebtreesExt\MoreI18N;
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Repository;
+use Fisharebest\Webtrees\View;
+
+/**
+ * @var CallNumberCategory                  $category
+ * @var \Fisharebest\Webtrees\Repository    $repository
+ * @var bool                                $is_root_category
+ * @var bool                                $show_wt_links
+ */
+
+?>
+
+<?php if (!$is_root_category) : ?>
+    <a name="<?= $category->getId() ?>"></a>
+    <table class="finding-aid-table" >
+        <tr class="finding-aid-table-caption">
+            <td class="finding-aid-table-first-column">
+                <?= I18N::translate('Fonds') ?>/<br>
+                <?= I18N::translate('Call number') ?>
+            </td>
+            <td class="finding-aid-table-middle-column"><b><?= e($category->getFrontEndName(true)) ?></b></td>      
+            <?php if ($category->displayISODateRange() !== '') : ?>
+                <td class="finding-aid-table-last-column"><?= MoreI18N::xlate('Date range') ?>:<br><?= $category->displayISODateRange('--')?></td>          
+            <?php else : ?>
+                <td class="finding-aid-table-last-column"></td>          
+            <?php endif ?>        
+        </tr>
+        <tr>
+            <td class="finding-aid-table-empty-row" colspan="3"></td>      
+        </tr>
+        <tr>
+            <td class="finding-aid-table-separator-row" colspan="3"></td>      
+        </tr>
+    </table>
+    <?php $sources = Functions::getCollectionForArray($category->getSources()) ?>
+    <?php $sources = Functions::sortSourcesByCallNumber($sources) ?>
+    <?php foreach ($sources as $source) : ?>
+    <table class="finding-aid-table">
+        <?php $source_facts = Functions::sourceValuesByTag($source, $repository) ?>
+        <tr> 
+            <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>               
+            <td class="finding-aid-table-middle-column"><b><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></b></td>
+            <?php if ($show_wt_links) : ?>
+                <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>"><?= $source->xref() ?></a></td>            
+            <?php else : ?>
+                <td class="finding-aid-table-last-column"></td>
+            <?php endif ?>        
+        </tr>
+        <tr> 
+            <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>               
+            <td><?= $source->fullName()	?></td>                    
+            <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
+                <td><?= MoreI18N::xlate('Date range') ?>:</td>
+            <?php else : ?>
+                <td></td>
+            <?php endif ?>
+        </tr>
+        <tr> 
+            <td><?= I18N::translate('Author') ?></td>               
+            <td><?= isset($source_facts['SOUR:AUTH']) ?	$source_facts['SOUR:AUTH'] : '' ?></td>
+            <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
+                <td><?= Functions::displayISODateRangeForSource($source, '--')?></td>      
+            <?php else : ?>
+                <td></td>                 
+            <?php endif ?>
+        </tr>
+        <tr>
+            <td class="finding-aid-table-separator-row" colspan="3"></td>      
+        </tr>
+    </table>
+    <?php endforeach ?>	
+<?php endif ?>
+
+<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
+<?php $categories = Functions::sortCallNumberCategoriesByName($categories) ?>
+
+<?php foreach ($categories as $sub_category) : ?>
+    <?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
+            'category'          => $sub_category,
+            'repository' 	    => $repository,
+            'is_root_category'	=> false,
+            'show_wt_links'		=> $show_wt_links,
+            ]) ?>
+<?php endforeach ?>

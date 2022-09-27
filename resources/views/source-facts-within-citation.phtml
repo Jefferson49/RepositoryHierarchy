@@ -1,0 +1,66 @@
+<?php
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\Elements\AbstractXrefElement;
+use Fisharebest\Webtrees\Elements\XrefSource;
+use Fisharebest\Webtrees\Gedcom;
+use Fisharebest\Webtrees\GedcomRecord;
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Source;
+use Fisharebest\Webtrees\Tree;
+
+/**
+ * @var \Fisharebest\Webtrees\Tree $tree
+ * @var Source $source
+ */
+?> 
+ 
+<?php $facts = $source->facts() ?>
+<?php foreach ($facts as $fact) : ?>
+    <?php if (in_array($fact->tag(), ['SOUR:REPO','SOUR:REFN','SOUR:NOTE'] )) : ?>
+
+		<?php 	$module_service = new ModuleService() ?>
+		<?php 	$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME) ?>
+		<?php $element = Registry::elementFactory()->make($fact->tag()); ?>
+
+		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+			<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+		<?php endif ?>
+
+		<?php if ($fact->tag() === 'SOUR:REPO') : ?>
+			<?php 	$xref = str_replace('@', '', $fact->value()) ?>
+			<?php 	$caln_string = $fact->attribute('CALN') ?>
+			<?php 	$element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
+
+			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+				<?= $element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
+			<?php endif ?>
+
+			<?php $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, '')) ?>
+			<?php if (	($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') && 
+						(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) && 
+						in_array($tree->name() . ':' . $xref, $atom_repositories) ) : ?>
+				<div>
+					<span class="label">AtoM</span>
+					: 
+					<span class="value align-top">
+						<?php if($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_SLUG, RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER) === RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER) : ?>
+							<?php $atom_slug = DownloadEADxmlService::getAtoMSlug($caln_string) ?>
+						<?php else : ?>
+							<?php $atom_slug = DownloadEADxmlService::getAtoMSlug($source->fullName()) ?>
+						<?php endif ?>
+						
+						<a href="<?= $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') . '/index.php/' . $atom_slug ?>">
+							<bdi>
+								<?= I18N::translate('Link to archival description in AtoM') ?>
+							</bdi>
+						</a>
+					</span>
+				</div>
+			<?php endif ?>
+		<?php endif ?>
+	<?php endif ?>
+<?php endforeach ?>

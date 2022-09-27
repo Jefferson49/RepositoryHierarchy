@@ -1,0 +1,42 @@
+<?php
+ 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Repository;
+use Fisharebest\Webtrees\View;
+use Illuminate\Support\Collection;
+
+/**
+ * @var CallNumberCategory      $category
+ * @var bool                    $is_root_category
+ * @var bool                    $show_links 
+ */
+
+?>
+
+<?php if (!$is_root_category) : ?>
+    <ul>
+        <li>
+            <?php if ($show_links) : ?>
+                <a href="#<?= $category->getId() ?>"><?= $category->getFrontEndName() ?></a>
+            <?php else : ?>
+                <?= $category->getFrontEndName() ?>
+            <?php endif ?>
+<?php endif ?>
+
+<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
+<?php $categories = Functions::sortCallNumberCategoriesByName($categories) ?>
+
+<?php foreach ($categories as $sub_category) : ?>
+    <?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
+            'category'              => $sub_category,
+            'is_root_category'      => false,
+            'show_links'			=> $show_links,
+            ]) ?>
+<?php endforeach ?>
+
+<?php if (!$is_root_category) : ?>
+        </li>
+    </ul>
+<?php endif ?>	

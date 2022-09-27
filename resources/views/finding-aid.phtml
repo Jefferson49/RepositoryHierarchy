@@ -1,0 +1,109 @@
+<?php
+ 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Cissee\WebtreesExt\MoreI18N;
+use Fisharebest\Localization\Locale;
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Repository;
+use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\View;
+
+use function date;
+
+/**
+ * @var string								$title
+ * @var string								$language_tag
+ * @var CallNumberCategory      			$root_category
+ * @var \Fisharebest\Webtrees\Repository	$repository
+ * @var bool								$forPDF
+ */
+
+?>
+
+<?php $module_service = new ModuleService(); ?>
+<?php $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME); ?>
+
+<!DOCTYPE HTML>
+<html lang="<?= $language_tag	?>">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title><?= $title ?></title>
+
+		<style>
+			.finding-aid-body {
+				font-size:10pt;
+			}
+			.finding-aid-table {
+				border: 0pt white;
+				width: 100%;
+				break-inside: avoid;
+			} 
+			.finding-aid-table-caption {
+				font-weight: 400; 
+				background-color: #d0d0d0; 
+				text-align: left;
+			}		
+			.finding-aid-table-empty-row {
+				font-size:3pt;
+				height: 3pt;
+			}
+			.finding-aid-table-separator-row {
+				font-size:3pt;
+				height: 3pt;
+				border-top: 1pt solid black; 
+			}
+			.finding-aid-table-first-column {
+				width: 75pt;
+			}
+			.finding-aid-table-last-column {
+				width: 125pt;
+			}
+			td {
+				vertical-align: top;	
+			}
+			<?php if($forPDF) : ?>
+			.finding-aid-table-middle-column {
+				width: 300pt;
+			}
+			<?php endif ?>
+		</style>
+	</head>
+	<body class="finding-aid-body">
+		<h1><?= $title ?></h1>
+		<p><?= I18N::translate('Generated on') . ': ' . date('Y-m-d') ?></p>
+
+		<?php $locale = Locale::create($language_tag) ?>
+		<p><?= I18N::translate('Language of description') . ': ' . $locale->endonym() ?></p>
+
+		<h3><?= MoreI18N::xlate('Repository') ?></h3>
+		<p><?= $repository->fullName() ?></p>
+
+		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_ADDRESS, '1'))) : ?>
+			<p>
+				<b><?= MoreI18N::xlate('Address') ?>:</b><br>
+				<?php $address_lines = Functions::getRepositoryAddressLines($repository) ?>
+				<?php foreach($address_lines as $line) : ?>
+					<?= $line?><br>
+				<?php endforeach ?>
+			</p>
+		<?php endif ?>
+
+		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC, '1'))) : ?>
+			<h2><?= I18N::translate('Table of Contents - Archival Arrangement') ?></h2>
+			<?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
+				'category'              => $root_category,
+				'is_root_category'      => true,
+				'show_links'			=> !$forPDF && boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
+				]) ?>
+		<?php endif ?>
+
+		<h2><?= I18N::translate('List of Sources') ?></h2>
+		<?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
+			'category' 			=> $root_category,
+			'repository' 		=> $repository,
+			'is_root_category'	=> true,
+			'show_wt_links'		=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
+			]) ?>
+	</body>
+</html>

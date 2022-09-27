@@ -25,6 +25,8 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,7 +38,7 @@ use function view;
 /**
  * Process a form to create a new source.
  */
-class CreateSourceModalAction implements RequestHandlerInterface
+class CreateSourceModal implements RequestHandlerInterface
 {
     /**
      * @param ServerRequestInterface $request
@@ -46,8 +48,19 @@ class CreateSourceModalAction implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $tree = Validator::attributes($request)->tree();
+        $user = Validator::attributes($request)->user();
         $source_repository = Validator::attributes($request)->string('xref');
 		$source_call_number = Validator::attributes($request)->string('source_call_number');
+
+        //If no user is logged in, show error text
+        if (Auth::accessLevel($tree, $user) === Auth::PRIV_PRIVATE) {
+            $error_text =   I18N::translate('Currently, you do not have the user rights to create new sources. In order to create new sources, you need to be logged in as a user.');
+
+            return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/message', [  
+                'title' => I18N::translate('Create new sources'),
+                'text'  => $error_text,
+                ]));   
+        }
 
         return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/create-source', [
             'tree' 					=> $tree,

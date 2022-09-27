@@ -26,11 +26,14 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
+use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 
 use function md5;
+use Fisharebest\Webtrees\Repository;
 	
 class CallNumberCategory  {
 
@@ -80,6 +83,9 @@ class CallNumberCategory  {
 
 	//List of related sub categories. Provides a recursive structure for a hierarchy of sub categories
 	private array $sub_categories = [];	
+
+	//Overall date range of the category
+	private ?Date $overall_date_range = null;	
 
 
    /**
@@ -162,7 +168,7 @@ class CallNumberCategory  {
 		}
 
 		if (strpos($name, CallNumberCategory::EMPTY_CATEGORY_NAME) !== false) {
-			return I18N::translate('Sources without call number');
+			return MoreI18N::xlate('Sources without call number');
 		} elseif (strpos($name, CallNumberCategory::DEFAULT_CATEGORY_NAME) !== false) {
 			return I18N::translate('Default call number category');
 		} else {
@@ -206,7 +212,81 @@ class CallNumberCategory  {
 		return $this->sources;
 	}
 
+	/**
+     * Get sub categories
+     *
+	 * @return array
+     */
+	public function getSubCategories(): array {
+		return $this->sub_categories;
+	}
+
+	/**
+     * Get overall date range
+     *
+	 * @return Date
+     */
+	public function getOverallDateRange(): ?Date {
+		return $this->overall_date_range;
+	}
+
+	/**
+     * Add source
+     *
+	 * @param Source
+     */
+	public function addSource(Source $source) {
+		array_push($this->sources, $source);
+	}
+
    /**
+     * Add sub category
+     *
+ 	 * @param CallNumberCategory
+    */
+	public function addSubCategory(CallNumberCategory $sub_category) {
+		array_push($this->sub_categories, $sub_category);
+	}
+
+   /**
+     * Calculate date range
+     *
+ 	 * @param CallNumberCategory
+	 *
+	 * @return Date
+    */
+	public function calculateDateRange(): ?Date {
+
+		$date_ranges = [];
+
+		//Collect all date ranges for sub categories
+		$sub_categories = $this->getSubCategories();
+
+		foreach($sub_categories as $sub_category){
+
+			$date_range = $sub_category->calculateDateRange();
+			if($date_range !== null) {
+				array_push($date_ranges, $date_range);
+			}
+		}
+
+		//Collect all date ranges for sources
+		$sources = $this->sources;
+
+		foreach($sources as $source) {
+
+			$date_range = Functions::getDateRangeForSource($source);
+			if($date_range !== null) {
+				array_push($date_ranges, $date_range);
+			}
+		}
+
+		$this->overall_date_range = Functions::getOverallDateRange($date_ranges);
+		
+		return $this->overall_date_range;
+	}
+
+	/**
      * Add truncated call number for a source to the truncated call numbers list
      *
 	 * @param Source
@@ -233,30 +313,38 @@ class CallNumberCategory  {
 	}
 
 	/**
-     * Get sub categories
+     * Get call number for a source in a repository
      *
-	 * @return array
+	 * @param Source		$source
+	 * @param Repository	$repository
+	 * @param bool 			$truncated
+     *
+     * @return string
      */
-	public function getSubCategories(): array {
-		return $this->sub_categories;
+    public function getCallNumber(Source $source, Repository $repository, bool $truncated = false): string{	
+	
+        if($truncated) {
+			return $this->getTruncatedCallNumber($source);
+		} else {
+			return Functions::getCallNumberForSource($source, $repository);
+		}
 	}
 
-   /**
-     * Add source
+	/**
+     * Display date range
      *
-	 * @param Source
+     * @param string    $delimiter  [ISO 8601 allows: '/' odr '--']
+	 * 
+	 * @return string
      */
-	public function addSource(Source $source) {
-		array_push($this->sources, $source);
-	}
-
-   /**
-     * Add sub category
-     *
- 	 * @param CallNumberCategory
-    */
-	public function addSubCategory(CallNumberCategory $sub_category) {
-		array_push($this->sub_categories, $sub_category);
-	}
+    public function displayISODateRange(string $delimiter = '/'): string {	
+	
+        if(($this->overall_date_range !== null) && $this->overall_date_range->isOK()) {
+			{
+				return Functions::getISOformatForDateRange($this->overall_date_range, $delimiter );
+			}
+		}
+		return '';
+    }
 
  }
