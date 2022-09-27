@@ -286,7 +286,7 @@ class DownloadEADxmlService extends DownloadService
          //<archdesc>
          $archive_dom = $dom->appendChild($this->ead_xml->createElement('archdesc'));
             $archive_dom->appendChild(new DOMAttr('level', 'fonds'));
-            $archive_dom->appendChild(new DOMAttr('type', I18N::translate('Finding aid')));
+            $archive_dom->appendChild(new DOMAttr('type', 'inventory'));
             if($this->use_encoding_analog) {
                 $archive_dom->appendChild(new DOMAttr('relatedencoding','ISAD(G)v2'));
                 $archive_dom->appendChild(new DOMAttr('encodinganalog','3.1.4'));
