@@ -91,9 +91,14 @@ class DownloadFindingAidService extends DownloadService
      */
     public function generateHtml(bool $forPDF = false): string 
     {
+        $language_tag = Session::get('language');
+        
+        //Convert different English 'en-*' tags to simple 'en' tag
+        $language_tag = substr($language_tag, 0, 2) === 'en' ? 'en' : $language_tag;
+
         return view(RepositoryHierarchy::MODULE_NAME . '::finding-aid', [  
             'title'             => I18N::translate('Finding aid') . ': ' . $this->repository->fullName(),
-            'language_tag'      => Session::get('language'),
+            'language_tag'      => $language_tag,
             'root_category'     => $this->root_category,
             'repository'        => $this->repository,
             'forPDF'            => $forPDF,

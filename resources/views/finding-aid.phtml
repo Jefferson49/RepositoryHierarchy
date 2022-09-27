@@ -3,6 +3,7 @@
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
+use Fisharebest\Localization\Locale;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\ModuleService;
@@ -75,9 +76,8 @@ use function date;
 		<h1><?= $title ?></h1>
 		<p><?= I18N::translate('Generated on') . ': ' . date('Y-m-d') ?></p>
 
-		<?php $iso_table = new ISO639 ?>
-        <?php $language = $iso_table->nativeByCode1(Session::get('language')) ?>
-		<p><?= I18N::translate('Language of description') . ': ' . $language ?></p>
+		<?php $locale = Locale::create($language_tag) ?>
+		<p><?= I18N::translate('Language of description') . ': ' . $locale->endonym() ?></p>
 
 		<h3><?= MoreI18N::xlate('Repository') ?></h3>
 		<p><?= $repository->fullName() ?></p>
