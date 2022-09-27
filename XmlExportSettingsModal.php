@@ -25,9 +25,11 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Fisharebest\Localization\Locale;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -66,12 +68,17 @@ class XmlExportSettingsModal implements RequestHandlerInterface
             $user_id = $user->id();
         }
 
+        $locale = Locale::create(Session::get('language'));
+        //ISO-3166 country code
+        $country_code = $locale->territory()->code();
+        $main_agency_code_default = $country_code . '-XXXXX';
+
         return response(view($repository_hierarchy->name() . '::modals/xml-export-settings', [
             'tree' 					    => $tree,
             'xref' 		                => $repository_xref,
             'finding_aid_title'         => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, I18N::translate('Finding aid') . ': ' . Functions::removeHtmlTags($repository->fullName())),	
-            'country_code' 			    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, 'XX'),	
-            'main_agency_code' 		    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, 'XX-XXXXX'),
+            'country_code' 			    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $country_code),	
+            'main_agency_code' 		    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $main_agency_code_default),
             'finding_aid_identifier'    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $user_id, I18N::translate('Finding aid')),	
             'finding_aid_url'           => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, 
                 route(RepositoryHierarchy::class, [
