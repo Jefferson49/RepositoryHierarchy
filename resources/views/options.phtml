@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Source;
 
@@ -19,7 +20,7 @@ use Fisharebest\Webtrees\Source;
 
 <div class="row mb-3">
     <label class="col-sm-3 col-form-label">
-        <?= I18N::translate('Repository') ?>
+        <?= MoreI18N::xlate('Repository') ?>
     </label>
 
     <div class="col-sm-9">
@@ -29,17 +30,17 @@ use Fisharebest\Webtrees\Source;
 
 <div class="row mb-3">
     <label class="col-sm-3 col-form-label">
-        <?= I18N::translate('Records') ?>
+        <?= MoreI18N::xlate('Records') ?>
     </label>
 
     <div class="col-sm-9">
-		<input class="form-control" value="<?= I18N::translate('Sources') ?>" disabled>
+		<input class="form-control" value="<?= MoreI18N::xlate('Sources') ?>" disabled>
     </div>
 </div>
 
 <div class="row mb-3">
     <label class="col-sm-3 col-form-label">
-        <?= I18N::translate('Call number') ?>
+        <?= MoreI18N::xlate('Call number') ?>
     </label>
 
     <div class="col-sm-9">
@@ -59,7 +60,7 @@ use Fisharebest\Webtrees\Source;
 
 <div class="visually-hidden">
     <label class="col-sm-3 col-form-label" for="repository_xref">
-        <?= I18N::translate('Repository') ?>
+        <?= MoreI18N::xlate('Repository') ?>
     </label>
 
     <div class="col-sm-9">
@@ -99,7 +100,7 @@ use Fisharebest\Webtrees\Source;
 
 <div class="visually-hidden">
     <label class="col-sm-3 col-form-label" for="type">
-        <?= I18N::translate('Records') ?>
+        <?= MoreI18N::xlate('Records') ?>
     </label>
 
     <div class="col-sm-9">

@@ -1,0 +1,98 @@
+<?php
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Tree;
+
+/**
+ * @var Tree 	$tree
+ * @var string 	$xref
+ * @var string 	$finding_aid_titl
+ * @var string 	$country_code
+ * @var string 	$main_agency_code
+ * @var string  $finding_aid_identifier
+ * @var string  $finding_aid_url
+ * @var string  $finding_aid_publisher
+ */
+?>
+
+<div class="row mb-3">
+    <label class="col-form-label col-sm-2" for="finding_aid_title">
+        <?= I18N::translate('Finding aid title') ?>
+    </label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" id="finding_aid_title" name="finding_aid_title" value="<?= $finding_aid_title ?>" required="required">
+    </div>
+</div>
+<div class="row mb-3">
+    <label class="col-form-label col-sm-2" for="country_code">
+        <?= I18N::translate('Country code') ?>
+    </label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" id="country_code" name="country_code" value="<?= $country_code ?>" required="required">
+    </div>
+</div>
+<div class="row mb-3">
+    <label class="col-form-label col-sm-2" for="main_agency_code">
+        <?= I18N::translate('Main agency code') ?>
+    </label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" id="main_agency_code" name="main_agency_code" value="<?= $main_agency_code ?>" required="required">
+    </div>
+</div>
+<div class="row mb-3">
+    <label class="col-form-label col-sm-2" for="finding_aid_identifier">
+        <?= I18N::translate('Finding aid identifier') ?>
+    </label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" id="finding_aid_identifier" name="finding_aid_identifier" value="<?= $finding_aid_identifier ?>" required="required">
+    </div>
+</div>
+<div class="row mb-3">
+    <label class="col-form-label col-sm-2" for="finding_aid_url">
+        <?= I18N::translate('URL of the online finding aid') ?>
+    </label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" id="finding_aid_url" name="finding_aid_url" value="<?= $finding_aid_url ?>">
+    </div>
+</div>
+<div class="row mb-3">
+    <label class="col-form-label col-sm-2" for="finding_aid_publisher">
+        <?= I18N::translate('Publisher') ?>
+    </label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" id="finding_aid_publisher" name="finding_aid_publisher" value="<?= $finding_aid_publisher ?>">
+    </div>
+</div>
+
+<div>
+    <h4><?= I18N::translate('Explanations') ?>:</h4>
+    <ul>
+        <li>
+            <b><?= I18N::translate('Finding aid title') ?>:</b>
+            <?= I18N::translate('Title proper of the finding aid.') ?>
+        </li>
+        <li>
+            <b><?= I18N::translate('Country code') ?>:</b>
+            <?= I18N::translate('Country name encoded according to ISO 3166-1, e.g. "FR" for "France".') ?>
+        </li>
+        <li>
+            <b><?= I18N::translate('Main agency code') ?>:</b>
+            <?= I18N::translate('Unique code identifying the archival institution maintaining the described collection; encoded according to ISO 15511 (ISIL). The main agency code is officially assigned to archives by a national authority. As a substitute value, the country code and "-XXXXX" might be chosen, e.g. FR-XXXXX') ?>
+        </li>
+        <li>
+            <b><?= I18N::translate('Finding aid identifier') ?>:</b>
+            <?= I18N::translate('Unique identifyer for the finding aid document.') ?>
+        </li>
+        <li>
+            <b><?= I18N::translate('URL of the online finding aid (optional)') ?>:</b>
+            <?= I18N::translate('An URL, where the finding aid can be found oline.') ?>
+        </li>
+        <li>
+            <b><?= I18N::translate('Publisher (optional)') ?>:</b>
+            <?= I18N::translate('Name of the editing institution or the publishing company.') ?>
+        </li>
+    </ul>
+</div>

@@ -34,10 +34,18 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
-require __DIR__ . '/RepositoryHierarchy.php';
 require __DIR__ . '/CallNumberCategory.php';
+require __DIR__ . '/CallNumberDataFix.php';
+require __DIR__ . '/CreateSourceModal.php';
+require __DIR__ . '/DownloadService.php';
+require __DIR__ . '/DownloadEADxmlService.php';
+require __DIR__ . '/DownloadFindingAidService.php';
+require __DIR__ . '/Functions.php';
+require __DIR__ . '/RepositoryHierarchy.php';
 require __DIR__ . '/RepositoryHierarchyHelpTexts.php';
-require __DIR__ . '/CallNumberFixAction.php';
-require __DIR__ . '/CreateSourceModalAction.php';
+require __DIR__ . '/vendor/matriphe/php-iso-639-master/src/ISO639.php';
+require __DIR__ . '/vendor/vesta-webtrees-2-custom-modules/vesta_common/tree/master/patchedWebtrees/MoreI18N.php';
+require __DIR__ . '/XmlExportSettingsAction.php';
+require __DIR__ . '/XmlExportSettingsModal.php';
 
-return new RepositoryHierarchy();
+return app(RepositoryHierarchy::class);

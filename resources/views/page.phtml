@@ -2,6 +2,7 @@
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\HelpText;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
@@ -13,7 +14,6 @@ use Fisharebest\Webtrees\View;
  * @var string      		$title
  * @var RepositoryHierarchy	$repository_hierarchy
  * @var string      		$delimiter_expression
- * @var bool               	$show_head
  * @var string             	$error
  * @var string             	$command 
  */
@@ -26,64 +26,109 @@ use Fisharebest\Webtrees\View;
 	</div>
 <?php endif ?>
 
-<?php if ($show_head) : ?>
-	<h2 class="wt-page-title">
-		<?= $repository_hierarchy->getListTitle($repository_hierarchy->getRepository()) ?>
-	</h2>
+<h2 class="wt-page-title">
+	<?= $repository_hierarchy->getListTitle($repository_hierarchy->getRepository()) ?>
+</h2>
 
-	<form method="post" class="wt-page-options wt-page-options-ancestors-chart d-print-none">
+<form method="post" action="<?= e(route(RepositoryHierarchy::class, [
+						'tree'		=> $tree->name(),
+						'xref'		=> $repository_hierarchy->getRepositoryXref(),
+						])) ?>" 
+	class="wt-page-options wt-page-options-ancestors-chart d-print-none">
 
-		<div class="row">
-			<label class="col-sm-3 col-form-label wt-page-options-label" for="xref">
-				<?= I18N::translate('Repository') ?>
-			</label>
-			<div class="col-sm-9 wt-page-options-value">
-				<?= view('components/select-repository', ['name' => 'xref', 'repository' => $repository_hierarchy->getRepository(), 'tree' => $tree, 'required' => true]) ?>
-			</div>
+	<div class="row">
+		<label class="col-sm-3 col-form-label wt-page-options-label" for="xref">
+			<?= MoreI18N::xlate('Repository') ?>
+		</label>
+		<div class="col-sm-9 wt-page-options-value">
+			<?= view('components/select-repository', [
+				'name' => 'xref', 
+				'repository' => $repository_hierarchy->getRepository(), 
+				'tree' => $tree, 
+				'required' => true]) ?>
+		</div>
+	</div>
+
+	<div class="row">
+		<label class="col-sm-3 col-form-label wt-page-options-label" for="delimiter_expression">
+			<?= I18N::translate('Delimiter Expression for Call Numbers') ?>
+			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" data-wt-href="<?= e(route(RepositoryHierarchyHelpTexts::class, ['topic' => 'Delimiter Expression'])) ?>">
+				<?= view('icons/spacer') ?>
+				<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_ICON, '1'))) : ?>							
+					<?= view('icons/help') ?>
+				<?php endif ?>			
+				<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_LINK, '1'))) : ?>							
+					<?= I18N::translate('Help') ?>
+				<?php endif ?>			
+			</a>
+		</label>
+		<div class="col-sm-9 wt-page-options-value">
+			<input class="form-control" id="delimiter_expression" name="delimiter_expression" type="text" value="<?= e($delimiter_expression) ?>" required="required">
+		</div>
+	</div>
+
+	<div class="row">
+		<label class="col-sm-3 col-form-label wt-page-options-label" for="view">
+			<?= I18N::translate('View and load/save options') ?>
+		</label>
+		<div class="col-sm-9 wt-page-options-value">
+			<input class="btn btn-primary" type="submit" value="<?= I18N::translate('view') ?>">
+			<?= view('icons/spacer') ?>
+			<?= view('components/radios-inline', [
+				'name' => 'command', 
+				'options' => $repository_hierarchy->getLoadSaveOptions(), 
+				'selected' => RepositoryHierarchy::CMD_NONE,
+				]) ?>
 		</div>
 
-		<div class="row">
-			<label class="col-sm-3 col-form-label wt-page-options-label" for="delimiter_expression">
-				<?= I18N::translate('Delimiter Expression for Call Numbers') ?>
-				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" data-wt-href="<?= e(route(RepositoryHierarchyHelpTexts::class, ['topic' => 'Delimiter Expression'])) ?>">
-					<?= view('icons/spacer') ?>
-					<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_ICON, '1'))) : ?>							
-						<?= view('icons/help') ?>
-					<?php endif ?>			
-					<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_LINK, '1'))) : ?>							
-						<?= I18N::translate('Help') ?>
-					<?php endif ?>			
-				</a>
-			</label>
-			<div class="col-sm-9 wt-page-options-value">
-				<input class="form-control" id="delimiter_expression" name="delimiter_expression" type="text" value="<?= e($delimiter_expression) ?>" required="required">
-			</div>
-		</div>
-		
-		<fieldset class="row mb-3">
-			<legend class="col-form-label col-sm-3 wt-page-options-label">
-				<?= I18N::translate('Load/save options') ?>
-			</legend>
-			<div class="col-sm-9 wt-page-options-value">
-				<?= view('components/radios-inline', ['name' => 'command', 'options' => $repository_hierarchy->getLoadSaveOptions(), 'selected' => RepositoryHierarchy::CMD_NONE]) ?>
-			</div>
-		</fieldset>	
-		
-		<div class="row mb-3">
-			<div class="col-form-label col-sm-3 wt-page-options-label"></div>
-			<div class="col-sm-9 wt-page-options-value">		
-				<input class="btn btn-primary" type="submit" value="<?= I18N::translate('view') ?>">
-			</div>
-		</div>
+	</div>
 
-		<?= csrf_field() ?>
-	</form>
-<?php endif ?>
+	<?= csrf_field() ?>
+</form>	
+
+<form method="post" action="<?= e(route(RepositoryHierarchy::class, [
+						'tree'                              => $tree->name(),
+						'xref'								=> $repository_hierarchy->getRepositoryXref(),
+						'delimiter_expression'              => $delimiter_expression,
+						'command'                           => RepositoryHierarchy::CMD_DOWNLOAD_XML,
+						])) ?>" 
+		class="wt-page-options wt-page-options-ancestors-chart d-print-none">
+	<div class="row">
+		<label class="col-sm-3 col-form-label wt-page-options-label">
+			<?= MoreI18N::xlate('Download') ?>
+		</label>
+		<div class="col-sm-9 wt-page-options-value">			
+			<input class="btn btn-secondary" type="submit" value="<?= MoreI18N::xlate('Download') ?>">
+			<?= view('icons/spacer') ?>
+			<?= view('components/radios-inline', [
+				'name' => 'download_command', 
+				'options' => DownloadService::getDownloadOptions(DownloadService::DOWNLOAD_OPTION_ALL), 
+				'selected' => DownloadService::DOWNLOAD_OPTION_HTML,
+			]) ?>
+			<?= view('icons/spacer') ?>
+			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
+						data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
+							'tree'					=> $tree->name(),
+							'xref'					=> $repository_hierarchy->getRepositoryXref(),
+							'delimiter_expression'	=> $delimiter_expression,
+							])) ?>">
+				<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
+			</a>
+		</div>
+	</div>					
+
+	<?= csrf_field() ?>
+</form>
 
 <?php if (($delimiter_expression !=='') && ($error === '')) : ?>
 	<div class="wt-ajax-load wt-page-content wt-chart wt-chart-ancestors">
-		<?php foreach ($repository_hierarchy->getRootCategory()->getSubCategories() as $sub_category) : ?>
-			<?= view($repository_hierarchy->name() . '::tree', ['repository_hierarchy' => $repository_hierarchy, 'category' => $sub_category]) ?>
+		<?php $categories = Functions::getCollectionForArray($repository_hierarchy->getRootCategory()->getSubCategories()) ?>
+		<?php $categories = Functions::sortCallNumberCategoriesByName($categories) ?>
+		<?php foreach ($categories as $category) : ?>
+			<?= view($repository_hierarchy->name() . '::tree', [
+					'repository_hierarchy' => $repository_hierarchy, 
+					'category' => $category,
+					]) ?>
 		<?php endforeach ?>	
 	</div>
 <?php endif ?>

@@ -1,5 +1,6 @@
 <?php
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
@@ -14,7 +15,7 @@ use Fisharebest\Webtrees\Tree;
 
 <div class="row mb-3">
     <label class="col-form-label col-sm-2" for="source-title">
-        <?= I18N::translate('Title') ?>
+        <?= MoreI18N::xlate('Title') ?>
     </label>
     <div class="col-sm-10">
         <input class="form-control" type="text" id="source-title" name="source-title" required="required">
@@ -22,7 +23,7 @@ use Fisharebest\Webtrees\Tree;
 </div>
 <div class="row mb-3">
     <label class="col-form-label col-sm-2" for="source-abbreviation">
-        <?= I18N::translate('Abbreviation') ?>
+        <?= MoreI18N::xlate('Abbreviation') ?>
     </label>
     <div class="col-sm-10">
         <input class="form-control" type="text" id="source-abbreviation" name="source-abbreviation">
@@ -30,13 +31,13 @@ use Fisharebest\Webtrees\Tree;
 </div>
 <div class="row mb-3">
     <label class="col-form-label col-sm-2" for="source-author">
-        <?= I18N::translate('Author') ?>
+        <?= MoreI18N::xlate('Author') ?>
     </label>
     <div class="col-sm-4">
         <input class="form-control" type="text" id="source-author" name="source-author">
     </div>
     <label class="col-form-label col-sm-2" for="source-publication">
-        <?= I18N::translate('Publication') ?>
+        <?= MoreI18N::xlate('Publication') ?>
     </label>
     <div class="col-sm-4">
         <input class="form-control" type="text" id="source-publication" name="source-publication">
@@ -44,13 +45,13 @@ use Fisharebest\Webtrees\Tree;
 </div>
 <div class="row mb-3">
     <label class="col-form-label col-sm-2" for="source-repository">
-        <?= I18N::translate('Repository') ?>
+        <?= MoreI18N::xlate('Repository') ?>
     </label>
     <div class="col-sm-4">
         <?= view('components/select-repository', ['name' => 'source-repository', 'tree' => $tree, 'repository' => Registry::repositoryFactory()->make($source_repository, $tree)]) ?>
     </div>
     <label class="col-form-label col-sm-2" for="source-call-number">
-        <?= I18N::translate('Call number') ?>
+        <?= MoreI18N::xlate('Call number') ?>
     </label>
     <div class="col-sm-4">
         <input class="form-control" type="text" id="source-call-number" name="source-call-number" value = "<?= $source_call_number . '{' . I18N::translate('new') . '}' ?>" >
@@ -58,7 +59,7 @@ use Fisharebest\Webtrees\Tree;
 </div>
 <div class="row mb-3">
     <label class="col-form-label col-sm-2" for="source-text">
-        <?= I18N::translate('Text') ?>
+        <?= MoreI18N::xlate('Text') ?>
     </label>
     <div class="col-sm-10">
         <textarea class="form-control" id="source-text" name="source-text" rows="5"></textarea>

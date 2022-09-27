@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ead PUBLIC "+//ISBN 1-931666-00-8//DTD ead.dtd (Encoded Archival Description (EAD) Version 2002)//EN" "http://lcweb2.loc.gov/xmlcommon/dtds/ead2002/ead.dtd">
+<ead>
+	<eadheader countryencoding="iso3166-1" dateencoding="iso8601" langencoding="iso639-2b"
+		repositoryencoding="iso15511" scriptencoding="iso15924">
+		<eadid mainagencycode="DE-XXXXX" identifier="Findbuch" countrycode="DE" url="http://www.familienforschung-hemprich.de">Findbuch Archiv Familienforschung Hemprich</eadid>
+		<filedesc>
+			<titlestmt>
+				<titleproper>Findbuch Archiv Familienforschung Hemprich</titleproper>
+			</titlestmt>
+			<publicationstmt>
+				<publisher encodinganalog="publisher">Archiv Familienforschung Hemprich</publisher>
+				<date normal="2022-08-06" encodinganalog="date">2022-08-06</date>
+			</publicationstmt>
+		</filedesc>
+		<profiledesc>
+			<creation>Erstellt von webtrees 2.1.6
+				<date normal="2019-01-29">Erstellungsdatum des Findbuchs</date>
+			</creation>
+			<langusage>
+				<language langcode="ger">Deutsch</language>
+			</langusage>
+		</profiledesc>
+	</eadheader>
+	<archdesc level="fonds" type="Findbuch" encodinganalog="3.1.4" relatedencoding="ISAD(G)v2">
+		<did>
+			<unittitle encodinganalog="3.1.2">Familienforschung Hemprich</unittitle>
+			<unitid>Familienforschung Hemprich</unitid>
+			<unitdate normal="1600/2022" encodinganalog="3.1.3">1600/2022</unitdate>
+			<physdesc encodinganalog="3.1.5">2 laufende Meter Ordner</physdesc>
+			<repository>
+				<corpname>Archiv Familienforschung Hemprich</corpname>
+				<!-- neu in EAD(DDB) 1.2: ISIL in @id - wird durch die DDB automatisch befüllt -->
+				<address>
+					<addressline>Hornberger Str. 25, D-71034 Böblingen, Germany, webmaster@familienforschung-hemprich.de</addressline>
+				</address>
+			</repository>
+			<origination encodinganalog="3.2.1">
+				<persname>Markus Hemprich</persname>
+			</origination>
+		</did>
+		<dsc>
+			<c level="collection" id="Bestand">
+				<did>			
+					<unittitle encodinganalog="3.1.2">Titel der Collection</unittitle>
+					<unitid type="call number" encodinganalog="3.1.1">Signatur der Collection</unitid>
+					<unitdate normal="1500/2022" encodinganalog="3.1.3">Bestandslaufzeit</unitdate>
+					<langmaterial>
+						<language langcode="ger" scriptcode="Latn">Sprache der Unterlagen</language>
+					</langmaterial>
+					<origination label="final" encodinganalog="3.2.1">
+						<name authfilenumber="link to this authority file"
+							>Archiv Familienforschung Hemprich</name>
+					</origination>
+				</did>
+				<scopecontent encodinganalog="3.3.1">
+					<head>Familienforschung Hemprich</head>
+					<p>Beschreibung Bestand ...</p>
+				</scopecontent>
+				<accessrestrict encodinganalog="3.4.1">
+					<head>Zugangsbeschränkung</head>
+					<p>Beschreibung Zugangsbeschränkung ...</p>
+				</accessrestrict>
+				<controlaccess>						
+					<head>Übersicht Indices etc.</head>
+					<p>Beschreibung Indices ...</p>
+					<name>Archiv Familienforschung Hemprich</name>
+					<persname>Nachname, Vorname</persname> 
+					<famname>Nachname</famname> 
+					<geogname>Ortsname</geogname> 
+				</controlaccess>
+				<c level="series" id="Identifier_der_Serie">
+					<did>
+						<unittitle encodinganalog="3.1.2">Serientitel</unittitle>
+						<unitid type="call number" encodinganalog="3.1.1">Signatur der Serie</unitid>
+					</did>
+					<c level="item" id="Identifier_Item">
+						<did>
+							<unittitle encodinganalog="3.1.2">Titel der Archivalie</unittitle>
+							<unitid type="call number" encodinganalog="3.1.1">Signatur</unitid>
+							<unitdate normal="1900-01-01/1902-12-31" encodinganalog="3.1.3">Laufzeit</unitdate>
+							<origination encodinganalog="3.2.1" label="Provenienz">
+								<name>Archiv Familienforschung Hemprich</name>
+							</origination>
+							<origination encodinganalog="3.2.1" label="Autor">
+								<persname>Autor</persname>
+							</origination>
+							<repository>
+								<name>Archiv Familienforschung Hemprich</name>
+							</repository>
+							<langmaterial>
+								<language langcode="ger" scriptcode="Latn">Sprache der
+									Unterlagen</language>
+							</langmaterial>
+							<note type="generalNote">
+								<p>Unspezifische_Bemerkungen</p>
+							</note>
+						</did>
+						<controlaccess>						
+							<persname>Nachname, Vorname</persname> 
+							<famname>Nachname</famname> 
+							<geogname>Ortsname</geogname> 
+						</controlaccess>
+					</c>
+				</c>
+			</c>
+		</dsc>
+	</archdesc>
+</ead>

@@ -29,11 +29,11 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
-use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\I18N;
@@ -63,7 +63,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function route;
-
 	
 class RepositoryHierarchy   extends     AbstractModule 
                             implements  ModuleConfigInterface,
@@ -71,7 +70,7 @@ class RepositoryHierarchy   extends     AbstractModule
                                         ModuleDataFixInterface,
                                         ModuleGlobalInterface, 
                                         ModuleListInterface, 
-                                        RequestHandlerInterface 
+                                        RequestHandlerInterface
 {
     use ModuleConfigTrait;
     use ModuleCustomTrait;
@@ -88,6 +87,8 @@ class RepositoryHierarchy   extends     AbstractModule
     protected const CREATE_SOURCE_IN_ROUTE = 'repositoryhierarchy_create_source';
     protected const FIX_CALL_NUMBER_IN_ROUTE = 'repositoryhierarchy_fix_callnumbers';
     protected const REPO_ACTIONS_IN_ROUTE = 'repositoryhierarchy_repo_actions';
+    protected const XML_SETTINGS_MODAL_IN_ROUTE = 'repositoryhierarchy_xml_settings_modal';
+    protected const XML_SETTINGS_ACTION_IN_ROUTE = 'repositoryhierarchy_xml_settings_action';
     protected const TREE_ATTRIBUTE_DEFAULT = '{tree}';
     protected const XREF_ATTRIBUTE_DEFAULT = '{xref}';
     protected const DELIMITER_ATTRIBUTE_DEFAULT = '{delimiter_expression}';
@@ -104,8 +105,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const VAR_DATA_FIX_TYPES = 'types';
     public const VAR_DATA_FIX_CATEGORY_NAME_REPLACE = 'category_name_replace';
     public const VAR_DATA_FIX_PENDING_URL = 'pending_url';     
-
-
+    
     //The separator for delimiter expressions and its substitue
     public const DELIMITER_SEPARATOR = ';';
     public const DELIMITER_ESCAPE = '{delimiter_escape}';
@@ -130,6 +130,27 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_MODULE_VERSION = 'module_version';
     public const PREF_START_REPOSITORY = 'start_repository';
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
+    public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
+    public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for-category';
+    public const PREF_SHOW_ATOM_LINKS ='show_atom_links';
+    public const PREF_ATOM_SLUG ='atom_slug';
+    public const PREF_ATOM_SLUG_TITLE ='title';
+    public const PREF_ATOM_SLUG_CALL_NUMBER ='call_number';
+    public const PREF_WEBTREES_BASE_URL = 'webtrees_base_url';
+    public const PREF_ATOM_BASE_URL = 'atom_base_url';
+    public const PREF_ATOM_REPOSITORIES = 'atom_repositories';
+    public const PREF_XML_VERSION = 'xml_version_';
+    public const PREF_FINDING_AID_TITLE = 'finding_aid_title_';
+    public const PREF_COUNTRY_CODE = 'country_code_';
+    public const PREF_MAIN_AGENCY_CODE = 'main_agency_code_';
+    public const PREF_FINDING_AID_IDENTIFIER = 'finding_aid_id_';
+    public const PREF_FINDING_AID_URL = 'finding_aid_url_';
+    public const PREF_FINDING_AID_PUBLISHER = 'finding_aid_publ_';
+    public const PREF_ALLOW_ADMIN_XML_SETTINGS = 'allow_admin_xml_settings';
+    public const PREF_SHOW_FINDING_AID_ADDRESS  = 'show_finding_aid_address';
+    public const PREF_SHOW_FINDING_AID_TOC  = 'show_finding_aid_toc';
+    public const PREF_SHOW_FINDING_AID_TOC_LINKS  = 'show_finding_aid_toc_links';
+    public const PREF_SHOW_FINDING_AID_WT_LINKS  = 'show_finding_aid_wt_links';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';    
@@ -141,12 +162,14 @@ class RepositoryHierarchy   extends     AbstractModule
     public const CMD_SAVE_DELIM = 'save_delimiter';    
     public const CMD_SAVE_REPO = 'save_repository';
     public const CMD_LOAD_REPO = 'load_repository';
+    public const CMD_DOWNLOAD_XML = 'download_xml';
+    public const CMD_LOAD_ADMIN_XML_SETTINGS = 'load_admin_xml_settings';
 
     //Comands for repositories
     public const CMD_SET_AS_START_REPO = 'set as start repository';
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.0.2';
+    public const CUSTOM_VERSION = '1.1.0';
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
@@ -202,34 +225,64 @@ class RepositoryHierarchy   extends     AbstractModule
                     '/'.self::MODULE_NAME_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
                     '/delimiter_expression/'.self::DELIMITER_ATTRIBUTE_DEFAULT.
-                    '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT, $this)
-                    ->allows(RequestMethodInterface::METHOD_POST);
+                    '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
+                , $this)
+                ->allows(RequestMethodInterface::METHOD_POST);
         
         //Register a route for the help texts    
         $router->get(RepositoryHierarchyHelpTexts::class,     
                     '/'.self::HELP_TEXTS_IN_ROUTE.
-                    '/topic/'.self::TOPIC_ATTRIBUTE_DEFAULT)             
+                    '/topic/'.self::TOPIC_ATTRIBUTE_DEFAULT
+                    )             
                 ->allows(RequestMethodInterface::METHOD_POST);    
 
         //Register a route for the create source modal    
-        $router ->get(CreateSourceModalAction::class,   
+        $router ->get(CreateSourceModal::class,   
                     '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
                     '/'.self::CREATE_SOURCE_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-                    '/source_call_number/'.self::SOURCE_CALL_NUMBER_ATTRIBUTE_DEFAULT)
+                    '/source_call_number/'.self::SOURCE_CALL_NUMBER_ATTRIBUTE_DEFAULT
+                    )
                 ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a route for the call number fix action
-        $router ->get(CallNumberFixAction::class,   
+        $router ->get(CallNumberDataFix::class,   
                     '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
                     '/'.self::FIX_CALL_NUMBER_IN_ROUTE.
                     '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
                     '/category_name/'.self::CATEGORY_NAME_ATTRIBUTE_DEFAULT.
-                    '/category_full_name/'.self::CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT)
+                    '/category_full_name/'.self::CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT
+                    )
+                ->allows(RequestMethodInterface::METHOD_POST);
+
+        //Register a route for the XML export settings modal
+        $router ->get(XmlExportSettingsModal::class,   
+                    '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+                    '/'.self::XML_SETTINGS_MODAL_IN_ROUTE.
+                    '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+                    '/delimiter_expression/'.self::DELIMITER_ATTRIBUTE_DEFAULT.
+                    '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
+                    )
+                ->allows(RequestMethodInterface::METHOD_POST);
+
+        //Register a route for the XML export settings ation
+        $router ->get(XmlExportSettingsAction::class,   
+                    '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+                    '/'.self::XML_SETTINGS_ACTION_IN_ROUTE.
+                    '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+                    '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
+                    )
                 ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a namespace for the views
 		View::registerNamespace($this->name(), $this->resourcesFolder() . 'views/');
+
+        //Register a custom view for facts in order to show additional source facts in citations
+        if( (boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) OR
+            (boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0'))))  {
+
+            View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
+        }
 	}
 	
     /**
@@ -258,38 +311,6 @@ class RepositoryHierarchy   extends     AbstractModule
     public function resourcesFolder(): string
     {
 		return __DIR__ . '/resources/';
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listMenuClass()
-     */
-    public function listMenuClass(): string {
-        return 'menu-list-repository-hierarchy';
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listIsEmpty()
-     */
-    public function listIsEmpty(Tree $tree): bool
-    {
-        return !DB::table('other')
-            ->where('o_file', '=', $tree->id())
-            ->where('o_type', '=', Repository::RECORD_TYPE)
-            ->exists();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listUrl()
-     */
-
-    public function listUrl(Tree $tree, array $parameters = []): string
-    {
-        $parameters['tree'] = $tree->name();
-
-        return route(RepositoryHierarchy::class, $parameters);
     }
 
     /**
@@ -354,91 +375,40 @@ class RepositoryHierarchy   extends     AbstractModule
 
     /**
      * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleGlobalInterface::headContent()
-     */
-    public function headContent(): string {
-        return '<link href="' . $this->assetUrl('css/repository-hierarchy.css') . '" type="text/css" rel="stylesheet" />';
-    }    
-
-    /**
-     * Get related tree
-     * 
-     * @return Tree     $tree;
-     */
-    public function getTree(): Tree {
-        return $this->tree;
-    }
-    
-    /**
-     * Get repository
-     * 
-     * @return Repository
-     */
-    public function getRepository(): Repository {
-        return $this->repository;
-    }
-
-    /**
-     * Get xref of the related repository
-     * 
-     * @return string
-     */
-    public function getRepositoryXref(): string {
-        return $this->repository_xref;
-    }
-
-    /**
-     * Get root category
-     * 
-     * @return CallNumberCategory
-     */
-    public function getRootCategory(): CallNumberCategory {
-        return $this->root_category;
-    }
-
-    /**
-     * whether a string contains 'true'
-     * 
-     * @param string
-     * 
-     * @return bool
-     */
-    public function isTrue(string $value): bool {
-        return ($value === 'true' ? true : false);
-    }
-
-    /**
-     * Admin, user settings
-     * 
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
+     * @see \Fisharebest\Webtrees\Module\ModuleInterface::getAdminAction()
      */
     public function getAdminAction(ServerRequestInterface $request): ResponseInterface
     {
         $this->layout = 'layouts/administration';
 
         return $this->viewResponse($this->name() . '::settings', [
-            'title'                                 => $this->title(),
-            self::PREF_SHOW_CATEGORY_LABEL          => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
-            self::PREF_SHOW_HELP_ICON               => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
-            self::PREF_SHOW_HELP_LINK               => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
-            self::PREF_SHOW_TRUNCATED_CALL_NUMBER   => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
-            self::PREF_SHOW_TRUNCATED_CATEGORY      => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
-            self::PREF_SHOW_TITLE                   => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
-            self::PREF_SHOW_XREF                    => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
-            self::PREF_SHOW_AUTHOR                  => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
-            self::PREF_SHOW_DATE_RANGE              => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
-            self::PREF_ALLOW_ADMIN_DELIMITER        => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
+            'title'                                     => $this->title(),
+            self::PREF_SHOW_CATEGORY_LABEL              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
+            self::PREF_SHOW_HELP_ICON                   => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
+            self::PREF_SHOW_HELP_LINK                   => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
+            self::PREF_SHOW_TRUNCATED_CALL_NUMBER       => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
+            self::PREF_SHOW_TRUNCATED_CATEGORY          => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
+            self::PREF_SHOW_TITLE                       => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
+            self::PREF_SHOW_XREF                        => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
+            self::PREF_SHOW_AUTHOR                      => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
+            self::PREF_SHOW_DATE_RANGE                  => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
+            self::PREF_ALLOW_ADMIN_DELIMITER            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
+            self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
+            self::PREF_SHOW_FINDING_AID_ADDRESS         => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
+            self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
+            self::PREF_SHOW_FINDING_AID_TOC             => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
+            self::PREF_SHOW_FINDING_AID_TOC_LINKS       => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
+            self::PREF_ALLOW_ADMIN_XML_SETTINGS         => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
+            self::PREF_ATOM_SLUG                        => $this->getPreference(self::PREF_ATOM_SLUG, self::PREF_ATOM_SLUG_CALL_NUMBER),
+            self::PREF_SHOW_ATOM_LINKS                  => boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')),
+            self::PREF_ATOM_BASE_URL                    => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
+            self::PREF_ATOM_REPOSITORIES                => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
         ]);    
     }
 
     /**
-     * Save the user preference.
-     *
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleInterface::postAdminAction()
      */
     public function postAdminAction(ServerRequestInterface $request): ResponseInterface
     {
@@ -456,6 +426,29 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_SHOW_AUTHOR, isset($params[self::PREF_SHOW_AUTHOR])? '1':'0');
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE])? '1':'0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, isset($params[self::PREF_SHOW_FINDING_AID_ADDRESS])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC, isset($params[self::PREF_SHOW_FINDING_AID_TOC])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_TOC_LINKS])? '1':'0');
+            $this->setPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, isset($params[self::PREF_ALLOW_ADMIN_XML_SETTINGS])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_ATOM_LINKS, isset($params[self::PREF_SHOW_ATOM_LINKS])? '1':'0');
+            $this->setPreference(self::PREF_ATOM_SLUG, isset($params[self::PREF_ATOM_SLUG])? $params[self::PREF_ATOM_SLUG]: self::PREF_ATOM_SLUG_CALL_NUMBER);
+
+            //Remove slashes at the end of the URL
+            if(isset($params[self::PREF_ATOM_BASE_URL])) {
+
+                $atom_base_url = $params[self::PREF_ATOM_BASE_URL];
+
+                if(substr($atom_base_url, -1) === '/') {
+                    $atom_base_url = substr($atom_base_url, 0, -1);
+                } 
+            } else {
+                $atom_base_url = '';
+            }
+            
+            $this->setPreference(self::PREF_ATOM_BASE_URL, $atom_base_url);
+            $this->setPreference(self::PREF_ATOM_REPOSITORIES, isset($params[self::PREF_ATOM_REPOSITORIES])? $params[self::PREF_ATOM_REPOSITORIES]:'');
 
             $message = I18N::translate('The preferences for the module “%s” were updated.', $this->title());
             FlashMessages::addMessage($message, 'success');
@@ -465,15 +458,81 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
+     * Update the preferences (after new module version is detected)
+     *
+     * @return string
+     */
+    public function updatePreferences(): string
+    {
+        //Currently empty. Might be used in further versions of the module
+        $error = '';
+        return $error;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listMenuClass()
+     */
+    public function listMenuClass(): string {
+
+        //CSS class for module Icon (included in CSS file) is returned to be shown in the list menu
+        return 'menu-list-repository-hierarchy';
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listIsEmpty()
+     */
+    public function listIsEmpty(Tree $tree): bool
+    {
+        return !DB::table('other')
+            ->where('o_file', '=', $tree->id())
+            ->where('o_type', '=', Repository::RECORD_TYPE)
+            ->exists();
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleListInterface::listUrl()
+     */
+
+    public function listUrl(Tree $tree, array $parameters = []): string
+    {
+        $parameters['tree'] = $tree->name();
+
+        return route(RepositoryHierarchy::class, $parameters);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Fisharebest\Webtrees\Module\ModuleGlobalInterface::headContent()
+     */
+    public function headContent(): string {
+        //Include CSS file in head of webtrees HTML to make sure it is always found
+        return '<link href="' . $this->assetUrl('css/repository-hierarchy.css') . '" type="text/css" rel="stylesheet" />';
+    }    
+
+    /**
      * {@inheritDoc}
      * @see \Fisharebest\Webtrees\Module\ModuleDataFixInterface::fixOptions()
      */
     public function fixOptions(Tree $tree): string
     {
-        //If data fix is called from wrong context
+        //If data fix is called from wrong context, show error text
         if (!isset($this->repository_xref)) {
             $error_text =   I18N::translate('The Repository Hierarchy data fix cannot be used in the "control panel".') . '<br>' . 
                             I18N::translate('The data fix can be called from the user front end by clicking on the link to rename a call number category.');
+
+            return view($this->name() . '::error', [
+                'text' => $error_text,
+                ]
+            );
+        }
+
+        //If user is not a manager for this tree, show error text
+        if (!Auth::isManager($tree)) {
+            $error_text =   I18N::translate('Currently, you do not have the user rights to change call number categories.') . '<br>' . 
+                            I18N::translate('In order to change call number categories, you need to have a "Manager" role for the corresponding tree.');
 
             return view($this->name() . '::error', [
                 'text' => $error_text,
@@ -486,31 +545,9 @@ class RepositoryHierarchy   extends     AbstractModule
             CallNumberCategory ::VAR_CATEGORY_FULL_NAME => $this->data_fix_category_full_name,
             CallNumberCategory::VAR_CATEGORY_NAME       => $this->data_fix_category_name,
             self::VAR_DATA_FIX_CATEGORY_NAME_REPLACE    => $this->data_fix_category_name,
-            self::VAR_DATA_FIX_TYPES                    => [Source::RECORD_TYPE => I18N::translate('Sources')],
+            self::VAR_DATA_FIX_TYPES                    => [Source::RECORD_TYPE => MoreI18N::xlate('Sources')],
             ]
         );
-    }
-
-    /**
-     * A  list of all source records that might need fixing.
-     *
-     * @param Tree                 $tree
-     * @param array<string,string> $params
-     *
-     * @return Collection<int,object>
-     */
-    protected function sourcesToFix(Tree $tree, array $params): ?Collection
-    {
-        if ($params[CallNumberCategory::VAR_CATEGORY_NAME] === '' || $params[self::VAR_DATA_FIX_CATEGORY_NAME_REPLACE] === '') {
-            return null;
-        }
-
-        $search = '%' . addcslashes($params[CallNumberCategory::VAR_CATEGORY_FULL_NAME], '\\%_') . '%';
-
-        return  $this->sourcesToFixQuery($tree, $params)
-            ->where('s_file', '=', $tree->id())
-            ->where('s_gedcom', 'LIKE', $search)
-            ->pluck('s_id');
     }
 
     /**
@@ -571,6 +608,110 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
+     * A  list of all source records that might need fixing.
+     *
+     * @param Tree                 $tree
+     * @param array<string,string> $params
+     *
+     * @return Collection<int,object>
+     */
+    protected function sourcesToFix(Tree $tree, array $params): ?Collection
+    {
+        if ($params[CallNumberCategory::VAR_CATEGORY_NAME] === '' || $params[self::VAR_DATA_FIX_CATEGORY_NAME_REPLACE] === '') {
+            return null;
+        }
+
+        $search = '%' . addcslashes($params[CallNumberCategory::VAR_CATEGORY_FULL_NAME], '\\%_') . '%';
+
+        return  $this->sourcesToFixQuery($tree, $params)
+            ->where('s_file', '=', $tree->id())
+            ->where('s_gedcom', 'LIKE', $search)
+            ->pluck('s_id');
+    }
+
+    /**
+     * The title for a specific instance of this list.
+     *
+     * @param Repository
+     *
+     * @return string
+     */
+    public function getListTitle(Repository $repository = null): string 
+    {
+        //In this module, repositories are listed
+        if ($repository === null) {
+            return I18N::translate('Repository Hierarchy');
+        } else {
+            return I18N::translate('Repository Hierachy of: %s', $repository->fullName());
+        }
+    }
+
+    /**
+     * Get related tree
+     * 
+     * @return Tree     $tree;
+     */
+    public function getTree(): Tree {
+        return $this->tree;
+    }
+    
+    /**
+     * Get repository
+     * 
+     * @return Repository
+     */
+    public function getRepository(): Repository {
+        return $this->repository;
+    }
+
+    /**
+     * Get xref of the related repository
+     * 
+     * @return string
+     */
+    public function getRepositoryXref(): string {
+        return $this->repository_xref;
+    }
+
+    /**
+     * Get root category
+     * 
+     * @return CallNumberCategory
+     */
+    public function getRootCategory(): CallNumberCategory {
+        return $this->root_category;
+    }
+
+    /**
+     * Get stored repository for a user
+     *
+     * @param Tree      $tree
+     * @param string    $xref
+     * 
+     */
+    public function getStoredRepositoryXref(Tree $tree, UserInterface $user): string
+    {
+        return $this->getPreference(self::PREF_REPOSITORY . $tree->id() . '_' . $user->id(), '');
+    }
+
+    /**
+     * Error text with a header
+     * 
+     * @param string $error_text
+     * @param bool $show_module_name
+     * 
+     * @return string
+     */
+    public function errorTextWithHeader(string $error_text = '', bool $show_module_name = false): string
+    {
+        if ($show_module_name) {
+            return MoreI18N::xlate('Custom module') . ': ' . $this->name() . '<br>' . $error_text;        
+        } else {
+            return $error_text;
+        }
+    }
+
+    /**
      * Set data fix params
      *
      * @param Tree      $tree
@@ -584,23 +725,6 @@ class RepositoryHierarchy   extends     AbstractModule
         $this->repository_xref = $xref;
         $this->data_fix_category_name = $category_name;
         $this->data_fix_category_full_name = $category_full_name;
-    }
-
-    /**
-     * The title for a specific instance of this list.
-     *
-     * @param Repository
-     *
-     * @return string
-     */
-    public function getListTitle(Repository $repository = null): string {
-
-        //In this module, repositories are listed
-        if ($repository === null) {
-            return I18N::translate('Repository Hierarchy');
-        } else {
-            return I18N::translate('Repository Hierarchy of: %s', $repository->fullName());
-        }
     }
 
     /**
@@ -714,7 +838,7 @@ class RepositoryHierarchy   extends     AbstractModule
                 $pos_end = $pos_start + strlen($matched_part);                    
                 $length = strlen($call_number_chunk);
                 $left   = substr($call_number_chunk, 0, $pos_start);
-                $right  = substr($call_number_chunk, -($length - $pos_end), $length - $pos_end);
+                $right  = substr($call_number_chunk, -($length - (int) $pos_end), $length - (int) $pos_end);
 
                 //If found category name is empty, take default
                 if ($left === '') {
@@ -751,115 +875,6 @@ class RepositoryHierarchy   extends     AbstractModule
 	}
 
     /**
-     * Sorting sources by call number
-     *
-	 * @param Collection $sources
-     *
-     * @return Collection
-     */
-    public function sortSourcesByCallNumber(Collection $sources): Collection {
-		
-        return $sources->sortBy(function (Source $source) {
-            return $this->getCallNumber($source);
-        });
-    }
-
-    /**
-     * Get call number for a source
-     *
-	 * @param Source
-	 * @param CallNumberCategory
-	 * @param bool $truncated
-     *
-     * @return string
-     */
-    public function getCallNumber(Source $source, CallNumberCategory $category = null, bool $truncated = false): string{	
-	
-        $call_number = '';
-
-        foreach($source->facts(['REPO']) as $repository) {
-
-            preg_match_all('/1 REPO @(.*)@/', $repository->gedcom(), $matches, PREG_SET_ORDER);
-                    
-            if (!empty($matches[0]) ) {
-                $match = $matches[0];
-                $xref = $match[1];
-            }
-            else $xref = '';
-
-            //only if it is the requested repository
-            if ($xref === $this->repository_xref) {
-
-                preg_match_all('/\n2 CALN (.*)/', $repository->gedcom(), $matches, PREG_SET_ORDER);
-                
-                if (!empty($matches[0]) ) {
-                    $match = $matches[0];
-                    $call_number = $match[1];
-                }
-
-                break;
-            }
-        }    
-
-        //If activated, take truncated call number
-        if ($truncated) {
-            $call_number = $category->getTruncatedCallNumber($source);
-        }
-
-        return $call_number;
-	}
-
-    /**
-     * Get date number for a source
-     *
-	 * @param Source
-     *
-     * @return string
-     */
-    public function getDateRange(Source $source): string {	
-			
-        $date_range = '';
-
-        if ($source->facts(['DATA'])->isNotEmpty() ) {
-
-            $data = $source->facts(['DATA'])->first(); 	
-
-            preg_match_all('/3 DATE (.{1,32})/', $data->gedcom(), $matches, PREG_SET_ORDER);
-            
-            if (!empty($matches[0]) ) {
-                $match = $matches[0];
-                $date_range = (new Date($match[1]))->display();               
-            }       
-        }
-        return $date_range;
-    }
-
-    /**
-     * Get xref of default repository
-     * 
-     * @param Tree
-     * @param UserInterface $user
-     *
-     * @return string
-     */
-    public function getDefaultRepositoryXref(Tree $tree, UserInterface $user): string 
-    {
-        Auth::checkComponentAccess($this, ModuleListInterface::class, $tree, $user);
-
-        $repositories = DB::table('other')
-            ->where('o_file', '=', $tree->id())
-            ->where('o_type', '=', Repository::RECORD_TYPE)
-            ->get()
-            ->map(Registry::repositoryFactory()->mapper($tree))
-            ->filter(GedcomRecord::accessFilter());
-        
-        foreach ($repositories as $repository) {
-            return $repository->xref();
-        }   
-        return '';
-    }
-
-    /**
      * Options for load/save delimiter expressions
      *
      * @return array<string>
@@ -884,35 +899,6 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
-     * Update the preferences (after new module version is detected)
-     *
-     * @return string
-     */
-    public function updatePreferences(): string
-    {
-        //Currently empty. Might be used in further versions of the module
-        $error = '';
-        return $error;
-    }
-
-    /**
-     * Error text with a header
-     * 
-     * @param string $error_text
-     * @param bool $show_module_name
-     * 
-     * @return string
-     */
-    public function errorTextWithHeader(string $error_text = '', bool $show_module_name = false): string
-    {
-        if ($show_module_name) {
-            return I18N::translate('Custom module') . ': ' . $this->name() . '<br>' . $error_text;        
-        } else {
-            return $error_text;
-        }
-    }
-
-    /**
      * @param ServerRequestInterface $request
      *
      * @return ResponseInterface
@@ -925,15 +911,29 @@ class RepositoryHierarchy   extends     AbstractModule
 		$delimiter_expression   = Validator::attributes($request)->string('delimiter_expression');
         $command                = Validator::attributes($request)->string('command');
 
+        if($command === self::CMD_DOWNLOAD_XML) {
+            $download_command = Validator::parsedBody($request)->string('download_command');
+        }
+
         // Convert POST requests into GET requests for pretty URLs.
         if ($request->getMethod() === RequestMethodInterface::METHOD_POST) {
-            
-            return redirect(route(self::class, [
-                'tree'        	        => $tree->name(),
-                'xref'        	        => Validator::parsedBody($request)->isXref()->string('xref'),
-				'delimiter_expression'	=> Validator::parsedBody($request)->string('delimiter_expression'),
-                'command'               => Validator::parsedBody($request)->string('command'),
-            ]));
+
+            if($command === self::CMD_DOWNLOAD_XML) {
+                return redirect(route(self::class, [
+                    'tree'        	        => $tree->name(),
+                    'xref'        	        => $xref,
+                    'delimiter_expression'	=> $delimiter_expression,
+                    'command'               => $download_command,
+                ]));
+    
+            } else {
+                return redirect(route(self::class, [
+                    'tree'        	        => $tree->name(),
+                    'xref'        	        => Validator::parsedBody($request)->isXref()->string('xref'),
+                    'delimiter_expression'	=> Validator::parsedBody($request)->string('delimiter_expression'),
+                    'command'               => Validator::parsedBody($request)->string('command'),
+                ]));
+            }            
         }
 
         //Variable for error texts; default is empty
@@ -976,7 +976,7 @@ class RepositoryHierarchy   extends     AbstractModule
             }            
            //Otherwise, load default repository
             else {
-                $xref = $this->getDefaultRepositoryXref($tree, $user);
+                $xref = Functions::getDefaultRepositoryXref($this, $tree, $user);
             }
         }
 
@@ -1071,9 +1071,9 @@ class RepositoryHierarchy   extends     AbstractModule
                 }
             }
         
-            //Find all sources linked to the repository
+            //Find and sort all sources linked to the repository
             $linked_sources = (new LinkedRecordService())->linkedSources($repository);
-            $linked_sources = $this->sortSourcesByCallNumber($linked_sources);	
+            $linked_sources = Functions::sortSourcesByCallNumber($linked_sources);
 
             //Generate root category
             $this->root_category = new CallNumberCategory($tree, $delimiter_reg_exps, TRUE);
@@ -1081,7 +1081,7 @@ class RepositoryHierarchy   extends     AbstractModule
             //Generate the (recursive) hierarchy of call numbers
             foreach ($linked_sources as $source) {
     
-                $call_number = $this->getCallNumber($source);
+                $call_number = Functions::getCallNumberForSource($source, $this->repository);
 
                 //If call number is empty, assign empty category and default delimiter
                 if ($call_number === '') {
@@ -1099,13 +1099,55 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->root_category = new CallNumberCategory($tree, array() );
         }
 
+        //Calculate date ranges for the whole hierarchy of call number categories
+        $date_range = $this->getRootCategory()->calculateDateRange();
+
+        //If download of EAD XML is requested, create and return download
+        if (DownloadService::isXmlDownloadCommand($command)) {
+            
+            $xml_type = $command;
+            $title = $this->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $xref . '_' . $user->id(), '');
+
+            if($title === '') {
+                $error_text = $this->errorTextWithHeader('<b>'. I18N::translate('XML export settings not found. Please open EAD XML settings and provide settings.') . '</b>' . '<p>');  
+            } 
+            else {
+                //Initialize EAD XML
+                $download_ead_xml_service = new DownloadEADxmlService($xml_type, $this->repository, $this->root_category, $user);
+
+                //Create EAD XML export
+                $download_ead_xml_service->createXMLforCategory($xml_type, $download_ead_xml_service->getCollection(), $this->root_category);
+    
+                //Start download
+                return $download_ead_xml_service->downloadResponse('EAD');
+            }
+        }         
+
+        //If download of HTML finding aid is requested, create and return download
+        if ($command === DownloadService::DOWNLOAD_OPTION_HTML) {
+            $title = I18N::translate('Finding aid');
+
+            //Create finding aid and download
+            $download_finding_aid_service = new DownloadFindingAidService($this->repository, $this->root_category, $user);
+            return $download_finding_aid_service->downloadHtmlResponse('finding_aid');
+        }
+
+        //If download of PDF finding aid is requested, create and return download
+        if ($command === DownloadService::DOWNLOAD_OPTION_PDF) {
+            $title = I18N::translate('Finding aid');
+
+            //Create finding aid and download
+            $download_finding_aid_service = new DownloadFindingAidService($this->repository, $this->root_category, $user);
+            return $download_finding_aid_service->downloadPDFResponse('finding_aid');
+        }
+
+
         //Return the page view
         return $this->viewResponse($this->name() . '::page', [
             'tree'                              => $tree,
             'title'                             => $this->getListTitle($repository),
             'repository_hierarchy'              => $this,
 			'delimiter_expression'              => $delimiter_expression,
-            'show_head'                         => true,
             'error'                             => $error_text,
             'command'                           => self::CMD_NONE,
         ]);
