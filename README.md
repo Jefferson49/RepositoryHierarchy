@@ -62,6 +62,7 @@ This README file contains the following main sections:
     *   [EAD standard for XML export of archival records](#EAD)
     *   [apeEAD standard for XML export of finding aids](#apeEAD)
 *   [How the module maps to Gedcom and to archive management concepts](#Mapping)
+*   [Translation](#Translation)
 *   [Github Repository](#Github)
 
 <a name="Benefits"></a>
@@ -242,6 +243,8 @@ The generated finding aid document contains the following metadata for each of t
 + Author
 + Date range
 + Gedcom-ID and webtrees link (optional)
+
+![Screenshot](resources/img/finding_aid.jpg)
 
 <a name="Using-EAD-xml"></a>
 ### Generate and download an EAD XML export
@@ -436,6 +439,14 @@ The following table describes how the concepts from archive and library manageme
 |Item,<br>file,<br>book|Source|Source|
 |Call number|Call number|Call number|
 |Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
+
+<a name="Translation"></a>
+## Translation
+You can help to translate this module. The translation is based on [gettext](https://en.wikipedia.org/wiki/Gettext) and uses .po files, which can be found in [/resources/lang/](https://github.com/Jefferson49/RepositoryHierarchy/tree/main/resources/lang). You can use a local editor like [Poedit](https://poedit.net/) or notepad++ to work on translations and provide them in the [Github repository](https://github.com/Jefferson49/RepositoryHierarchy) of the module. You can do this via a pull request (if you know how to do), or by opening a new issue and attaching a .po file. Updated translations will be included in the next release of this module.
+
+Currently, the following languages are already available:
++ English
++ German
 
 <a name="Github"></a>
 ##  Github repository  
