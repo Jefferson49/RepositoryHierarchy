@@ -302,7 +302,7 @@ The following concept was tested with the [AtoM](https://www.accesstomemory.org/
 
 While exporting data from webtrees with an EAD XML export, a XML structure with URLs to each of the sources in webtrees is included. After importing the EAD XML into AtoM, the links are shown in the user interface and can be used to navigate to the related webtrees source.
 
-![Screenshot](resources/img/screenshot_AtoM.jpg)
+![Screenshot](resources/img/screenshot_AtoM.JPG)
 
 Within webtrees, the Repository Hierarchy module can provide links to the related AtoM records. In order to use this feature, the following steps need to be taken:
 + Settings in webtrees:
@@ -314,7 +314,7 @@ Within webtrees, the Repository Hierarchy module can provide links to the relate
     + Open settings / global settings in AtoM and set the permalinks in AtoM to call numbers or source titles. It is important to use the same settings in AtoM like in webtrees. More information about the AtoM permalinks settings can be found in the [AtoM documentation](https://www.accesstomemory.org/en/docs/2.6/user-manual/administer/settings/#description-permalinks).
     + Depending on the settings in AtoM, it might also be necessary to re-genearte slugs (i.e. permalinks) in Atom. More information can bei found in the [AtoM documentation](https://www.accesstomemory.org/en/docs/2.6/admin-manual/maintenance/cli-tools/#generate-slugs).
 
-![Screenshot](resources/img/screenshot_AtoM_link_in_webtrees.jpg)
+![Screenshot](resources/img/screenshot_AtoM_link_in_webtrees.JPG)
 
 <a name="Using-citations"></a>
 ### Show additional source and repository information in source citations
@@ -324,7 +324,7 @@ The Repository Hierarchy modules provides a feature to show extended information
 + REFN (user reference numbers)
 + NOTE (notes of the source)
 
-![Screenshot](resources/img/screenshot_source_citation_in_webtrees.jpg)
+![Screenshot](resources/img/screenshot_source_citation_in_webtrees.JPG)
 
 In order to activate this feature, the setting "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations" needs to be activated in the control panel.
 
