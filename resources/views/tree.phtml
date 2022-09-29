@@ -71,7 +71,7 @@ use Fisharebest\Webtrees\I18N;
             		<?php $sources = Functions::sortSourcesByCallNumber($sources) ?>
 					<?php foreach ($sources as $source) : ?>
 						<li>
-							<a href="<?= e($source->url()) ?>"><?= Functions::getCallNumberForSource($source, $repository_hierarchy->getRepository(), boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))) ?></a>
+							<a href="<?= e($source->url()) ?>"><?= Functions::getCallNumberForSource($source, $repository_hierarchy->getAllRepositories(), boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))) ?></a>
 
 							<?php if (($source->fullName() != '') && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TITLE, '1')))) : ?>
 								—

@@ -45,6 +45,7 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
+use PhpParser\Node\Expr\Cast\Array_;
 
 
 /**
@@ -540,13 +541,25 @@ class Functions {
      * Get call number for a source
      *
 	 * @param Source        $source
-	 * @param Repository    $repository
+	 * @param array         $repositories [Repository]
      *
      * @return string
      */
-    public static function getCallNumberForSource(Source $source, Repository $repository = null): string{	
+    public static function getCallNumberForSource(Source $source, array $repositories = []): string{	
 	
-        $source_facts = self::sourceValuesByTag($source, $repository);
+        if (empty($repositories)) {
+
+            $source_facts = self::sourceValuesByTag($source);
+        }
+        else {
+
+            foreach ($repositories as $repository) {
+
+                $source_facts = self::sourceValuesByTag($source, $repository);
+    
+                if (isset($source_facts['SOUR:REPO:CALN'])) break;
+            }    
+        }
 
         return isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '';
 	}
@@ -576,5 +589,27 @@ class Functions {
         return '';
     }
 
+    /**
+     * Get meta repositories for a repository
+     * 
+     * @param Repository    $repository
+     *
+     * @return string       xref
+     */
+    public static function getMetaRepository(Repository $repository): string {
+
+        $meta_repository = '';
+
+        foreach($repository->facts() as $fact) {
+
+            if (($fact->tag() === 'REPO:REFN') && ($fact->attribute('TYPE') === 'META_REPOSITORY')) {
+
+                $meta_repository = $fact->value();
+                break;
+            }
+        }
+
+        return $meta_repository;
+    }
 
 }

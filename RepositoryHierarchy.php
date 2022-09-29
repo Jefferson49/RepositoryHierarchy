@@ -186,8 +186,14 @@ class RepositoryHierarchy   extends     AbstractModule
     //The xref string of the repository, to which the repository hierarchy relates
     private string $repository_xref;
 
+    //The xref string of the meta repository (if available)
+    private string $meta_repository_xref;
+
     //The repository, to which the repository hierarchy relates
     private Repository $repository;
+
+    //The meta repository (if available)
+    private Repository $meta_repository;
 
     //Root element of category hierarchy
 	private CallNumberCategory $root_category;
@@ -665,6 +671,22 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
+     * Get all repositories (including meta repository)
+     * 
+     * @return array
+     */
+    public function getAllRepositories(): array {
+
+        $repositories = [$this->repository];
+
+        if (isset($this->meta_repository)) {
+            array_push($repositories, $this->meta_repository);
+        }
+
+        return $repositories;
+    }
+
+    /**
      * Get xref of the related repository
      * 
      * @return string
@@ -999,6 +1021,17 @@ class RepositoryHierarchy   extends     AbstractModule
         $this->repository_xref = $xref;
         $this->repository = $repository;        
 
+        //Check for meta repository. If available generate meta repository, check access, and copy to instance
+        $meta_xref = Functions::getMetaRepository($repository);
+
+        if ($meta_xref !== '') {
+            $meta_repository  = Registry::repositoryFactory()->make($meta_xref, $tree);
+            $meta_repository  = Auth::checkRepositoryAccess($meta_repository, false, true);
+
+            $this->meta_repository_xref = $meta_xref;
+            $this->meta_repository = $meta_repository;    
+        }
+
         //If requested, load stored delimiter expression
         if ($command === self::CMD_LOAD_ADMIN_DELIM) {
             $load_value = $this->getPreference(self::PREF_DELIMITER . $tree->id() . '_' . self::ADMIN_USER_STRING . '_' . $xref);
@@ -1071,8 +1104,17 @@ class RepositoryHierarchy   extends     AbstractModule
                 }
             }
         
-            //Find and sort all sources linked to the repository
-            $linked_sources = (new LinkedRecordService())->linkedSources($repository);
+            //Find all sources linked to the repository
+            $linked_record_service = new LinkedRecordService();
+            $linked_sources = $linked_record_service->linkedSources($repository);
+
+            //Add linked sources of meta repository (if available)
+            if (isset($this->meta_repository)) {
+
+                $linked_sources = $linked_sources->merge($linked_record_service->linkedSources($this->meta_repository));
+            }
+
+            //Sort linked sources
             $linked_sources = Functions::sortSourcesByCallNumber($linked_sources);
 
             //Generate root category
@@ -1081,7 +1123,7 @@ class RepositoryHierarchy   extends     AbstractModule
             //Generate the (recursive) hierarchy of call numbers
             foreach ($linked_sources as $source) {
     
-                $call_number = Functions::getCallNumberForSource($source, $this->repository);
+                $call_number = Functions::getCallNumberForSource($source, $this->getAllRepositories());
 
                 //If call number is empty, assign empty category and default delimiter
                 if ($call_number === '') {

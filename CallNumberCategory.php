@@ -326,7 +326,7 @@ class CallNumberCategory  {
         if($truncated) {
 			return $this->getTruncatedCallNumber($source);
 		} else {
-			return Functions::getCallNumberForSource($source, $repository);
+			return Functions::getCallNumberForSource($source, [$repository]);
 		}
 	}
 
