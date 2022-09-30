@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: 2022-09-30 07:06+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,8 +10,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.1.1\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: CallNumberCategory.php:173
+#: CallNumberCategory.php:172
+msgid "Sources without call number"
+msgstr "Quellen ohne Signatur"
+
+#: CallNumberCategory.php:174
 msgid "Default call number category"
 msgstr "Defaultwert für Signatur-Kategorie"
 
@@ -24,40 +31,19 @@ msgstr ""
 "Quellen anzulegen. Um neue Quellen anzulegen, müssen Sie als Benutzer "
 "angemeldet sein."
 
-#: RepositoryHierarchy.php:241 RepositoryHierarchy.php:600
-#: RepositoryHierarchyHelpTexts.php:67 RepositoryHierarchyHelpTexts.php:77
-#: RepositoryHierarchyHelpTexts.php:87 RepositoryHierarchyHelpTexts.php:96
-#: RepositoryHierarchy.php:293 RepositoryHierarchy.php:642
-#: RepositoryHierarchyHelpTexts.php:68 RepositoryHierarchyHelpTexts.php:78
-#: RepositoryHierarchyHelpTexts.php:88 RepositoryHierarchyHelpTexts.php:97
-msgid "Repository Hierarchy"
-msgstr "Archiv Hierarchie"
-
-#: RepositoryHierarchy.php:251 CreateSourceModal.php:60
+#: CreateSourceModal.php:60
 msgid "Create new sources"
 msgstr "Neue Quelle anlegen"
 
-#: DownloadEADxmlService.php:283 DownloadFindingAidService.php:95
-#: RepositoryHierarchy.php:1127 RepositoryHierarchy.php:1136
-#: XmlExportSettingsModal.php:71 XmlExportSettingsModal.php:74
+#: DownloadFindingAidService.php:95 RepositoryHierarchy.php:1197
+#: RepositoryHierarchy.php:1206 XmlExportSettingsModal.php:79
+#: XmlExportSettingsModal.php:82
 msgid "Finding aid"
 msgstr "Findbuch"
 
 #: DownloadService.php:56
 msgid "EAD XML"
 msgstr "EAD XML"
-
-#: DownloadService.php:57
-msgid "apeEAD XML"
-msgstr "apeEAD XML"
-
-#: DownloadService.php:58
-msgid "DDB EAD XML"
-msgstr "DDB EAD XML"
-
-#: DownloadService.php:59
-msgid "AtoM EAD XML"
-msgstr "AtoM EAD XML"
 
 #: DownloadService.php:63
 msgid "Finding aid as HTML"
@@ -67,7 +53,13 @@ msgstr "Findbuch als HTML"
 msgid "Finding aid as PDF"
 msgstr "Findbuch als PDF"
 
-#: RepositoryHierarchy.php:303
+#: RepositoryHierarchy.php:300 RepositoryHierarchy.php:649
+#: RepositoryHierarchyHelpTexts.php:68 RepositoryHierarchyHelpTexts.php:78
+#: RepositoryHierarchyHelpTexts.php:88 RepositoryHierarchyHelpTexts.php:97
+msgid "Repository Hierarchy"
+msgstr "Archiv Hierarchie"
+
+#: RepositoryHierarchy.php:310
 msgid ""
 "A hierarchical structured list of the sources of an archive based on the "
 "call numbers of the sources"
@@ -75,21 +67,19 @@ msgstr ""
 "Eine hierarchisch strukturierte Liste der Quellen in einem Archiv, basierend "
 "auf den Signaturen der Quellen"
 
-#: RepositoryHierarchy.php:460 RepositoryHierarchy.php:452
+#: RepositoryHierarchy.php:459
 #, php-format
 msgid "The preferences for the module “%s” were updated."
 msgstr "Die Einstellungen für das Modul %s wurden aktualisiert."
 
-#: RepositoryHierarchy.php:475 RepositoryHierarchy.php:489
-#: resources/views/options.phtml:36 RepositoryHierarchy.php:522
+#: RepositoryHierarchy.php:529
 msgid ""
 "The Repository Hierarchy data fix cannot be used in the \"control panel\"."
 msgstr ""
 "Die Datenkorrektur für Archiv Hierarchie kann unter \"Verwaltung\" nicht "
 "genutzt werden."
 
-#: RepositoryHierarchy.php:476 RepositoryHierarchy.php:602
-#: RepositoryHierarchy.php:523
+#: RepositoryHierarchy.php:530
 msgid ""
 "The data fix can be called from the user front end by clicking on the link "
 "to rename a call number category."
@@ -97,14 +87,14 @@ msgstr ""
 "Die Datenkorrektur kann aus der Bentutzeroberfläche aufgerufen werden, indem "
 "der Link für die Umbenennung einer Signatur-Kategorie angeclickt wird."
 
-#: RepositoryHierarchy.php:533
+#: RepositoryHierarchy.php:540
 msgid ""
 "Currently, you do not have the user rights to change call number categories."
 msgstr ""
 "Aktuell verfügen Sie nicht über die erforderlichen Benutzer Rechte, um "
 "Signatur-Kategorien zu ändern."
 
-#: RepositoryHierarchy.php:534
+#: RepositoryHierarchy.php:541
 msgid ""
 "In order to change call number categories, you need to have a \"Manager\" "
 "role for the corresponding tree."
@@ -112,62 +102,58 @@ msgstr ""
 "Um Signatur-Kategorien zu ändern, benötigen Sie die Rolle \"Verwalter\" für "
 "den zugehörigen Stammbaum."
 
-#: RepositoryHierarchy.php:644
-#, php-format
-msgid "Repository Hierarchy of: %s"
+#: RepositoryHierarchy.php:651
+#, fuzzy, php-format
+#| msgid "Repository Hierarchy of: %s"
+msgid "Repository Hierachy of: %s"
 msgstr "Archiv Hierarchie von: %s"
 
-#: RepositoryHierarchy.php:636 RepositoryHierarchy.php:988
-#: RepositoryHierarchy.php:759
+#: RepositoryHierarchy.php:809
 msgid "Regular expression not accepted"
 msgstr "Regulärer Ausdruck nicht akzeptiert"
 
-#: RepositoryHierarchy.php:645 RepositoryHierarchy.php:768
+#: RepositoryHierarchy.php:818
 msgid "No valid delimiter or valid regular expression for delimiter found."
 msgstr "Kein valider Delimiter oder valider Ausdruck für Delimiter gefunden."
 
-#: RepositoryHierarchy.php:870 RepositoryHierarchy.php:884
+#: RepositoryHierarchy.php:934
 msgid "load delimiter expression from administrator"
 msgstr "Delimiter Ausdruck von Administrator laden"
 
-#: RepositoryHierarchy.php:876 RepositoryHierarchy.php:890
+#: RepositoryHierarchy.php:940
 msgid "none"
 msgstr "Keine"
 
-#: RepositoryHierarchy.php:877 RepositoryHierarchy.php:891
+#: RepositoryHierarchy.php:941
 msgid "save repository"
 msgstr "Archiv speichern"
 
-#: RepositoryHierarchy.php:878 RepositoryHierarchy.php:892
+#: RepositoryHierarchy.php:942
 msgid "load repository"
 msgstr "Archiv laden"
 
-#: RepositoryHierarchy.php:879 RepositoryHierarchy.php:893
+#: RepositoryHierarchy.php:943
 msgid "save delimiter expression"
 msgstr "Delimiter Ausdruck speichern"
 
-#: RepositoryHierarchy.php:880 RepositoryHierarchy.php:894
+#: RepositoryHierarchy.php:944
 msgid "load delimiter expression"
 msgstr "Delimiter Ausdruck laden"
 
-#: RepositoryHierarchy.php:909
-msgid "Custom module"
-msgstr ""
-
-#: RepositoryHierarchy.php:952 RepositoryHierarchy.php:951
+#: RepositoryHierarchy.php:1001
 msgid "Error during update of preferences"
 msgstr "Fehler beim Aktualisieren der Einstellungen"
 
-#: RepositoryHierarchy.php:965 RepositoryHierarchy.php:964
+#: RepositoryHierarchy.php:1014
 msgid "Could not load repository. No repository stored."
 msgstr "Archiv konnte nicht geladen werden. Kein Archiv gespeichert."
 
-#: RepositoryHierarchy.php:987
+#: RepositoryHierarchy.php:1037
 #, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "Der Stammbaum \"%s\" enthält kein Archiv"
 
-#: RepositoryHierarchy.php:1010 RepositoryHierarchy.php:1009
+#: RepositoryHierarchy.php:1070
 msgid ""
 "Could not load delimiter expression from administrator. No administrator "
 "delimiter expression stored."
@@ -175,18 +161,17 @@ msgstr ""
 "Delimiter Ausdruck von Administrator konnte nicht geladen werden. Kein "
 "Delimiter Ausdruck von Administrator gespeichert."
 
-#: RepositoryHierarchy.php:1019 RepositoryHierarchy.php:1018
+#: RepositoryHierarchy.php:1079
 msgid "Could not load delimiter expression. No delimiter expression stored."
 msgstr ""
 "Delimiter Ausdruck konnte nicht geladen werden. Kein Delimiter Ausdruck "
 "gespeichert."
 
-#: RepositoryHierarchy.php:1043 RepositoryHierarchy.php:1050
-#: RepositoryHierarchyHelpTexts.php:104 RepositoryHierarchy.php:1042
+#: RepositoryHierarchy.php:1103
 msgid "Error in delimiter expression"
 msgstr "Fehler in Delimiter Ausdruck"
 
-#: RepositoryHierarchy.php:1049 RepositoryHierarchyHelpTexts.php:105
+#: RepositoryHierarchy.php:1110 RepositoryHierarchyHelpTexts.php:105
 msgid ""
 "Please note that the following characters need to be escaped if not used as "
 "meta characters in a regular expression"
@@ -195,30 +180,26 @@ msgstr ""
 "versehen werden müssen, falls sie nicht als Meta-Zeichen in einem regulären "
 "Ausdruck verwendet werden"
 
-#: RepositoryHierarchy.php:1053 RepositoryHierarchyHelpTexts.php:105
-#: RepositoryHierarchy.php:1054 RepositoryHierarchy.php:1052
-#: RepositoryHierarchyHelpTexts.php:106
+#: RepositoryHierarchy.php:1113 RepositoryHierarchyHelpTexts.php:106
 msgid "For example, use"
 msgstr "Nutzen Sie zum Beispiel"
 
-#: RepositoryHierarchy.php:1053 RepositoryHierarchy.php:1054
-#: RepositoryHierarchyHelpTexts.php:105 RepositoryHierarchy.php:1052
+#: RepositoryHierarchy.php:1113 RepositoryHierarchy.php:1114
 #: RepositoryHierarchyHelpTexts.php:106
 msgid "instead of"
 msgstr "statt"
 
-#: RepositoryHierarchy.php:1053 RepositoryHierarchyHelpTexts.php:58
-#: RepositoryHierarchyHelpTexts.php:59 RepositoryHierarchyHelpTexts.php:60
-#: RepositoryHierarchyHelpTexts.php:105 RepositoryHierarchy.php:1052
-#: RepositoryHierarchyHelpTexts.php:61 RepositoryHierarchyHelpTexts.php:106
+#: RepositoryHierarchy.php:1113 RepositoryHierarchyHelpTexts.php:59
+#: RepositoryHierarchyHelpTexts.php:60 RepositoryHierarchyHelpTexts.php:61
+#: RepositoryHierarchyHelpTexts.php:106
 msgid "or"
 msgstr "oder"
 
-#: RepositoryHierarchy.php:1053
+#: RepositoryHierarchy.php:1114
 msgid "if the characters shall be used as plain text."
 msgstr "wenn die Zeichen als reiner Text verwendet werden sollen."
 
-#: RepositoryHierarchy.php:1111
+#: RepositoryHierarchy.php:1181
 msgid ""
 "XML export settings not found. Please open EAD XML settings and provide "
 "settings."
@@ -377,19 +358,19 @@ msgstr "Gedcom-ID"
 msgid "Author"
 msgstr "Autor"
 
-#: resources/views/finding-aid.phtml:76
+#: resources/views/finding-aid.phtml:73
 msgid "Generated on"
 msgstr "Erzeugt am"
 
-#: resources/views/finding-aid.phtml:80
+#: resources/views/finding-aid.phtml:76
 msgid "Language of description"
 msgstr "Sprache der Beschreibung"
 
-#: resources/views/finding-aid.phtml:96
+#: resources/views/finding-aid.phtml:92
 msgid "Table of Contents - Archival Arrangement"
 msgstr "Inhaltsverzeichnis - Tektonik des Archivs"
 
-#: resources/views/finding-aid.phtml:104
+#: resources/views/finding-aid.phtml:100
 msgid "List of Sources"
 msgstr "Liste der Quellen"
 
@@ -678,6 +659,15 @@ msgstr "Umbenennen"
 msgid "Add new source"
 msgstr "Neue Quelle hinzufügen"
 
+#~ msgid "apeEAD XML"
+#~ msgstr "apeEAD XML"
+
+#~ msgid "DDB EAD XML"
+#~ msgstr "DDB EAD XML"
+
+#~ msgid "AtoM EAD XML"
+#~ msgstr "AtoM EAD XML"
+
 #~ msgid "Link to the website of the archive"
 #~ msgstr "Link zur Webseite des Archivs"
 
@@ -700,9 +690,6 @@ msgstr "Neue Quelle hinzufügen"
 
 #~ msgid "Table of contents"
 #~ msgstr "Inhaltsverzeichnis"
-
-#~ msgid "Sources without call number"
-#~ msgstr "Quellen ohne Signatur"
 
 #~ msgid "Publication"
 #~ msgstr "Veröffentlichung"

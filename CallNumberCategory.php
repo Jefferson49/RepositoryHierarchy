@@ -169,7 +169,7 @@ class CallNumberCategory  {
 		}
 
 		if (strpos($name, CallNumberCategory::EMPTY_CATEGORY_NAME) !== false) {
-			return MoreI18N::xlate('Sources without call number');
+			return I18N::translate('Sources without call number');
 		} elseif (strpos($name, CallNumberCategory::DEFAULT_CATEGORY_NAME) !== false) {
 			return I18N::translate('Default call number category');
 		} else {
