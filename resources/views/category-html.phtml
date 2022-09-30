@@ -8,10 +8,10 @@ use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\View;
 
 /**
- * @var CallNumberCategory                  $category
- * @var \Fisharebest\Webtrees\Repository    $repository
- * @var bool                                $is_root_category
- * @var bool                                $show_wt_links
+ * @var CallNumberCategory      $category
+ * @var RepositoryHierarchy     $repository_hierarchy,
+ * @var bool                    $is_root_category
+ * @var bool                    $show_wt_links
  */
 
 ?>
@@ -39,10 +39,10 @@ use Fisharebest\Webtrees\View;
         </tr>
     </table>
     <?php $sources = Functions::getCollectionForArray($category->getSources()) ?>
-    <?php $sources = Functions::sortSourcesByCallNumber($sources) ?>
+    <?php $sources = $repository_hierarchy->sortSourcesByCallNumber($sources) ?>
     <?php foreach ($sources as $source) : ?>
     <table class="finding-aid-table">
-        <?php $source_facts = Functions::sourceValuesByTag($source, $repository) ?>
+        <?php $source_facts = Functions::sourceValuesByTag($source, $repository_hierarchy->getRepository()) ?>
         <tr> 
             <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>               
             <td class="finding-aid-table-middle-column"><b><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></b></td>
@@ -78,13 +78,13 @@ use Fisharebest\Webtrees\View;
 <?php endif ?>
 
 <?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
-<?php $categories = Functions::sortCallNumberCategoriesByName($categories) ?>
+<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 
 <?php foreach ($categories as $sub_category) : ?>
     <?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
-            'category'          => $sub_category,
-            'repository' 	    => $repository,
-            'is_root_category'	=> false,
-            'show_wt_links'		=> $show_wt_links,
+            'category'              => $sub_category,
+            'repository_hierarchy'	=> $repository_hierarchy,
+            'is_root_category'	    => false,
+            'show_wt_links'		    => $show_wt_links,
             ]) ?>
 <?php endforeach ?>

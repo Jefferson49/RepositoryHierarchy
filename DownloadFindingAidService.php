@@ -56,11 +56,8 @@ class DownloadFindingAidService extends DownloadService
     //The LinkedRecordService used
     private LinkedRecordService $linked_record_service;
 
-    //The repository, to which the service relates
-    private Repository $repository;
-
-    //The root category of the Repository Hierarchy, to which the service relates
-    private CallNumberCategory $root_category;
+    //The repository hierarchy, to which the service relates
+    private RepositoryHierarchy $repository_hierarchy;
 
     //The user, for which the service is executed
     private UserInterface $user;
@@ -74,13 +71,11 @@ class DownloadFindingAidService extends DownloadService
      * @param UserInterface         $user
      *
      */
-    public function __construct(Repository $repository, 
-                                CallNumberCategory $root_category,
+    public function __construct(RepositoryHierarchy $repository_hierarchy, 
                                 UserInterface $user)
     {
         //Initialize variables
-        $this->repository = $repository;
-        $this->root_category = $root_category;
+        $this->repository_hierarchy = $repository_hierarchy;
         $this->user = $user;
     }
 
@@ -97,11 +92,10 @@ class DownloadFindingAidService extends DownloadService
         $language_tag = substr($language_tag, 0, 2) === 'en' ? 'en' : $language_tag;
 
         return view(RepositoryHierarchy::MODULE_NAME . '::finding-aid', [  
-            'title'             => I18N::translate('Finding aid') . ': ' . $this->repository->fullName(),
-            'language_tag'      => $language_tag,
-            'root_category'     => $this->root_category,
-            'repository'        => $this->repository,
-            'forPDF'            => $forPDF,
+            'title'                 => I18N::translate('Finding aid') . ': ' . $this->repository_hierarchy->getRepository()->fullName(),
+            'language_tag'          => $language_tag,
+            'repository_hierarchy'  => $this->repository_hierarchy,
+            'forPDF'                => $forPDF,
             ]);
     }
 

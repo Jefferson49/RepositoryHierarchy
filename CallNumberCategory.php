@@ -31,6 +31,7 @@ use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
+use Illuminate\Support\Collection;
 
 use function md5;
 use Fisharebest\Webtrees\Repository;
@@ -345,6 +346,20 @@ class CallNumberCategory  {
 			}
 		}
 		return '';
+    }
+
+    /**
+     * Sort call number categories by call number
+     *
+	 * @param Collection $categories
+     *
+     * @return Collection
+     */
+    public static function sortCallNumberCategoriesByName(Collection $categories): Collection {
+		
+        return $categories->sort(function (CallNumberCategory $category1, CallNumberCategory $category2) {
+                return strnatcmp($category1->getFullName(), $category2->getFullName());
+            });
     }
 
  }

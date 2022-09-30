@@ -509,35 +509,6 @@ class Functions {
     }
 
     /**
-     * Sorting sources by call number
-     *
-	 * @param Collection    $sources
-	 * @param Repository    $repository
-     *
-     * @return Collection
-     */
-    public static function sortSourcesByCallNumber(Collection $sources): Collection {
-
-        return $sources->sort(function (Source $source1, Source $source2) {
-            return strnatcmp(self::getCallNumberForSource($source1), self::getCallNumberForSource($source2));
-        });
-    }
-
-    /**
-     * Sorting call number categories by call number
-     *
-	 * @param Collection $categories
-     *
-     * @return Collection
-     */
-    public static function sortCallNumberCategoriesByName(Collection $categories): Collection {
-		
-        return $categories->sort(function (CallNumberCategory $category1, CallNumberCategory $category2) {
-                return strnatcmp($category1->getFullName(), $category2->getFullName());
-            });
-    }
-
-    /**
      * Get call number for a source
      *
 	 * @param Source        $source

@@ -717,6 +717,33 @@ class RepositoryHierarchy   extends     AbstractModule
     }
 
     /**
+     * Sorting sources by call number
+     *
+	 * @param Collection    $sources
+	 * @param Repository    $repository
+     *
+     * @return Collection
+     */
+    public function sortSourcesByCallNumber(Collection $sources): Collection {
+
+        return $sources->sort(function (Source $source1, Source $source2) {
+            return strnatcmp(self::getCallNumberForSourceInHierarchy($source1), self::getCallNumberForSourceInHierarchy($source2));
+        });
+    }
+
+    /**
+     * Get call number for source in hierarchy
+     *
+	 * @param Source        $source
+     *
+     * @return string
+     */
+    private function getCallNumberForSourceInHierarchy(Source $source): string {
+
+        return Functions::getCallNumberForSource($source, [$this->repository, $this->meta_repository]);
+    }
+
+    /**
      * Error text with a header
      * 
      * @param string $error_text
@@ -1115,7 +1142,7 @@ class RepositoryHierarchy   extends     AbstractModule
             }
 
             //Sort linked sources
-            $linked_sources = Functions::sortSourcesByCallNumber($linked_sources);
+            $linked_sources = $this->sortSourcesByCallNumber($linked_sources);
 
             //Generate root category
             $this->root_category = new CallNumberCategory($tree, $delimiter_reg_exps, TRUE);
@@ -1170,7 +1197,7 @@ class RepositoryHierarchy   extends     AbstractModule
             $title = I18N::translate('Finding aid');
 
             //Create finding aid and download
-            $download_finding_aid_service = new DownloadFindingAidService($this->repository, $this->root_category, $user);
+            $download_finding_aid_service = new DownloadFindingAidService($this, $user);
             return $download_finding_aid_service->downloadHtmlResponse('finding_aid');
         }
 
@@ -1179,7 +1206,7 @@ class RepositoryHierarchy   extends     AbstractModule
             $title = I18N::translate('Finding aid');
 
             //Create finding aid and download
-            $download_finding_aid_service = new DownloadFindingAidService($this->repository, $this->root_category, $user);
+            $download_finding_aid_service = new DownloadFindingAidService($this, $user);
             return $download_finding_aid_service->downloadPDFResponse('finding_aid');
         }
 
