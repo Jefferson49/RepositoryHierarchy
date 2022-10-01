@@ -573,7 +573,7 @@ class Functions {
 
         foreach($repository->facts() as $fact) {
 
-            if (($fact->tag() === 'REPO:REFN') && ($fact->attribute('TYPE') === 'META_REPOSITORY')) {
+            if (($fact->tag() === 'REPO:REFN') && ($fact->attribute('TYPE') === RepositoryHierarchy::SOUR_REFN_TYPE_META_REPO)) {
 
                 $meta_repository = $fact->value();
                 break;

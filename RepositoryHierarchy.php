@@ -168,6 +168,9 @@ class RepositoryHierarchy   extends     AbstractModule
     //Comands for repositories
     public const CMD_SET_AS_START_REPO = 'set as start repository';
 
+    //User reference types in SOUR:REFN:TYPE
+    public const SOUR_REFN_TYPE_META_REPO = 'META_REPOSITORY';
+
     //Custom module version
     public const CUSTOM_VERSION = '1.1.0';
 
