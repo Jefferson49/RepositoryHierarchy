@@ -43,9 +43,10 @@ use Fisharebest\Webtrees\View;
     <?php foreach ($sources as $source) : ?>
     <table class="finding-aid-table">
         <?php $source_facts = Functions::sourceValuesByTag($source, $repository_hierarchy->getRepository()) ?>
+        <?php $call_number = Functions::getCallNumberForSource($source, $repository_hierarchy->getAllRepositories()) ?>
         <tr> 
             <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>               
-            <td class="finding-aid-table-middle-column"><b><?= isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '' ?></b></td>
+            <td class="finding-aid-table-middle-column"><b><?= $call_number ?></b></td>
             <?php if ($show_wt_links) : ?>
                 <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>"><?= $source->xref() ?></a></td>            
             <?php else : ?>
