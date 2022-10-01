@@ -26,6 +26,7 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_finding_aid_toc
  * @var  bool		$show_finding_aid_toc_links
  * @var  bool		$allow_admin_xml_settings
+ * @var  bool		$use_meta_repositories
  * @var  bool		$show_atom_links
  * @var  string		$atom_slug
  * @var  string		$atom_base_url
@@ -104,6 +105,12 @@ use Fisharebest\Webtrees\View;
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Allow users to load stored XML settings from administrator.'), 'name' => RepositoryHierarchy::PREF_ALLOW_ADMIN_XML_SETTINGS, 'checked' => $allow_admin_xml_settings]) ?>
             </div>
+
+            <div class="row"><?= view('icons/spacer') ?></div> 
+            <h3><?= I18N::translate('Settings for Meta Repositories') ?></h3>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Use Meta Repositories.'), 'name' => RepositoryHierarchy::PREF_USE_META_REPOSITORIES, 'checked' => $use_meta_repositories]) ?>
+            </div>            
 
             <div class="row"><?= view('icons/spacer') ?></div> 
             <h3><?= I18N::translate('Settings for linking to external archive management tools') ?></h3>
