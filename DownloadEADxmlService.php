@@ -65,6 +65,9 @@ class DownloadEADxmlService extends DownloadService
     //The LinkedRecordService used
     private LinkedRecordService $linked_record_service;
 
+    //The repository hierarchy, to which the service relates
+    private RepositoryHierarchy $repository_hierarchy;
+
     //The repository, to which the service relates
     private Repository $repository;
 
@@ -88,12 +91,13 @@ class DownloadEADxmlService extends DownloadService
      * 
      */
     public function __construct(string $xml_type, 
-                                Repository $repository, 
+                                RepositoryHierarchy $repository_hierarchy, 
                                 CallNumberCategory $root_category,
                                 UserInterface $user)
     {
         //Initialize variables
-        $this->repository = $repository;
+        $this->repository_hierarchy = $repository_hierarchy;
+        $this->repository = $repository_hierarchy->getRepository();
         $this->user = $user;
         $this->use_encoding_analog = ($xml_type !== self::DOWNLOAD_OPTION_DDB_EAD);
 
@@ -164,7 +168,7 @@ class DownloadEADxmlService extends DownloadService
 
             //Add sources to xml structure
             foreach ($category->getSources() as $source) {
-                $this->addFile($xml_type, $series_dom, $source, $this->repository);
+                $this->addFile($xml_type, $series_dom, $source);
             }
 
             //Call recursion for sub categories
@@ -523,9 +527,10 @@ class DownloadEADxmlService extends DownloadService
      * @param DOMDocument      $dom
      * @param Source           $source
      */
-    private function addFile(string $xml_type, DOMNode $dom, Source $source, Repository $repository)
+    private function addFile(string $xml_type, DOMNode $dom, Source $source)
     {
-        $fact_values =Functions::sourceValuesByTag($source, $repository);
+        $fact_values = Functions::sourceValuesByTag($source, $this->repository);
+        $call_number = Functions::getCallNumberForSource($source, $this->repository_hierarchy->getAllRepositories());
 
         //<c>
         $c_dom = $dom->appendChild($this->ead_xml->createElement('c'));
@@ -536,8 +541,8 @@ class DownloadEADxmlService extends DownloadService
             $did_dom = $c_dom->appendChild($this->ead_xml->createElement('did'));
 
                 //<unitid>
-                if (isset($fact_values['SOUR:REPO:CALN'])) {
-                    $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $fact_values['SOUR:REPO:CALN']));
+                if ($call_number !== '') {
+                    $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $call_number));
                     if($this->use_encoding_analog) {
                         $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
                     }

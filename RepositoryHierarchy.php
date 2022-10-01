@@ -1182,7 +1182,7 @@ class RepositoryHierarchy   extends     AbstractModule
             } 
             else {
                 //Initialize EAD XML
-                $download_ead_xml_service = new DownloadEADxmlService($xml_type, $this->repository, $this->root_category, $user);
+                $download_ead_xml_service = new DownloadEADxmlService($xml_type, $this, $this->root_category, $user);
 
                 //Create EAD XML export
                 $download_ead_xml_service->createXMLforCategory($xml_type, $download_ead_xml_service->getCollection(), $this->root_category);
