@@ -31,6 +31,7 @@ use Fisharebest\Localization\Locale\LocaleInterface;
 use Fisharebest\Localization\Translator;
 use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Repository;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Module\ModuleLanguageInterface;
 use RuntimeException;
 
@@ -56,7 +57,7 @@ class C16Y
     public function __construct(string $path, Repository $repository)
     {
         // Load the "translation" file
-        $po_file = $path . $repository->xref() . '.po';
+        $po_file = $path . $repository->xref() . '_' .  Session::get('language') .'.po';
 
         //Create a dummy locale (is required by the Translator for the plural rule)
         $dummy_locale = Locale::create('de');
