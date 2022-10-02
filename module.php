@@ -34,6 +34,7 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+require __DIR__ . '/C16Y.php';
 require __DIR__ . '/CallNumberCategory.php';
 require __DIR__ . '/CallNumberDataFix.php';
 require __DIR__ . '/CreateSourceModal.php';

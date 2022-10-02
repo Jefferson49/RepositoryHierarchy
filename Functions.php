@@ -30,22 +30,15 @@ use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\Date\AbstractCalendarDate;
-use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\GedcomRecord;
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Repository;
-use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
-use Nyholm\Psr7\Factory\Psr17Factory;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
-use PhpParser\Node\Expr\Cast\Array_;
 
 
 /**
@@ -80,26 +73,6 @@ class Functions {
         }
 
         return $stream;
-    }
-
-    /**
-     * Return response to download a file from a DOM document
-     * 
-     * @param string    $filename       Name of download file without extension
-     *
-     * @return ResponseInterface
-     */
-    public static function responseForDOMDownload(DOMDocument $dom, string $filename): ResponseInterface 
-    {
-        $resource = Functions::export($dom);
-        $stream_factory = new Psr17Factory();
-        $response_factory = app(ResponseFactoryInterface::class);
-        $stream = $stream_factory->createStreamFromResource($resource);
-
-         return $response_factory->createResponse()
-            ->withBody($stream)
-            ->withHeader('content-type', 'text/xml; charset=' . UTF8::NAME)
-            ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.xml"');
     }
 
     /**

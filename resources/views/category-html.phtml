@@ -9,7 +9,7 @@ use Fisharebest\Webtrees\View;
 
 /**
  * @var CallNumberCategory      $category
- * @var RepositoryHierarchy     $repository_hierarchy,
+ * @var RepositoryHierarchy     $repository_hierarchy
  * @var bool                    $is_root_category
  * @var bool                    $show_wt_links
  */
@@ -21,10 +21,15 @@ use Fisharebest\Webtrees\View;
     <table class="finding-aid-table" >
         <tr class="finding-aid-table-caption">
             <td class="finding-aid-table-first-column">
-                <?= I18N::translate('Fonds') ?>/<br>
-                <?= I18N::translate('Call number') ?>
+                <?= I18N::translate('Call number') ?>/<br>
+                <?= I18N::translate('Fonds') ?>
             </td>
-            <td class="finding-aid-table-middle-column"><b><?= e($category->getFrontEndName(true)) ?></b></td>      
+            <td class="finding-aid-table-middle-column">
+                <b><?= e($category->getFrontEndName(true)) ?></b><br>
+                <?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0'))): ?>
+                    <?= $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
+                <?php endif ?>
+                </td>      
             <?php if ($category->displayISODateRange() !== '') : ?>
                 <td class="finding-aid-table-last-column"><?= MoreI18N::xlate('Date range') ?>:<br><?= $category->displayISODateRange('--')?></td>          
             <?php else : ?>

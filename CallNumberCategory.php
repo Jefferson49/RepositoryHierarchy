@@ -26,15 +26,17 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
-use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Illuminate\Support\Collection;
+use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 
 use function md5;
 use Fisharebest\Webtrees\Repository;
+use Symfony\Component\Config\Resource\ResourceInterface;
 	
 class CallNumberCategory  {
 
@@ -361,5 +363,55 @@ class CallNumberCategory  {
                 return strnatcmp($category1->getFullName(), $category2->getFullName());
             });
     }
+
+    /**
+     * Save a file with C16Y data for call number category titles
+     *
+	 * @param string 				$repository_xref
+	 * @param CallNumberCategory	$root_category
+     *
+     * @return Collection
+     */
+    public static function saveC16YFile(string $path, string $repository_xref, CallNumberCategory $root_category): void {	
+
+		$po_file = $path . $repository_xref . '.php';
+
+		//Delete file if already existing
+		if (file_exists($po_file)) {
+			unlink($po_file);
+		}
+
+		if (!$fp = fopen($po_file, "c")) {
+			throw new RuntimeException('Cannot open file: ' . $po_file);
+		}
+	
+		if (fwrite($fp,  "<?php\n") === FALSE) {
+			throw new RuntimeException('Cannot write to file: ' . $po_file);
+		}
+
+		self::writeCallNumberCategoryTitleToStream($fp, $root_category);
+		
+		fclose($fp);	
+	}
+
+    /**
+     * Write call number category title to stream
+     *
+	 * @param 						$stream
+	 * @param CallNumberCategory	$category
+     *
+     * @return Collection
+     */
+    public static function writeCallNumberCategoryTitleToStream($stream, CallNumberCategory $category): void {		
+
+		//$sub_categories = Functions::getCollectionForArray($category->getSubCategories());
+		//$sub_categories = CallNumberCategory::sortCallNumberCategoriesByName($sub_categories);
+		$sub_categories = $category->getSubCategories();
+
+		foreach ($sub_categories as $sub_category) {
+			fwrite($stream, "gettext('" . $sub_category->getFrontEndName(true) . "');\n");
+			self::writeCallNumberCategoryTitleToStream($stream, $sub_category);
+		}
+	}
 
  }

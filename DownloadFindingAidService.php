@@ -29,32 +29,18 @@ use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Report\PdfRenderer;
-use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
 use Fisharebest\Webtrees\Session;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use RuntimeException;
-use TCPDF;
-
-use function date;
 
 /**
- * Download Service for EAD XML files
+ * Download Service for finding aids
  */
 class DownloadFindingAidService extends DownloadService
 {
-
-    //The ResponseFactory used
-    private ResponseFactoryInterface $response_factory;
-
-    //The StreamFactory used
-    private StreamFactoryInterface $stream_factory;
-
-    //The LinkedRecordService used
-    private LinkedRecordService $linked_record_service;
 
     //The repository hierarchy, to which the service relates
     private RepositoryHierarchy $repository_hierarchy;
@@ -66,7 +52,6 @@ class DownloadFindingAidService extends DownloadService
     /**
      * Constructor
      * 
-     * @param Repository            $repository    
      * @param CallNumberCategory    $root_category
      * @param UserInterface         $user
      *
@@ -100,85 +85,27 @@ class DownloadFindingAidService extends DownloadService
     }
 
     /**
-     * Return HTML response to download a finding aid
-     * 
-     * @param string    $filename       Name of download file without extension
-     *
-     * @return ResponseInterface
-     */
-    public function downloadHtmlResponse(string $filename): ResponseInterface 
-    {
-        $html = $this->generateHtml();
-        $stream = fopen('php://memory', 'wb+');
-
-        if ($stream === false) {
-            throw new RuntimeException('Failed to create temporary stream');
-        }
-
-        //Write html to stream
-        $bytes_written = fwrite($stream, $html);
-
-        if ($bytes_written !== strlen($html)) {
-            throw new RuntimeException('Unable to write to stream.  Perhaps the disk is full?');
-        }
-
-        if (rewind($stream) === false) {
-            throw new RuntimeException('Cannot rewind temporary stream');
-        }
-
-        //Prepare and return the response
-        $resource = $stream;
-        $stream_factory = new Psr17Factory();
-        $response_factory = app(ResponseFactoryInterface::class);
-        $stream = $stream_factory->createStreamFromResource($resource);
-
-        return $response_factory->createResponse()
-            ->withBody($stream)
-            ->withHeader('content-type', 'text/html; charset=' . UTF8::NAME)
-            ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.html"');  
-    }
-
-    /**
      * Return PDF response to download a finding aid
      * 
      * @param string    $filename       Name of download file without extension
      *
      * @return ResponseInterface
      */
-    public function downloadPDFResponse(string $filename): ResponseInterface 
+    public function downloadPDFResponse(string $filename): ResponseInterface
     {
-        $pdf = $this->createPDF();
-        
-        //Show PDF values (for debugging)
-        //return $this->getPDFvalues($pdf);
+        return $this->responseForPdfDownload($this->createPDF(), $filename);
+    }
 
-        $stream = fopen('php://memory', 'wb+');
-
-        if ($stream === false) {
-            throw new RuntimeException('Failed to create temporary stream');
-        }
-
-        //Write pdf to stream
-        $bytes_written = fwrite($stream, $pdf->tcpdf->Output('doc.pdf', 'S'));
-
-        if ($bytes_written !== strlen($pdf->tcpdf->Output('doc.pdf', 'S'))) {
-            throw new RuntimeException('Unable to write to stream.  Perhaps the disk is full?');
-        }
-
-        if (rewind($stream) === false) {
-            throw new RuntimeException('Cannot rewind temporary stream');
-        }
-
-        //Prepare and return the response
-        $resource = $stream;
-        $stream_factory = new Psr17Factory();
-        $response_factory = app(ResponseFactoryInterface::class);
-        $stream = $stream_factory->createStreamFromResource($resource);
-
-        return $response_factory->createResponse()
-            ->withBody($stream)
-            ->withHeader('content-type', 'application/pdf; charset=' . UTF8::NAME)
-            ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.pdf"');  
+    /**
+     * Return HTML response to download a finding aid
+     * 
+     * @param string    $filename       Name of download file without extension
+     *
+     * @return ResponseInterface
+     */
+    public function downloadHtmlResponse(string $filename): ResponseInterface
+    {
+        return $this->responseForHtmlDownload($this->generateHtml(), $filename);
     }
 
     /**

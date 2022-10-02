@@ -10,6 +10,7 @@ use Fisharebest\Webtrees\View;
 /**
  * @var  string		$title
  * @var  bool		$show_category_label
+ * @var  bool		$show_category_title
  * @var  bool		$show_help_icon
  * @var  bool		$show_help_link
  * @var  bool		$show_category_expanded
@@ -21,6 +22,7 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_date_range
  * @var  bool		$allow_admin_delimiter
  * @var  bool		$show_source_facts_in_citations
+ * @var  bool		$show_finding_aid_category_title
  * @var  bool		$show_finding_aid_address
  * @var  bool		$show_finding_aid_wt_links
  * @var  bool		$show_finding_aid_toc
@@ -50,6 +52,9 @@ use Fisharebest\Webtrees\View;
             <h3><?= I18N::translate('Settings for Repository Hierarchy list') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show label before call number category.'), 'name' => RepositoryHierarchy::PREF_SHOW_CATEGORY_LABEL, 'checked' => $show_category_label]) ?>
+			</div> 
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show titles of call number categories (if available from .po file).'), 'name' => RepositoryHierarchy::PREF_SHOW_CATEGORY_TITLE, 'checked' => $show_category_title]) ?>
 			</div> 
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show help icon after label for delimiter expression.'), 'name' => RepositoryHierarchy::PREF_SHOW_HELP_ICON, 'checked' => $show_help_icon]) ?>
@@ -87,6 +92,9 @@ use Fisharebest\Webtrees\View;
 
             <div class="row"><?= view('icons/spacer') ?></div> 
             <h3><?= I18N::translate('Settings for finding aid exports') ?></h3>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show titles of call number categories (if available from .po file).'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, 'checked' => $show_finding_aid_category_title]) ?>
+			</div> 
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Include repository address within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_ADDRESS, 'checked' => $show_finding_aid_address]) ?>
             </div>            

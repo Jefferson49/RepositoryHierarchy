@@ -31,14 +31,12 @@ use DOMDocument;
 use DOMImplementation;
 use DOMNode;
 use Fisharebest\Webtrees\Contracts\UserInterface;
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Matriphe\ISO639\ISO639;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -55,15 +53,6 @@ class DownloadEADxmlService extends DownloadService
 
     //The top level collection within the xml
     private DOMNode $collection;
-
-    //The ResponseFactory used
-    private ResponseFactoryInterface $response_factory;
-
-    //The StreamFactory used
-    private StreamFactoryInterface $stream_factory;
-
-    //The LinkedRecordService used
-    private LinkedRecordService $linked_record_service;
 
     //The repository hierarchy, to which the service relates
     private RepositoryHierarchy $repository_hierarchy;
@@ -305,7 +294,7 @@ class DownloadEADxmlService extends DownloadService
                 }
                     
                 //<unitid>
-                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', Functions::removeHtmlTags($this->repository->fullName())));
+                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->repository->xref()));
                 if($this->use_encoding_analog) {
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
                 }
@@ -398,16 +387,16 @@ class DownloadEADxmlService extends DownloadService
              //<did>
              $did_dom = $collection_dom->appendChild($this->ead_xml->createElement('did'));
 
-                //<unitid>
-                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->repository->xref()));
-                if($this->use_encoding_analog) {
-                    $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
-                }
-
                 //<unittitle>
                 $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', Functions::removeHtmlTags($this->repository->fullName())));
                 if($this->use_encoding_analog) {
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+                }
+
+                //<unitid>
+                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $this->repository->xref()));
+                if($this->use_encoding_analog) {
+                    $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
                 }
 
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
@@ -483,13 +472,16 @@ class DownloadEADxmlService extends DownloadService
              $did_dom = $series_dom->appendChild($this->ead_xml->createElement('did'));
 
                 //<unittitle>
-                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $call_number_category->getName()));
+                $title = $this->repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($call_number_category->getFrontEndName(true));
+                $title = ($title === '') ? $call_number_category->getFrontEndName(true) : $title;
+
+                $unittitle_dom = $did_dom->appendChild($this->ead_xml->createElement('unittitle', $title));
                 if($this->use_encoding_analog) {
                     $unittitle_dom->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
                 }
                 
                 //<unitid>
-                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $call_number_category->getFullName()));
+                $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $call_number_category->getFrontEndName(true)));
                 if($this->use_encoding_analog) {
                     $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
                 }
@@ -540,18 +532,18 @@ class DownloadEADxmlService extends DownloadService
             //<did>
             $did_dom = $c_dom->appendChild($this->ead_xml->createElement('did'));
 
+                //<unittitle>
+                $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']));
+                if($this->use_encoding_analog) {
+                    $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
+                }
+
                 //<unitid>
                 if ($call_number !== '') {
                     $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $call_number));
                     if($this->use_encoding_analog) {
                         $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
                     }
-                }
-
-                //<unittitle>
-                $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']));
-                if($this->use_encoding_analog) {
-                    $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
                 }
 
                 //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
@@ -592,7 +584,7 @@ class DownloadEADxmlService extends DownloadService
      */
     public function downloadResponse(string $filename): ResponseInterface 
     {
-        return Functions::responseForDOMDownload($this->ead_xml, $filename);
+        return self::responseForDOMDownload($this->ead_xml, $filename);
     } 
     
     /**

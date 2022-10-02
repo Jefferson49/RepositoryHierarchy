@@ -119,6 +119,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_SHOW_HELP_ICON = 'show_help_icon';
     public const PREF_SHOW_HELP_LINK = 'show_help_link';
     public const PREF_SHOW_CATEGORY_LABEL = 'show_category_label';
+    public const PREF_SHOW_CATEGORY_TITLE = 'show_category_title';
     public const PREF_SHOW_TRUNCATED_CALL_NUMBER = 'show_truncated_call_number';
     public const PREF_SHOW_TRUNCATED_CATEGORY = 'show_truncated_category';
     public const PREF_SHOW_TITLE = 'show_title';
@@ -147,6 +148,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public const PREF_FINDING_AID_URL = 'finding_aid_url_';
     public const PREF_FINDING_AID_PUBLISHER = 'finding_aid_publ_';
     public const PREF_ALLOW_ADMIN_XML_SETTINGS = 'allow_admin_xml_settings';
+    public const PREF_SHOW_FINDING_AID_CATEGORY_TITLE = 'show_finding_aid_category_title';
     public const PREF_SHOW_FINDING_AID_ADDRESS = 'show_finding_aid_address';
     public const PREF_SHOW_FINDING_AID_TOC = 'show_finding_aid_toc';
     public const PREF_SHOW_FINDING_AID_TOC_LINKS = 'show_finding_aid_toc_links';
@@ -211,6 +213,11 @@ class RepositoryHierarchy   extends     AbstractModule
     //The name of the call number category to be fixed
     private string $data_fix_category_name = '';
 
+    //The path of the .po files for call number category titles
+    private string $call_number_category_titles_po_file_path;
+
+    //The call number category title service, which is used
+    private C16Y $call_number_category_title_service;
 
     /**
      * Constructor
@@ -219,6 +226,9 @@ class RepositoryHierarchy   extends     AbstractModule
     {
         //Create data fix service
         $this->data_fix_service = new DataFixService;
+
+        //Path for .po files (if call number category titles are used)
+        $this->call_number_category_titles_po_file_path = __DIR__ . '/resources/caln/';
     }
 
     /**
@@ -394,6 +404,7 @@ class RepositoryHierarchy   extends     AbstractModule
         return $this->viewResponse($this->name() . '::settings', [
             'title'                                     => $this->title(),
             self::PREF_SHOW_CATEGORY_LABEL              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
+            self::PREF_SHOW_CATEGORY_TITLE              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_TITLE, '0')),
             self::PREF_SHOW_HELP_ICON                   => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
             self::PREF_SHOW_HELP_LINK                   => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
             self::PREF_SHOW_TRUNCATED_CALL_NUMBER       => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
@@ -404,6 +415,7 @@ class RepositoryHierarchy   extends     AbstractModule
             self::PREF_SHOW_DATE_RANGE                  => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
             self::PREF_ALLOW_ADMIN_DELIMITER            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
             self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
+            self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE  => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
             self::PREF_SHOW_FINDING_AID_ADDRESS         => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
             self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
             self::PREF_SHOW_FINDING_AID_TOC             => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
@@ -428,6 +440,7 @@ class RepositoryHierarchy   extends     AbstractModule
         //Save the received settings to the user preferences
         if ($params['save'] === '1') {
             $this->setPreference(self::PREF_SHOW_CATEGORY_LABEL, isset($params[self::PREF_SHOW_CATEGORY_LABEL])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_CATEGORY_TITLE, isset($params[self::PREF_SHOW_CATEGORY_TITLE])? '1':'0');
             $this->setPreference(self::PREF_SHOW_HELP_ICON, isset($params[self::PREF_SHOW_HELP_ICON])? '1':'0');
             $this->setPreference(self::PREF_SHOW_HELP_LINK, isset($params[self::PREF_SHOW_HELP_LINK])? '1':'0');
             $this->setPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, isset($params[self::PREF_SHOW_TRUNCATED_CALL_NUMBER])? '1':'0');
@@ -438,6 +451,7 @@ class RepositoryHierarchy   extends     AbstractModule
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE])? '1':'0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER])? '1':'0');
             $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS])? '1':'0');
+            $this->setPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, isset($params[self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE])? '1':'0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, isset($params[self::PREF_SHOW_FINDING_AID_ADDRESS])? '1':'0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS])? '1':'0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC, isset($params[self::PREF_SHOW_FINDING_AID_TOC])? '1':'0');
@@ -720,6 +734,28 @@ class RepositoryHierarchy   extends     AbstractModule
     public function getStoredRepositoryXref(Tree $tree, UserInterface $user): string
     {
         return $this->getPreference(self::PREF_REPOSITORY . $tree->id() . '_' . $user->id(), '');
+    }
+
+    /**
+     * Get call number category titles service
+     *
+     * 
+     */
+    public function getCallNumberCategoryTitleService(): C16Y
+    {
+        return $this->call_number_category_title_service;
+    }
+
+    /**
+     * Get call number category titles .po file path
+     *
+     * @param Tree      $tree
+     * @param string    $xref
+     * 
+     */
+    public function getCallNumberCategoryTitlesPoFilePath(): string
+    {
+        return $this->call_number_category_titles_po_file_path;
     }
 
     /**
@@ -1067,6 +1103,9 @@ class RepositoryHierarchy   extends     AbstractModule
             }
         } 
 
+        //Create call mumber category title service
+        $this->call_number_category_title_service = new C16Y($this->call_number_category_titles_po_file_path, $this->repository);
+
         //If requested, load stored delimiter expression
         if ($command === self::CMD_LOAD_ADMIN_DELIM) {
             $load_value = $this->getPreference(self::PREF_DELIMITER . $tree->id() . '_' . self::ADMIN_USER_STRING . '_' . $xref);
@@ -1218,7 +1257,10 @@ class RepositoryHierarchy   extends     AbstractModule
             return $download_finding_aid_service->downloadPDFResponse('finding_aid');
         }
 
+        //Create file for call number category titles      
+        CallNumberCategory::saveC16YFile($this->call_number_category_titles_po_file_path, $this->repository->xref(), $this->root_category);
 
+        
         //Return the page view
         return $this->viewResponse($this->name() . '::page', [
             'tree'                              => $tree,
