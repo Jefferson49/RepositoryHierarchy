@@ -31,6 +31,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
+use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
@@ -56,6 +57,8 @@ use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\View;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface;
@@ -179,6 +182,7 @@ class RepositoryHierarchy   extends     AbstractModule
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
+    public const GITHUB_LATEST_VERSION_URL = 'https://github.com/'. self::GITHUB_REPO . '/releases/latest';
 
     //Author of custom module
     public const CUSTOM_AUTHOR = 'Markus Hemprich';
@@ -353,20 +357,38 @@ class RepositoryHierarchy   extends     AbstractModule
 
     /**
      * {@inheritDoc}
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleLatestVersionUrl()
-     */
-    public function customModuleLatestVersionUrl(): string
-    {
-        return 'https://raw.githubusercontent.com/' . self::GITHUB_REPO . '/main/latest-version.txt';
-    }
-
-    /**
-     * {@inheritDoc}
      * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleLatestVersion()
      */
     public function customModuleLatestVersion(): string
     {
-        return 'https://github.com/' . self::GITHUB_REPO . '/releases/latest';
+        // No update URL provided.
+        if (self::GITHUB_LATEST_VERSION_URL === '') {
+            return $this->customModuleVersion();
+        }
+
+        try {
+            $client = new Client([
+                'timeout' => 3,
+            ]);
+
+            $response = $client->get(self::GITHUB_LATEST_VERSION_URL);
+
+            if ($response->getStatusCode() === StatusCodeInterface::STATUS_OK) {
+
+                $content = $response->getBody()->getContents();
+                preg_match_all('/v\d+\.\d+\.\d+/', $content, $matches, PREG_OFFSET_CAPTURE);
+
+                $version = $matches[0][0][0];
+                $version = substr($version, 1);
+
+                return $version;
+            } 
+
+        } catch (GuzzleException $ex) {
+            // Can't connect to the server?
+        }
+
+        return $this->customModuleVersion();
     }
 
     /**
@@ -375,7 +397,7 @@ class RepositoryHierarchy   extends     AbstractModule
      */
     public function customModuleSupportUrl(): string
     {
-        return 'https://github.com/' . self::GITHUB_REPO . '/issues';
+        return 'https://github.com/' . self::GITHUB_REPO;
     }
 
     /**
