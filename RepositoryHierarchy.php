@@ -365,30 +365,31 @@ class RepositoryHierarchy   extends     AbstractModule
         if (self::GITHUB_LATEST_VERSION_URL === '') {
             return $this->customModuleVersion();
         }
+        return Registry::cache()->file()->remember($this->name() . '-latest-version', function (): string {
+            try {
+                $client = new Client([
+                    'timeout' => 3,
+                ]);
 
-        try {
-            $client = new Client([
-                'timeout' => 3,
-            ]);
+                $response = $client->get(self::GITHUB_LATEST_VERSION_URL);
 
-            $response = $client->get(self::GITHUB_LATEST_VERSION_URL);
+                if ($response->getStatusCode() === StatusCodeInterface::STATUS_OK) {
 
-            if ($response->getStatusCode() === StatusCodeInterface::STATUS_OK) {
+                    $content = $response->getBody()->getContents();
+                    preg_match_all('/v\d+\.\d+\.\d+/', $content, $matches, PREG_OFFSET_CAPTURE);
 
-                $content = $response->getBody()->getContents();
-                preg_match_all('/v\d+\.\d+\.\d+/', $content, $matches, PREG_OFFSET_CAPTURE);
+                    $version = $matches[0][0][0];
+                    $version = substr($version, 1);
 
-                $version = $matches[0][0][0];
-                $version = substr($version, 1);
+                    return $version;
+                } 
 
-                return $version;
-            } 
+            } catch (GuzzleException $ex) {
+                // Can't connect to the server?
+            }
 
-        } catch (GuzzleException $ex) {
-            // Can't connect to the server?
-        }
-
-        return $this->customModuleVersion();
+            return $this->customModuleVersion();
+        }, 86400);
     }
 
     /**
