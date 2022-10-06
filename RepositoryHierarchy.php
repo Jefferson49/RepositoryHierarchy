@@ -182,7 +182,10 @@ class RepositoryHierarchy   extends     AbstractModule
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
-    public const GITHUB_LATEST_VERSION_URL = 'https://github.com/'. self::GITHUB_REPO . '/releases/latest';
+
+    //Github API URL to get the information about the latest releases
+    public const GITHUB_API_LATEST_VERSION = 'https://api.github.com/repos/'. self::GITHUB_REPO . '/releases/latest';
+    public const GITHUB_API_TAG_NAME_PREFIX = '"tag_name":"v';
 
     //Author of custom module
     public const CUSTOM_AUTHOR = 'Markus Hemprich';
@@ -362,7 +365,7 @@ class RepositoryHierarchy   extends     AbstractModule
     public function customModuleLatestVersion(): string
     {
         // No update URL provided.
-        if (self::GITHUB_LATEST_VERSION_URL === '') {
+        if (self::GITHUB_API_LATEST_VERSION === '') {
             return $this->customModuleVersion();
         }
         return Registry::cache()->file()->remember($this->name() . '-latest-version', function (): string {
@@ -371,15 +374,15 @@ class RepositoryHierarchy   extends     AbstractModule
                     'timeout' => 3,
                 ]);
 
-                $response = $client->get(self::GITHUB_LATEST_VERSION_URL);
+                $response = $client->get(self::GITHUB_API_LATEST_VERSION);
 
                 if ($response->getStatusCode() === StatusCodeInterface::STATUS_OK) {
 
                     $content = $response->getBody()->getContents();
-                    preg_match_all('/v\d+\.\d+\.\d+/', $content, $matches, PREG_OFFSET_CAPTURE);
+                    preg_match_all('/' . self::GITHUB_API_TAG_NAME_PREFIX . '\d+\.\d+\.\d+/', $content, $matches, PREG_OFFSET_CAPTURE);
 
                     $version = $matches[0][0][0];
-                    $version = substr($version, 1);
+                    $version = substr($version, strlen(self::GITHUB_API_TAG_NAME_PREFIX));
 
                     return $version;
                 } 
