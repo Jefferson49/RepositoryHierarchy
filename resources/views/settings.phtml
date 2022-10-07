@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
@@ -136,7 +136,7 @@ use Fisharebest\Webtrees\View;
                 <div class="row">
                 <p></p>
                 <?= view('components/radios', [
-                    'name' => 'atom_slug', 
+                    'name' => 'atom_slug',
                     'selected' => $atom_slug,
                     'options' => [
                         RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER => I18N::translate('Use call numbers to create AtoM REST links ("AtoM slugs")'),

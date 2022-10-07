@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
@@ -8,10 +8,10 @@ use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\View;
 
 /**
- * @var CallNumberCategory      $category
- * @var RepositoryHierarchy     $repository_hierarchy
- * @var bool                    $is_root_category
- * @var bool                    $show_wt_links
+ * @var CallNumberCategory  $category
+ * @var RepositoryHierarchy $repository_hierarchy
+ * @var bool                $is_root_category
+ * @var bool                $show_wt_links
  */
 
 ?>
@@ -69,7 +69,7 @@ use Fisharebest\Webtrees\View;
         </tr>
         <tr> 
             <td><?= I18N::translate('Author') ?></td>               
-            <td><?= isset($source_facts['SOUR:AUTH']) ?	$source_facts['SOUR:AUTH'] : '' ?></td>
+            <td><?= isset($source_facts['SOUR:AUTH']) ? $source_facts['SOUR:AUTH'] : '' ?></td>
             <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
                 <td><?= Functions::displayISODateRangeForSource($source, '--')?></td>      
             <?php else : ?>
@@ -92,5 +92,5 @@ use Fisharebest\Webtrees\View;
             'repository_hierarchy'	=> $repository_hierarchy,
             'is_root_category'	    => false,
             'show_wt_links'		    => $show_wt_links,
-            ]) ?>
+        ]) ?>
 <?php endforeach ?>

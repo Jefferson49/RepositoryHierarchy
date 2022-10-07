@@ -15,18 +15,18 @@ use Fisharebest\Webtrees\Tree;
 ?>
 
 <form method="post" action="<?= e(route(CreateSourceAction::class, [
-		'tree' 					=> $tree->name(),
-		'source-repository' 	=> $source_repository,
-		'source-call-number' 	=> $source_call_number,		
-		])) ?>" id="wt-modal-form">
+			'tree' 					=> $tree->name(),
+			'source-repository' 	=> $source_repository,
+			'source-call-number' 	=> $source_call_number,
+        ])) ?>" id="wt-modal-form">
     <?= view('modals/header', ['title' => I18N::translate('Create a source')]) ?>
 
     <div class="modal-body">
         <?= view('_repository_hierarchy_' . '::modals/source-fields', [
-			'tree' 					=> $tree, 
-			'source_repository' 	=> $source_repository, 
-			'source_call_number'	=> $source_call_number, 
-		]) ?>
+            'tree' 					=> $tree,
+            'source_repository' 	=> $source_repository,
+            'source_call_number'	=> $source_call_number,
+        ]) ?>
     </div>
 
     <?= view('modals/footer-save-cancel') ?>

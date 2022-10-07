@@ -3,9 +3,9 @@
 /**
  * webtrees: online genealogy
  * Copyright (C) 2022 webtrees development team
- *					  <http://webtrees.net>
+ *                    <http://webtrees.net>
  *
- * RepositoryHierarchy (webtrees custom module):  
+ * RepositoryHierarchy (webtrees custom module):
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
@@ -40,8 +40,7 @@ use function sprintf;
 /**
  * Provide full names for call number category, using the translation mechanism of the Translator class
  */
-
-class C16Y 
+class C16Y
 {
     private static ?ModuleLanguageInterface $language;
 
@@ -51,6 +50,9 @@ class C16Y
 
     /**
      * Constructor
+     *
+     * @param string     $path
+     * @param Repository $repository
      *
      * @return void
      */
@@ -66,9 +68,7 @@ class C16Y
             $translation  = new Translation($po_file);
             $translations = $translation->asArray();
             self::$translator = new Translator($translations, $dummy_locale->pluralRule());
-
         } catch (Exception $ex) {
-
             //if no .po file is found, create empty translator
             self::$translator = new Translator([], $dummy_locale->pluralRule());
         }
@@ -77,7 +77,7 @@ class C16Y
     /**
      * Get the title for a call number category
      *
-     * @param string $message
+     * @param string $call_number_category_full_name
      *
      * @return string
      */
@@ -85,14 +85,10 @@ class C16Y
     {
         $title = self::$translator->translate($call_number_category_full_name);
 
-        if($title === $call_number_category_full_name) {
-
+        if ($title === $call_number_category_full_name) {
             return '';
-        }
-        else {
+        } else {
             return sprintf($title);
         }
-
     }
-
 }

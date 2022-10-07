@@ -3,9 +3,9 @@
 /**
  * webtrees: online genealogy
  * Copyright (C) 2022 webtrees development team
- *					  <http://webtrees.net>
+ *                    <http://webtrees.net>
  *
- * RepositoryHierarchy (webtrees custom module):  
+ * RepositoryHierarchy (webtrees custom module):
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
@@ -26,22 +26,16 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\Contracts\UserInterface;
-use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Report\PdfRenderer;
-use Fisharebest\Webtrees\Services\LinkedRecordService;
 use Fisharebest\Webtrees\Session;
-use Nyholm\Psr7\Factory\Psr17Factory;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 
 /**
  * Download Service for finding aids
  */
 class DownloadFindingAidService extends DownloadService
 {
-
     //The repository hierarchy, to which the service relates
     private RepositoryHierarchy $repository_hierarchy;
 
@@ -51,14 +45,14 @@ class DownloadFindingAidService extends DownloadService
 
     /**
      * Constructor
-     * 
-     * @param CallNumberCategory    $root_category
-     * @param UserInterface         $user
      *
+     * @param RepositoryHierarchy $repository_hierarchy
+     * @param UserInterface       $user
      */
-    public function __construct(RepositoryHierarchy $repository_hierarchy, 
-                                UserInterface $user)
-    {
+    public function __construct(
+        RepositoryHierarchy $repository_hierarchy,
+        UserInterface $user
+    ) {
         //Initialize variables
         $this->repository_hierarchy = $repository_hierarchy;
         $this->user = $user;
@@ -66,28 +60,33 @@ class DownloadFindingAidService extends DownloadService
 
     /**
      * Generate HTML for finding aid
-     * 
+     *
+     * @param bool $forPDF
+     *
      * @return string
      */
-    public function generateHtml(bool $forPDF = false): string 
+    public function generateHtml(bool $forPDF = false): string
     {
         $language_tag = Session::get('language');
-        
+
         //Convert different English 'en-*' tags to simple 'en' tag
         $language_tag = substr($language_tag, 0, 2) === 'en' ? 'en' : $language_tag;
 
-        return view(RepositoryHierarchy::MODULE_NAME . '::finding-aid', [  
-            'title'                 => I18N::translate('Finding aid') . ': ' . $this->repository_hierarchy->getRepository()->fullName(),
-            'language_tag'          => $language_tag,
-            'repository_hierarchy'  => $this->repository_hierarchy,
-            'forPDF'                => $forPDF,
-            ]);
+        return view(
+            RepositoryHierarchy::MODULE_NAME . '::finding-aid',
+            [
+                'title'                 => I18N::translate('Finding aid') . ': ' . $this->repository_hierarchy->getRepository()->fullName(),
+                'language_tag'          => $language_tag,
+                'repository_hierarchy'  => $this->repository_hierarchy,
+                'forPDF'                => $forPDF,
+            ]
+        );
     }
 
     /**
      * Return PDF response to download a finding aid
-     * 
-     * @param string    $filename       Name of download file without extension
+     *
+     * @param string $filename Name of download file without extension
      *
      * @return ResponseInterface
      */
@@ -98,8 +97,8 @@ class DownloadFindingAidService extends DownloadService
 
     /**
      * Return HTML response to download a finding aid
-     * 
-     * @param string    $filename       Name of download file without extension
+     *
+     * @param string $filename Name of download file without extension
      *
      * @return ResponseInterface
      */
@@ -110,10 +109,10 @@ class DownloadFindingAidService extends DownloadService
 
     /**
      * Create PDF
-     *     
+     *
      * @return PdfRenderer
      */
-    public function createPDF(): PdfRenderer 
+    public function createPDF(): PdfRenderer
     {
         //Create PDF document and settings
         $pdf = new PdfRenderer();
@@ -131,12 +130,12 @@ class DownloadFindingAidService extends DownloadService
 
     /**
      * Return response with PDF values (for debugging purposes)
-     * 
-     * @param string    $filename       Name of download file without extension
+     *
+     * @param PdfRenderer $pdf Name of download file without extension
      *
      * @return ResponseInterface
      */
-    public function getPDFvalues(PdfRenderer $pdf): ResponseInterface 
+    public function getPDFvalues(PdfRenderer $pdf): ResponseInterface
     {
         //Get settings
         $margins = $pdf->tcpdf->getMargins();
@@ -152,36 +151,41 @@ class DownloadFindingAidService extends DownloadService
         $font_size_pt = $pdf->tcpdf->getFontSizePt();
         $font_family = $pdf->tcpdf-> getFontFamily();
         $font_style = $pdf->tcpdf-> getFontStyle();
-        
+
         //Create modal HTML text
-        $text = 
-        '<p>scale_factor: ' . $scale_factor . '</p>'.
-        '<p>width_page_current_units: ' . $width_page_current_units . '</p>'.
-        '<p>height_page_current_units: ' . $height_page_current_units . '</p>'.
-        '<p>left_margin: ' . $left_margin . '</p>'.
-        '<p>right_margin: ' . $right_margin . '</p>' .
-        '<p>original_left_margin: ' . $original_left_margin . '</p>'.
-        '<p>original_right_margin: ' . $original_right_margin . '</p>' .
-        '<p>font_size: ' . $font_size . '</p>' .
-        '<p>font_size_pt: ' . $font_size_pt . '</p>' .
-        '<p>font_family: ' . $font_family . '</p>' .
-        '<p>font_style: ' . $font_style . '</p>' .
-        '';
+        $text = '<p>scale_factor: ' . $scale_factor . '</p>'.
+                '<p>width_page_current_units: ' . $width_page_current_units . '</p>'.
+                '<p>height_page_current_units: ' . $height_page_current_units . '</p>'.
+                '<p>left_margin: ' . $left_margin . '</p>'.
+                '<p>right_margin: ' . $right_margin . '</p>' .
+                '<p>original_left_margin: ' . $original_left_margin . '</p>'.
+                '<p>original_right_margin: ' . $original_right_margin . '</p>' .
+                '<p>font_size: ' . $font_size . '</p>' .
+                '<p>font_size_pt: ' . $font_size_pt . '</p>' .
+                '<p>font_family: ' . $font_family . '</p>' .
+                '<p>font_style: ' . $font_style . '</p>' .
+                '';
 
         //Return modal with text
-        return response(view(RepositoryHierarchy::MODULE_NAME . '::error', [  
-            'text'  => $text,
-            ]));              
-    } 
+        return response(
+            view(
+                RepositoryHierarchy::MODULE_NAME . '::error',
+                [
+                    'text'  => $text,
+                ]
+            )
+        );
+    }
 
     /**
      * Generate test HTML (for debugging)
-     * 
+     *
+     * @param bool $forPDF
+     *
      * @return string
      */
-    public function generateTestHtml(bool $forPDF = false): string 
+    public function generateTestHtml(bool $forPDF = false): string
     {
         return view(RepositoryHierarchy::MODULE_NAME . '::test', []);
     }
-
 }

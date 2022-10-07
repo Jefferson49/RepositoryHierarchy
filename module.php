@@ -3,17 +3,17 @@
 /**
  * webtrees: online genealogy
  * Copyright (C) 2022 webtrees development team
- *					  <http://webtrees.net>
+ *                    <http://webtrees.net>
  *
- * Fancy Research Links (webtrees custom module):  
+ * Fancy Research Links (webtrees custom module):
  * Copyright (C) 2022 Carmen Just
- *					  <https://justcarmen.nl>
+ *                    <https://justcarmen.nl>
  *
- * Extended Relationships (webtrees custom module):  
+ * Extended Relationships (webtrees custom module):
  * Copyright (C) 2022 Richard Cissee
- *					  <http://cissee.de>
- * 
- * RepositoryHierarchy (webtrees custom module):  
+ *                    <http://cissee.de>
+ *
+ * RepositoryHierarchy (webtrees custom module):
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
@@ -28,7 +28,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
- 
+
 
 declare(strict_types=1);
 

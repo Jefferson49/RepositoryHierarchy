@@ -42,24 +42,24 @@ use Fisharebest\Webtrees\I18N;
 		<?php endif ?>
 	</button>			
 	<?= view('icons/spacer') ?>
-	<?php if ((strpos($category->getFullName(), CallNumberCategory::EMPTY_CATEGORY_NAME) === false) AND (strpos($category->getFullName(), CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
+	<?php if ((strpos($category->getFullName(), CallNumberCategory::EMPTY_CATEGORY_NAME) === false) and (strpos($category->getFullName(), CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
 		<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
 			<a href="<?= e(route(CallNumberDataFix::class, [
-					'tree' => $repository_hierarchy->getTree()->name(), 
-					'xref' => $repository_hierarchy->getRepositoryXref(), 
-					'category_name' => $category->getName(), 
-					'category_full_name' => $category->getFullName() 
-					])) ?>">
+                    'tree' => $repository_hierarchy->getTree()->name(),
+                    'xref' => $repository_hierarchy->getRepositoryXref(),
+                    'category_name' => $category->getName(),
+                    'category_full_name' => $category->getFullName()
+                    ])) ?>">
 				<?= view('icons/edit') ?>
 				<?= I18N::translate('Rename') ?>	
 			</a>
 			<?= view('icons/spacer') ?>
 			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
 						data-wt-href="<?= e(route(CreateSourceModal::class, [
-							'tree' => $repository_hierarchy->getTree()->name(), 
-							'xref' => $repository_hierarchy->getRepositoryXref(), 
-							'source_call_number' => $category->getFullName()
-							])) ?>">
+                            'tree' => $repository_hierarchy->getTree()->name(),
+                            'xref' => $repository_hierarchy->getRepositoryXref(),
+                            'source_call_number' => $category->getFullName()
+                            ])) ?>">
 				<?= view('icons/source') ?>
 				<?= I18N::translate('Add new source') ?>	
 			</a>
@@ -114,8 +114,8 @@ use Fisharebest\Webtrees\I18N;
 			<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 			<?php foreach ($categories as $sub_category) : ?>			
 				<?= view($repository_hierarchy->name() . '::tree', [
-					'repository_hierarchy' => $repository_hierarchy, 
-					'category' => $sub_category]) ?>
+                    'repository_hierarchy' => $repository_hierarchy,
+                    'category' => $sub_category]) ?>
 			<?php endforeach ?>	
 		</div>	
 	</div>

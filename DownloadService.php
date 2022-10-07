@@ -3,9 +3,9 @@
 /**
  * webtrees: online genealogy
  * Copyright (C) 2022 webtrees development team
- *					  <http://webtrees.net>
+ *                    <http://webtrees.net>
  *
- * RepositoryHierarchy (webtrees custom module):  
+ * RepositoryHierarchy (webtrees custom module):
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
@@ -26,27 +26,20 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use DOMDocument;
-use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Report\PdfRenderer;
-use Fisharebest\Webtrees\Services\LinkedRecordService;
-use Fisharebest\Webtrees\Session;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 use RuntimeException;
-use TCPDF;
-
 
 /**
  * Download Service
  */
 class DownloadService
 {
-
-    //Download and EAD XML types    
+    //Download and EAD XML types
     public const DOWNLOAD_OPTION_EAD_XML = 'download_option_ead_xml';
     public const DOWNLOAD_OPTION_APE_EAD = 'download_option_ape_ead';
     public const DOWNLOAD_OPTION_DDB_EAD = 'download_option_ddb_ead';
@@ -55,16 +48,18 @@ class DownloadService
     public const DOWNLOAD_OPTION_PDF = 'download_option_pdf';
     public const DOWNLOAD_OPTION_TEXT = 'download_option_text';
     public const DOWNLOAD_OPTION_XML = 'download_option_xml';
-    public const DOWNLOAD_OPTION_ALL = 'download_option_all'; 
-    
+    public const DOWNLOAD_OPTION_ALL = 'download_option_all';
+
 
     /**
      * Options for downloads
      *
+     * @param string $selection
+     *
      * @return array<string>
      */
     public static function getDownloadOptions(string $selection = self::DOWNLOAD_OPTION_ALL): array
-    {        
+    {
         $xml_options = [
             self::DOWNLOAD_OPTION_EAD_XML   => I18N::translate('EAD XML'),
             //self::DOWNLOAD_OPTION_APE_EAD   => I18N::translate('apeEAD XML'),
@@ -78,7 +73,6 @@ class DownloadService
         ];
 
         switch($selection) {
-
             case self::DOWNLOAD_OPTION_XML:
                 $options = $xml_options;
                 break;
@@ -93,13 +87,15 @@ class DownloadService
 
             default:
                 $options = $text_options + $xml_options;
-            }
+        }
 
         return $options;
-    }    
+    }
 
     /**
      * Is XML download command
+     *
+     * @param string $command
      *
      * @return bool
      */
@@ -107,25 +103,25 @@ class DownloadService
     {
         $xml_options = self::getDownloadOptions(self::DOWNLOAD_OPTION_XML);
 
-        return  array_key_exists($command, $xml_options); 
+        return  array_key_exists($command, $xml_options);
     }
-      
+
     /**
      * Return response to download a file from a DOM document
-     * 
-     * @param DOMDocument   $dom        DOM object
-     * @param string        $filename   Name of download file without extension
+     *
+     * @param DOMDocument $dom      DOM object
+     * @param string      $filename Name of download file without extension
      *
      * @return ResponseInterface
      */
-    public static function responseForDOMDownload(DOMDocument $dom, string $filename): ResponseInterface 
+    public static function responseForDOMDownload(DOMDocument $dom, string $filename): ResponseInterface
     {
         $resource = Functions::export($dom);
         $stream_factory = new Psr17Factory();
         $response_factory = app(ResponseFactoryInterface::class);
         $stream = $stream_factory->createStreamFromResource($resource);
 
-         return $response_factory->createResponse()
+        return $response_factory->createResponse()
             ->withBody($stream)
             ->withHeader('content-type', 'text/xml; charset=' . UTF8::NAME)
             ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.xml"');
@@ -133,13 +129,13 @@ class DownloadService
 
     /**
      * Return response to download a HTML file
-     * 
-     * @param string    $html           HTML text
-     * @param string    $filename       Name of download file without extension
+     *
+     * @param string $html     HTML text
+     * @param string $filename Name of download file without extension
      *
      * @return ResponseInterface
      */
-    public function responseForHtmlDownload(string $html, string $filename): ResponseInterface 
+    public function responseForHtmlDownload(string $html, string $filename): ResponseInterface
     {
         $stream = fopen('php://memory', 'wb+');
 
@@ -167,18 +163,18 @@ class DownloadService
         return $response_factory->createResponse()
             ->withBody($stream)
             ->withHeader('content-type', 'text/html; charset=' . UTF8::NAME)
-            ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.html"');  
+            ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.html"');
     }
 
     /**
      * Return response to download a PDF file
-     * 
-     * @param string        $filename      Name of download file without extension
-     * @param PdfRenderer   $pdf           Name of download file without extension     * 
+     *
+     * @param PdfRenderer $pdf
+     * @param string      $filename Name of download file without extension
      *
      * @return ResponseInterface
      */
-    public function responseForPdfDownload(PdfRenderer $pdf, string $filename): ResponseInterface 
+    public function responseForPdfDownload(PdfRenderer $pdf, string $filename): ResponseInterface
     {
         $stream = fopen('php://memory', 'wb+');
 
@@ -206,7 +202,6 @@ class DownloadService
         return $response_factory->createResponse()
             ->withBody($stream)
             ->withHeader('content-type', 'application/pdf; charset=' . UTF8::NAME)
-            ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.pdf"');  
+            ->withHeader('content-disposition', 'attachment; filename="' . addcslashes($filename, '"') . '.pdf"');
     }
-    
 }
