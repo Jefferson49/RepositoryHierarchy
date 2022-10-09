@@ -1,6 +1,9 @@
+[![Latest Release](https://img.shields.io/github/v/release/Jefferson49/RepositoryHierarchy?display_name=tag)](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest)
+[![webtrees major version](https://img.shields.io/badge/webtrees-v2.1.x-green)](https://webtrees.net/download)
+
 <a name="Overview"></a>				
 ##  Repository Hierarchy Overview
-A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated . The module also provides an **EAD XML export**, which enables data exchange and linking with an external archive management system. The EAD XML export is also compatible with apeEAD, which allows data exchange with an archive portal.
+A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated . The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The EAD XML export is also compatible with apeEAD, which allows data exchange with an archive portal.
 
 The module uses delimiters to cut call numbers (of sources) into sub-strings and extracts call number categories. Based on the extracted categories, a hierarchical tree of call number categories with the related sources is constructed and shown.
 
@@ -46,6 +49,10 @@ This README file contains the following main sections:
     *   [Using delimiters](#Using-delimiters)
     *   [Save and load options](#Using-save-load)
     *   [Rename a call number category](#Using-rename)
+    *   [Add a new source to a call number category](#Using-add-source)
+    *   [Provide and show titles for call number categories](#Category-titles)
+    *   [Using a meta repository](#Meta-repository)
+    *   [Using a combined meta repository](#Combined-meta-repository)
     *   [Generate and download a finding aid document](#Using-finding-aid)
     *   [Generate and download an EAD XML export](#Using-EAD-xml)
     *   [Settings for EAD XML exports](#Using-xml-settings)
@@ -63,6 +70,7 @@ This README file contains the following main sections:
     *   [apeEAD standard for XML export of finding aids](#apeEAD)
 *   [How the module maps to Gedcom and to archive management concepts](#Mapping)
 *   [Translation](#Translation)
+*   [Bugs and feature requests](#Bugs)
 *   [Github Repository](#Github)
 
 <a name="Benefits"></a>
@@ -227,6 +235,54 @@ By opening the "Add new source" link close to a call number category, a form is 
 
 While the "{new}" placeholder should be modified, the rest of the call number, which consists of the call number category hierarchy should only be modified if the "route" or "path" of the call number category shall also be changed. If the intention is to simple add a new source to an existing call number category, only the "{new}" placeholder should be changed.
 
+<a name="Category-titles"></a>
+###  Provide and show titles for call number categories
+While the Repository Hierarchy module can generate call number categories from call numbers, the webtrees and GEDCOM data model does not provide features to describe the call number categories. To fill this gap, the Repository Hierarchy module offers a feature to describe and view titles for the call number categories. 
+
+The following two screenshots show examples for the titles in the module browser front end and in an exported finding aid.
+
+![Screenshot for call number category titles](resources/img/sreenshot_caln_category_titles.jpg)
+
+![Screenshot for call number category titles in finding aids](resources/img/sreenshot_caln_category_titles_finding_aid.jpg)
+
+In order to provide titles for call number categories, the Repository Hierarchy module uses a mechanism based on [gettext](https://en.wikipedia.org/wiki/Gettext) and .po files, which is frequently used for translation of software projects. In the context of the Repository Hierarchy module, call number categories are "translated" into titles.
+
+Everytime a Repository Hierarchy for a repository is shown in the browser front end, a gettext file is generated and stored in the /resources/caln/ folder of the Repository Hierarchy module. The gettext file with the name "\<Repository XREF\>.php" contains all call number categories of the related repository.
+
+In order to provide category titles, the user can use a .po editor like [Poedit](https://poedit.net/) and "translate" the call number categories into titles. It is also possible to use a simple text editor; however, a .po editor offers more comfortable features for .po updates and plausibility checks. The translation files need to have the following name: "\<Repository XREF\>_\<language tag\>.po". If a .po file is provided without language tag (i.e. "\<Repository XREF\>.po"), it is used as a default for all languages without specifically provided .po files.
+
+An example with the related files in the /resources/caln/ folder is shown in the following screenshot.
+
+![Screenshot for call number category .po files](resources/img/sreenshot_caln_po_files.jpg)
+
+<a name="Meta-repository"></a>
+###  Using a meta repository
+A meta repository provides the possibility to view sources of a set of repositories in a shared hierarchy. The basic idea is to share a common namespace for call number categories between sources from different repositories. The common namespace can also be seen as common archival arrangement for the related sources.
+
+A meta repository can be added in webtrees as a "regular" repository without specific extensions. While no restrictions apply, it is proposed to use the prefix "Meta:" in the repository name.
+
+All the sources, which are planned to be integrated in the meta respository, need to be assigned to the meta repository and also need to be assigned call numbers within the context of the meta repository. The call numbers within the meta respository should follow the approach of a common namespace or a common archival arrangement.
+
+![Screenshot for call numbers of sources in the meta repository](resources/img/screenshot_meta_call_numbers.jpg)
+
+Given that the mentioned definiton and assignment of the meta repository is available, it can be used and viewed with the Repository Hierarchy module. The handling is the same like for a single repository, but it provides the means to view and organize a much broader range of sources.
+
+<a name="Combined-meta-repository"></a>
+###  Using a combined meta repository
+The Repository Hierarchy module offers a feature to combine a meta repository with a base repository. Like in the last chapter, the intention is again to share a common namespace between the meta repository and the base repository. By combining the base repository, it is not necessary to add the meta repository to each of the sources of the base repository. This is especially useful, if the base repository is the "home" of the user's genealogy and contains a lot of sources. 
+
+The Repository Hierarchy module will provide means to view a combined view of all the sources of the base repository and all the sources of the meta repository.
+
+To make the relationship between the repositories more visible, ít is proposed to use the same repository name and a prefix "Meta:" for the meta repository. An example is shown in the following screenshot. 
+
+![Screenshot for repository and meta repository](resources/img/screenshot_repository_and_meta_repository.jpg)
+
+In order to link the meta repository to the base repository, the XREF of the meta repository needs to be assinged as a user defined "Reference number" (i.e. Gedcom tag REPO:REFN) to the base repository. Additionally, the "Reference number" needs to be assigned the type "META_REPOSITORY" (i.e. Gedcom tag REPO:REFN:TYPE).
+
+![Screenshot assign meta repository](resources/img/screenshot_assign_meta_repository.jpg)
+
+Given that the mentioned definiton and assignment of the meta repository is available, the Repository Hierarchy module will include all the sources of the meta repository when viewing the structure of the base repository. The handling is the same like for a single repository, but it provides the means to view and organize a much broader range of sources. It is even possible to view all sources of a webtrees tree in one Repository Hierarchy view.
+
 <a name="Using-finding-aid"></a>
 ### Generate and download a finding aid document
 A [finding aid](https://en.wikipedia.org/wiki/Finding_aid) document contains detailed, indexed, and processed metadata and other information about a specific collection of source records within an archive. More simple, it is a (hiearchical) list of sources in an archive with additional metadata. 
@@ -244,7 +300,7 @@ The generated finding aid document contains the following metadata for each of t
 + Date range
 + Gedcom-ID and webtrees link (optional)
 
-![Screenshot](resources/img/finding_aid.jpg)
+![Screenshot](resources/img/screenshot_finding_aid.jpg)
 
 <a name="Using-EAD-xml"></a>
 ### Generate and download an EAD XML export
@@ -302,7 +358,7 @@ The following concept was tested with the [AtoM](https://www.accesstomemory.org/
 
 While exporting data from webtrees with an EAD XML export, a XML structure with URLs to each of the sources in webtrees is included. After importing the EAD XML into AtoM, the links are shown in the user interface and can be used to navigate to the related webtrees source.
 
-![Screenshot](resources/img/screenshot_AtoM.JPG)
+![Screenshot](resources/img/screenshot_AtoM.jpg)
 
 Within webtrees, the Repository Hierarchy module can provide links to the related AtoM records. In order to use this feature, the following steps need to be taken:
 + Settings in webtrees:
@@ -314,7 +370,7 @@ Within webtrees, the Repository Hierarchy module can provide links to the relate
     + Open settings / global settings in AtoM and set the permalinks in AtoM to call numbers or source titles. It is important to use the same settings in AtoM like in webtrees. More information about the AtoM permalinks settings can be found in the [AtoM documentation](https://www.accesstomemory.org/en/docs/2.6/user-manual/administer/settings/#description-permalinks).
     + Depending on the settings in AtoM, it might also be necessary to re-genearte slugs (i.e. permalinks) in Atom. More information can bei found in the [AtoM documentation](https://www.accesstomemory.org/en/docs/2.6/admin-manual/maintenance/cli-tools/#generate-slugs).
 
-![Screenshot](resources/img/screenshot_AtoM_link_in_webtrees.JPG)
+![Screenshot](resources/img/screenshot_AtoM_link_in_webtrees.jpg)
 
 <a name="Using-citations"></a>
 ### Show additional source and repository information in source citations
@@ -324,7 +380,7 @@ The Repository Hierarchy modules provides a feature to show extended information
 + REFN (user reference numbers)
 + NOTE (notes of the source)
 
-![Screenshot](resources/img/screenshot_source_citation_in_webtrees.JPG)
+![Screenshot](resources/img/screenshot_source_citation_in_webtrees.jpg)
 
 In order to activate this feature, the setting "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations" needs to be activated in the control panel.
 
@@ -447,6 +503,10 @@ You can help to translate this module. The translation is based on [gettext](htt
 Currently, the following languages are already available:
 + English
 + German
+
+<a name="Bugs"></a>
+## Bugs and feature requests
+If you experience any bugs or have a feature request for this theme you can [create a new issue](https://github.com/Jefferson49/RepositoryHierarchy/issues).
 
 <a name="Github"></a>
 ##  Github repository  
