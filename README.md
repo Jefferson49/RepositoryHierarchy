@@ -59,7 +59,7 @@ This README file contains the following main sections:
     *   [Export data to an external archive management system](#Using-export)
     *   [Create links between webtrees and an external archive management system](#Using-links)
     *   [Show additional source and repository information in source citations](#Using-citations)
-    *   [Preferences](#Preferences)
+    *   [Preferences](#Prefences)
 *   [Some more background about archive and library management](#Background)
     *   [Archival Arrangement](#Arrangement)
     *   [Library classification](#Classification)
@@ -271,7 +271,7 @@ Given that the mentioned definiton and assignment of the meta repository is avai
 ###  Using a combined meta repository
 The Repository Hierarchy module offers a feature to combine a meta repository with a base repository. Like in the last chapter, the intention is again to share a common namespace between the meta repository and the base repository. By combining the base repository, it is not necessary to add the meta repository to each of the sources of the base repository. This is especially useful, if the base repository is the "home" of the user's genealogy and contains a lot of sources. 
 
-The Repository Hierarchy module will provide means to view a combined view of all the sources of the base repository and all the sources of the meta repository.
+The Repository Hierarchy module will provide means to view a combined view of all the sources of the base repository and all the sources of the meta repository. In order to activate these features, the following setting needs to be selected in the control panel: "Use Meta Repositories".
 
 To make the relationship between the repositories more visible, ít is proposed to use the same repository name and a prefix "Meta:" for the meta repository. An example is shown in the following screenshot. 
 
@@ -392,6 +392,7 @@ The following preferences can be activated/deactivated by administrators in the 
 
 #### Preferences for the main Repository Hierarchy list
 + Show label before call number category.
++ Show titles of call number categories (if available from .po file).
 + Show help icon after label for delimiter expression.
 + Show help link after label for delimiter expression.
 + Use truncated categories. The call number categories will be truncated and shown without the trunk.
@@ -406,6 +407,7 @@ The following preferences can be activated/deactivated by administrators in the 
 + Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.
 
 #### Preferences for finding aid export
++ Show titles of call number categories (if available from .po file).
 + Include repository address within finding aid export.
 + Include links to webtrees sources within finding aid export.
 + Include table of contents within finding aid export.
@@ -414,7 +416,11 @@ The following preferences can be activated/deactivated by administrators in the 
 #### Preferences for EAD XML exports
 + Allow users to load stored XML settings from administrator.
 
+#### Preferences for Meta Repositories
++ Use Meta Repositories.
+
 #### Preferences for linking to external archive management tools
++ Show link to AtoM records within source citations.
 + Use call numbers to create AtoM REST links ("AtoM slugs")
 + Use source titles to create AtoM REST links ("AtoM slugs")
 + [AtoM](https://www.accesstomemory.org/) base ULR to be used for the generation of links to an [AtoM](https://www.accesstomemory.org/) archive management system.

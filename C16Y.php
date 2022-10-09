@@ -58,19 +58,27 @@ class C16Y
      */
     public function __construct(string $path, Repository $repository)
     {
-        // Load the "translation" file
         $po_file = $path . $repository->xref() . '_' .  Session::get('language') .'.po';
+        $default_po_file = $path . $repository->xref() .'.po';
 
         //Create a dummy locale (is required by the Translator for the plural rule)
         $dummy_locale = Locale::create('de');
 
+        // Load the "translation" file
         try {
             $translation  = new Translation($po_file);
             $translations = $translation->asArray();
             self::$translator = new Translator($translations, $dummy_locale->pluralRule());
         } catch (Exception $ex) {
-            //if no .po file is found, create empty translator
-            self::$translator = new Translator([], $dummy_locale->pluralRule());
+            //if no .po file is found, try the default file (without language tag)
+            try {
+                $translation  = new Translation($default_po_file);
+                $translations = $translation->asArray();
+                self::$translator = new Translator($translations, $dummy_locale->pluralRule());
+            } catch (Exception $ex) {
+                //if still no .po file is found, create empty translator
+                self::$translator = new Translator([], $dummy_locale->pluralRule());
+            }
         }
     }
 
