@@ -181,7 +181,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const SOUR_REFN_TYPE_META_REPO = 'META_REPOSITORY';
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.1.0';
+    public const CUSTOM_VERSION = '1.2.0';
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
