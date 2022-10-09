@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
@@ -10,6 +10,7 @@ use Fisharebest\Webtrees\View;
 /**
  * @var  string		$title
  * @var  bool		$show_category_label
+ * @var  bool		$show_category_title
  * @var  bool		$show_help_icon
  * @var  bool		$show_help_link
  * @var  bool		$show_category_expanded
@@ -21,11 +22,13 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_date_range
  * @var  bool		$allow_admin_delimiter
  * @var  bool		$show_source_facts_in_citations
+ * @var  bool		$show_finding_aid_category_title
  * @var  bool		$show_finding_aid_address
  * @var  bool		$show_finding_aid_wt_links
  * @var  bool		$show_finding_aid_toc
  * @var  bool		$show_finding_aid_toc_links
  * @var  bool		$allow_admin_xml_settings
+ * @var  bool		$use_meta_repositories
  * @var  bool		$show_atom_links
  * @var  string		$atom_slug
  * @var  string		$atom_base_url
@@ -49,6 +52,9 @@ use Fisharebest\Webtrees\View;
             <h3><?= I18N::translate('Settings for Repository Hierarchy list') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show label before call number category.'), 'name' => RepositoryHierarchy::PREF_SHOW_CATEGORY_LABEL, 'checked' => $show_category_label]) ?>
+			</div> 
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show titles of call number categories (if available from .po file).'), 'name' => RepositoryHierarchy::PREF_SHOW_CATEGORY_TITLE, 'checked' => $show_category_title]) ?>
 			</div> 
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show help icon after label for delimiter expression.'), 'name' => RepositoryHierarchy::PREF_SHOW_HELP_ICON, 'checked' => $show_help_icon]) ?>
@@ -87,6 +93,9 @@ use Fisharebest\Webtrees\View;
             <div class="row"><?= view('icons/spacer') ?></div> 
             <h3><?= I18N::translate('Settings for finding aid exports') ?></h3>
             <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show titles of call number categories (if available from .po file).'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, 'checked' => $show_finding_aid_category_title]) ?>
+			</div> 
+            <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Include repository address within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_ADDRESS, 'checked' => $show_finding_aid_address]) ?>
             </div>            
             <div class="row">
@@ -106,6 +115,12 @@ use Fisharebest\Webtrees\View;
             </div>
 
             <div class="row"><?= view('icons/spacer') ?></div> 
+            <h3><?= I18N::translate('Settings for Meta Repositories') ?></h3>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Use Meta Repositories.'), 'name' => RepositoryHierarchy::PREF_USE_META_REPOSITORIES, 'checked' => $use_meta_repositories]) ?>
+            </div>            
+
+            <div class="row"><?= view('icons/spacer') ?></div> 
             <h3><?= I18N::translate('Settings for linking to external archive management tools') ?></h3>
             <div class="row">            
                 <?= I18N::translate('The following settings apply if AtoM (https://www.accesstomemory.org) is used as an external archive management system.') ?>
@@ -121,7 +136,7 @@ use Fisharebest\Webtrees\View;
                 <div class="row">
                 <p></p>
                 <?= view('components/radios', [
-                    'name' => 'atom_slug', 
+                    'name' => 'atom_slug',
                     'selected' => $atom_slug,
                     'options' => [
                         RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER => I18N::translate('Use call numbers to create AtoM REST links ("AtoM slugs")'),

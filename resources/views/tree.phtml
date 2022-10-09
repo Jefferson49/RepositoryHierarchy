@@ -24,10 +24,16 @@ use Fisharebest\Webtrees\I18N;
 			<b><?= I18N::translate('Call Number Category') . ': ' ?></b>
 		<?php endif ?>		
 		<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CATEGORY, '1'))) : ?>
-			<b><?= $category->getFrontEndName() ?></b>
+			<b><?= $category->getFrontEndName() ?> </b>
+			<?php $title = $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
+			<?php if (($title !== '') && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_TITLE, '0')))): ?>
+				(
+					<?= $title ?>
+				)
+			<?php endif ?>		
 		<?php else : ?>		
 			<b><?= $category->getFrontEndName(true) ?></b>
-		<?php endif ?>		
+		<?php endif ?>	
 		<?php if (($category->getOverallDateRange() !== null) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0')))) : ?>
 			(
 			<?= MoreI18N::xlate('Date range') ?>:
@@ -36,24 +42,24 @@ use Fisharebest\Webtrees\I18N;
 		<?php endif ?>
 	</button>			
 	<?= view('icons/spacer') ?>
-	<?php if ((strpos($category->getFullName(), CallNumberCategory::EMPTY_CATEGORY_NAME) === false) AND (strpos($category->getFullName(), CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
+	<?php if ((strpos($category->getFullName(), CallNumberCategory::EMPTY_CATEGORY_NAME) === false) and (strpos($category->getFullName(), CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
 		<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
 			<a href="<?= e(route(CallNumberDataFix::class, [
-					'tree' => $repository_hierarchy->getTree()->name(), 
-					'xref' => $repository_hierarchy->getRepositoryXref(), 
-					'category_name' => $category->getName(), 
-					'category_full_name' => $category->getFullName() 
-					])) ?>">
+                    'tree' => $repository_hierarchy->getTree()->name(),
+                    'xref' => $repository_hierarchy->getRepositoryXref(),
+                    'category_name' => $category->getName(),
+                    'category_full_name' => $category->getFullName()
+                    ])) ?>">
 				<?= view('icons/edit') ?>
 				<?= I18N::translate('Rename') ?>	
 			</a>
 			<?= view('icons/spacer') ?>
 			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
 						data-wt-href="<?= e(route(CreateSourceModal::class, [
-							'tree' => $repository_hierarchy->getTree()->name(), 
-							'xref' => $repository_hierarchy->getRepositoryXref(), 
-							'source_call_number' => $category->getFullName()
-							])) ?>">
+                            'tree' => $repository_hierarchy->getTree()->name(),
+                            'xref' => $repository_hierarchy->getRepositoryXref(),
+                            'source_call_number' => $category->getFullName()
+                            ])) ?>">
 				<?= view('icons/source') ?>
 				<?= I18N::translate('Add new source') ?>	
 			</a>
@@ -68,10 +74,10 @@ use Fisharebest\Webtrees\I18N;
 			<div class="d-flex">	
 				<ul>
 					<?php $sources = Functions::getCollectionForArray($category->getSources()) ?>
-            		<?php $sources = Functions::sortSourcesByCallNumber($sources) ?>
+            		<?php $sources = $repository_hierarchy->sortSourcesByCallNumber($sources) ?>
 					<?php foreach ($sources as $source) : ?>
 						<li>
-							<a href="<?= e($source->url()) ?>"><?= Functions::getCallNumberForSource($source, $repository_hierarchy->getRepository(), boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))) ?></a>
+							<a href="<?= e($source->url()) ?>"><?= Functions::getCallNumberForSource($source, $repository_hierarchy->getAllRepositories(), boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))) ?></a>
 
 							<?php if (($source->fullName() != '') && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TITLE, '1')))) : ?>
 								—
@@ -105,11 +111,11 @@ use Fisharebest\Webtrees\I18N;
 			</div>
 
 			<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
-			<?php $categories = Functions::sortCallNumberCategoriesByName($categories) ?>
+			<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 			<?php foreach ($categories as $sub_category) : ?>			
 				<?= view($repository_hierarchy->name() . '::tree', [
-					'repository_hierarchy' => $repository_hierarchy, 
-					'category' => $sub_category]) ?>
+                    'repository_hierarchy' => $repository_hierarchy,
+                    'category' => $sub_category]) ?>
 			<?php endforeach ?>	
 		</div>	
 	</div>

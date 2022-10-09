@@ -3,13 +3,13 @@
 /**
  * webtrees: online genealogy
  * Copyright (C) 2022 webtrees development team
- *					  <http://webtrees.net>
+ *                    <http://webtrees.net>
  *
- * Extended Relationships (webtrees custom module):  
+ * Extended Relationships (webtrees custom module):
  * Copyright (C) 2022 Richard Cissee
- *					  <http://cissee.de>
+ *                    <http://cissee.de>
  *
- * RepositoryHierarchy (webtrees custom module):  
+ * RepositoryHierarchy (webtrees custom module):
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
@@ -25,7 +25,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
@@ -38,23 +37,25 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function view;
 
-class RepositoryHierarchyHelpTexts implements RequestHandlerInterface {
-
 /**
- * @param ServerRequestInterface $request
- *
- * @return ResponseInterface
+ * Help texts used in the Repository Hierarchy module
  */
-public function handle(ServerRequestInterface $request): ResponseInterface
+class RepositoryHierarchyHelpTexts implements RequestHandlerInterface
 {
-  $topic = Validator::attributes($request)->string('topic');
+    /**
+     * @param ServerRequestInterface $request
+     *
+     * @return ResponseInterface
+     */
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        $topic = Validator::attributes($request)->string('topic');
 
-    switch ($topic) {
+        switch ($topic) {
+            case 'Delimiter Expression':
 
-      case 'Delimiter Expression':
-
-        $title = I18N::translate('How to use delimiter expressions?');
-        $markdown_text = 
+                $title = I18N::translate('How to use delimiter expressions?');
+                $markdown_text =
 I18N::translate('A delimiter is a sequence of one or more characters for specifying the boundary between separate, independent regions in a text. Use delimiters to cut call numbers into chunks of call number categories. The call number categories will be used to construct a hierarchy of call numbers.').'
 1. '. I18N::translate('Use a single delimiter, e.g.').' "**/**" '. I18N::translate('or').' "**-**"
 2. '. I18N::translate('Use a set of delimiters separated by').' "**'. RepositoryHierarchy::DELIMITER_SEPARATOR . '**" ' .  I18N::translate('e.g.') . ' "**/;-**"'.  I18N::translate('or') .' "**#;,**"'.'
@@ -110,22 +111,25 @@ I18N::translate('A delimiter is a sequence of one or more characters for specify
 [Wikipedia](https://en.wikipedia.org/wiki/Regular_expression)';
 
 
-        $markdown_factory = new MarkdownFactory();
-        $text = $markdown_factory->markdown($markdown_text);
+                $markdown_factory = new MarkdownFactory();
+                $text = $markdown_factory->markdown($markdown_text);
 
-        break;
+                break;
 
-      default:
-        $title = I18N::translate('Help');
-        $text = I18N::translate('The help text has not yet been written for this item.');
-        break;
+            default:
+                $title = I18N::translate('Help');
+                $text = I18N::translate('The help text has not yet been written for this item.');
+                break;
+        }
+
+        $html = view(
+            'modals/help',
+            [
+                'title' => $title,
+                'text'  => $text,
+            ]
+        );
+
+        return response($html);
     }
-
-  $html = view('modals/help', [
-      'title' => $title,
-      'text'  => $text,
-  ]);
-
-  return response($html);
-  }
 }

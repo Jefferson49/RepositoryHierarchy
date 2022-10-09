@@ -3,7 +3,6 @@
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
-use Fisharebest\Webtrees\HelpText;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Tree;
@@ -15,12 +14,12 @@ use Fisharebest\Webtrees\View;
  * @var RepositoryHierarchy	$repository_hierarchy
  * @var string      		$delimiter_expression
  * @var string             	$error
- * @var string             	$command 
+ * @var string             	$command
  */
- 
+
 ?>
 
-<?php if ($error != '' ) : ?>
+<?php if ($error != '') : ?>
 	<div class="alert alert-danger">
 		<?= $error ?>
 	</div>
@@ -31,9 +30,9 @@ use Fisharebest\Webtrees\View;
 </h2>
 
 <form method="post" action="<?= e(route(RepositoryHierarchy::class, [
-						'tree'		=> $tree->name(),
-						'xref'		=> $repository_hierarchy->getRepositoryXref(),
-						])) ?>" 
+        'tree'		=> $tree->name(),
+        'xref'		=> $repository_hierarchy->getRepositoryXref(),
+        ])) ?>" 
 	class="wt-page-options wt-page-options-ancestors-chart d-print-none">
 
 	<div class="row">
@@ -42,10 +41,10 @@ use Fisharebest\Webtrees\View;
 		</label>
 		<div class="col-sm-9 wt-page-options-value">
 			<?= view('components/select-repository', [
-				'name' => 'xref', 
-				'repository' => $repository_hierarchy->getRepository(), 
-				'tree' => $tree, 
-				'required' => true]) ?>
+                'name' => 'xref',
+                'repository' => $repository_hierarchy->getRepository(),
+                'tree' => $tree,
+                'required' => true]) ?>
 		</div>
 	</div>
 
@@ -75,10 +74,10 @@ use Fisharebest\Webtrees\View;
 			<input class="btn btn-primary" type="submit" value="<?= I18N::translate('view') ?>">
 			<?= view('icons/spacer') ?>
 			<?= view('components/radios-inline', [
-				'name' => 'command', 
-				'options' => $repository_hierarchy->getLoadSaveOptions(), 
-				'selected' => RepositoryHierarchy::CMD_NONE,
-				]) ?>
+                'name' => 'command',
+                'options' => $repository_hierarchy->getLoadSaveOptions(),
+                'selected' => RepositoryHierarchy::CMD_NONE,
+                ]) ?>
 		</div>
 
 	</div>
@@ -87,11 +86,11 @@ use Fisharebest\Webtrees\View;
 </form>	
 
 <form method="post" action="<?= e(route(RepositoryHierarchy::class, [
-						'tree'                              => $tree->name(),
-						'xref'								=> $repository_hierarchy->getRepositoryXref(),
-						'delimiter_expression'              => $delimiter_expression,
-						'command'                           => RepositoryHierarchy::CMD_DOWNLOAD_XML,
-						])) ?>" 
+                        'tree'                              => $tree->name(),
+                        'xref'								=> $repository_hierarchy->getRepositoryXref(),
+                        'delimiter_expression'              => $delimiter_expression,
+                        'command'                           => RepositoryHierarchy::CMD_DOWNLOAD_XML,
+                        ])) ?>" 
 		class="wt-page-options wt-page-options-ancestors-chart d-print-none">
 	<div class="row">
 		<label class="col-sm-3 col-form-label wt-page-options-label">
@@ -101,17 +100,17 @@ use Fisharebest\Webtrees\View;
 			<input class="btn btn-secondary" type="submit" value="<?= MoreI18N::xlate('Download') ?>">
 			<?= view('icons/spacer') ?>
 			<?= view('components/radios-inline', [
-				'name' => 'download_command', 
-				'options' => DownloadService::getDownloadOptions(DownloadService::DOWNLOAD_OPTION_ALL), 
-				'selected' => DownloadService::DOWNLOAD_OPTION_HTML,
-			]) ?>
+                'name' => 'download_command',
+                'options' => DownloadService::getDownloadOptions(DownloadService::DOWNLOAD_OPTION_ALL),
+                'selected' => DownloadService::DOWNLOAD_OPTION_HTML,
+            ]) ?>
 			<?= view('icons/spacer') ?>
 			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
 						data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
-							'tree'					=> $tree->name(),
-							'xref'					=> $repository_hierarchy->getRepositoryXref(),
-							'delimiter_expression'	=> $delimiter_expression,
-							])) ?>">
+                            'tree'					=> $tree->name(),
+                            'xref'					=> $repository_hierarchy->getRepositoryXref(),
+                            'delimiter_expression'	=> $delimiter_expression,
+                            ])) ?>">
 				<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
 			</a>
 		</div>
@@ -123,12 +122,12 @@ use Fisharebest\Webtrees\View;
 <?php if (($delimiter_expression !=='') && ($error === '')) : ?>
 	<div class="wt-ajax-load wt-page-content wt-chart wt-chart-ancestors">
 		<?php $categories = Functions::getCollectionForArray($repository_hierarchy->getRootCategory()->getSubCategories()) ?>
-		<?php $categories = Functions::sortCallNumberCategoriesByName($categories) ?>
+		<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 		<?php foreach ($categories as $category) : ?>
 			<?= view($repository_hierarchy->name() . '::tree', [
-					'repository_hierarchy' => $repository_hierarchy, 
-					'category' => $category,
-					]) ?>
+                    'repository_hierarchy' => $repository_hierarchy,
+                    'category' => $category,
+                    ]) ?>
 		<?php endforeach ?>	
 	</div>
 <?php endif ?>

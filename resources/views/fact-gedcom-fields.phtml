@@ -5,7 +5,6 @@ use Fisharebest\Webtrees\Elements\AbstractXrefElement;
 use Fisharebest\Webtrees\Elements\XrefSource;
 use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\GedcomRecord;
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
@@ -69,7 +68,7 @@ foreach ($keys as $key) {
 
         <div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
 
-            <?php //Additionally show source facts within citations ?>
+            <?php //Additionally show source facts within citations?>
             <?= view('_repository_hierarchy_' . '::source-facts-within-citation', ['tree' => $tree, 'source' => $source]) ?>
 
             <?php array_shift($keys) ?>

@@ -3,17 +3,17 @@
 /**
  * webtrees: online genealogy
  * Copyright (C) 2022 webtrees development team
- *					  <http://webtrees.net>
+ *                    <http://webtrees.net>
  *
- * Fancy Research Links (webtrees custom module):  
+ * Fancy Research Links (webtrees custom module):
  * Copyright (C) 2022 Carmen Just
- *					  <https://justcarmen.nl>
+ *                    <https://justcarmen.nl>
  *
- * Extended Relationships (webtrees custom module):  
+ * Extended Relationships (webtrees custom module):
  * Copyright (C) 2022 Richard Cissee
- *					  <http://cissee.de>
- * 
- * RepositoryHierarchy (webtrees custom module):  
+ *                    <http://cissee.de>
+ *
+ * RepositoryHierarchy (webtrees custom module):
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
@@ -28,12 +28,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
- 
+
 
 declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+require __DIR__ . '/C16Y.php';
 require __DIR__ . '/CallNumberCategory.php';
 require __DIR__ . '/CallNumberDataFix.php';
 require __DIR__ . '/CreateSourceModal.php';

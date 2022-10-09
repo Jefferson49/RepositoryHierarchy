@@ -3,9 +3,9 @@
 /**
  * webtrees: online genealogy
  * Copyright (C) 2022 webtrees development team
- *					  <http://webtrees.net>
+ *                    <http://webtrees.net>
  *
- * RepositoryHierarchy (webtrees custom module):  
+ * RepositoryHierarchy (webtrees custom module):
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
@@ -41,6 +41,8 @@ use function view;
 class CreateSourceModal implements RequestHandlerInterface
 {
     /**
+     * Handle the create source model request
+     *
      * @param ServerRequestInterface $request
      *
      * @return ResponseInterface
@@ -50,22 +52,32 @@ class CreateSourceModal implements RequestHandlerInterface
         $tree = Validator::attributes($request)->tree();
         $user = Validator::attributes($request)->user();
         $source_repository = Validator::attributes($request)->string('xref');
-		$source_call_number = Validator::attributes($request)->string('source_call_number');
+        $source_call_number = Validator::attributes($request)->string('source_call_number');
 
         //If no user is logged in, show error text
         if (Auth::accessLevel($tree, $user) === Auth::PRIV_PRIVATE) {
             $error_text =   I18N::translate('Currently, you do not have the user rights to create new sources. In order to create new sources, you need to be logged in as a user.');
 
-            return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/message', [  
-                'title' => I18N::translate('Create new sources'),
-                'text'  => $error_text,
-                ]));   
+            return response(
+                view(
+                    RepositoryHierarchy::MODULE_NAME . '::modals/message',
+                    [
+                        'title' => I18N::translate('Create new sources'),
+                        'text'  => $error_text,
+                    ]
+                )
+            );
         }
 
-        return response(view(RepositoryHierarchy::MODULE_NAME . '::modals/create-source', [
-            'tree' 					=> $tree,
-            'source_repository' 	=> $source_repository,
-            'source_call_number' 	=> $source_call_number,
-        ]));
+        return response(
+            view(
+                RepositoryHierarchy::MODULE_NAME . '::modals/create-source',
+                [
+                    'tree'               => $tree,
+                    'source_repository'  => $source_repository,
+                    'source_call_number' => $source_call_number,
+                ]
+            )
+        );
     }
 }

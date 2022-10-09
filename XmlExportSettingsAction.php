@@ -3,9 +3,9 @@
 /**
  * webtrees: online genealogy
  * Copyright (C) 2022 webtrees development team
- *					  <http://webtrees.net>
+ *                    <http://webtrees.net>
  *
- * RepositoryHierarchy (webtrees custom module):  
+ * RepositoryHierarchy (webtrees custom module):
  * Copyright (C) 2022 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
@@ -34,11 +34,13 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Process a form to change XML export settings.
+ * View a modal to change XML export settings.
  */
 class XmlExportSettingsAction implements RequestHandlerInterface
 {
     /**
+     * Handle a request to view a modal XML export settings
+     *
      * @param ServerRequestInterface $request
      *
      * @return ResponseInterface
@@ -48,28 +50,32 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $tree               = Validator::attributes($request)->tree();
         $user               = Validator::attributes($request)->user();
         $repository_xref    = Validator::attributes($request)->string('xref');
-        $command            = Validator::attributes($request)->string('command');        
+        $command            = Validator::attributes($request)->string('command');
         $params             = (array) $request->getQueryParams();
 
         $admin_user_id = RepositoryHierarchy::ADMIN_USER_STRING;
         $module_service = new ModuleService();
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
 
-        if($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) {
-            
-            return response([      
-                'html'  => view($repository_hierarchy->name() . '::modals/xml-export-settings', [
-                    'tree' 					    => $tree,
-                    'xref' 		                => $repository_xref,
-                    'finding_aid_title'         => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),	
-                    'country_code' 			    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
-                    'main_agency_code' 		    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
-                    'finding_aid_identifier'    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),	
-                    'finding_aid_url'           => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),	
-                    'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
-                    'show_load_from_admin'      => false,	
-                    ]),
-                ]);
+        if ($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) {
+            return response(
+                [
+                    'html'  => view(
+                        $repository_hierarchy->name() . '::modals/xml-export-settings',
+                        [
+                            'tree'                      => $tree,
+                            'xref'                      => $repository_xref,
+                            'finding_aid_title'         => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
+                            'country_code'              => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
+                            'main_agency_code'          => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
+                            'finding_aid_identifier'    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
+                            'finding_aid_url'           => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
+                            'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $admin_user_id, ''),
+                            'show_load_from_admin'      => false,
+                        ]
+                    ),
+                ]
+            );
         }
 
         //Save received values to preferences
@@ -80,13 +86,18 @@ class XmlExportSettingsAction implements RequestHandlerInterface
             $this->savePreferences($request, true);
         }
 
-        if($params['show_load_from_admin']) {
-            return response([      
-                'html'  => view($repository_hierarchy->name() . '::modals/message', [  
-                    'title' => I18N::translate('EAD XML settings'),
-                    'text'  => I18N::translate('The EAD XML seetings have been changed'),
-                    ])
-                ]);   
+        if ($params['show_load_from_admin']) {
+            return response(
+                [
+                    'html'  => view(
+                        $repository_hierarchy->name() . '::modals/message',
+                        [
+                            'title' => I18N::translate('EAD XML settings'),
+                            'text'  => I18N::translate('The EAD XML seetings have been changed'),
+                        ]
+                    )
+                ]
+            );
         } else {
             return response();
         }
@@ -94,9 +105,11 @@ class XmlExportSettingsAction implements RequestHandlerInterface
 
     /**
      * Save preferences
-     * 
-     * @param ServerRequestInterface    $request    
-     * @param bool                      $save_as_admin
+     *
+     * @param ServerRequestInterface $request
+     * @param bool                   $save_as_admin
+     *
+     * @return void
      */
     private function savePreferences(ServerRequestInterface $request, bool $save_as_admin)
     {
@@ -105,7 +118,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $user               = Validator::attributes($request)->user();
         $params             = (array) $request->getParsedBody();
 
-        if($save_as_admin) {
+        if ($save_as_admin) {
             $user_id = RepositoryHierarchy::ADMIN_USER_STRING;
         } else {
             $user_id = $user->id();
@@ -114,7 +127,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $module_service = new ModuleService();
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
 
-         //Save received values to preferences
+        //Save received values to preferences
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['finding_aid_title']);
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['country_code']);
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $params['main_agency_code']);
