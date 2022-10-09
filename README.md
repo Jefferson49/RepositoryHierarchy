@@ -60,6 +60,7 @@ This README file contains the following main sections:
     *   [Create links between webtrees and an external archive management system](#Using-links)
     *   [Show additional source and repository information in source citations](#Using-citations)
     *   [Preferences](#Prefences)
+*   [**Demo website and examples**](#Demo)
 *   [Some more background about archive and library management](#Background)
     *   [Archival Arrangement](#Arrangement)
     *   [Library classification](#Classification)
@@ -426,8 +427,53 @@ The following preferences can be activated/deactivated by administrators in the 
 + [AtoM](https://www.accesstomemory.org/) base ULR to be used for the generation of links to an [AtoM](https://www.accesstomemory.org/) archive management system.
 + Repositories, for which [AtoM](https://www.accesstomemory.org/) linking is used.
 
+<a name="Demo"></a>
+## Demo website and examples
+The following links provide access to a demo website, which demonstrates some of the module features.
+
++ Demo website for the [**Repository Hierarchy module**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepositoryhierarchy%2Fxref%2F%7Bxref%7D%2Fdelimiter_expression%2F%7Bdelimiter_expression%7D%2Fcommand%2F%7Bcommand%7D&language=en-GB)
+
++ Example for a [**Source Record**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Fsource%2FS8685%2FKirchenbuch-Deubach-Taufen-1670-1804&language=en-GB) with source repository citation (and 2nd citation for a meta repository)
+
++ Example for an [**Individual Record**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Findividual%2FI6684%2FLeonhard-Kastler&language=en-GB) with source citations
+
++ Example for a [**Meta Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR8773%2FMeta-Archiv-Familienforschung-Hemprich&language=en-GB)
+
+The following GEDCOM snippets show the usage of the module in the INDI, SOUR, and REPO structures of webtrees/Gedcom. The snippets are directly related to the demo website above; the XREFs from the snippets can be directly found on the demo website.
+
+>0 @I6684@ INDI  
+1 NAME Leonhard /Kastler/  
+1 BIRT  
+2 DATE 03 NOV 1735  
+2 PLAC Deubach, Landkreis Guenzburg, Bayern, DEU  
+2 SOUR @S8685@  
+3 PAGE Seite 62, https://data.matricula-online.eu/de/deutschland/augsburg/deubach/1-T/?pg=33  
+
+>0 @S8685@ SOUR  
+1 TITL Kirchenbuch Deubach, Taufen 1670-1804  
+1 DATA  
+2 EVEN BAPM  
+3 DATE FROM 1670 TO 1804  
+3 PLAC Deubach, Landkreis Guenzburg, Bayern, DEU  
+1 REPO @R7328@  
+2 CALN Deubach, 1-T, https://data.matricula-online.eu/de/deutschland/augsburg/deubach/1-T  
+3 MEDI ELECTRONIC  
+1 REPO @R8773@  
+2 CALN BiHu/Kop/KB/Deubach, Landkreis Guenzburg, Bayern, DEU/Taufen 1670-1804  
+
+>0 @R1@ REPO  
+1 NAME My Family Archive  
+1 REFN R8773  
+2 TYPE META_REPOSITORY  
+
+>0 @R8773@ REPO  
+1 NAME Meta: My Family Archive  
+
+>0 @R7328@ REPO  
+1 NAME Matricula Online  
+
 <a name="Background"></a>
-##  Some more background about archive and library management
+## Some more background about archive and library management
 In archive (or library) management, archival arrangements, library classifications, finding aids, and call numbers are frequently used to:
 + define a structure for an archive
 + assign item numbers to the sources in the archive
@@ -436,11 +482,11 @@ In archive (or library) management, archival arrangements, library classificatio
 In the following, some of the typical concepts are briefly described.
 
 <a name="Arrangement"></a>
-###  Archival Arrangement
+### Archival Arrangement
 [Wikipedia](https://en.wikipedia.org/wiki/Finding_aid): "Arrangement is the manner in which \[the archive] has been ordered \[...]. Hierarchical levels of arrangement are typically composed of record groups containing series, which in turn contain boxes, folders, and items."
 
 <a name="Classification"></a>
-###  Library classification
+### Library classification
 [Wikipedia](https://en.wikipedia.org/wiki/Library_classification): "A library classification is a system of knowledge distribution by which library resources are arranged and ordered systematically."
 
 <a name="Finding_aids"></a>
@@ -450,11 +496,11 @@ In the following, some of the typical concepts are briefly described.
 [Wikipedia](https://en.wikipedia.org/wiki/Finding_aid): "A finding aid for an archive is an organization tool, a document containing detailed, indexed, and processed metadata and other information about a specific collection of records within an archive."
 
 <a name="Call_numbers"></a>
-###  Call numbers
+### Call numbers
 [Wikipedia](https://en.wikipedia.org/wiki/Library_classification): "\[...] a call number (essentially a book's address) based on the classification system in use at the particular library will be assigned to the work using the notation of the system."
 
 <a name="Relationship"></a>
-###  Relationship between Archival Arrangement and Call numbers
+### Relationship between Archival Arrangement and Call numbers
 A lot of archives (and libraries) map the archival arrangement (or library classification) into the call numbers of the sources. 
 
 For example, the archive might have the following arrangement:
@@ -471,13 +517,13 @@ In this case, the call numbers might have the following structure:
 Therefore, the hierarchy of the archival arrangement is represented in the "route" or the "path" of the call number. 
 
 <a name="EAD"></a>
-###  EAD standard for XML export of archival records
+### EAD standard for XML export of archival records
 Encoded Archival Description ([EAD](https://www.loc.gov/ead/)) is a standard for encoding descriptive information regarding archival records. The EAD standard provides a **XML export format**, which allows to describe and export the content and structure of archives and sources. It also provides data structures to describe and export finding aids.
 
 See also: [Wikipedia](https://en.wikipedia.org/wiki/Encoded_Archival_Description)
 
 <a name="apeEAD"></a>
-###  apeEAD standard for XML export of finding aids
+### apeEAD standard for XML export of finding aids
 [apeEAD](https://www.archivesportaleurope.net/tools/for-content-providers/standards/apeead/) is a standard, which was designed and published by the [Archive Portal Europe](https://www.archivesportaleurope.net/). As a sub-set of [EAD](#EAD), apeEAD was specifically designed for encoding archival finding aids. As specification of the standard, the Archive Portal Europe provides a [table](http://apex-project.eu/images/docs/apeEAD_finding_aid_table_201210.pdf) with the used EAD XML tags and a [description and best practice guide](http://apex-project.eu/images/docs/apenet_ead_finding_aid_holdings_guide.pdf) for usind ape EAD.
 
 The Archive Portal Europe also provides a validation tool. With the [apeEAD data preparation tool](https://github.com/ArchivesPortalEuropeFoundation/ape-dpt), EAD XML exports can be validated against the apeEAD standard. Details are described in a [manual](http://apex-project.eu/index.php/en/outcomes/tools-and-manuals/data-preparation-tool-manual).
@@ -485,7 +531,7 @@ The Archive Portal Europe also provides a validation tool. With the [apeEAD data
 The XML exports of the Repository Hiararchy module were developed and tested to pass the validation of the apeEAD data preparation tool.
 
 <a name="Mapping"></a>
-##  How the module maps to Gedcom and to archive management concepts
+## How the module maps to Gedcom and to archive management concepts
 In order to manage archives and sources, Gedcom and webtrees basically provide the following data structures:
 + Repository
 + Source
