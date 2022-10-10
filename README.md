@@ -441,7 +441,9 @@ The following links provide access to a demo website, which demonstrates some of
 
 + Example for a [**Meta Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR8773%2FMeta-Archiv-Familienforschung-Hemprich&language=en-GB)
 
-The following GEDCOM snippets show the usage of the module in the INDI, SOUR, and REPO structures of webtrees/Gedcom. The snippets are directly related to the demo website above; the XREFs from the snippets can be directly found on the demo website.
++ Example for a [**Base Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR1%2FArchiv-Familienforschung-Hemprich&language=en-GB)
+
+The following GEDCOM snippets show the usage of the module in the INDI, SOUR, and REPO structures of webtrees/Gedcom. The snippets are related to the demo website above; the XREFs from the snippets can be directly found on the demo website.
 
 >0 @I6684@ INDI  
 1 NAME Leonhard /Kastler/  
@@ -474,7 +476,27 @@ The following GEDCOM snippets show the usage of the module in the INDI, SOUR, an
 >0 @R7328@ REPO  
 1 NAME Matricula Online  
 
-In this example, R1 is the base repository, R8773 the meta repository, and R7328 just some other repository. With the Gedcom lines "1 REFN R8773  2 TYPE META_REPOSITORY", the meta repository is linked to the base repository. If the Repository Hierarchy module identifies this relationship, the two repositories (e.g. R1 and R8773) are combined and shown in the same hierarchical view. In order to create a benefit from this concecpt, the two repositories should use the same call number format (i.e. same delimiters, and the same call number category structure).
+In this example, R1 is the base repository, R8773 the meta repository, and R7328 just some other repository. With the Gedcom lines "1 REFN R8773  2 TYPE META_REPOSITORY", the meta repository is combined with the base repository. If the Repository Hierarchy module identifies this relationship, the two repositories (e.g. R1 and R8773) are combined and shown in the same hierarchical view. In order to create a benefit from this concecpt, the two repositories should use the same call number format (i.e. same delimiters, and the same call number category structure).
+
+Please note that combining the base repository (R1) to the meta repository (R8773) mainly reduces effort and avoids redundancy for source repository citations of sources in the base repository. This is illustrated by the following example for a source in the base repository R1:
+
+**Example 1**  
+Source with "double" source repository citations (one for the base repository, and a second one for the meta repository)  
+>0 @S8765@ SOUR  
+1 TITL Hochzeit Litzel-Hartmann, Standesamt Fleinhausen, 1902  
+1 REPO @R1@  
+2 CALN LiHa/Biogr/Litzel, Maximilian/Nr. 01  
+1 REPO @R8773@  
+2 CALN LiHa/Biogr/Litzel, Maximilian/Nr. 01  
+
+**Example 2**  
+Source with "single" source repository citations (if using a combined meta repository). In this case, the second source repository citation (for the meta repository) is not needed!  
+>0 @S8765@ SOUR  
+1 TITL Hochzeit Litzel-Hartmann, Standesamt Fleinhausen, 1902  
+1 REPO @R1@  
+2 CALN LiHa/Biogr/Litzel, Maximilian/Nr. 01  
+
+It is important to notice that both examples are working and both make use of the meta repository. However, the second example avoids redundancy.
 
 <a name="Background"></a>
 ## Some more background about archive and library management
