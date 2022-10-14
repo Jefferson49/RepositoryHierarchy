@@ -20,20 +20,24 @@ use Fisharebest\Webtrees\I18N;
 		<span class="chart-collapse">
 			<?= view('icons/collapse') ?>
 		</span>
+
 		<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_LABEL, '1'))) : ?>
 			<b><?= I18N::translate('Call Number Category') . ': ' ?></b>
 		<?php endif ?>		
+
 		<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CATEGORY, '1'))) : ?>
 			<b><?= $category->getFrontEndName() ?> </b>
-			<?php $title = $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
+		<?php else : ?>		
+			<b><?= $category->getFrontEndName(true) ?></b>
+		<?php endif ?>	
+
+		<?php $title = $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
 			<?php if (($title !== '') && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_TITLE, '0')))): ?>
 				(
 					<?= $title ?>
 				)
-			<?php endif ?>		
-		<?php else : ?>		
-			<b><?= $category->getFrontEndName(true) ?></b>
-		<?php endif ?>	
+		<?php endif ?>		
+
 		<?php if (($category->getOverallDateRange() !== null) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0')))) : ?>
 			(
 			<?= MoreI18N::xlate('Date range') ?>:
