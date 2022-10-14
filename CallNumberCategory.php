@@ -344,24 +344,6 @@ class CallNumberCategory
     }
 
     /**
-     * Get call number for a source in a repository
-     *
-     * @param Source     $source
-     * @param Repository $repository
-     * @param bool       $truncated
-     *
-     * @return string
-     */
-    public function getCallNumber(Source $source, Repository $repository, bool $truncated = false): string
-    {
-        if ($truncated) {
-            return $this->getTruncatedCallNumber($source);
-        } else {
-            return Functions::getCallNumberForSource($source, [$repository]);
-        }
-    }
-
-    /**
      * Display date range
      *
      * @param string $delimiter [ISO 8601 allows: '/' odr '--']
