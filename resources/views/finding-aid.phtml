@@ -27,7 +27,7 @@ use function date;
 <html lang="<?= $language_tag	?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<title><?= $title ?></title>
+		<title><?= Functions::removeHtmlTags($title) ?></title>
 
 		<style>
 			.finding-aid-body {
