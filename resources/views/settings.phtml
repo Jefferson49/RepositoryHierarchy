@@ -105,6 +105,9 @@ use Fisharebest\Webtrees\View;
                 <?= view('components/checkbox', ['label' => I18N::translate('Include table of contents within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_TOC, 'checked' => $show_finding_aid_toc]) ?>
             </div>
             <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show titles within table of contents in finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_TOC_TITLES, 'checked' => $show_finding_aid_toc_titles]) ?>
+            </div>
+            <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show links within table of contents in finding aid export (not available for PDF export).'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, 'checked' => $show_finding_aid_toc_links]) ?>
             </div>
 

@@ -158,6 +158,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_SHOW_FINDING_AID_ADDRESS = 'show_finding_aid_address';
     public const PREF_SHOW_FINDING_AID_TOC = 'show_finding_aid_toc';
     public const PREF_SHOW_FINDING_AID_TOC_LINKS = 'show_finding_aid_toc_links';
+    public const PREF_SHOW_FINDING_AID_TOC_TITLES = 'show_finding_aid_toc_titles';
     public const PREF_SHOW_FINDING_AID_WT_LINKS = 'show_finding_aid_wt_links';
     public const PREF_USE_META_REPOSITORIES = 'use_meta_repositories';
 
@@ -495,6 +496,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
                 self::PREF_SHOW_FINDING_AID_TOC             => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
                 self::PREF_SHOW_FINDING_AID_TOC_LINKS       => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
+                self::PREF_SHOW_FINDING_AID_TOC_TITLES      => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_TITLES, '1')),
                 self::PREF_ALLOW_ADMIN_XML_SETTINGS         => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
                 self::PREF_USE_META_REPOSITORIES            => boolval($this->getPreference(self::PREF_USE_META_REPOSITORIES, '0')),
                 self::PREF_ATOM_SLUG                        => $this->getPreference(self::PREF_ATOM_SLUG, self::PREF_ATOM_SLUG_CALL_NUMBER),
@@ -535,6 +537,7 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC, isset($params[self::PREF_SHOW_FINDING_AID_TOC]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_TOC_LINKS]) ? '1' : '0');
+            $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC_TITLES, isset($params[self::PREF_SHOW_FINDING_AID_TOC_TITLES]) ? '1' : '0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, isset($params[self::PREF_ALLOW_ADMIN_XML_SETTINGS]) ? '1' : '0');
             $this->setPreference(self::PREF_USE_META_REPOSITORIES, isset($params[self::PREF_USE_META_REPOSITORIES]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_ATOM_LINKS, isset($params[self::PREF_SHOW_ATOM_LINKS]) ? '1' : '0');
