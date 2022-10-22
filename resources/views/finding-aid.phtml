@@ -83,7 +83,7 @@ use function date;
 				<b><?= MoreI18N::xlate('Address') ?>:</b><br>
 				<?php $address_lines = Functions::getRepositoryAddressLines($repository_hierarchy->getRepository()) ?>
 				<?php foreach($address_lines as $line) : ?>
-					<?= $line?><br>
+					<?= e($line) ?><br>
 				<?php endforeach ?>
 			</p>
 		<?php endif ?>

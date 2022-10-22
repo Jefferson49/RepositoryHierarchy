@@ -26,9 +26,9 @@ use Fisharebest\Webtrees\I18N;
 		<?php endif ?>		
 
 		<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CATEGORY, '1'))) : ?>
-			<b><?= $category->getFrontEndName() ?> </b>
+			<b><?= e($category->getFrontEndName()) ?> </b>
 		<?php else : ?>		
-			<b><?= $category->getFrontEndName(true) ?></b>
+			<b><?= e($category->getFrontEndName(true)) ?></b>
 		<?php endif ?>	
 
 		<?php $title = $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
@@ -82,36 +82,36 @@ use Fisharebest\Webtrees\I18N;
 					<?php foreach ($sources as $source) : ?>
 						<li>
 							<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'))): ?>
-								<a href="<?= e($source->url()) ?>"><?= $category->getTruncatedCallNumber($source) ?></a>
+								<a href="<?= e($source->url()) ?>"><?= e($category->getTruncatedCallNumber($source)) ?></a>
 							<?php else : ?>
-								<a href="<?= e($source->url()) ?>"><?= Functions::getCallNumberForSource($source, $repository_hierarchy->getAllRepositories()) ?></a>
+								<a href="<?= e($source->url()) ?>"><?= e(Functions::getCallNumberForSource($source, $repository_hierarchy->getAllRepositories())) ?></a>
 							<?php endif ?>
 
 							<?php if (($source->fullName() != '') && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TITLE, '1')))) : ?>
 								—
 								<?= MoreI18N::xlate('Title') ?>:						
 								<a href="<?= e($source->url()) ?>">	
-								<?= $source->fullName()	?>				
+								<?= $source->fullName() ?>				
 								</a>
 							<?php endif ?>
 
 							<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_XREF, '1'))) : ?>							
 								—
 								<a href="<?= e($source->url()) ?>">	
-								<?= '('. $source->xref() . ')' ?>
+								<?= e('('. $source->xref() . ')') ?>
 								</a>
 							<?php endif ?>							
 
 							<?php if (($source->facts(['AUTH'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_AUTHOR, '1')))) : ?>
 								—
 								<?= I18N::translate('Author') ?>:
-								<?= $source->facts(['AUTH'])->first()->value() ?>
+								<?= e($source->facts(['AUTH'])->first()->value()) ?>
 							<?php endif ?>	
 
 							<?php if (($source->facts(['DATA'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1')))) : ?>
 								—
 								<?= MoreI18N::xlate('Date range') ?>:
-								<?= Functions::displayDateRangeForSource($source, $repository_hierarchy->getTree())?>
+								<?= Functions::displayDateRangeForSource($source, $repository_hierarchy->getTree()) ?>
 							<?php endif ?>
 						</li>
 					<?php endforeach ?>	

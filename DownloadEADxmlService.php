@@ -556,7 +556,7 @@ class DownloadEADxmlService extends DownloadService
         $did_dom = $c_dom->appendChild($this->ead_xml->createElement('did'));
 
         //<unittitle>
-        $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', $fact_values['SOUR:TITL']));
+        $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', e($fact_values['SOUR:TITL'])));
         if ($this->use_encoding_analog) {
             $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
         }

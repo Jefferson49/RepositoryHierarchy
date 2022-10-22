@@ -17,7 +17,7 @@ use Fisharebest\Webtrees\View;
 ?>
 
 <?php if (!$is_root_category) : ?>
-    <a name="<?= $category->getId() ?>"></a>
+    <a name="<?= e($category->getId()) ?>"></a>
     <table class="finding-aid-table" >
         <tr class="finding-aid-table-caption">
             <td class="finding-aid-table-first-column">
@@ -27,11 +27,11 @@ use Fisharebest\Webtrees\View;
             <td class="finding-aid-table-middle-column">
                 <b><?= e($category->getFrontEndName(true)) ?></b><br>
                 <?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0'))): ?>
-                    <?= $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
+                    <?= e($repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true))) ?>
                 <?php endif ?>
                 </td>      
             <?php if ($category->displayISODateRange() !== '') : ?>
-                <td class="finding-aid-table-last-column"><?= MoreI18N::xlate('Date range') ?>:<br><?= $category->displayISODateRange('--')?></td>          
+                <td class="finding-aid-table-last-column"><?= MoreI18N::xlate('Date range') ?>:<br><?= e($category->displayISODateRange('--')) ?></td>          
             <?php else : ?>
                 <td class="finding-aid-table-last-column"></td>          
             <?php endif ?>        
@@ -51,9 +51,9 @@ use Fisharebest\Webtrees\View;
         <?php $call_number = Functions::getCallNumberForSource($source, $repository_hierarchy->getAllRepositories()) ?>
         <tr> 
             <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>               
-            <td class="finding-aid-table-middle-column"><b><?= $call_number ?></b></td>
+            <td class="finding-aid-table-middle-column"><b><?= e($call_number) ?></b></td>
             <?php if ($show_wt_links) : ?>
-                <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>"><?= $source->xref() ?></a></td>            
+                <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>"><?= e($source->xref()) ?></a></td>            
             <?php else : ?>
                 <td class="finding-aid-table-last-column"></td>
             <?php endif ?>        
@@ -71,7 +71,7 @@ use Fisharebest\Webtrees\View;
             <td><?= I18N::translate('Author') ?></td>               
             <td><?= isset($source_facts['SOUR:AUTH']) ? $source_facts['SOUR:AUTH'] : '' ?></td>
             <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
-                <td><?= Functions::displayISODateRangeForSource($source, '--')?></td>      
+                <td><?= e(Functions::displayISODateRangeForSource($source, '--')) ?></td>      
             <?php else : ?>
                 <td></td>                 
             <?php endif ?>

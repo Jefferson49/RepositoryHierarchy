@@ -39,7 +39,7 @@ use Fisharebest\Webtrees\View;
 
 <?= view('components/breadcrumbs', ['links' => [route(ControlPanel::class) => MoreI18N::xlate('Control panel'), $title]]) ?>
 
-<h1><?= $title ?></h1>
+<h1><?=e($title) ?></h1>
 
 <div class="row mb-3">
 	<form method="post">
@@ -131,7 +131,7 @@ use Fisharebest\Webtrees\View;
             </div> 
             <div class="row">
                 <p></p>
-                <?= I18N::translate('Settings for the creation of AtoM REST links ("AtoM slugs"), which can be used to link a webtrees source citation to the source view in an external AtoM archive management system. Only applies if the option "%s" is activated.', I18N::translate('Show link to AtoM records within source citations')) ?>
+                <?= I18N::translate('Settings for the creation of AtoM REST links ("AtoM slugs"), which can be used to link a webtrees source citation to the source view in an external AtoM archive management system. Only applies if the option "%s" is activated.', I18N::translate('Show link to AtoM records within source citations'))?>
 
                 <div class="row">
                 <p></p>

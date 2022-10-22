@@ -19,9 +19,9 @@ use Illuminate\Support\Collection;
     <ul>
         <li>
             <?php if ($show_links) : ?>
-                <a href="#<?= $category->getId() ?>"><?= $category->getFrontEndName() ?></a>
+                <a href="#<?= e($category->getId()) ?>"><?= e($category->getFrontEndName()) ?></a>
             <?php else : ?>
-                <?= $category->getFrontEndName() ?>
+                <?= e($category->getFrontEndName()) ?>
             <?php endif ?>
 <?php endif ?>
 
@@ -39,4 +39,4 @@ use Illuminate\Support\Collection;
 <?php if (!$is_root_category) : ?>
         </li>
     </ul>
-<?php endif ?>	
+<?php endif ?>

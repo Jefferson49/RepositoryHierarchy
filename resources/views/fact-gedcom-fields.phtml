@@ -63,7 +63,7 @@ foreach ($keys as $key) {
 
             <?php $label = '<span class="label">' . MoreI18N::xlate('Source') . '</span>' ?>
             <?php $value = '<span class="field" dir="auto"><a href="' . e($source->url()) . '">' . $source->fullName() . '</a></span>' ?>
-            <?= MOreI18N::xlate('%1$s: %2$s', $label, $value) ?>
+            <?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
         </div>
 
         <div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
