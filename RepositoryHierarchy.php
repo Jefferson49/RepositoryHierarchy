@@ -1239,7 +1239,7 @@ class RepositoryHierarchy extends AbstractModule implements
         //Create and check repository from xref
         Auth::checkComponentAccess($this, ModuleInterface::class, $tree, $user);
         $repository  = Registry::repositoryFactory()->make($xref, $tree);
-        $repository  = Auth::checkRepositoryAccess($repository, false, true);
+        $repository  = Auth::checkRepositoryAccess($repository, false);
 
         //Copy values to this instance
         $this->tree = $tree;
@@ -1252,7 +1252,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
             if ($meta_xref !== '') {
                 $meta_repository  = Registry::repositoryFactory()->make($meta_xref, $tree);
-                $meta_repository  = Auth::checkRepositoryAccess($meta_repository, false, true);
+                $meta_repository  = Auth::checkRepositoryAccess($meta_repository, false);
 
                 $this->meta_repository_xref = $meta_xref;
                 $this->meta_repository = $meta_repository;
