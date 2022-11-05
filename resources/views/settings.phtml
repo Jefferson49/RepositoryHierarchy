@@ -15,6 +15,8 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_help_link
  * @var  bool		$show_category_expanded
  * @var  bool		$show_truncated_call_number
+ * @var  bool		$allow_rename
+ * @var  bool		$allow_new_sources
  * @var  bool		$show_truncated_category
  * @var  bool		$show_title
  * @var  bool		$show_xref
@@ -67,6 +69,12 @@ use Fisharebest\Webtrees\View;
 			</div> 
            <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Use truncated call numbers. The call numbers will be truncated and shown without call number category.'), 'name' => RepositoryHierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, 'checked' => $show_truncated_call_number]) ?>
+			</div> 
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Allow renaming of call number categories. Will show an icon and a link for renaming.'), 'name' => RepositoryHierarchy::PREF_ALLOW_RENAME, 'checked' => $allow_rename]) ?>
+			</div> 
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Allow adding new sources to a call number category. Will show an icon and a link to add new sources.'), 'name' => RepositoryHierarchy::PREF_ALLOW_NEW_SOURCE, 'checked' => $allow_new_source]) ?>
 			</div> 
            <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show the title of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_TITLE, 'checked' => $show_title]) ?>

@@ -161,6 +161,8 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_SHOW_FINDING_AID_TOC_TITLES = 'show_finding_aid_toc_titles';
     public const PREF_SHOW_FINDING_AID_WT_LINKS = 'show_finding_aid_wt_links';
     public const PREF_USE_META_REPOSITORIES = 'use_meta_repositories';
+    public const PREF_ALLOW_RENAME = 'allow_rename';
+    public const PREF_ALLOW_NEW_SOURCE = 'allow_new_source';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';
@@ -485,6 +487,8 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_HELP_LINK                   => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
                 self::PREF_SHOW_TRUNCATED_CALL_NUMBER       => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
                 self::PREF_SHOW_TRUNCATED_CATEGORY          => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
+                self::PREF_ALLOW_RENAME                     => boolval($this->getPreference(self::PREF_ALLOW_RENAME, '1')),
+                self::PREF_ALLOW_NEW_SOURCE                 => boolval($this->getPreference(self::PREF_ALLOW_NEW_SOURCE, '1')),
                 self::PREF_SHOW_TITLE                       => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
                 self::PREF_SHOW_XREF                        => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
                 self::PREF_SHOW_AUTHOR                      => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
@@ -526,6 +530,8 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_HELP_LINK, isset($params[self::PREF_SHOW_HELP_LINK]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, isset($params[self::PREF_SHOW_TRUNCATED_CALL_NUMBER]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, isset($params[self::PREF_SHOW_TRUNCATED_CATEGORY]) ? '1' : '0');
+            $this->setPreference(self::PREF_ALLOW_RENAME, isset($params[self::PREF_ALLOW_RENAME]) ? '1' : '0');
+            $this->setPreference(self::PREF_ALLOW_NEW_SOURCE, isset($params[self::PREF_ALLOW_NEW_SOURCE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TITLE, isset($params[self::PREF_SHOW_TITLE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_XREF, isset($params[self::PREF_SHOW_XREF]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_AUTHOR, isset($params[self::PREF_SHOW_AUTHOR]) ? '1' : '0');
