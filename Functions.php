@@ -172,7 +172,8 @@ class Functions
     /**
      * Source value by tag
      *
-     * @param Source $source
+     * @param Source     $source
+     * @param Repository $repository
      *
      * @return array    [$tag => $value]
      */
@@ -229,12 +230,6 @@ class Functions
                         break;
                 }
             }
-        }
-
-        //Substitue characters, which cause errors in XML/HTML
-        foreach ($source_values as $key=>$value) {
-            $source_values[$key] = e($value);
-            //$source_values[$key] = htmlspecialchars($value, ENT_XML1, 'UTF-8');
         }
 
         return $source_values;

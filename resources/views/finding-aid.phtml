@@ -27,7 +27,7 @@ use function date;
 <html lang="<?= $language_tag	?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<title><?= $title ?></title>
+		<title><?= Functions::removeHtmlTags($title) ?></title>
 
 		<style>
 			.finding-aid-body {
@@ -83,7 +83,7 @@ use function date;
 				<b><?= MoreI18N::xlate('Address') ?>:</b><br>
 				<?php $address_lines = Functions::getRepositoryAddressLines($repository_hierarchy->getRepository()) ?>
 				<?php foreach($address_lines as $line) : ?>
-					<?= $line?><br>
+					<?= e($line) ?><br>
 				<?php endforeach ?>
 			</p>
 		<?php endif ?>
@@ -91,9 +91,11 @@ use function date;
 		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC, '1'))) : ?>
 			<h2><?= I18N::translate('Table of Contents - Archival Arrangement') ?></h2>
 			<?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
+                'repository_hierarchy'	=> $repository_hierarchy,
                 'category'              => $repository_hierarchy->getRootCategory(),
                 'is_root_category'      => true,
                 'show_links'			=> !$forPDF && boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
+                'show_titles'			=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_TITLES, '0')),
             ]) ?>
 		<?php endif ?>
 

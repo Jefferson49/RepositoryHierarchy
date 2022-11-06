@@ -31,11 +31,7 @@ use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Illuminate\Support\Collection;
-use Psr\Http\Message\StreamInterface;
 use RuntimeException;
-
-use Fisharebest\Webtrees\Repository;
-use Symfony\Component\Config\Resource\ResourceInterface;
 
 use function md5;
 
@@ -96,8 +92,7 @@ class CallNumberCategory
 
 
     /**
-     * Constructor.
-     *
+     * Constructor
      */
     public function __construct(
         Tree $tree,
@@ -340,24 +335,6 @@ class CallNumberCategory
             return $this->truncated_call_numbers[$source->xref()];
         } else {
             return '';
-        }
-    }
-
-    /**
-     * Get call number for a source in a repository
-     *
-     * @param Source     $source
-     * @param Repository $repository
-     * @param bool       $truncated
-     *
-     * @return string
-     */
-    public function getCallNumber(Source $source, Repository $repository, bool $truncated = false): string
-    {
-        if ($truncated) {
-            return $this->getTruncatedCallNumber($source);
-        } else {
-            return Functions::getCallNumberForSource($source, [$repository]);
         }
     }
 

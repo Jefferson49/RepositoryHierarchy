@@ -61,6 +61,7 @@ This README file contains the following main sections:
     *   [Show additional source and repository information in source citations](#Using-citations)
     *   [Preferences](#Prefences)
 *   [**Demo website and examples**](#Demo)
+    *   [Demo website and examples for a meta repository](#Meta_demo)
 *   [Some more background about archive and library management](#Background)
     *   [Archival Arrangement](#Arrangement)
     *   [Library classification](#Classification)
@@ -400,6 +401,8 @@ The following preferences can be activated/deactivated by administrators in the 
 + Show help link after label for delimiter expression.
 + Use truncated categories. The call number categories will be truncated and shown without the trunk.
 + Use truncated call numbers. The call numbers will be truncated and shown without call number category.
++ Allow renaming of call number categories. Will show an icon and a link for renaming.
++ Allow adding new sources to a call number category. Will show an icon and a link to add new sources.
 + Show the title of the sources.
 + Show the XREF of the sources.
 + Show the author of the sources.
@@ -414,6 +417,7 @@ The following preferences can be activated/deactivated by administrators in the 
 + Include repository address within finding aid export.
 + Include links to webtrees sources within finding aid export.
 + Include table of contents within finding aid export.
++ Show titles within table of contents in finding aid export. 
 + Show links within table of contents in finding aid export (not available for PDF export).
 
 #### Preferences for EAD XML exports
@@ -439,11 +443,21 @@ The following links provide access to a demo website, which demonstrates some of
 
 + Example for an [**Individual Record**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Findividual%2FI6684%2FLeonhard-Kastler&language=en-GB) with source citations
 
+<a name="Meta_demo"></a>
+### Demo website and examples for a meta repository
+Additionally to the above demo website links, the following links, examples, and GEDCOM snippets demonstrate the features of the Repository Hierarchy module, which make use of a meta repository.
+
 + Example for a [**Meta Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR8773%2FMeta-Archiv-Familienforschung-Hemprich&language=en-GB)
 
 + Example for a [**Base Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR1%2FArchiv-Familienforschung-Hemprich&language=en-GB)
 
-The following GEDCOM snippets show the usage of the module in the INDI, SOUR, and REPO structures of webtrees/Gedcom. The snippets are related to the demo website above; the XREFs from the snippets can be directly found on the demo website.
+Please note in this webtrees demo site, how the Base Repository is linked to the meta repository: 
+
+>Reference number: R8773  
+Type: META_REPOSITORY
+
+
+The following GEDCOM snippets show the usage of a meta repository in the INDI, SOUR, and REPO structures of webtrees/Gedcom. The snippets are related to the demo website above; the XREFs from the snippets can be directly found on the demo website.
 
 >0 @I6684@ INDI  
 1 NAME Leonhard /Kastler/  
@@ -476,7 +490,7 @@ The following GEDCOM snippets show the usage of the module in the INDI, SOUR, an
 >0 @R7328@ REPO  
 1 NAME Matricula Online  
 
-In this example, R1 is the base repository, R8773 the meta repository, and R7328 just some other repository. With the Gedcom lines "1 REFN R8773  2 TYPE META_REPOSITORY", the meta repository is combined with the base repository. If the Repository Hierarchy module identifies this relationship, the two repositories (e.g. R1 and R8773) are combined and shown in the same hierarchical view. In order to create a benefit from this concecpt, the two repositories should use the same call number format (i.e. same delimiters, and the same call number category structure).
+In this example, R1 is the base repository, R8773 the meta repository, and R7328 is just some other repository. With the Gedcom lines "1 REFN R8773  2 TYPE META_REPOSITORY", the meta repository is combined with the base repository. If the Repository Hierarchy module identifies this relationship, the two repositories (e.g. R1 and R8773) are combined and shown in the same hierarchical view. In order to create a benefit from this concept, the two repositories should use the same call number format (i.e. same delimiters, and the same call number category structure).
 
 Please note that combining the base repository (R1) to the meta repository (R8773) mainly reduces effort and avoids redundancy for source repository citations of sources in the base repository. This is illustrated by the following example for a source in the base repository R1:
 
@@ -496,7 +510,7 @@ Source with "single" source repository citations (if using a combined meta repos
 1 REPO @R1@  
 2 CALN LiHa/Biogr/Litzel, Maximilian/Nr. 01  
 
-It is important to notice that both examples are working and both make use of the meta repository. However, the second example avoids redundancy.
+It is important to notice that both examples are equaly working and both make use of the meta repository. However, the second example avoids redundancy and needs less work.
 
 <a name="Background"></a>
 ## Some more background about archive and library management

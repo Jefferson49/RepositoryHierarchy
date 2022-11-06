@@ -23,7 +23,7 @@ use Fisharebest\Webtrees\Tree;
         <?= I18N::translate('Finding aid title') ?>
     </label>
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="finding_aid_title" name="finding_aid_title" value="<?= $finding_aid_title ?>" required="required">
+        <input class="form-control" type="text" id="finding_aid_title" name="finding_aid_title" value="<?= e($finding_aid_title) ?>" required="required">
     </div>
 </div>
 <div class="row mb-3">
@@ -47,7 +47,7 @@ use Fisharebest\Webtrees\Tree;
         <?= I18N::translate('Finding aid identifier') ?>
     </label>
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="finding_aid_identifier" name="finding_aid_identifier" value="<?= $finding_aid_identifier ?>" required="required">
+        <input class="form-control" type="text" id="finding_aid_identifier" name="finding_aid_identifier" value="<?= e($finding_aid_identifier) ?>" required="required">
     </div>
 </div>
 <div class="row mb-3">
@@ -63,7 +63,7 @@ use Fisharebest\Webtrees\Tree;
         <?= I18N::translate('Publisher') ?>
     </label>
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="finding_aid_publisher" name="finding_aid_publisher" value="<?= $finding_aid_publisher ?>">
+        <input class="form-control" type="text" id="finding_aid_publisher" name="finding_aid_publisher" value="<?= e($finding_aid_publisher) ?>">
     </div>
 </div>
 

@@ -84,8 +84,11 @@ class RepositoryHierarchy extends AbstractModule implements
     use ModuleGlobalTrait;
     use ModuleDataFixTrait;
 
-    //Module name
+    //Custom module name
     public const MODULE_NAME = '_repository_hierarchy_';
+
+    //Custom module version
+    public const CUSTOM_VERSION = '1.2.1';
 
     //Routes, attributes
     protected const MODULE_NAME_IN_ROUTE = 'repositoryhierarchy';
@@ -158,8 +161,11 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_SHOW_FINDING_AID_ADDRESS = 'show_finding_aid_address';
     public const PREF_SHOW_FINDING_AID_TOC = 'show_finding_aid_toc';
     public const PREF_SHOW_FINDING_AID_TOC_LINKS = 'show_finding_aid_toc_links';
+    public const PREF_SHOW_FINDING_AID_TOC_TITLES = 'show_finding_aid_toc_titles';
     public const PREF_SHOW_FINDING_AID_WT_LINKS = 'show_finding_aid_wt_links';
     public const PREF_USE_META_REPOSITORIES = 'use_meta_repositories';
+    public const PREF_ALLOW_RENAME = 'allow_rename';
+    public const PREF_ALLOW_NEW_SOURCE = 'allow_new_source';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';
@@ -179,9 +185,6 @@ class RepositoryHierarchy extends AbstractModule implements
 
     //User reference types in SOUR:REFN:TYPE
     public const SOUR_REFN_TYPE_META_REPO = 'META_REPOSITORY';
-
-    //Custom module version
-    public const CUSTOM_VERSION = '1.2.0';
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
@@ -484,6 +487,8 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_HELP_LINK                   => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
                 self::PREF_SHOW_TRUNCATED_CALL_NUMBER       => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
                 self::PREF_SHOW_TRUNCATED_CATEGORY          => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
+                self::PREF_ALLOW_RENAME                     => boolval($this->getPreference(self::PREF_ALLOW_RENAME, '1')),
+                self::PREF_ALLOW_NEW_SOURCE                 => boolval($this->getPreference(self::PREF_ALLOW_NEW_SOURCE, '1')),
                 self::PREF_SHOW_TITLE                       => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
                 self::PREF_SHOW_XREF                        => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
                 self::PREF_SHOW_AUTHOR                      => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
@@ -495,6 +500,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
                 self::PREF_SHOW_FINDING_AID_TOC             => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
                 self::PREF_SHOW_FINDING_AID_TOC_LINKS       => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
+                self::PREF_SHOW_FINDING_AID_TOC_TITLES      => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_TITLES, '1')),
                 self::PREF_ALLOW_ADMIN_XML_SETTINGS         => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
                 self::PREF_USE_META_REPOSITORIES            => boolval($this->getPreference(self::PREF_USE_META_REPOSITORIES, '0')),
                 self::PREF_ATOM_SLUG                        => $this->getPreference(self::PREF_ATOM_SLUG, self::PREF_ATOM_SLUG_CALL_NUMBER),
@@ -524,6 +530,8 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_HELP_LINK, isset($params[self::PREF_SHOW_HELP_LINK]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, isset($params[self::PREF_SHOW_TRUNCATED_CALL_NUMBER]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, isset($params[self::PREF_SHOW_TRUNCATED_CATEGORY]) ? '1' : '0');
+            $this->setPreference(self::PREF_ALLOW_RENAME, isset($params[self::PREF_ALLOW_RENAME]) ? '1' : '0');
+            $this->setPreference(self::PREF_ALLOW_NEW_SOURCE, isset($params[self::PREF_ALLOW_NEW_SOURCE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TITLE, isset($params[self::PREF_SHOW_TITLE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_XREF, isset($params[self::PREF_SHOW_XREF]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_AUTHOR, isset($params[self::PREF_SHOW_AUTHOR]) ? '1' : '0');
@@ -535,6 +543,7 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC, isset($params[self::PREF_SHOW_FINDING_AID_TOC]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_TOC_LINKS]) ? '1' : '0');
+            $this->setPreference(self::PREF_SHOW_FINDING_AID_TOC_TITLES, isset($params[self::PREF_SHOW_FINDING_AID_TOC_TITLES]) ? '1' : '0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, isset($params[self::PREF_ALLOW_ADMIN_XML_SETTINGS]) ? '1' : '0');
             $this->setPreference(self::PREF_USE_META_REPOSITORIES, isset($params[self::PREF_USE_META_REPOSITORIES]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_ATOM_LINKS, isset($params[self::PREF_SHOW_ATOM_LINKS]) ? '1' : '0');
@@ -1236,7 +1245,7 @@ class RepositoryHierarchy extends AbstractModule implements
         //Create and check repository from xref
         Auth::checkComponentAccess($this, ModuleInterface::class, $tree, $user);
         $repository  = Registry::repositoryFactory()->make($xref, $tree);
-        $repository  = Auth::checkRepositoryAccess($repository, false, true);
+        $repository  = Auth::checkRepositoryAccess($repository, false);
 
         //Copy values to this instance
         $this->tree = $tree;
@@ -1249,7 +1258,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
             if ($meta_xref !== '') {
                 $meta_repository  = Registry::repositoryFactory()->make($meta_xref, $tree);
-                $meta_repository  = Auth::checkRepositoryAccess($meta_repository, false, true);
+                $meta_repository  = Auth::checkRepositoryAccess($meta_repository, false);
 
                 $this->meta_repository_xref = $meta_xref;
                 $this->meta_repository = $meta_repository;

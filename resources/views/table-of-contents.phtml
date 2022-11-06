@@ -8,9 +8,11 @@ use Fisharebest\Webtrees\View;
 use Illuminate\Support\Collection;
 
 /**
- * @var CallNumberCategory $category
- * @var bool               $is_root_category
- * @var bool               $show_links
+ * @var CallNumberCategory  $category
+ * @var RepositoryHierarchy $repository_hierarchy
+ * @var bool                $is_root_category
+ * @var bool                $show_links
+ * @var bool                $show_titles
  */
 
 ?>
@@ -19,10 +21,17 @@ use Illuminate\Support\Collection;
     <ul>
         <li>
             <?php if ($show_links) : ?>
-                <a href="#<?= $category->getId() ?>"><?= $category->getFrontEndName() ?></a>
+                <a href="#<?= e($category->getId()) ?>"><?= e($category->getFrontEndName()) ?></a>
             <?php else : ?>
-                <?= $category->getFrontEndName() ?>
+                <?= e($category->getFrontEndName()) ?>
             <?php endif ?>
+
+            <?php $title = $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
+			<?php if (($title !== '') && $show_titles): ?>
+				(
+					<?= $title ?>
+				)
+		    <?php endif ?>	
 <?php endif ?>
 
 <?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
@@ -30,13 +39,15 @@ use Illuminate\Support\Collection;
 
 <?php foreach ($categories as $sub_category) : ?>
     <?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
+            'repository_hierarchy'	=> $repository_hierarchy,
             'category'              => $sub_category,
             'is_root_category'      => false,
             'show_links'			=> $show_links,
+            'show_titles'			=> $show_titles,
             ]) ?>
 <?php endforeach ?>
 
 <?php if (!$is_root_category) : ?>
         </li>
     </ul>
-<?php endif ?>	
+<?php endif ?>

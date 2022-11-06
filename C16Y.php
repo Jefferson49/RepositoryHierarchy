@@ -33,7 +33,6 @@ use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Module\ModuleLanguageInterface;
-use RuntimeException;
 
 use function sprintf;
 
@@ -61,23 +60,24 @@ class C16Y
         $po_file = $path . $repository->xref() . '_' .  Session::get('language') .'.po';
         $default_po_file = $path . $repository->xref() .'.po';
 
-        //Create a dummy locale (is required by the Translator for the plural rule)
-        $dummy_locale = Locale::create('de');
+        //Create locale (is required by the Translator for the plural rule)
+        $locale = Locale::create(Session::get('language'));
+        $default_locale = Locale::create('en-GB');
 
         // Load the "translation" file
         try {
             $translation  = new Translation($po_file);
             $translations = $translation->asArray();
-            self::$translator = new Translator($translations, $dummy_locale->pluralRule());
+            self::$translator = new Translator($translations, $locale->pluralRule());
         } catch (Exception $ex) {
             //if no .po file is found, try the default file (without language tag)
             try {
                 $translation  = new Translation($default_po_file);
                 $translations = $translation->asArray();
-                self::$translator = new Translator($translations, $dummy_locale->pluralRule());
+                self::$translator = new Translator($translations, $default_locale->pluralRule());
             } catch (Exception $ex) {
                 //if still no .po file is found, create empty translator
-                self::$translator = new Translator([], $dummy_locale->pluralRule());
+                self::$translator = new Translator([], $default_locale->pluralRule());
             }
         }
     }
