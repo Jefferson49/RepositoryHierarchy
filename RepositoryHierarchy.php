@@ -84,8 +84,11 @@ class RepositoryHierarchy extends AbstractModule implements
     use ModuleGlobalTrait;
     use ModuleDataFixTrait;
 
-    //Module name
+    //Custom module name
     public const MODULE_NAME = '_repository_hierarchy_';
+
+    //Custom module version
+    public const CUSTOM_VERSION = '1.2.1';
 
     //Routes, attributes
     protected const MODULE_NAME_IN_ROUTE = 'repositoryhierarchy';
@@ -182,9 +185,6 @@ class RepositoryHierarchy extends AbstractModule implements
 
     //User reference types in SOUR:REFN:TYPE
     public const SOUR_REFN_TYPE_META_REPO = 'META_REPOSITORY';
-
-    //Custom module version
-    public const CUSTOM_VERSION = '1.2.0';
 
     //Github repository
     public const GITHUB_REPO = 'Jefferson49/RepositoryHierarchy';
