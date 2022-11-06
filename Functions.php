@@ -172,7 +172,8 @@ class Functions
     /**
      * Source value by tag
      *
-     * @param Source $source
+     * @param Source     $source
+     * @param Repository $repository
      *
      * @return array    [$tag => $value]
      */

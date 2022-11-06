@@ -31,11 +31,7 @@ use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Illuminate\Support\Collection;
-use Psr\Http\Message\StreamInterface;
 use RuntimeException;
-
-use Fisharebest\Webtrees\Repository;
-use Symfony\Component\Config\Resource\ResourceInterface;
 
 use function md5;
 
@@ -96,8 +92,7 @@ class CallNumberCategory
 
 
     /**
-     * Constructor.
-     *
+     * Constructor
      */
     public function __construct(
         Tree $tree,

@@ -50,11 +50,11 @@ use Fisharebest\Webtrees\I18N;
 		<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
 			<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_ALLOW_RENAME, '1'))) : ?>
 				<a href="<?= e(route(CallNumberDataFix::class, [
-						'tree' => $repository_hierarchy->getTree()->name(),
-						'xref' => $repository_hierarchy->getRepositoryXref(),
-						'category_name' => $category->getName(),
-						'category_full_name' => $category->getFullName()
-						])) ?>">
+                        'tree' => $repository_hierarchy->getTree()->name(),
+                        'xref' => $repository_hierarchy->getRepositoryXref(),
+                        'category_name' => $category->getName(),
+                        'category_full_name' => $category->getFullName()
+                        ])) ?>">
 					<?= view('icons/edit') ?>
 					<?= I18N::translate('Rename') ?>	
 				</a>
@@ -63,10 +63,10 @@ use Fisharebest\Webtrees\I18N;
 			<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_ALLOW_NEW_SOURCE, '1'))) : ?>
 				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
 							data-wt-href="<?= e(route(CreateSourceModal::class, [
-								'tree' => $repository_hierarchy->getTree()->name(),
-								'xref' => $repository_hierarchy->getRepositoryXref(),
-								'source_call_number' => $category->getFullName()
-								])) ?>">
+                                'tree' => $repository_hierarchy->getTree()->name(),
+                                'xref' => $repository_hierarchy->getRepositoryXref(),
+                                'source_call_number' => $category->getFullName()
+                                ])) ?>">
 					<?= view('icons/source') ?>
 					<?= I18N::translate('Add new source') ?>	
 				</a>

@@ -33,7 +33,6 @@ use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Module\ModuleLanguageInterface;
-use RuntimeException;
 
 use function sprintf;
 
