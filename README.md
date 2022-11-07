@@ -3,7 +3,7 @@
 
 <a name="Overview"></a>				
 ##  Repository Hierarchy Overview
-A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated . The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The EAD XML export is also compatible with apeEAD, which allows data exchange with an archive portal.
+A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated. The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The EAD XML export is compatible with apeEAD, which allows data exchange with an archive portal.
 
 The module uses delimiters to cut call numbers (of sources) into sub-strings and extracts call number categories. Based on the extracted categories, a hierarchical tree of call number categories with the related sources is constructed and shown.
 
@@ -36,15 +36,15 @@ To specify delimiters, the module can handle single characters as well as comple
 ![Screenshot](resources/img/screenshot.jpg)
 
 <a name="Contents"></a>				
-##  Table of Contents
+##  Table of contents
 This README file contains the following main sections:
 *   [Overview](#Overview)
 *   [Screenshot](#Screenshot)
-*   [Table of Contents](#Contents)
+*   [Table of contents](#Contents)
 *   [What are the benefits of using this module?](#Benefits)
 *   [Installation](#Installation)
-*   [Webtrees Version](#Version)
-*   [Concepts of the Repository Hierarchy Module](#Concepts)
+*   [Webtrees version](#Version)
+*   [Concepts of the Repository Hierarchy module](#Concepts)
 *   [**How to use the module?**](#Usage)
     *   [Using delimiters](#Using-delimiters)
     *   [Save and load options](#Using-save-load)
@@ -73,7 +73,7 @@ This README file contains the following main sections:
 *   [How the module maps to Gedcom and to archive management concepts](#Mapping)
 *   [Translation](#Translation)
 *   [Bugs and feature requests](#Bugs)
-*   [Github Repository](#Github)
+*   [Github repository](#Github)
 
 <a name="Benefits"></a>
 ##  What are the benefits of using this module?
@@ -101,7 +101,7 @@ This README file contains the following main sections:
 The latest release of the module was developed and tested with [webtrees 2.1.7](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
 
 <a name="Concepts"></a>
-##  Concepts of the Repository Hierarchy Module
+##  Concepts of the Repository Hierarchy module
 In the following, the concepts of the Repository Hierarchy module are described. 
 
 ###  Call number categories
@@ -358,7 +358,7 @@ For re-importing EAD XML the same webtrees repository, the AtoM setting "Ignore 
 ### Create links between webtrees and an external archive management system
 When exporting webtrees data to an external archive system, linking between webtrees and the external system helps to connect the two systems and to keep redundancy at a mimimum.
 
-The following concept was tested with the [AtoM](https://www.accesstomemory.org/) archive management system. If you are interested to interact with other archive management systems, please contact the [module author](http://www.familienforschung-hemprich.de/index.php/de/kontakt) for further clarifcation and discussion.
+The following concept was tested with the [AtoM](https://www.accesstomemory.org/) archive management system. If you are interested to interact with other archive management systems, please contact the [module author](https://www.familienforschung-hemprich.de/index.php/de/kontakt) for further clarifcation and discussion.
 
 While exporting data from webtrees with an EAD XML export, a XML structure with URLs to each of the sources in webtrees is included. After importing the EAD XML into AtoM, the links are shown in the user interface and can be used to navigate to the related webtrees source.
 
@@ -437,19 +437,19 @@ The following preferences can be activated/deactivated by administrators in the 
 ## Demo website and examples
 The following links provide access to a demo website, which demonstrates some of the module features.
 
-+ Demo website for the [**Repository Hierarchy module**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepositoryhierarchy%2Fxref%2F%7Bxref%7D%2Fdelimiter_expression%2F%7Bdelimiter_expression%7D%2Fcommand%2F%7Bcommand%7D&language=en-GB)
++ Demo website for the [**Repository Hierarchy module**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepositoryhierarchy%2Fxref%2F%7Bxref%7D%2Fdelimiter_expression%2F%7Bdelimiter_expression%7D%2Fcommand%2F%7Bcommand%7D&language=en-GB)
 
-+ Example for a [**Source Record**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Fsource%2FS8685%2FKirchenbuch-Deubach-Taufen-1670-1804&language=en-GB) with source repository citation (and 2nd citation for a meta repository)
++ Example for a [**Source Record**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Fsource%2FS8685%2FKirchenbuch-Deubach-Taufen-1670-1804&language=en-GB) with source repository citation (and 2nd citation for a meta repository)
 
-+ Example for an [**Individual Record**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Findividual%2FI6684%2FLeonhard-Kastler&language=en-GB) with source citations
++ Example for an [**Individual Record**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Findividual%2FI6684%2FLeonhard-Kastler&language=en-GB) with source citations
 
 <a name="Meta_demo"></a>
 ### Demo website and examples for a meta repository
 Additionally to the above demo website links, the following links, examples, and GEDCOM snippets demonstrate the features of the Repository Hierarchy module, which make use of a meta repository.
 
-+ Example for a [**Meta Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR8773%2FMeta-Archiv-Familienforschung-Hemprich&language=en-GB)
++ Example for a [**Meta Repository**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR8773%2FMeta-Archiv-Familienforschung-Hemprich&language=en-GB)
 
-+ Example for a [**Base Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR1%2FArchiv-Familienforschung-Hemprich&language=en-GB)
++ Example for a [**Base Repository**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR1%2FArchiv-Familienforschung-Hemprich&language=en-GB)
 
 Please note in this webtrees demo site, how the Base Repository is linked to the meta repository: 
 
