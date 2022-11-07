@@ -358,7 +358,7 @@ For re-importing EAD XML the same webtrees repository, the AtoM setting "Ignore 
 ### Create links between webtrees and an external archive management system
 When exporting webtrees data to an external archive system, linking between webtrees and the external system helps to connect the two systems and to keep redundancy at a mimimum.
 
-The following concept was tested with the [AtoM](https://www.accesstomemory.org/) archive management system. If you are interested to interact with other archive management systems, please contact the [module author](http://www.familienforschung-hemprich.de/index.php/de/kontakt) for further clarifcation and discussion.
+The following concept was tested with the [AtoM](https://www.accesstomemory.org/) archive management system. If you are interested to interact with other archive management systems, please contact the [module author](https://www.familienforschung-hemprich.de/index.php/de/kontakt) for further clarifcation and discussion.
 
 While exporting data from webtrees with an EAD XML export, a XML structure with URLs to each of the sources in webtrees is included. After importing the EAD XML into AtoM, the links are shown in the user interface and can be used to navigate to the related webtrees source.
 
@@ -437,19 +437,19 @@ The following preferences can be activated/deactivated by administrators in the 
 ## Demo website and examples
 The following links provide access to a demo website, which demonstrates some of the module features.
 
-+ Demo website for the [**Repository Hierarchy module**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepositoryhierarchy%2Fxref%2F%7Bxref%7D%2Fdelimiter_expression%2F%7Bdelimiter_expression%7D%2Fcommand%2F%7Bcommand%7D&language=en-GB)
++ Demo website for the [**Repository Hierarchy module**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepositoryhierarchy%2Fxref%2F%7Bxref%7D%2Fdelimiter_expression%2F%7Bdelimiter_expression%7D%2Fcommand%2F%7Bcommand%7D&language=en-GB)
 
-+ Example for a [**Source Record**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Fsource%2FS8685%2FKirchenbuch-Deubach-Taufen-1670-1804&language=en-GB) with source repository citation (and 2nd citation for a meta repository)
++ Example for a [**Source Record**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Fsource%2FS8685%2FKirchenbuch-Deubach-Taufen-1670-1804&language=en-GB) with source repository citation (and 2nd citation for a meta repository)
 
-+ Example for an [**Individual Record**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Findividual%2FI6684%2FLeonhard-Kastler&language=en-GB) with source citations
++ Example for an [**Individual Record**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Findividual%2FI6684%2FLeonhard-Kastler&language=en-GB) with source citations
 
 <a name="Meta_demo"></a>
 ### Demo website and examples for a meta repository
 Additionally to the above demo website links, the following links, examples, and GEDCOM snippets demonstrate the features of the Repository Hierarchy module, which make use of a meta repository.
 
-+ Example for a [**Meta Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR8773%2FMeta-Archiv-Familienforschung-Hemprich&language=en-GB)
++ Example for a [**Meta Repository**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR8773%2FMeta-Archiv-Familienforschung-Hemprich&language=en-GB)
 
-+ Example for a [**Base Repository**](http://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR1%2FArchiv-Familienforschung-Hemprich&language=en-GB)
++ Example for a [**Base Repository**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Frepository%2FR1%2FArchiv-Familienforschung-Hemprich&language=en-GB)
 
 Please note in this webtrees demo site, how the Base Repository is linked to the meta repository: 
 
