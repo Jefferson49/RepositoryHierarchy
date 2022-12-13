@@ -88,7 +88,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const MODULE_NAME = '_repository_hierarchy_';
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.2.1';
+    public const CUSTOM_VERSION = '1.2.2';
 
     //Routes, attributes
     protected const MODULE_NAME_IN_ROUTE = 'repositoryhierarchy';
