@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2022-11-05 13:14+0100\n"
+"POT-Creation-Date: 2022-12-17 19:52+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -9,16 +9,16 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: CallNumberCategory.php:189
+#: CallNumberCategory.php:184
 msgid "Sources without call number"
 msgstr "Quellen ohne Signatur"
 
-#: CallNumberCategory.php:191
+#: CallNumberCategory.php:186
 msgid "Default call number category"
 msgstr "Defaultwert für Signatur-Kategorie"
 
@@ -487,27 +487,27 @@ msgstr "Anzeigen und Optionen zum Laden/Speichern"
 msgid "view"
 msgstr "Anzeigen"
 
-#: resources/views/settings.phtml:52
+#: resources/views/settings.phtml:54
 msgid "Settings for Repository Hierarchy list"
 msgstr "Einstellungen für die Archiv Hierarchie Auflistung"
 
-#: resources/views/settings.phtml:54
+#: resources/views/settings.phtml:56
 msgid "Show label before call number category."
 msgstr "Anzeige Label vor Signatur-Kategorien."
 
-#: resources/views/settings.phtml:57 resources/views/settings.phtml:102
+#: resources/views/settings.phtml:59 resources/views/settings.phtml:104
 msgid "Show titles of call number categories (if available from .po file)."
 msgstr "Titel für Signatur-Kategorien anzeigen (wenn verfügbar aus .po Datei)."
 
-#: resources/views/settings.phtml:60
+#: resources/views/settings.phtml:62
 msgid "Show help icon after label for delimiter expression."
 msgstr "Hilfe-Icon nach dem Label für den Delimiter Ausdruck anzeigen."
 
-#: resources/views/settings.phtml:63
+#: resources/views/settings.phtml:65
 msgid "Show help link after label for delimiter expression."
 msgstr "Hilfe-Link nach dem Label für den Delimiter Ausdruck anzeigen."
 
-#: resources/views/settings.phtml:66
+#: resources/views/settings.phtml:68
 msgid ""
 "Use truncated categories. The call number categories will be truncated and "
 "shown without the trunk."
@@ -515,7 +515,7 @@ msgstr ""
 "Verwendung von gekürzten Kategorien. Signatur-Kategorien werden vom Stamm "
 "der Signatur-Kategorien abgeschnitten und ohne den Stamm angezeigt."
 
-#: resources/views/settings.phtml:69
+#: resources/views/settings.phtml:71
 msgid ""
 "Use truncated call numbers. The call numbers will be truncated and shown "
 "without call number category."
@@ -523,7 +523,7 @@ msgstr ""
 "Verwendung von gekürzten Signaturen. Signaturen werden abgeschnitten und "
 "ohne Signatur-Kategorien angezeigt."
 
-#: resources/views/settings.phtml:72
+#: resources/views/settings.phtml:74
 msgid ""
 "Allow renaming of call number categories. Will show an icon and a link for "
 "renaming."
@@ -531,7 +531,7 @@ msgstr ""
 "Umbenennen von Signatur-Kategorien erlauben. Ein Symbol und ein Link zur "
 "Umbenennung wird angezeigt."
 
-#: resources/views/settings.phtml:75
+#: resources/views/settings.phtml:77
 msgid ""
 "Allow adding new sources to a call number category. Will show an icon and a "
 "link to add new sources."
@@ -539,32 +539,32 @@ msgstr ""
 "Hinzufügen von neuen Quellen zu Signatur-Kategorien erlauben. Ein Symbol und "
 "ein Link zum Hinzufügen wird angezeigt."
 
-#: resources/views/settings.phtml:78
+#: resources/views/settings.phtml:80
 msgid "Show the title of the sources."
 msgstr "Titel bei Quellen anzeigen."
 
-#: resources/views/settings.phtml:81
+#: resources/views/settings.phtml:83
 msgid "Show the XREF of the sources."
 msgstr "XREF Bezeichner bei Quellen anzeigen."
 
-#: resources/views/settings.phtml:84
+#: resources/views/settings.phtml:86
 msgid "Show the author of the sources."
 msgstr "Autor bei Quellen anzeigen."
 
-#: resources/views/settings.phtml:87
+#: resources/views/settings.phtml:89
 msgid "Show the date range of the sources."
 msgstr "Datumsbereich bei Quellen anzeigen."
 
-#: resources/views/settings.phtml:90
+#: resources/views/settings.phtml:92
 msgid "Allow users to load stored delimiter expressions from administrator."
 msgstr ""
 "Laden von gespeicherten Delimiter Ausdrücken vom Administrator erlauben."
 
-#: resources/views/settings.phtml:94
+#: resources/views/settings.phtml:96
 msgid "Settings for source citations"
 msgstr "Einstellungen für Quellen-Zitate"
 
-#: resources/views/settings.phtml:96
+#: resources/views/settings.phtml:98
 msgid ""
 "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source "
 "citations."
@@ -572,28 +572,28 @@ msgstr ""
 "Zusätzliche Fakten  (REPO, REPO:CALN, REFN, NOTE) innerhalb von Quellen-"
 "Zitaten anzeigen."
 
-#: resources/views/settings.phtml:100
+#: resources/views/settings.phtml:102
 msgid "Settings for finding aid exports"
 msgstr "Einstellungen für Findbuch-Exporte"
 
-#: resources/views/settings.phtml:105
+#: resources/views/settings.phtml:107
 msgid "Include repository address within finding aid export."
 msgstr "Adresse des Archivs in den Findbuch-Export einfügen."
 
-#: resources/views/settings.phtml:108
+#: resources/views/settings.phtml:110
 msgid "Include links to webtrees sources within finding aid export."
 msgstr "Einfügen von Links zu webtrees Quellen innerhalb des Findbuch-Exports."
 
-#: resources/views/settings.phtml:111
+#: resources/views/settings.phtml:113
 msgid "Include table of contents within finding aid export."
 msgstr "Inhaltsverzeichnis innerhalb des Findbuch-Exports einfügen."
 
-#: resources/views/settings.phtml:114
+#: resources/views/settings.phtml:116
 msgid "Show titles within table of contents in finding aid export."
 msgstr ""
 "Titel innerhalb des Inhaltsverzeichnisses von Findbuch-Exporten anzeigen."
 
-#: resources/views/settings.phtml:117
+#: resources/views/settings.phtml:119
 msgid ""
 "Show links within table of contents in finding aid export (not available for "
 "PDF export)."
@@ -601,27 +601,27 @@ msgstr ""
 "Links innerhalb des Inhaltsverzeichnisses von Findbuch-Exporten anzeigen "
 "(nicht verfügbar bei PDF Export)."
 
-#: resources/views/settings.phtml:121
+#: resources/views/settings.phtml:123
 msgid "Settings for EAD XML exports"
 msgstr "Einstellungen für EAD XML Exporte"
 
-#: resources/views/settings.phtml:123
+#: resources/views/settings.phtml:125
 msgid "Allow users to load stored XML settings from administrator."
 msgstr "Laden von gespeicherten XML Einstellungen vom Administrator erlauben."
 
-#: resources/views/settings.phtml:127
+#: resources/views/settings.phtml:129
 msgid "Settings for Meta Repositories"
 msgstr "Einstellungen für Meta Archive"
 
-#: resources/views/settings.phtml:129
+#: resources/views/settings.phtml:131
 msgid "Use Meta Repositories."
 msgstr "Meta Archive benutzen."
 
-#: resources/views/settings.phtml:133
+#: resources/views/settings.phtml:135
 msgid "Settings for linking to external archive management tools"
 msgstr "Einstellungen für die Verlinkung zu externen Archiv-Management Tools"
 
-#: resources/views/settings.phtml:135
+#: resources/views/settings.phtml:137
 msgid ""
 "The following settings apply if AtoM (https://www.accesstomemory.org) is "
 "used as an external archive management system."
@@ -629,11 +629,11 @@ msgstr ""
 "Die folgenden Einstellungen sind relevant, wenn AtoM (https://www."
 "accesstomemory.org) als externes Archiv Management System verwendet wird."
 
-#: resources/views/settings.phtml:139 resources/views/settings.phtml:143
+#: resources/views/settings.phtml:141 resources/views/settings.phtml:145
 msgid "Show link to AtoM records within source citations"
 msgstr "Link zu AtoM Datensätzen innerhalb von Quellen-Zitaten anzeigen"
 
-#: resources/views/settings.phtml:143
+#: resources/views/settings.phtml:145
 #, php-format
 msgid ""
 "Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be "
@@ -646,24 +646,24 @@ msgstr ""
 "in einem externen AtoM Archiv-Management-System zu verlinken. Nur anwendbar, "
 "wenn die Option \"%s\" aktiviert ist."
 
-#: resources/views/settings.phtml:151
+#: resources/views/settings.phtml:153
 msgid "Use call numbers to create AtoM REST links (\"AtoM slugs\")"
 msgstr "Benutze Signaturen, um AtoM REST-Links (\"AtoM slugs\") zu erzeugen"
 
-#: resources/views/settings.phtml:152
+#: resources/views/settings.phtml:154
 msgid "Use source titles to create AtoM REST links (\"AtoM slugs\")"
 msgstr ""
 "Benutze den Quellen-Titel, um AtoM REST-Links (\"AtoM slugs\") zu erzeugen"
 
-#: resources/views/settings.phtml:158
+#: resources/views/settings.phtml:160
 msgid "Base URL for AtoM"
 msgstr "Basis-URL für AtoM"
 
-#: resources/views/settings.phtml:166
+#: resources/views/settings.phtml:168
 msgid "Repositories, for which AtoM linking is used."
 msgstr "Archive, für welche AtoM-Links verwendet werden."
 
-#: resources/views/settings.phtml:171
+#: resources/views/settings.phtml:173
 msgid ""
 "Format treename:xref. A list of several entries can be separated by comma, e."
 "g. \"my_tree:X1765,my_tree:X2987\""
@@ -671,7 +671,7 @@ msgstr ""
 "Format Stammbaum:XREF. Ein Liste von mehreren Einträgen kann durch Kommas "
 "getrennt werden, z.B. \"mein_baum:X1765,mein_baum:X2987\""
 
-#: resources/views/settings.phtml:179
+#: resources/views/settings.phtml:181
 msgid "save"
 msgstr "Speichern"
 

@@ -1,24 +1,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2022-11-05 13:14+0100\n"
+"POT-Creation-Date: 2022-12-17 19:54+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
 "Language-Team: \n"
-"Language: de\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: CallNumberCategory.php:189
+#: CallNumberCategory.php:184
 msgid "Sources without call number"
 msgstr "Bronnen zonder referentienummer"
 
-#: CallNumberCategory.php:191
+#: CallNumberCategory.php:186
 msgid "Default call number category"
 msgstr "Standaard referentienummercategorie"
 
@@ -491,29 +492,29 @@ msgstr "Opties voor bekijken en laden/opslaan"
 msgid "view"
 msgstr "bekijken"
 
-#: resources/views/settings.phtml:52
+#: resources/views/settings.phtml:54
 msgid "Settings for Repository Hierarchy list"
 msgstr "Instellingen voor opslagplaatshiërarchieflijst"
 
-#: resources/views/settings.phtml:54
+#: resources/views/settings.phtml:56
 msgid "Show label before call number category."
 msgstr "Toon label voor referentienummercategorie."
 
-#: resources/views/settings.phtml:57 resources/views/settings.phtml:102
+#: resources/views/settings.phtml:59 resources/views/settings.phtml:104
 msgid "Show titles of call number categories (if available from .po file)."
 msgstr ""
 "Toon titels van referentienummercategorieën (indien beschikbaar in .po-"
 "bestand)."
 
-#: resources/views/settings.phtml:60
+#: resources/views/settings.phtml:62
 msgid "Show help icon after label for delimiter expression."
 msgstr "Toon helppictogram na label voor scheidingstekenexpressie."
 
-#: resources/views/settings.phtml:63
+#: resources/views/settings.phtml:65
 msgid "Show help link after label for delimiter expression."
 msgstr "Toon helplink na label voor scheidingstekenexpressie."
 
-#: resources/views/settings.phtml:66
+#: resources/views/settings.phtml:68
 msgid ""
 "Use truncated categories. The call number categories will be truncated and "
 "shown without the trunk."
@@ -521,7 +522,7 @@ msgstr ""
 "Gebruik afgekorte categorieën. De referentienummercategorieën worden "
 "afgekort en getoond zonder de stam."
 
-#: resources/views/settings.phtml:69
+#: resources/views/settings.phtml:71
 msgid ""
 "Use truncated call numbers. The call numbers will be truncated and shown "
 "without call number category."
@@ -529,7 +530,7 @@ msgstr ""
 "Gebruik afgekorte referentienummers. De referentienummers worden afgekort en "
 "getoond zonder referentienummercategorieën."
 
-#: resources/views/settings.phtml:72
+#: resources/views/settings.phtml:74
 msgid ""
 "Allow renaming of call number categories. Will show an icon and a link for "
 "renaming."
@@ -537,7 +538,7 @@ msgstr ""
 "Hernoemen van referentienummercategorieën toestaan. Toont een pictogram en "
 "een link voor het hernoemen."
 
-#: resources/views/settings.phtml:75
+#: resources/views/settings.phtml:77
 msgid ""
 "Allow adding new sources to a call number category. Will show an icon and a "
 "link to add new sources."
@@ -545,60 +546,60 @@ msgstr ""
 "Toevoegen van nieuwe bronnen aan een referentienummercategorie toestaan. "
 "Toont een pictogram en een link om nieuwe bronnen toe te voegen."
 
-#: resources/views/settings.phtml:78
+#: resources/views/settings.phtml:80
 msgid "Show the title of the sources."
 msgstr "Toon de titel van de bronnen."
 
-#: resources/views/settings.phtml:81
+#: resources/views/settings.phtml:83
 msgid "Show the XREF of the sources."
 msgstr "Toon de XREF van de bronnen."
 
-#: resources/views/settings.phtml:84
+#: resources/views/settings.phtml:86
 msgid "Show the author of the sources."
 msgstr "Toon de auteur van de bronnen."
 
-#: resources/views/settings.phtml:87
+#: resources/views/settings.phtml:89
 msgid "Show the date range of the sources."
 msgstr "Toon het datumbereik van de bronnen."
 
-#: resources/views/settings.phtml:90
+#: resources/views/settings.phtml:92
 msgid "Allow users to load stored delimiter expressions from administrator."
 msgstr ""
 "Gebruikers toestaan om opgeslagen scheidingstekenexpressies van de beheerder "
 "te laden."
 
-#: resources/views/settings.phtml:94
+#: resources/views/settings.phtml:96
 msgid "Settings for source citations"
 msgstr "Instellingen voor bronvermeldingen"
 
-#: resources/views/settings.phtml:96
+#: resources/views/settings.phtml:98
 msgid ""
 "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source "
 "citations."
 msgstr ""
 "Toon extra bronfeiten (REPO, REPO:CALN, REFN, NOTE) binnen bronvermeldingen."
 
-#: resources/views/settings.phtml:100
+#: resources/views/settings.phtml:102
 msgid "Settings for finding aid exports"
 msgstr "Instellingen voor export van archieftoegangen"
 
-#: resources/views/settings.phtml:105
+#: resources/views/settings.phtml:107
 msgid "Include repository address within finding aid export."
 msgstr "Adres van de opslagplaats opnemen in export van archieftoegangen."
 
-#: resources/views/settings.phtml:108
+#: resources/views/settings.phtml:110
 msgid "Include links to webtrees sources within finding aid export."
 msgstr "Links naar webtrees-bronnen opnemen in export van archieftoegangen."
 
-#: resources/views/settings.phtml:111
+#: resources/views/settings.phtml:113
 msgid "Include table of contents within finding aid export."
 msgstr "Inhoudsopgave opnemen in export van archieftoegangen."
 
-#: resources/views/settings.phtml:114
+#: resources/views/settings.phtml:116
 msgid "Show titles within table of contents in finding aid export."
 msgstr "Toon titels in de inhoudsopgave ook in export van archieftoegangen."
 
-#: resources/views/settings.phtml:117
+#: resources/views/settings.phtml:119
 msgid ""
 "Show links within table of contents in finding aid export (not available for "
 "PDF export)."
@@ -606,28 +607,28 @@ msgstr ""
 "Toon links in de inhoudsopgave ook in export van archieftoegangen (niet "
 "beschikbaar voor PDF-export)."
 
-#: resources/views/settings.phtml:121
+#: resources/views/settings.phtml:123
 msgid "Settings for EAD XML exports"
 msgstr "Instellingen voor EAD XML-exports"
 
-#: resources/views/settings.phtml:123
+#: resources/views/settings.phtml:125
 msgid "Allow users to load stored XML settings from administrator."
 msgstr ""
 "Gebruikers toestaan om opgeslagen XML-instellingen van de beheerder te laden."
 
-#: resources/views/settings.phtml:127
+#: resources/views/settings.phtml:129
 msgid "Settings for Meta Repositories"
 msgstr "Instellingen voor meta-opslagplaatsen"
 
-#: resources/views/settings.phtml:129
+#: resources/views/settings.phtml:131
 msgid "Use Meta Repositories."
 msgstr "Gebruik meta-opslagplaatsen."
 
-#: resources/views/settings.phtml:133
+#: resources/views/settings.phtml:135
 msgid "Settings for linking to external archive management tools"
 msgstr "Instellingen voor koppeling naar externe archiefbeheerhulpmiddelen"
 
-#: resources/views/settings.phtml:135
+#: resources/views/settings.phtml:137
 msgid ""
 "The following settings apply if AtoM (https://www.accesstomemory.org) is "
 "used as an external archive management system."
@@ -635,11 +636,11 @@ msgstr ""
 "De volgende instellingen zijn van toepassing als AtoM (https://www."
 "accesstomemory.org) als extern archiefbeheersysteem wordt gebruikt."
 
-#: resources/views/settings.phtml:139 resources/views/settings.phtml:143
+#: resources/views/settings.phtml:141 resources/views/settings.phtml:145
 msgid "Show link to AtoM records within source citations"
 msgstr "Toon link naar AtoM-records binnen bronvermeldingen"
 
-#: resources/views/settings.phtml:143
+#: resources/views/settings.phtml:145
 #, php-format
 msgid ""
 "Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be "
@@ -652,24 +653,24 @@ msgstr ""
 "bronweergave in een extern AtoM-archiefbeheersysteem. Alleen van toepassing "
 "als de optie \"%s\" is geactiveerd."
 
-#: resources/views/settings.phtml:151
+#: resources/views/settings.phtml:153
 msgid "Use call numbers to create AtoM REST links (\"AtoM slugs\")"
 msgstr ""
 "Gebruik referentienummers om AtoM REST-links (\"AtoM slugs\") te maken."
 
-#: resources/views/settings.phtml:152
+#: resources/views/settings.phtml:154
 msgid "Use source titles to create AtoM REST links (\"AtoM slugs\")"
 msgstr "Gebruik brontitels om AtoM REST-links (\"AtoM slugs\") te maken."
 
-#: resources/views/settings.phtml:158
+#: resources/views/settings.phtml:160
 msgid "Base URL for AtoM"
 msgstr "Basis-URL voor AtoM"
 
-#: resources/views/settings.phtml:166
+#: resources/views/settings.phtml:168
 msgid "Repositories, for which AtoM linking is used."
 msgstr "Opslagplaatsen, waarvoor AtoM-links worden gebruikt."
 
-#: resources/views/settings.phtml:171
+#: resources/views/settings.phtml:173
 msgid ""
 "Format treename:xref. A list of several entries can be separated by comma, e."
 "g. \"my_tree:X1765,my_tree:X2987\""
@@ -678,7 +679,7 @@ msgstr ""
 "komma's worden gescheiden, bijvoorbeeld \"mijn_stamboom:X1765,mijn_stamboom:"
 "X2987\"."
 
-#: resources/views/settings.phtml:179
+#: resources/views/settings.phtml:181
 msgid "save"
 msgstr "opslaan"
 

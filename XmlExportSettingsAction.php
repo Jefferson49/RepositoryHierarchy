@@ -93,7 +93,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
                         $repository_hierarchy->name() . '::modals/message',
                         [
                             'title' => I18N::translate('EAD XML settings'),
-                            'text'  => I18N::translate('The EAD XML seetings have been changed'),
+                            'text'  => I18N::translate('The EAD XML settings have been changed'),
                         ]
                     )
                 ]
