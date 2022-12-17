@@ -341,7 +341,7 @@ msgid "EAD XML settings"
 msgstr "EAD XML Einstellungen"
 
 #: XmlExportSettingsAction.php:96
-msgid "The EAD XML seetings have been changed"
+msgid "The EAD XML settings have been changed"
 msgstr "Die EAD XML Einstellungen wurden gespeichert"
 
 #: resources/views/category-html.phtml:24
