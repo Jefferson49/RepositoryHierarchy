@@ -396,7 +396,7 @@ msgstr "Landcode"
 #: resources/views/modals/xml-export-fields.phtml:39
 #: resources/views/modals/xml-export-fields.phtml:82
 msgid "Main agency code"
-msgstr "hoofdkantoorcode"
+msgstr "code van de instelling die de inventaris bijhoudt"
 
 #: resources/views/modals/xml-export-fields.phtml:47
 #: resources/views/modals/xml-export-fields.phtml:86
@@ -434,10 +434,10 @@ msgid ""
 "value, the country code and \"-XXXXX\" might be chosen, e.g. FR-XXXXX"
 msgstr ""
 "Unieke code ter identificatie van de archiefinstelling die de beschreven "
-"collectie beheert; gecodeerd volgens ISO 15511 (ISIL). De hoofdkantoorcode "
-"wordt officieel door een nationale autoriteit aan archieven toegekend. Als "
-"vervangende waarde kan de landcode en \"-XXXXX\" worden gekozen, bijv. FR-"
-"XXXXX"
+"collectie beheert; gecodeerd volgens ISO 15511 (ISIL). De code van de "
+"instelling die de inventaris bijhoudt wordt officieel door een nationale "
+"autoriteit aan archieven toegekend. Als vervangende waarde kan de landcode "
+"en \"-XXXXX\" worden gekozen, bijv. FR-XXXXX"
 
 #: resources/views/modals/xml-export-fields.phtml:87
 msgid "Unique identifyer for the finding aid document."
