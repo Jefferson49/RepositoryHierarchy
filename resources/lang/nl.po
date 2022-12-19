@@ -17,27 +17,26 @@ msgstr ""
 
 #: CallNumberCategory.php:184
 msgid "Sources without call number"
-msgstr "Bronnen zonder referentienummer"
+msgstr "Bronnen zonder oproepnummer"
 
 #: CallNumberCategory.php:186
 msgid "Default call number category"
-msgstr "Standaard referentienummercategorie"
+msgstr "Standaard oproepnummercategorie"
 
 #: CreateSourceModal.php:59
 msgid ""
-"Currently, you do not have the user rights to create new sources. In order "
-"to create new sources, you need to be logged in as a user."
+"Currently, you do not have the user rights to create new sources. In order to create new "
+"sources, you need to be logged in as a user."
 msgstr ""
-"Momenteel heeft u geen gebruikersrechten om nieuwe bronnen aan te maken. Om "
-"nieuwe bronnen aan te maken, moet u ingelogd zijn als gebruiker."
+"Momenteel heeft u geen gebruikersrechten om nieuwe bronnen aan te maken. Om nieuwe bronnen "
+"aan te maken, moet u ingelogd zijn als gebruiker."
 
 #: CreateSourceModal.php:65
 msgid "Create new sources"
 msgstr "Nieuwe bronnen maken"
 
-#: DownloadFindingAidService.php:78 RepositoryHierarchy.php:1399
-#: RepositoryHierarchy.php:1408 XmlExportSettingsModal.php:85
-#: XmlExportSettingsModal.php:88
+#: DownloadFindingAidService.php:78 RepositoryHierarchy.php:1399 RepositoryHierarchy.php:1408
+#: XmlExportSettingsModal.php:85 XmlExportSettingsModal.php:88
 msgid "Finding aid"
 msgstr "Archieftoegang"
 
@@ -61,11 +60,11 @@ msgstr "Opslagplaatshiërarchie"
 
 #: RepositoryHierarchy.php:354
 msgid ""
-"A hierarchical structured list of the sources of an archive based on the "
-"call numbers of the sources"
+"A hierarchical structured list of the sources of an archive based on the call numbers of "
+"the sources"
 msgstr ""
-"Een hiërarchisch gestructureerde lijst van de bronnen van een archief op "
-"basis van de referentienummers van de bronnen"
+"Een hiërarchisch gestructureerde lijst van de bronnen van een archief op basis van de "
+"oproepnummers van de bronnen"
 
 #: RepositoryHierarchy.php:566
 #, php-format
@@ -73,35 +72,30 @@ msgid "The preferences for the module “%s” were updated."
 msgstr "De voorkeuren voor de module \"%s\" zijn bijgewerkt."
 
 #: RepositoryHierarchy.php:659
-msgid ""
-"The Repository Hierarchy data fix cannot be used in the \"control panel\"."
+msgid "The Repository Hierarchy data fix cannot be used in the \"control panel\"."
 msgstr ""
-"De gegevenscorrectie voor de opslagplaatshiërarchie kan niet worden gebruikt "
-"in het \"controlepaneel\"."
+"De gegevenscorrectie voor de opslagplaatshiërarchie kan niet worden gebruikt in het "
+"\"controlepaneel\"."
 
 #: RepositoryHierarchy.php:660
 msgid ""
-"The data fix can be called from the user front end by clicking on the link "
-"to rename a call number category."
+"The data fix can be called from the user front end by clicking on the link to rename a "
+"call number category."
 msgstr ""
-"De gegevenscorrectie kan worden opgeroepen vanuit de gebruikersinterface "
-"door te klikken op de link voor het hernoemen van een "
-"referentienummercategorie."
+"De gegevenscorrectie kan worden opgeroepen vanuit de gebruikersinterface door te klikken "
+"op de link voor het hernoemen van een oproepnummercategorie."
 
 #: RepositoryHierarchy.php:672
-msgid ""
-"Currently, you do not have the user rights to change call number categories."
-msgstr ""
-"Momenteel heeft u niet de gebruikersrechten om referentienummercategorieën "
-"te wijzigen."
+msgid "Currently, you do not have the user rights to change call number categories."
+msgstr "Momenteel heeft u niet de gebruikersrechten om oproepnummercategorieën te wijzigen."
 
 #: RepositoryHierarchy.php:673
 msgid ""
-"In order to change call number categories, you need to have a \"Manager\" "
-"role for the corresponding tree."
+"In order to change call number categories, you need to have a \"Manager\" role for the "
+"corresponding tree."
 msgstr ""
-"Om referentienummercategorieën te kunnen wijzigen, moet u een \"Manager\"-"
-"rol hebben voor de betreffende stamboom."
+"Om oproepnummercategorieën te kunnen wijzigen, moet u een \"Manager\"-rol hebben voor de "
+"betreffende stamboom."
 
 #: RepositoryHierarchy.php:805
 #, php-format
@@ -115,8 +109,7 @@ msgstr "Reguliere expressie niet geaccepteerd"
 #: RepositoryHierarchy.php:1004
 msgid "No valid delimiter or valid regular expression for delimiter found."
 msgstr ""
-"Geen geldig scheidingsteken of geldige reguliere expressie voor "
-"scheidingsteken gevonden."
+"Geen geldig scheidingsteken of geldige reguliere expressie voor scheidingsteken gevonden."
 
 #: RepositoryHierarchy.php:1124
 msgid "load delimiter expression from administrator"
@@ -157,17 +150,15 @@ msgstr "De stamboom \"%s\" bevat geen opslagplaats"
 
 #: RepositoryHierarchy.php:1279
 msgid ""
-"Could not load delimiter expression from administrator. No administrator "
-"delimiter expression stored."
+"Could not load delimiter expression from administrator. No administrator delimiter "
+"expression stored."
 msgstr ""
-"Kan scheidingstekenexpressie van beheerder niet laden. Geen "
-"scheidingstekenexpressie van de beheerder opgeslagen."
+"Kan scheidingstekenexpressie van beheerder niet laden. Geen scheidingstekenexpressie van "
+"de beheerder opgeslagen."
 
 #: RepositoryHierarchy.php:1288
 msgid "Could not load delimiter expression. No delimiter expression stored."
-msgstr ""
-"Kan scheidingstekenexpressie niet laden. Geen scheidingstekenexpressie "
-"opgeslagen."
+msgstr "Kan scheidingstekenexpressie niet laden. Geen scheidingstekenexpressie opgeslagen."
 
 #: RepositoryHierarchy.php:1311
 msgid "Error in delimiter expression"
@@ -175,12 +166,11 @@ msgstr "Fout in scheidingstekenexpressie"
 
 #: RepositoryHierarchy.php:1318 RepositoryHierarchyHelpTexts.php:106
 msgid ""
-"Please note that the following characters need to be escaped if not used as "
-"meta characters in a regular expression"
+"Please note that the following characters need to be escaped if not used as meta "
+"characters in a regular expression"
 msgstr ""
-"Houd er rekening mee dat de volgende tekens voorzien moeten worden van een "
-"escape-teken als ze niet worden gebruikt als metatekens in een reguliere "
-"expressie"
+"Houd er rekening mee dat de volgende tekens voorzien moeten worden van een escape-teken "
+"als ze niet worden gebruikt als metatekens in een reguliere expressie"
 
 #: RepositoryHierarchy.php:1321 RepositoryHierarchyHelpTexts.php:107
 msgid "For example, use"
@@ -202,12 +192,9 @@ msgid "if the characters shall be used as plain text."
 msgstr "als de tekens als gewone tekst moeten worden gebruikt."
 
 #: RepositoryHierarchy.php:1384
-msgid ""
-"XML export settings not found. Please open EAD XML settings and provide "
-"settings."
+msgid "XML export settings not found. Please open EAD XML settings and provide settings."
 msgstr ""
-"XML-exportinstellingen niet gevonden. Open EAD XML-instellingen en geef de "
-"instellingen op."
+"XML-exportinstellingen niet gevonden. Open EAD XML-instellingen en geef de instellingen op."
 
 #: RepositoryHierarchyHelpTexts.php:57
 msgid "How to use delimiter expressions?"
@@ -215,16 +202,15 @@ msgstr "Hoe gebruikt u scheidingstekenexpressies?"
 
 #: RepositoryHierarchyHelpTexts.php:59
 msgid ""
-"A delimiter is a sequence of one or more characters for specifying the "
-"boundary between separate, independent regions in a text. Use delimiters to "
-"cut call numbers into chunks of call number categories. The call number "
-"categories will be used to construct a hierarchy of call numbers."
+"A delimiter is a sequence of one or more characters for specifying the boundary between "
+"separate, independent regions in a text. Use delimiters to cut call numbers into chunks of "
+"call number categories. The call number categories will be used to construct a hierarchy "
+"of call numbers."
 msgstr ""
-"Een scheidingsteken is een reeks van één of meer tekens om de grens aan te "
-"geven tussen afzonderlijke, onafhankelijke gebieden in een tekst. Gebruik "
-"scheidingstekens om referentienummers op te delen in brokken "
-"referentienummercategorieën. De referentienummercategorieën worden gebruikt "
-"om een hiërarchie van referentienummers op te bouwen."
+"Een scheidingsteken is een reeks van één of meer tekens om de grens aan te geven tussen "
+"afzonderlijke, onafhankelijke gebieden in een tekst. Gebruik scheidingstekens om "
+"oproepnummers op te delen in brokken oproepnummercategorieën. De oproepnummercategorieën "
+"worden gebruikt om een hiërarchie van oproepnummers op te bouwen."
 
 #: RepositoryHierarchyHelpTexts.php:60
 msgid "Use a single delimiter, e.g."
@@ -239,11 +225,9 @@ msgid "e.g."
 msgstr "bijvoorbeeld"
 
 #: RepositoryHierarchyHelpTexts.php:62
-msgid ""
-"Use a regular expressions, which contain the delimiter in brackets, e.g."
+msgid "Use a regular expressions, which contain the delimiter in brackets, e.g."
 msgstr ""
-"Gebruik een reguliere expressie, die het scheidingsteken tussen haakjes "
-"bevat, bijvoorbeeld"
+"Gebruik een reguliere expressie, die het scheidingsteken tussen haakjes bevat, bijvoorbeeld"
 
 #: RepositoryHierarchyHelpTexts.php:62 RepositoryHierarchyHelpTexts.php:63
 #: RepositoryHierarchyHelpTexts.php:66 RepositoryHierarchyHelpTexts.php:67
@@ -274,7 +258,7 @@ msgstr "Voorbeeld"
 #: RepositoryHierarchyHelpTexts.php:65 RepositoryHierarchyHelpTexts.php:75
 #: RepositoryHierarchyHelpTexts.php:85 RepositoryHierarchyHelpTexts.php:94
 msgid "Call numbers"
-msgstr "Referentienummers"
+msgstr "Oproepnummers"
 
 #: RepositoryHierarchyHelpTexts.php:68 RepositoryHierarchyHelpTexts.php:78
 #: RepositoryHierarchyHelpTexts.php:88
@@ -347,10 +331,9 @@ msgstr "EAD XML-instellingen"
 msgid "The EAD XML settings have been changed"
 msgstr "De EAD XML-instellingen zijn gewijzigd"
 
-#: resources/views/category-html.phtml:24
-#: resources/views/category-html.phtml:53
+#: resources/views/category-html.phtml:24 resources/views/category-html.phtml:53
 msgid "Call number"
-msgstr "Referentienummer"
+msgstr "Oproepnummer"
 
 #: resources/views/category-html.phtml:56
 msgid "Gedcom-ID"
@@ -421,24 +404,20 @@ msgid "Title proper of the finding aid."
 msgstr "Exacte titel van de archieftoegang."
 
 #: resources/views/modals/xml-export-fields.phtml:79
-msgid ""
-"Country name encoded according to ISO 3166-1, e.g. \"FR\" for \"France\"."
-msgstr ""
-"Landnaam gecodeerd volgens ISO 3166-1, bijvoorbeeld \"FR\" voor "
-"\"Frankrijk\"."
+msgid "Country name encoded according to ISO 3166-1, e.g. \"FR\" for \"France\"."
+msgstr "Landnaam gecodeerd volgens ISO 3166-1, bijvoorbeeld \"FR\" voor \"Frankrijk\"."
 
 #: resources/views/modals/xml-export-fields.phtml:83
 msgid ""
-"Unique code identifying the archival institution maintaining the described "
-"collection; encoded according to ISO 15511 (ISIL). The main agency code is "
-"officially assigned to archives by a national authority. As a substitute "
-"value, the country code and \"-XXXXX\" might be chosen, e.g. FR-XXXXX"
+"Unique code identifying the archival institution maintaining the described collection; "
+"encoded according to ISO 15511 (ISIL). The main agency code is officially assigned to "
+"archives by a national authority. As a substitute value, the country code and \"-XXXXX\" "
+"might be chosen, e.g. FR-XXXXX"
 msgstr ""
-"Unieke code ter identificatie van de archiefinstelling die de beschreven "
-"collectie beheert; gecodeerd volgens ISO 15511 (ISIL). De main agency code "
-"wordt officieel door een nationale autoriteit aan archieven toegekend. Als "
-"vervangende waarde kan de landcode en \"-XXXXX\" worden gekozen, bijv. FR-"
-"XXXXX"
+"Unieke code ter identificatie van de archiefinstelling die de beschreven collectie "
+"beheert; gecodeerd volgens ISO 15511 (ISIL). De main agency code wordt officieel door een "
+"nationale autoriteit aan archieven toegekend. Als vervangende waarde kan de landcode en \"-"
+"XXXXX\" worden gekozen, bijv. FR-XXXXX"
 
 #: resources/views/modals/xml-export-fields.phtml:87
 msgid "Unique identifyer for the finding aid document."
@@ -470,7 +449,7 @@ msgstr "Instellingen van beheerder laden"
 
 #: resources/views/options.phtml:53 resources/views/options.phtml:83
 msgid "Search call number category"
-msgstr "Zoek referentienummercategorie"
+msgstr "Zoek oproepnummercategorie"
 
 #: resources/views/options.phtml:73
 msgid "Category full name"
@@ -482,7 +461,7 @@ msgstr "Vervangen door"
 
 #: resources/views/page.phtml:53
 msgid "Delimiter Expression for Call Numbers"
-msgstr "Scheidingstekenexpressie voor referentienummers"
+msgstr "Scheidingstekenexpressie voor oproepnummers"
 
 #: resources/views/page.phtml:71
 msgid "View and load/save options"
@@ -498,13 +477,11 @@ msgstr "Instellingen voor opslagplaatshiërarchieflijst"
 
 #: resources/views/settings.phtml:56
 msgid "Show label before call number category."
-msgstr "Toon label voor referentienummercategorie."
+msgstr "Toon label voor oproepnummercategorie."
 
 #: resources/views/settings.phtml:59 resources/views/settings.phtml:104
 msgid "Show titles of call number categories (if available from .po file)."
-msgstr ""
-"Toon titels van referentienummercategorieën (indien beschikbaar in .po-"
-"bestand)."
+msgstr "Toon titels van oproepnummercategorieën (indien beschikbaar in .po-bestand)."
 
 #: resources/views/settings.phtml:62
 msgid "Show help icon after label for delimiter expression."
@@ -516,35 +493,33 @@ msgstr "Toon helplink na label voor scheidingstekenexpressie."
 
 #: resources/views/settings.phtml:68
 msgid ""
-"Use truncated categories. The call number categories will be truncated and "
-"shown without the trunk."
+"Use truncated categories. The call number categories will be truncated and shown without "
+"the trunk."
 msgstr ""
-"Gebruik afgekorte categorieën. De referentienummercategorieën worden "
-"afgekort en getoond zonder de stam."
+"Gebruik afgekorte categorieën. De oproepnummercategorieën worden afgekort en getoond "
+"zonder de stam."
 
 #: resources/views/settings.phtml:71
 msgid ""
-"Use truncated call numbers. The call numbers will be truncated and shown "
-"without call number category."
+"Use truncated call numbers. The call numbers will be truncated and shown without call "
+"number category."
 msgstr ""
-"Gebruik afgekorte referentienummers. De referentienummers worden afgekort en "
-"getoond zonder referentienummercategorieën."
+"Gebruik afgekorte oproepnummers. De oproepnummers worden afgekort en getoond zonder "
+"oproepnummercategorieën."
 
 #: resources/views/settings.phtml:74
-msgid ""
-"Allow renaming of call number categories. Will show an icon and a link for "
-"renaming."
+msgid "Allow renaming of call number categories. Will show an icon and a link for renaming."
 msgstr ""
-"Hernoemen van referentienummercategorieën toestaan. Toont een pictogram en "
-"een link voor het hernoemen."
+"Hernoemen van oproepnummercategorieën toestaan. Toont een pictogram en een link voor het "
+"hernoemen."
 
 #: resources/views/settings.phtml:77
 msgid ""
-"Allow adding new sources to a call number category. Will show an icon and a "
-"link to add new sources."
+"Allow adding new sources to a call number category. Will show an icon and a link to add "
+"new sources."
 msgstr ""
-"Toevoegen van nieuwe bronnen aan een referentienummercategorie toestaan. "
-"Toont een pictogram en een link om nieuwe bronnen toe te voegen."
+"Toevoegen van nieuwe bronnen aan een oproepnummercategorie toestaan. Toont een pictogram "
+"en een link om nieuwe bronnen toe te voegen."
 
 #: resources/views/settings.phtml:80
 msgid "Show the title of the sources."
@@ -565,19 +540,15 @@ msgstr "Toon het datumbereik van de bronnen."
 #: resources/views/settings.phtml:92
 msgid "Allow users to load stored delimiter expressions from administrator."
 msgstr ""
-"Gebruikers toestaan om opgeslagen scheidingstekenexpressies van de beheerder "
-"te laden."
+"Gebruikers toestaan om opgeslagen scheidingstekenexpressies van de beheerder te laden."
 
 #: resources/views/settings.phtml:96
 msgid "Settings for source citations"
 msgstr "Instellingen voor bronvermeldingen"
 
 #: resources/views/settings.phtml:98
-msgid ""
-"Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source "
-"citations."
-msgstr ""
-"Toon extra bronfeiten (REPO, REPO:CALN, REFN, NOTE) binnen bronvermeldingen."
+msgid "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations."
+msgstr "Toon extra bronfeiten (REPO, REPO:CALN, REFN, NOTE) binnen bronvermeldingen."
 
 #: resources/views/settings.phtml:102
 msgid "Settings for finding aid exports"
@@ -601,11 +572,10 @@ msgstr "Toon titels in de inhoudsopgave ook in export van archieftoegangen."
 
 #: resources/views/settings.phtml:119
 msgid ""
-"Show links within table of contents in finding aid export (not available for "
-"PDF export)."
+"Show links within table of contents in finding aid export (not available for PDF export)."
 msgstr ""
-"Toon links in de inhoudsopgave ook in export van archieftoegangen (niet "
-"beschikbaar voor PDF-export)."
+"Toon links in de inhoudsopgave ook in export van archieftoegangen (niet beschikbaar voor "
+"PDF-export)."
 
 #: resources/views/settings.phtml:123
 msgid "Settings for EAD XML exports"
@@ -613,8 +583,7 @@ msgstr "Instellingen voor EAD XML-exports"
 
 #: resources/views/settings.phtml:125
 msgid "Allow users to load stored XML settings from administrator."
-msgstr ""
-"Gebruikers toestaan om opgeslagen XML-instellingen van de beheerder te laden."
+msgstr "Gebruikers toestaan om opgeslagen XML-instellingen van de beheerder te laden."
 
 #: resources/views/settings.phtml:129
 msgid "Settings for Meta Repositories"
@@ -630,11 +599,11 @@ msgstr "Instellingen voor koppeling naar externe archiefbeheerhulpmiddelen"
 
 #: resources/views/settings.phtml:137
 msgid ""
-"The following settings apply if AtoM (https://www.accesstomemory.org) is "
-"used as an external archive management system."
+"The following settings apply if AtoM (https://www.accesstomemory.org) is used as an "
+"external archive management system."
 msgstr ""
-"De volgende instellingen zijn van toepassing als AtoM (https://www."
-"accesstomemory.org) als extern archiefbeheersysteem wordt gebruikt."
+"De volgende instellingen zijn van toepassing als AtoM (https://www.accesstomemory.org) als "
+"extern archiefbeheersysteem wordt gebruikt."
 
 #: resources/views/settings.phtml:141 resources/views/settings.phtml:145
 msgid "Show link to AtoM records within source citations"
@@ -643,20 +612,17 @@ msgstr "Toon link naar AtoM-records binnen bronvermeldingen"
 #: resources/views/settings.phtml:145
 #, php-format
 msgid ""
-"Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be "
-"used to link a webtrees source citation to the source view in an external "
-"AtoM archive management system. Only applies if the option \"%s\" is "
-"activated."
+"Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be used to link a "
+"webtrees source citation to the source view in an external AtoM archive management system. "
+"Only applies if the option \"%s\" is activated."
 msgstr ""
-"Instellingen voor het maken van AtoM REST-links (\"AtoM slugs\"), die kunnen "
-"worden gebruikt om een webtrees-bronvermelding te koppelen aan de "
-"bronweergave in een extern AtoM-archiefbeheersysteem. Alleen van toepassing "
-"als de optie \"%s\" is geactiveerd."
+"Instellingen voor het maken van AtoM REST-links (\"AtoM slugs\"), die kunnen worden "
+"gebruikt om een webtrees-bronvermelding te koppelen aan de bronweergave in een extern AtoM-"
+"archiefbeheersysteem. Alleen van toepassing als de optie \"%s\" is geactiveerd."
 
 #: resources/views/settings.phtml:153
 msgid "Use call numbers to create AtoM REST links (\"AtoM slugs\")"
-msgstr ""
-"Gebruik referentienummers om AtoM REST-links (\"AtoM slugs\") te maken."
+msgstr "Gebruik oproepnummers om AtoM REST-links (\"AtoM slugs\") te maken."
 
 #: resources/views/settings.phtml:154
 msgid "Use source titles to create AtoM REST links (\"AtoM slugs\")"
@@ -672,12 +638,11 @@ msgstr "Opslagplaatsen, waarvoor AtoM-links worden gebruikt."
 
 #: resources/views/settings.phtml:173
 msgid ""
-"Format treename:xref. A list of several entries can be separated by comma, e."
-"g. \"my_tree:X1765,my_tree:X2987\""
+"Format treename:xref. A list of several entries can be separated by comma, e.g. \"my_tree:"
+"X1765,my_tree:X2987\""
 msgstr ""
-"Formaat stamboomnaam:XREF. Een lijst van verschillende items kan door "
-"komma's worden gescheiden, bijvoorbeeld \"mijn_stamboom:X1765,mijn_stamboom:"
-"X2987\"."
+"Formaat stamboomnaam:XREF. Een lijst van verschillende items kan door komma's worden "
+"gescheiden, bijvoorbeeld \"mijn_stamboom:X1765,mijn_stamboom:X2987\"."
 
 #: resources/views/settings.phtml:181
 msgid "save"
@@ -689,7 +654,7 @@ msgstr "Link naar archiefbeschrijving in AtoM"
 
 #: resources/views/tree.phtml:25
 msgid "Call Number Category"
-msgstr "Referentienummercategorie"
+msgstr "Oproepnummercategorie"
 
 #: resources/views/tree.phtml:59
 msgid "Rename"
@@ -709,80 +674,79 @@ msgstr "Nieuwe bron toevoegen"
 #~ msgstr "AtoM EAD XML"
 
 #~ msgid "Link to the website of the archive"
-#~ msgstr "Link zur Webseite des Archivs"
+#~ msgstr "Link naar de website van het archief"
 
 #~ msgid "Generated by webtrees"
-#~ msgstr "Erzeugt von webtrees"
+#~ msgstr "Gegenereerd door webtrees"
 
 #~ msgid "Base URL for webtrees"
-#~ msgstr "Basis-URL für webtrees"
+#~ msgstr "Basis-URL voor webtrees"
 
 #~ msgid "Date range"
-#~ msgstr "Datumsbereich"
+#~ msgstr "Datumbereik"
 
 #~ msgid ""
-#~ "Use call number of source to create AtoM slugs, i.e. permalinks or REST "
-#~ "links to view the source in AtoM"
+#~ "Use call number of source to create AtoM slugs, i.e. permalinks or REST links to view "
+#~ "the source in AtoM"
 #~ msgstr ""
-#~ "Benutze die Quellen-Signatur um AtoM \"slugs\" zu erzeugen, d.h. "
-#~ "Permanent- oder REST-Links, mit welchen die Quellen in AtoM angezeigt "
-#~ "werden können"
+#~ "Gebruik oproepnummer van bron om AtoM \"slugs\" te maken, dat wil zeggen permanente of "
+#~ "REST-links om de bron in AtoM te bekijken"
 
 #~ msgid "Table of contents"
-#~ msgstr "Inhaltsverzeichnis"
+#~ msgstr "Inhoudsopgave"
 
 #~ msgid "Publication"
-#~ msgstr "Veröffentlichung"
+#~ msgstr "Publicatie"
 
 #~ msgid "Text"
-#~ msgstr "Text"
+#~ msgstr "Tekst"
 
 #, fuzzy
 #~| msgid "Call number"
 #~ msgid "Call Number"
-#~ msgstr "Signatur"
+#~ msgstr "Oproepnummer"
 
 #~ msgid "load XML settings from administrator"
-#~ msgstr "XML Einstellungen von Administrator laden"
+#~ msgstr "XML-instellingen van beheerder laden"
 
 #~ msgid "Download EAD XML"
-#~ msgstr "EAD XML herunterladen"
+#~ msgstr "EAD XML downloaden"
 
 #~ msgid "EAD XML settings (from admin)"
-#~ msgstr "EAD XML Einstellungen (von Admin)"
+#~ msgstr "EAD XML-instellingen (van beheerder)"
 
 #~ msgid "EAD XML seetings"
-#~ msgstr "EAD XML Einstellungen"
+#~ msgstr "EAD XML-instellingen"
 
 #~ msgid "Dowload AtoM EAD XML"
-#~ msgstr "AtoM EAD XML herunterladen"
+#~ msgstr "AtoM EAD XML downloaden"
 
 #~ msgid "Hit the radio buttons to select or unselect the related options"
-#~ msgstr "Drücken Sie die Knöpfe, um einzelne Optionen an- oder abzuwählen"
+#~ msgstr "Druk op de keuzerondjes om de betreffende opties te selecteren of te deselecteren"
 
 #~ msgid "download EAD XML for AtoM"
-#~ msgstr "EAD XML für AtoM herunterladen"
+#~ msgstr "EAD XML voor AtoM downloaden"
 
 #~ msgid "Call numbers:"
-#~ msgstr "Signaturen:"
+#~ msgstr "Oproepnummers:"
 
 #~ msgid "Category"
-#~ msgstr "Kategorie"
+#~ msgstr "Categorie"
 
 #~ msgid "Search/replace for call number categories"
-#~ msgstr "Suchen/Ersetzen für Signatur-Kategorien"
+#~ msgstr "Zoeken/vervangen voor oproepnummercategorieën"
 
 #~ msgid "Change call numbers by searching/replacing call number categories"
-#~ msgstr "Ändern von Signaturen durch Suchen/Ersetzen von Signatur-Kategorien"
+#~ msgstr "Oproepnummers wijzigen door het zoeken/vervangen van oproepnummercategorieën"
 
 #~ msgid "Replace call number category"
-#~ msgstr "Ersetze durch Signatur-Kategorie"
+#~ msgstr "Vervangen oproepnummercategorie"
 
 #~ msgid "Archive Hierarchy"
-#~ msgstr "Archiv Hierarchie"
+#~ msgstr "Archiefhiërarchie"
 
 #~ msgid "Repository Hierachy"
-#~ msgstr "Archiv Hierarchie"
+#~ msgstr "Opslagplaatshiërarchie"
 
 #~ msgid "Series-"
 #~ msgstr "Serie-"
