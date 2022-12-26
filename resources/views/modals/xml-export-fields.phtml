@@ -31,7 +31,7 @@ use Fisharebest\Webtrees\Tree;
         <?= I18N::translate('Country code') ?>
     </label>
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="country_code" name="country_code" value="<?= $country_code ?>" required="required">
+        <input class="form-control" type="text" id="country_code" name="country_code" value="<?= e($country_code) ?>" required="required">
     </div>
 </div>
 <div class="row mb-3">
@@ -39,7 +39,7 @@ use Fisharebest\Webtrees\Tree;
         <?= I18N::translate('Main agency code') ?>
     </label>
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="main_agency_code" name="main_agency_code" value="<?= $main_agency_code ?>" required="required">
+        <input class="form-control" type="text" id="main_agency_code" name="main_agency_code" value="<?= e($main_agency_code) ?>" required="required">
     </div>
 </div>
 <div class="row mb-3">
@@ -55,7 +55,7 @@ use Fisharebest\Webtrees\Tree;
         <?= I18N::translate('URL of the online finding aid') ?>
     </label>
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="finding_aid_url" name="finding_aid_url" value="<?= $finding_aid_url ?>">
+        <input class="form-control" type="text" id="finding_aid_url" name="finding_aid_url" value="<?= e($finding_aid_url) ?>">
     </div>
 </div>
 <div class="row mb-3">

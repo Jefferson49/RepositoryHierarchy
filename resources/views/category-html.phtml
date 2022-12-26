@@ -59,7 +59,7 @@ use Fisharebest\Webtrees\View;
             <?php endif ?>        
         </tr>
         <tr> 
-            <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>               
+            <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>		<?php //Do not escape, because it is already escaped in the method  ?>
             <td><?= $source->fullName()	?></td>                    
             <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
                 <td><?= MoreI18N::xlate('Date range') ?>:</td>

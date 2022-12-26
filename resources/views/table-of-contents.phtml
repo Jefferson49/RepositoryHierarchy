@@ -29,7 +29,7 @@ use Illuminate\Support\Collection;
             <?php $title = $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
 			<?php if (($title !== '') && $show_titles): ?>
 				(
-					<?= $title ?>
+					<?= e($title) ?>
 				)
 		    <?php endif ?>	
 <?php endif ?>

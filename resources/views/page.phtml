@@ -26,6 +26,7 @@ use Fisharebest\Webtrees\View;
 <?php endif ?>
 
 <h2 class="wt-page-title">
+	<?php //Do not escape, because it is already escaped in the method  ?>
 	<?= $repository_hierarchy->getListTitle($repository_hierarchy->getRepository()) ?>
 </h2>
 

@@ -75,7 +75,6 @@ class DownloadFindingAidService extends DownloadService
         return view(
             RepositoryHierarchy::MODULE_NAME . '::finding-aid',
             [
-                'title'                 => I18N::translate('Finding aid') . ': ' . $this->repository_hierarchy->getRepository()->fullName(),
                 'language_tag'          => $language_tag,
                 'repository_hierarchy'  => $this->repository_hierarchy,
                 'forPDF'                => $forPDF,
