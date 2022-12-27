@@ -6,13 +6,11 @@ use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Localization\Locale;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
-use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\View;
 
 use function date;
 
 /**
- * @var string              $title
  * @var string              $language_tag
  * @var RepositoryHierarchy $repository_hierarchy
  * @var bool                $forPDF
@@ -20,14 +18,12 @@ use function date;
 
 ?>
 
-<?php $module_service = new ModuleService(); ?>
-<?php $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME); ?>
-
 <!DOCTYPE HTML>
-<html lang="<?= $language_tag	?>">
+<html lang="<?= e($language_tag)	?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<title><?= Functions::removeHtmlTags($title) ?></title>
+		<?php //Do not escape, because it is already escaped in the method  ?>
+		<title><?= I18N::translate('Finding aid') . ': ' . Functions::removeHtmlTags($repository_hierarchy->getRepository()->fullName()) ?></title>
 
 		<style>
 			.finding-aid-body {
@@ -69,13 +65,15 @@ use function date;
 		</style>
 	</head>
 	<body class="finding-aid-body">
-		<h1><?= $title ?></h1>
+		<?php //Do not escape, because it is already escaped in the method  ?>
+		<h1><?= I18N::translate('Finding aid') . ': ' . $repository_hierarchy->getRepository()->fullName() ?></h1>
 		<p><?= I18N::translate('Generated on') . ': ' . date('Y-m-d') ?></p>
 
 		<?php $locale = Locale::create($language_tag) ?>
 		<p><?= I18N::translate('Language of description') . ': ' . $locale->endonym() ?></p>
 
 		<h3><?= MoreI18N::xlate('Repository') ?></h3>
+		<?php //Do not escape, because it is already escaped in the method  ?>
 		<p><?= $repository_hierarchy->getRepository()->fullName() ?></p>
 
 		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_ADDRESS, '1'))) : ?>
