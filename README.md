@@ -352,7 +352,7 @@ Some examples for archive management systems:
 
 The EAD export of the Repository Hierarchy module was tested with AtoM. Further details about AtoM import can be found in the [AtoM import documentation](https://www.accesstomemory.org/de/docs/2.6/user-manual/import-export/import-xml/#import-xml).
 
-For re-importing EAD XML the same webtrees repository, the AtoM setting "Ignore matches and import as new" should be used. The re-import will generate a new (parallel) archival institution in AtoM. To add (newly imported) sources to the exiting archival institution, they can be selected from the imported structure and moved within AtoM to the available structure. Please note that AtoM does not offer features to sync and update existing records. For more details, please refer to the [AtoM documentation for XML imports](https://www.accesstomemory.org/en/docs/2.6/user-manual/import-export/import-xml#matching-critera-for-description-xml-imports).
+For re-importing EAD XML from the same webtrees repository, the AtoM setting "Ignore matches and import as new" should be used. The re-import will generate a new (parallel) archival institution in AtoM. To add (newly imported) sources to the exiting archival institution, they can be selected from the imported structure and moved within AtoM to the available structure. Please note that AtoM does not offer features to sync and update existing records. For more details, please refer to the [AtoM documentation for XML imports](https://www.accesstomemory.org/en/docs/2.6/user-manual/import-export/import-xml#matching-critera-for-description-xml-imports).
 
 <a name="Using-links"></a>
 ### Create links between webtrees and an external archive management system
@@ -372,7 +372,7 @@ Within webtrees, the Repository Hierarchy module can provide links to the relate
     + Also activate the feature "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations"
 + Settings in AtoM:
     + Open settings / global settings in AtoM and set the permalinks in AtoM to call numbers or source titles. It is important to use the same settings in AtoM like in webtrees. More information about the AtoM permalinks settings can be found in the [AtoM documentation](https://www.accesstomemory.org/en/docs/2.6/user-manual/administer/settings/#description-permalinks).
-    + Depending on the settings in AtoM, it might also be necessary to re-genearte slugs (i.e. permalinks) in Atom. More information can bei found in the [AtoM documentation](https://www.accesstomemory.org/en/docs/2.6/admin-manual/maintenance/cli-tools/#generate-slugs).
+    + Depending on the settings in AtoM, it might also be necessary to re-generate slugs (i.e. permalinks) in Atom. More information can bei found in the [AtoM documentation](https://www.accesstomemory.org/en/docs/2.6/admin-manual/maintenance/cli-tools/#generate-slugs).
 
 ![Screenshot](resources/img/screenshot_AtoM_link_in_webtrees.jpg)
 
@@ -599,7 +599,7 @@ Currently, the following languages are already available:
 
 <a name="Bugs"></a>
 ## Bugs and feature requests
-If you experience any bugs or have a feature request for this theme you can [create a new issue](https://github.com/Jefferson49/RepositoryHierarchy/issues).
+If you experience any bugs or have a feature request for this webtrees custom module, you can [create a new issue](https://github.com/Jefferson49/RepositoryHierarchy/issues).
 
 <a name="Github"></a>
 ##  Github repository  
