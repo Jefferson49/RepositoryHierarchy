@@ -419,8 +419,15 @@ class RepositoryHierarchy extends AbstractModule implements
                         $content = $response->getBody()->getContents();
                         preg_match_all('/' . self::GITHUB_API_TAG_NAME_PREFIX . '\d+\.\d+\.\d+/', $content, $matches, PREG_OFFSET_CAPTURE);
 
-                        $version = $matches[0][0][0];
-                        $version = substr($version, strlen(self::GITHUB_API_TAG_NAME_PREFIX));
+						if(!empty($matches[0]))
+						{
+							$version = $matches[0][0][0];
+							$version = substr($version, strlen(self::GITHUB_API_TAG_NAME_PREFIX));	
+						}
+						else
+						{
+							$version = $this->customModuleVersion();
+						}
 
                         return $version;
                     }
