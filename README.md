@@ -60,6 +60,7 @@ This README file contains the following main sections:
     *   [Export data to an external archive management system](#Using-export)
     *   [Create links between webtrees and an external archive management system](#Using-links)
     *   [Show additional source and repository information in source citations](#Using-citations)
+    *   [Directly show media objects of source citations in individual facts](#Media-objects-in-citations)
     *   [Preferences](#Prefences)
 *   [**Demo website and examples**](#Demo)
     *   [Demo website and examples for a meta repository](#Meta_demo)
@@ -394,9 +395,21 @@ The Repository Hierarchy modules provides a feature to show extended information
 
 ![Screenshot](resources/img/screenshot_source_citation_in_webtrees.jpg)
 
-In order to activate this feature, the setting "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations" needs to be activated in the control panel.
+In order to activate this feature, the setting "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations" needs to be selected in the control panel.
 
 Note:Additionally, it is possible to show links to AtoM (as an external archive management system) within the source citations. The details are described in the related [chapter](#Using-links).
+
+<a name="Media-objects-in-citations"></a>
+### Directly show media objects of source citations in individual facts
+The Repository Hierarchy modules provides a feature to directly show media objects of source citations in individual facts and not subordinated in the source citation.
+
+**Screenshot of individual fact with directly shown media objects:**
+![Screenshot](resources/img/screenshot_media_objects_directly_in_facts.jpg)
+
+**Screenshot of individual fact with media objects subordinated to source citation:**
+![Screenshot](resources/img/screenshot_media_objects_subordinated_in_citations.jpg)
+
+In order to activate this feature, the setting "Directly show media objects of sources in facts and not subordinated within source citations." needs to be selected in the control panel.
 
 <a name="Prefences"></a>
 ###  Preferences
@@ -419,6 +432,7 @@ The following preferences can be activated/deactivated by administrators in the 
 
 #### Preferences for source citations
 + Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.
++ Directly show media objects of sources in facts and not sub-ordinated within source citations.
 
 #### Preferences for finding aid export
 + Show titles of call number categories (if available from .po file).
