@@ -83,7 +83,7 @@ foreach ($keys as $key) {
             <?php array_shift($keys) ?>
             <?php foreach ($keys as $key) : ?>
                 <?php if (	($values[$key] !== '') &&
-							!(($elements[$key]->label() === 'Media object') && (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))))				
+							!((get_class($elements[$key]) === 'Fisharebest\Webtrees\Elements\XrefMedia') && (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))))				
 				) : ?>
                     <?= $elements[$key]->labelValue(strtr($values[$key], ["\r" => "\n"]), $tree) ?>
                 <?php endif ?>
@@ -94,7 +94,7 @@ foreach ($keys as $key) {
 		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) : ?>
 			<?php foreach ($keys as $key) : ?>
 				<?php if ($values[$key] !== '') : ?>
-					<?php if ($elements[$key]->label() === 'Media object') : ?>
+					<?php if (get_class($elements[$key]) === 'Fisharebest\Webtrees\Elements\XrefMedia') : ?>
 						<?= $elements[$key]->labelValue(strtr($values[$key], ["\r" => "\n"]), $tree) ?>
 					<?php endif ?>
 				<?php endif ?>

@@ -617,6 +617,7 @@ You can help to translate this module. The translation is based on [gettext](htt
 Currently, the following languages are already available:
 + English
 + Dutch
++ French
 + German
 
 <a name="Bugs"></a>
