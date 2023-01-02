@@ -16,14 +16,16 @@ use Fisharebest\Webtrees\Tree;
  * @var \Fisharebest\Webtrees\Tree $tree
  * @var Source $source
  */
+
+$module_service = new ModuleService();
+$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+
 ?> 
  
 <?php $facts = $source->facts() ?>
 <?php foreach ($facts as $fact) : ?>
     <?php if (in_array($fact->tag(), ['SOUR:REPO','SOUR:REFN','SOUR:NOTE'])) : ?>
 
-		<?php $module_service = new ModuleService() ?>
-		<?php $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME) ?>
 		<?php $element = Registry::elementFactory()->make($fact->tag()) ?>
 
 		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
