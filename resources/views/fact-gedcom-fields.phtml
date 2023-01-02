@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
 use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Elements\AbstractXrefElement;
 use Fisharebest\Webtrees\Elements\XrefSource;
@@ -9,6 +11,7 @@ use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 
@@ -17,6 +20,9 @@ use Fisharebest\Webtrees\Tree;
  * @var string $parent e.g. "INDI:BIRT:DATE"
  * @var Tree   $tree
  */
+
+$module_service = new ModuleService();
+$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
 
 $hierarchy = explode(':', $parent);
 
@@ -76,12 +82,25 @@ foreach ($keys as $key) {
 
             <?php array_shift($keys) ?>
             <?php foreach ($keys as $key) : ?>
-                <?php if ($values[$key] !== '') : ?>
+                <?php if (	($values[$key] !== '') &&
+							!(($elements[$key]->label() === 'Media object') && (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))))				
+				) : ?>
                     <?= $elements[$key]->labelValue(strtr($values[$key], ["\r" => "\n"]), $tree) ?>
                 <?php endif ?>
             <?php endforeach ?>
         </div>
-    <?php endif ?>
+
+		<?php //Additionally show media objects after source citation?>
+		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) : ?>
+			<?php foreach ($keys as $key) : ?>
+				<?php if ($values[$key] !== '') : ?>
+					<?php if ($elements[$key]->label() === 'Media object') : ?>
+						<?= $elements[$key]->labelValue(strtr($values[$key], ["\r" => "\n"]), $tree) ?>
+					<?php endif ?>
+				<?php endif ?>
+			<?php endforeach ?>	
+		<?php endif ?>	
+	<?php endif ?>
 <?php else : ?>
     <?php foreach ($keys as $key) : ?>
         <?php if ($values[$key] !== '') : ?>

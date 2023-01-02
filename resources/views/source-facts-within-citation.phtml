@@ -27,7 +27,8 @@ use Fisharebest\Webtrees\Tree;
 		<?php $element = Registry::elementFactory()->make($fact->tag()) ?>
 
 		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
-			<?= e($element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree)) ?>
+			<?php //Do not escape, because it is already escaped in the method  ?>
+			<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
 		<?php endif ?>
 
 		<?php if ($fact->tag() === 'SOUR:REPO') : ?>
@@ -36,7 +37,8 @@ use Fisharebest\Webtrees\Tree;
 			<?php 	$element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
 
 			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
-				<?= e($element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree)) ?>
+				<?php //Do not escape, because it is already escaped in the method  ?>
+				<?= $element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
 			<?php endif ?>
 
 			<?php $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, '')) ?>
@@ -53,7 +55,7 @@ use Fisharebest\Webtrees\Tree;
 							<?php $atom_slug = DownloadEADxmlService::getAtoMSlug($source->fullName()) ?>
 						<?php endif ?>
 						
-						<a href="<?= e($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '')) . '/index.php/' . $atom_slug ?>">
+						<a href="<?= e($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '')) . '/index.php/' . e($atom_slug) ?>">
 							<bdi>
 								<?= I18N::translate('Link to archival description in AtoM') ?>
 							</bdi>

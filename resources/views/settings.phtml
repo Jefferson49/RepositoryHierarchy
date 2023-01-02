@@ -24,6 +24,7 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_date_range
  * @var  bool		$allow_admin_delimiter
  * @var  bool		$show_source_facts_in_citations
+ * @var  bool		$show_media_after_citations
  * @var  bool		$show_finding_aid_category_title
  * @var  bool		$show_finding_aid_address
  * @var  bool		$show_finding_aid_wt_links
@@ -96,6 +97,9 @@ use Fisharebest\Webtrees\View;
             <h3><?= I18N::translate('Settings for source citations') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'checked' => $show_source_facts_in_citations]) ?>
+            </div>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Directly show media objects of sources in facts and not subordinated within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, 'checked' => $show_media_after_citations]) ?>
             </div>
 
             <div class="row"><?= view('icons/spacer') ?></div> 
