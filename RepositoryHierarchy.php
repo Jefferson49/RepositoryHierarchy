@@ -141,6 +141,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_START_REPOSITORY = 'start_repository';
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
     public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
+	public const PREF_SHOW_MEDIA_AFTER_CITATIONS = 'show_media_after_citations';
     public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for-category';
     public const PREF_SHOW_ATOM_LINKS ='show_atom_links';
     public const PREF_ATOM_SLUG ='atom_slug';
@@ -502,6 +503,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_DATE_RANGE                  => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
                 self::PREF_ALLOW_ADMIN_DELIMITER            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
                 self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
+                self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	=> boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
                 self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE  => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
                 self::PREF_SHOW_FINDING_AID_ADDRESS         => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
                 self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
@@ -545,6 +547,7 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE]) ? '1' : '0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, isset($params[self::PREF_SHOW_MEDIA_AFTER_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, isset($params[self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, isset($params[self::PREF_SHOW_FINDING_AID_ADDRESS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS]) ? '1' : '0');
