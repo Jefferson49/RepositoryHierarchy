@@ -39,10 +39,10 @@ use Fisharebest\Webtrees\I18N;
 		<?php endif ?>		
 
 		<?php if (($category->getOverallDateRange() !== null) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0')))) : ?>
-			(
+			—
 			<?= MoreI18N::xlate('Date range') ?>:
-			<?= e($category->getOverallDateRange()->display()) ?>
-			)
+			<?php //Do not escape, because it is already escaped in the method  ?>
+			<?= $category->getOverallDateRange()->display() ?>
 		<?php endif ?>
 	</button>			
 	<?= view('icons/spacer') ?>

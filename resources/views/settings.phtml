@@ -16,6 +16,7 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_help_link
  * @var  bool		$show_category_expanded
  * @var  bool		$show_truncated_call_number
+ * @var  bool		$show_date_range_for_category
  * @var  bool		$allow_rename
  * @var  bool		$allow_new_sources
  * @var  bool		$show_truncated_category
@@ -69,6 +70,9 @@ use Fisharebest\Webtrees\View;
 			</div> 
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Use truncated call numbers. The call numbers will be truncated and shown without call number category.'), 'name' => RepositoryHierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, 'checked' => $show_truncated_call_number]) ?>
+			</div> 
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show date range for call number categories.'), 'name' => RepositoryHierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, 'checked' => $show_date_range_for_category]) ?>
 			</div> 
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Allow renaming of call number categories. Will show an icon and a link for renaming.'), 'name' => RepositoryHierarchy::PREF_ALLOW_RENAME, 'checked' => $allow_rename]) ?>
