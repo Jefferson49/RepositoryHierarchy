@@ -48,7 +48,7 @@ use Fisharebest\Webtrees\Tree;
 
     <div class="modal-body">
         <?= view(
-            '_repository_hierarchy_' . '::modals/xml-export-fields',
+            RepositoryHierarchy::MODULE_NAME . '::modals/xml-export-fields',
                 [
                 'tree' 						=> $tree,
                 'xref' 						=> $xref,
