@@ -319,7 +319,7 @@ class RepositoryHierarchy extends AbstractModule implements
             ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a namespace for the views
-        View::registerNamespace($this->name(), $this->resourcesFolder() . 'views/');
+        View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
 
         //Register a custom view for facts in order to show additional
         //source facts in citations, media objects in facts, or AtoM links
@@ -328,7 +328,7 @@ class RepositoryHierarchy extends AbstractModule implements
 			(boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0'))
 			)
         ) {
-            View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
+            View::registerCustomView('::fact-gedcom-fields', self::viewsNamespace() . '::fact-gedcom-fields');
         }
     }
 
@@ -477,6 +477,16 @@ class RepositoryHierarchy extends AbstractModule implements
     }
 
     /**
+     * Get the namespace for the views
+     *
+     * @return string
+     */
+    public static function viewsNamespace(): string
+    {
+        return __DIR__;
+    }
+
+    /**
      * View module settings in control panel
      *
      * @param ServerRequestInterface $request
@@ -488,7 +498,7 @@ class RepositoryHierarchy extends AbstractModule implements
         $this->layout = 'layouts/administration';
 
         return $this->viewResponse(
-            $this->name() . '::settings',
+            self::viewsNamespace() . '::settings',
             [
                 'title'                                     => $this->title(),
                 self::PREF_SHOW_CATEGORY_LABEL              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
@@ -672,7 +682,7 @@ class RepositoryHierarchy extends AbstractModule implements
                             I18N::translate('The data fix can be called from the user front end by clicking on the link to rename a call number category.');
 
             return view(
-                $this->name() . '::error',
+                self::viewsNamespace() . '::error',
                 [
                 'text' => $error_text,
                 ]
@@ -685,7 +695,7 @@ class RepositoryHierarchy extends AbstractModule implements
                             I18N::translate('In order to change call number categories, you need to have a "Manager" role for the corresponding tree.');
 
             return view(
-                $this->name() . '::error',
+                self::viewsNamespace() . '::error',
                 [
                 'text' => $error_text,
                 ]
@@ -693,7 +703,7 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         return view(
-            $this->name() . '::options',
+            self::viewsNamespace() . '::options',
             [
             CallNumberCategory::VAR_REPOSITORY_XREF     => $this->repository_xref,
             CallNumberCategory::VAR_CATEGORY_FULL_NAME => $this->data_fix_category_full_name,
@@ -1210,7 +1220,7 @@ class RepositoryHierarchy extends AbstractModule implements
             //If error, show error message
             if ($update_result !== '') {
                 return $this->viewResponse(
-                    $this->name() . '::error',
+                    self::viewsNamespace() . '::error',
                     [
                         'text' => $this->errorTextWithHeader(I18N::translate('Error during update of preferences') . ': ' . $update_result)
                     ]
@@ -1245,7 +1255,7 @@ class RepositoryHierarchy extends AbstractModule implements
         //If still no repository found, show error message
         if ($xref === '') {
             return $this->viewResponse(
-                $this->name() . '::error',
+                self::viewsNamespace() . '::error',
                 [
                     'tree'  => $tree,
                     'title' => $this->getListTitle(),
@@ -1430,7 +1440,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
         //Return the page view
         return $this->viewResponse(
-            $this->name() . '::page',
+            self::viewsNamespace() . '::page',
             [
                 'tree'                              => $tree,
                 'title'                             => $this->getListTitle($repository),

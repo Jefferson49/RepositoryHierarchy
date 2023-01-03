@@ -78,7 +78,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
 
         return response(
             view(
-                $repository_hierarchy->name() . '::modals/xml-export-settings',
+                RepositoryHierarchy::viewsNamespace() . '::modals/xml-export-settings',
                 [
                     'tree'                      => $tree,
                     'xref'                      => $repository_xref,

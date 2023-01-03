@@ -127,7 +127,7 @@ use Fisharebest\Webtrees\I18N;
 			<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
 			<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 			<?php foreach ($categories as $sub_category) : ?>			
-				<?= view($repository_hierarchy->name() . '::tree', [
+				<?= view(RepositoryHierarchy::viewsNamespace() . '::tree', [
                     'repository_hierarchy' => $repository_hierarchy,
                     'category' => $sub_category]) ?>
 			<?php endforeach ?>	

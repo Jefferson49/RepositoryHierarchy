@@ -78,7 +78,7 @@ foreach ($keys as $key) {
         <div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
 
             <?php //Additionally show source facts within citations?>
-            <?= view(RepositoryHierarchy::MODULE_NAME . '::source-facts-within-citation', ['tree' => $tree, 'source' => $source]) ?>
+            <?= view(RepositoryHierarchy::viewsNamespace() . '::source-facts-within-citation', ['tree' => $tree, 'source' => $source]) ?>
 
             <?php array_shift($keys) ?>
             <?php foreach ($keys as $key) : ?>

@@ -61,7 +61,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
             return response(
                 [
                     'html'  => view(
-                        $repository_hierarchy->name() . '::modals/xml-export-settings',
+                        RepositoryHierarchy::viewsNamespace() . '::modals/xml-export-settings',
                         [
                             'tree'                      => $tree,
                             'xref'                      => $repository_xref,
@@ -90,7 +90,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
             return response(
                 [
                     'html'  => view(
-                        $repository_hierarchy->name() . '::modals/message',
+                        RepositoryHierarchy::viewsNamespace() . '::modals/message',
                         [
                             'title' => I18N::translate('EAD XML settings'),
                             'text'  => I18N::translate('The EAD XML settings have been changed'),
