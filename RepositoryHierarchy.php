@@ -320,12 +320,11 @@ class RepositoryHierarchy extends AbstractModule implements
 
         //Register a custom view for facts in order to show additional
         //source facts in citations, media objects in facts, or AtoM links
-        if ((boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) or
-			(boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) or
-			(boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0'))
-			)
-        ) {
-            View::registerCustomView('::fact-gedcom-fields', self::viewsNamespace() . '::fact-gedcom-fields');
+        if 	( 	(boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) or
+			 	(boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) or
+			 	(boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')))	) 
+		{
+            View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
         }
     }
 
