@@ -55,7 +55,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
 
         $admin_user_id = RepositoryHierarchy::ADMIN_USER_STRING;
         $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 
         if ($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) {
             return response(
@@ -131,7 +131,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         }
 
         $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 
         //Save received values to preferences
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $finding_aid_title);

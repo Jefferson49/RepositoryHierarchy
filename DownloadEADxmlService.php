@@ -179,7 +179,7 @@ class DownloadEADxmlService extends DownloadService
     private function addHeader(string $xml_type, DOMNode $dom): DOMNode
     {
         $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
         $user_id = $this->user->id();
 
         //<eadheader>

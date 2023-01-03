@@ -22,7 +22,7 @@ use Fisharebest\Webtrees\Tree;
  */
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 
 $hierarchy = explode(':', $parent);
 

@@ -84,9 +84,6 @@ class RepositoryHierarchy extends AbstractModule implements
     use ModuleGlobalTrait;
     use ModuleDataFixTrait;
 
-    //Custom module name
-    public const MODULE_NAME = '_repository_hierarchy_';
-
     //Custom module version
     public const CUSTOM_VERSION = '1.2.4';
 
@@ -483,9 +480,19 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public static function viewsNamespace(): string
     {
-        return __DIR__;
+        return self::activeModuleName();
     }
 
+    /**
+     * Get the active module name, e.g. the name of the currently running module
+     *
+     * @return string
+     */
+    public static function activeModuleName(): string
+    {
+        return '_' . basename(__DIR__) . '_';
+    }
+	
     /**
      * View module settings in control panel
      *
@@ -1210,50 +1217,6 @@ class RepositoryHierarchy extends AbstractModule implements
         //Variable for error texts; default is empty
         $error_text = '';
 
-		//Return an error if folder name and module name are inconsitent
-		if ($this->name() !== self::MODULE_NAME) {
-
-			$folder_name = substr($this->name(), 1, strlen($this->name()) -2);
-			$module_name = substr(self::MODULE_NAME, 1, strlen(self::MODULE_NAME) -2);
-
-			$error_text = I18N::translate('The custom module folder name (' . $folder_name . ') and the custom module name (' . $module_name . ') are not identical. Please change the folder name to match the module name (' . $module_name . '). Otherwise, the custom module might not work correctly.');
-
-			if (str_starts_with($folder_name, 'RepositoryHierarchy-')) {
-				$error_text .= ' ' . I18N::translate('You might have downloaded the development code (ZIP file from: Github/Repository => Code => Download ZIP) instead of the release code (ZIP file from: Github/Repository => Releases => Assets).');
-			}
-
-			return $this->viewResponse(
-				self::viewsNamespace() . '::error',
-				[
-                    'tree'  => $tree,
-                    'title' => I18N::translate('Error in custom module: ') . $this->getListTitle(),
-					'text' 	=> $error_text,
-				]
-			);
-		}
-
-		//Return an error if folder name and module name are inconsitent
-		if ($this->name() !== self::MODULE_NAME) {
-
-			$folder_name = substr($this->name(), 1, strlen($this->name()) -2);
-			$module_name = substr(self::MODULE_NAME, 1, strlen(self::MODULE_NAME) -2);
-
-			$error_text = I18N::translate('The folder name (%s) and the module name (%s) are not identical. Please change the folder name to match the module name (%s). Otherwise, the custom module might not work correctly.', $folder_name, $module_name, $module_name);
-
-			if (str_starts_with($folder_name, 'RepositoryHierarchy-')) {
-				$error_text .= ' ' . I18N::translate('You might have downloaded the development code (ZIP file from: Github/Repository => Code => Download ZIP) instead of the release code (ZIP file from: Github/Repository => Releases => Assets). Please install the relase code.');
-			}
-
-			return $this->viewResponse(
-				self::viewsNamespace() . '::error',
-				[
-                    'tree'  => $tree,
-                    'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
-					'text' 	=> $error_text,
-				]
-			);
-		}
-
         //Check module version
         if ($this->getPreference(self::PREF_MODULE_VERSION) !== self::CUSTOM_VERSION) {
             $this->setPreference(self::PREF_MODULE_VERSION, self::CUSTOM_VERSION);
@@ -1268,9 +1231,6 @@ class RepositoryHierarchy extends AbstractModule implements
                     [
 						'tree'  => $tree,
 						'title' => I18N::translate('Error in custom module: ') . $this->getListTitle(),
-						'text' => $this->errorTextWithHeader(I18N::translate('Error during update of preferences') . ': ' . $update_result),
-						'tree'  => $tree,
-	                    'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
 						'text' => $this->errorTextWithHeader(I18N::translate('Error during update of preferences') . ': ' . $update_result),
                     ]
                 );
@@ -1308,7 +1268,6 @@ class RepositoryHierarchy extends AbstractModule implements
                 [
                     'tree'  => $tree,
                     'title' => I18N::translate('Error in custom module: ') . $this->getListTitle(),
-                    'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
                     'text'  => $this->errorTextWithHeader(I18N::translate('The tree “%s” does not contain any repository', $tree->name()), true)
                 ]
             );
