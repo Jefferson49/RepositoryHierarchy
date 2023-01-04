@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2023-01-03 13:44+0100\n"
+"POT-Creation-Date: 2023-01-04 20:39+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -47,13 +47,13 @@ msgstr "Findbuch als HTML"
 msgid "Finding aid as PDF"
 msgstr "Findbuch als PDF"
 
-#: RepositoryHierarchy.php:341 RepositoryHierarchy.php:834
+#: RepositoryHierarchy.php:340 RepositoryHierarchy.php:833
 #: RepositoryHierarchyHelpTexts.php:69 RepositoryHierarchyHelpTexts.php:79
 #: RepositoryHierarchyHelpTexts.php:89 RepositoryHierarchyHelpTexts.php:98
 msgid "Repository Hierarchy"
 msgstr "Archiv Hierarchie"
 
-#: RepositoryHierarchy.php:354
+#: RepositoryHierarchy.php:353
 msgid ""
 "A hierarchical structured list of the sources of an archive based on the "
 "call numbers of the sources"
@@ -61,19 +61,19 @@ msgstr ""
 "Eine hierarchisch strukturierte Liste der Quellen in einem Archiv, basierend "
 "auf den Signaturen der Quellen"
 
-#: RepositoryHierarchy.php:597
+#: RepositoryHierarchy.php:596
 #, php-format
 msgid "The preferences for the module “%s” were updated."
 msgstr "Die Einstellungen für das Modul %s wurden aktualisiert."
 
-#: RepositoryHierarchy.php:690
+#: RepositoryHierarchy.php:689
 msgid ""
 "The Repository Hierarchy data fix cannot be used in the \"control panel\"."
 msgstr ""
 "Die Datenkorrektur für Archiv Hierarchie kann unter \"Verwaltung\" nicht "
 "genutzt werden."
 
-#: RepositoryHierarchy.php:691
+#: RepositoryHierarchy.php:690
 msgid ""
 "The data fix can be called from the user front end by clicking on the link "
 "to rename a call number category."
@@ -81,14 +81,14 @@ msgstr ""
 "Die Datenkorrektur kann aus der Bentutzeroberfläche aufgerufen werden, indem "
 "der Link für die Umbenennung einer Signatur-Kategorie angeclickt wird."
 
-#: RepositoryHierarchy.php:703
+#: RepositoryHierarchy.php:702
 msgid ""
 "Currently, you do not have the user rights to change call number categories."
 msgstr ""
 "Aktuell verfügen Sie nicht über die erforderlichen Benutzer Rechte, um "
 "Signatur-Kategorien zu ändern."
 
-#: RepositoryHierarchy.php:704
+#: RepositoryHierarchy.php:703
 msgid ""
 "In order to change call number categories, you need to have a \"Manager\" "
 "role for the corresponding tree."
@@ -96,63 +96,61 @@ msgstr ""
 "Um Signatur-Kategorien zu ändern, benötigen Sie die Rolle \"Verwalter\" für "
 "den zugehörigen Stammbaum."
 
-#: RepositoryHierarchy.php:836
+#: RepositoryHierarchy.php:835
 #, php-format
 msgid "Repository Hierarchy of: %s"
 msgstr "Archiv Hierarchie von: %s"
 
-#: RepositoryHierarchy.php:1026
+#: RepositoryHierarchy.php:1025
 msgid "Regular expression not accepted"
 msgstr "Regulärer Ausdruck nicht akzeptiert"
 
-#: RepositoryHierarchy.php:1035
+#: RepositoryHierarchy.php:1034
 msgid "No valid delimiter or valid regular expression for delimiter found."
 msgstr "Kein valider Delimiter oder valider Ausdruck für Delimiter gefunden."
 
-#: RepositoryHierarchy.php:1155
+#: RepositoryHierarchy.php:1154
 msgid "load delimiter expression from administrator"
 msgstr "Delimiter Ausdruck von Administrator laden"
 
-#: RepositoryHierarchy.php:1161
+#: RepositoryHierarchy.php:1160
 msgid "none"
 msgstr "Keine"
 
-#: RepositoryHierarchy.php:1162
+#: RepositoryHierarchy.php:1161
 msgid "save repository"
 msgstr "Archiv speichern"
 
-#: RepositoryHierarchy.php:1163
+#: RepositoryHierarchy.php:1162
 msgid "load repository"
 msgstr "Archiv laden"
 
-#: RepositoryHierarchy.php:1164
+#: RepositoryHierarchy.php:1163
 msgid "save delimiter expression"
 msgstr "Delimiter Ausdruck speichern"
 
-#: RepositoryHierarchy.php:1165
+#: RepositoryHierarchy.php:1164
 msgid "load delimiter expression"
 msgstr "Delimiter Ausdruck laden"
 
-#: RepositoryHierarchy.php:1235 RepositoryHierarchy.php:1272
-#, fuzzy
-#| msgid "Error in custom module"
+#: RepositoryHierarchy.php:1238 RepositoryHierarchy.php:1276
 msgid "Error in custom module"
 msgstr "Fehler in benutzerspezifischem Modul"
 
-#: RepositoryHierarchy.php:1236
-msgid "Error during update of preferences"
-msgstr "Fehler beim Aktualisieren der Einstellungen"
+#: RepositoryHierarchy.php:1239
+msgid "Error during update of the module preferences"
+msgstr "Fehler beim Aktualisieren der Modul-Einstellungen"
 
-#: RepositoryHierarchy.php:1249
+#: RepositoryHierarchy.php:1252
 msgid "Could not load repository. No repository stored."
 msgstr "Archiv konnte nicht geladen werden. Kein Archiv gespeichert."
 
-#: RepositoryHierarchy.php:1273
+#: RepositoryHierarchy.php:1277
 #, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "Der Stammbaum \"%s\" enthält kein Archiv"
 
-#: RepositoryHierarchy.php:1312
+#: RepositoryHierarchy.php:1316
 msgid ""
 "Could not load delimiter expression from administrator. No administrator "
 "delimiter expression stored."
@@ -160,17 +158,17 @@ msgstr ""
 "Delimiter Ausdruck von Administrator konnte nicht geladen werden. Kein "
 "Delimiter Ausdruck von Administrator gespeichert."
 
-#: RepositoryHierarchy.php:1321
+#: RepositoryHierarchy.php:1325
 msgid "Could not load delimiter expression. No delimiter expression stored."
 msgstr ""
 "Delimiter Ausdruck konnte nicht geladen werden. Kein Delimiter Ausdruck "
 "gespeichert."
 
-#: RepositoryHierarchy.php:1344
+#: RepositoryHierarchy.php:1348
 msgid "Error in delimiter expression"
 msgstr "Fehler in Delimiter Ausdruck"
 
-#: RepositoryHierarchy.php:1351 RepositoryHierarchyHelpTexts.php:106
+#: RepositoryHierarchy.php:1355 RepositoryHierarchyHelpTexts.php:106
 msgid ""
 "Please note that the following characters need to be escaped if not used as "
 "meta characters in a regular expression"
@@ -179,26 +177,26 @@ msgstr ""
 "versehen werden müssen, falls sie nicht als Meta-Zeichen in einem regulären "
 "Ausdruck verwendet werden"
 
-#: RepositoryHierarchy.php:1354 RepositoryHierarchyHelpTexts.php:107
+#: RepositoryHierarchy.php:1358 RepositoryHierarchyHelpTexts.php:107
 msgid "For example, use"
 msgstr "Nutzen Sie zum Beispiel"
 
-#: RepositoryHierarchy.php:1354 RepositoryHierarchy.php:1355
+#: RepositoryHierarchy.php:1358 RepositoryHierarchy.php:1359
 #: RepositoryHierarchyHelpTexts.php:107
 msgid "instead of"
 msgstr "statt"
 
-#: RepositoryHierarchy.php:1354 RepositoryHierarchyHelpTexts.php:60
+#: RepositoryHierarchy.php:1358 RepositoryHierarchyHelpTexts.php:60
 #: RepositoryHierarchyHelpTexts.php:61 RepositoryHierarchyHelpTexts.php:62
 #: RepositoryHierarchyHelpTexts.php:107
 msgid "or"
 msgstr "oder"
 
-#: RepositoryHierarchy.php:1355
+#: RepositoryHierarchy.php:1359
 msgid "if the characters shall be used as plain text."
 msgstr "wenn die Zeichen als reiner Text verwendet werden sollen."
 
-#: RepositoryHierarchy.php:1417
+#: RepositoryHierarchy.php:1421
 msgid ""
 "XML export settings not found. Please open EAD XML settings and provide "
 "settings."
@@ -206,7 +204,7 @@ msgstr ""
 "Einstellungen für XML Export nicht gefunden. Bitte öffnen Sie die EAD XML "
 "Einstellungen und legen die Einstellungen fest."
 
-#: RepositoryHierarchy.php:1432 RepositoryHierarchy.php:1441
+#: RepositoryHierarchy.php:1436 RepositoryHierarchy.php:1445
 #: XmlExportSettingsModal.php:85 XmlExportSettingsModal.php:88
 #: resources/views/finding-aid.phtml:26 resources/views/finding-aid.phtml:69
 msgid "Finding aid"
