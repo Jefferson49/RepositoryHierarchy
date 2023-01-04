@@ -38,7 +38,7 @@ use Illuminate\Support\Collection;
 <?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 
 <?php foreach ($categories as $sub_category) : ?>
-    <?= view(RepositoryHierarchy::MODULE_NAME . '::table-of-contents', [
+    <?= view(RepositoryHierarchy::viewsNamespace() . '::table-of-contents', [
             'repository_hierarchy'	=> $repository_hierarchy,
             'category'              => $sub_category,
             'is_root_category'      => false,

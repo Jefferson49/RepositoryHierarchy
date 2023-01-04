@@ -73,7 +73,7 @@ class DownloadFindingAidService extends DownloadService
         $language_tag = substr($language_tag, 0, 2) === 'en' ? 'en' : $language_tag;
 
         return view(
-            RepositoryHierarchy::MODULE_NAME . '::finding-aid',
+            RepositoryHierarchy::viewsNamespace() . '::finding-aid',
             [
                 'language_tag'          => $language_tag,
                 'repository_hierarchy'  => $this->repository_hierarchy,
@@ -168,7 +168,7 @@ class DownloadFindingAidService extends DownloadService
         //Return modal with text
         return response(
             view(
-                RepositoryHierarchy::MODULE_NAME . '::error',
+                RepositoryHierarchy::viewsNamespace() . '::error',
                 [
                     'text'  => $text,
                 ]
@@ -185,6 +185,6 @@ class DownloadFindingAidService extends DownloadService
      */
     public function generateTestHtml(bool $forPDF = false): string
     {
-        return view(RepositoryHierarchy::MODULE_NAME . '::test', []);
+        return view(RepositoryHierarchy::viewsNamespace() . '::test', []);
     }
 }

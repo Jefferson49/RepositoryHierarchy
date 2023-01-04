@@ -87,7 +87,7 @@ use Fisharebest\Webtrees\View;
 <?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 
 <?php foreach ($categories as $sub_category) : ?>
-    <?= view(RepositoryHierarchy::MODULE_NAME . '::category-html', [
+    <?= view(RepositoryHierarchy::viewsNamespace() . '::category-html', [
             'category'              => $sub_category,
             'repository_hierarchy'	=> $repository_hierarchy,
             'is_root_category'	    => false,

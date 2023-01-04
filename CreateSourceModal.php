@@ -60,7 +60,7 @@ class CreateSourceModal implements RequestHandlerInterface
 
             return response(
                 view(
-                    RepositoryHierarchy::MODULE_NAME . '::modals/message',
+                    RepositoryHierarchy::viewsNamespace() . '::modals/message',
                     [
                         'title' => I18N::translate('Create new sources'),
                         'text'  => $error_text,
@@ -71,7 +71,7 @@ class CreateSourceModal implements RequestHandlerInterface
 
         return response(
             view(
-                RepositoryHierarchy::MODULE_NAME . '::modals/create-source',
+                RepositoryHierarchy::viewsNamespace() . '::modals/create-source',
                 [
                     'tree'               => $tree,
                     'source_repository'  => $source_repository,

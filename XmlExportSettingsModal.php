@@ -59,7 +59,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         $command                = Validator::attributes($request)->string('command');
 
         $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::MODULE_NAME);
+        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
         $repository  = Registry::repositoryFactory()->make($repository_xref, $tree);
 
         //If XML settings shall be loaded from administrator
@@ -78,7 +78,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
 
         return response(
             view(
-                $repository_hierarchy->name() . '::modals/xml-export-settings',
+                RepositoryHierarchy::viewsNamespace() . '::modals/xml-export-settings',
                 [
                     'tree'                      => $tree,
                     'xref'                      => $repository_xref,

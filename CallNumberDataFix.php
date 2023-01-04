@@ -72,7 +72,7 @@ class CallNumberDataFix implements RequestHandlerInterface
         $category_full_name = Validator::attributes($request)->string(CallNumberCategory::VAR_CATEGORY_FULL_NAME);
 
         $data_fixes = $this->module_service->findByInterface(ModuleDataFixInterface::class);
-        $data_fix = RepositoryHierarchy::MODULE_NAME;
+        $data_fix = RepositoryHierarchy::activeModuleName();
         $module = $data_fixes->get($data_fix);
         $module->setDataFixParams($tree, $repository_xref, $category_name, $category_full_name);
 

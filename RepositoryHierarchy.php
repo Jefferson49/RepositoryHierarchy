@@ -84,9 +84,6 @@ class RepositoryHierarchy extends AbstractModule implements
     use ModuleGlobalTrait;
     use ModuleDataFixTrait;
 
-    //Custom module name
-    public const MODULE_NAME = '_repository_hierarchy_';
-
     //Custom module version
     public const CUSTOM_VERSION = '1.2.4';
 
@@ -142,7 +139,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
     public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
 	public const PREF_SHOW_MEDIA_AFTER_CITATIONS = 'show_media_after_citations';
-    public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for-category';
+    public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for_category';
     public const PREF_SHOW_ATOM_LINKS ='show_atom_links';
     public const PREF_ATOM_SLUG ='atom_slug';
     public const PREF_ATOM_SLUG_TITLE ='title';
@@ -319,15 +316,14 @@ class RepositoryHierarchy extends AbstractModule implements
             ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a namespace for the views
-        View::registerNamespace($this->name(), $this->resourcesFolder() . 'views/');
+        View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
 
         //Register a custom view for facts in order to show additional
         //source facts in citations, media objects in facts, or AtoM links
-        if ((boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) or
-			(boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) or
-			(boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0'))
-			)
-        ) {
+        if 	( 	(boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) or
+			 	(boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) or
+			 	(boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')))	) 
+		{
             View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
         }
     }
@@ -477,6 +473,26 @@ class RepositoryHierarchy extends AbstractModule implements
     }
 
     /**
+     * Get the namespace for the views
+     *
+     * @return string
+     */
+    public static function viewsNamespace(): string
+    {
+        return self::activeModuleName();
+    }
+
+    /**
+     * Get the active module name, e.g. the name of the currently running module
+     *
+     * @return string
+     */
+    public static function activeModuleName(): string
+    {
+        return '_' . basename(__DIR__) . '_';
+    }
+	
+    /**
      * View module settings in control panel
      *
      * @param ServerRequestInterface $request
@@ -488,7 +504,7 @@ class RepositoryHierarchy extends AbstractModule implements
         $this->layout = 'layouts/administration';
 
         return $this->viewResponse(
-            $this->name() . '::settings',
+            self::viewsNamespace() . '::settings',
             [
                 'title'                                     => $this->title(),
                 self::PREF_SHOW_CATEGORY_LABEL              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
@@ -497,6 +513,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_HELP_LINK                   => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
                 self::PREF_SHOW_TRUNCATED_CALL_NUMBER       => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
                 self::PREF_SHOW_TRUNCATED_CATEGORY          => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
+                self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY     => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '1')),
                 self::PREF_ALLOW_RENAME                     => boolval($this->getPreference(self::PREF_ALLOW_RENAME, '1')),
                 self::PREF_ALLOW_NEW_SOURCE                 => boolval($this->getPreference(self::PREF_ALLOW_NEW_SOURCE, '1')),
                 self::PREF_SHOW_TITLE                       => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
@@ -541,6 +558,7 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_HELP_LINK, isset($params[self::PREF_SHOW_HELP_LINK]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, isset($params[self::PREF_SHOW_TRUNCATED_CALL_NUMBER]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, isset($params[self::PREF_SHOW_TRUNCATED_CATEGORY]) ? '1' : '0');
+            $this->setPreference(self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, isset($params[self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY]) ? '1' : '0');
             $this->setPreference(self::PREF_ALLOW_RENAME, isset($params[self::PREF_ALLOW_RENAME]) ? '1' : '0');
             $this->setPreference(self::PREF_ALLOW_NEW_SOURCE, isset($params[self::PREF_ALLOW_NEW_SOURCE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_TITLE, isset($params[self::PREF_SHOW_TITLE]) ? '1' : '0');
@@ -672,7 +690,7 @@ class RepositoryHierarchy extends AbstractModule implements
                             I18N::translate('The data fix can be called from the user front end by clicking on the link to rename a call number category.');
 
             return view(
-                $this->name() . '::error',
+                self::viewsNamespace() . '::error',
                 [
                 'text' => $error_text,
                 ]
@@ -685,7 +703,7 @@ class RepositoryHierarchy extends AbstractModule implements
                             I18N::translate('In order to change call number categories, you need to have a "Manager" role for the corresponding tree.');
 
             return view(
-                $this->name() . '::error',
+                self::viewsNamespace() . '::error',
                 [
                 'text' => $error_text,
                 ]
@@ -693,7 +711,7 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         return view(
-            $this->name() . '::options',
+            self::viewsNamespace() . '::options',
             [
             CallNumberCategory::VAR_REPOSITORY_XREF     => $this->repository_xref,
             CallNumberCategory::VAR_CATEGORY_FULL_NAME => $this->data_fix_category_full_name,
@@ -1207,12 +1225,14 @@ class RepositoryHierarchy extends AbstractModule implements
             //Update prefences stored in database
             $update_result = $this->updatePreferences();
 
-            //If error, show error message
+            //If error during update of preferences, show error message
             if ($update_result !== '') {
                 return $this->viewResponse(
-                    $this->name() . '::error',
+                    self::viewsNamespace() . '::error',
                     [
-                        'text' => $this->errorTextWithHeader(I18N::translate('Error during update of preferences') . ': ' . $update_result)
+						'tree'  => $tree,
+						'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
+						'text'  => I18N::translate('Error during update of the module preferences') . ': ' . $update_result,
                     ]
                 );
             }
@@ -1243,13 +1263,14 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         //If still no repository found, show error message
+		$xref = '';
         if ($xref === '') {
             return $this->viewResponse(
-                $this->name() . '::error',
+                self::viewsNamespace() . '::error',
                 [
                     'tree'  => $tree,
-                    'title' => $this->getListTitle(),
-                    'text'  => $this->errorTextWithHeader(I18N::translate('The tree “%s” does not contain any repository', $tree->name()), true)
+					'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
+                    'text'  => I18N::translate('The tree “%s” does not contain any repository', $tree->name()),
                 ]
             );
         }
@@ -1430,7 +1451,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
         //Return the page view
         return $this->viewResponse(
-            $this->name() . '::page',
+            self::viewsNamespace() . '::page',
             [
                 'tree'                              => $tree,
                 'title'                             => $this->getListTitle($repository),
