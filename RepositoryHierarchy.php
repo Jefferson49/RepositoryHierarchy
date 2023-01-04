@@ -1263,6 +1263,7 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         //If still no repository found, show error message
+		$xref = '';
         if ($xref === '') {
             return $this->viewResponse(
                 self::viewsNamespace() . '::error',
