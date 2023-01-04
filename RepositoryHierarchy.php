@@ -1225,14 +1225,14 @@ class RepositoryHierarchy extends AbstractModule implements
             //Update prefences stored in database
             $update_result = $this->updatePreferences();
 
-            //If error, show error message
+            //If error during update of preferences, show error message
             if ($update_result !== '') {
                 return $this->viewResponse(
                     self::viewsNamespace() . '::error',
                     [
 						'tree'  => $tree,
 						'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
-						'text' => $this->errorTextWithHeader(I18N::translate('Error during update of preferences') . ': ' . $update_result),
+						'text'  => I18N::translate('Error during update of the module preferences') . ': ' . $update_result,
                     ]
                 );
             }
@@ -1263,13 +1263,14 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         //If still no repository found, show error message
+		$xref = '';
         if ($xref === '') {
             return $this->viewResponse(
                 self::viewsNamespace() . '::error',
                 [
                     'tree'  => $tree,
 					'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
-                    'text'  => $this->errorTextWithHeader(I18N::translate('The tree “%s” does not contain any repository', $tree->name()), true)
+                    'text'  => I18N::translate('The tree “%s” does not contain any repository', $tree->name()),
                 ]
             );
         }
