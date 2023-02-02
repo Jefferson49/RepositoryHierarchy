@@ -170,6 +170,7 @@ class DownloadFindingAidService extends DownloadService
             view(
                 RepositoryHierarchy::viewsNamespace() . '::error',
                 [
+					'title' => '',
                     'text'  => $text,
                 ]
             )
