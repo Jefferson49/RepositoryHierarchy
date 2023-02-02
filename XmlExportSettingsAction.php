@@ -38,6 +38,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class XmlExportSettingsAction implements RequestHandlerInterface
 {
+	//Module service to search and find modules
 	private ModuleService $module_service;
 	
 	/**

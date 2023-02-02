@@ -43,6 +43,7 @@ use function view;
  */
 class XmlExportSettingsModal implements RequestHandlerInterface
 {
+	//Module service to search and find modules
 	private ModuleService $module_service;
 	
 	/**
