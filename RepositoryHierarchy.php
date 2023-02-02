@@ -686,12 +686,13 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         //If data fix is called from wrong context, show error text
         if (!isset($this->repository_xref)) {
-            $error_text =   I18N::translate('The Repository Hierarchy data fix cannot be used in the "control panel".') . '<br>' .
+            $error_text =   I18N::translate('The Repository Hierarchy data fix cannot be used in the "control panel".') . ' '.
                             I18N::translate('The data fix can be called from the user front end by clicking on the link to rename a call number category.');
 
             return view(
                 self::viewsNamespace() . '::error',
-                [
+                [				
+				'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
                 'text' => $error_text,
                 ]
             );
@@ -699,12 +700,13 @@ class RepositoryHierarchy extends AbstractModule implements
 
         //If user is not a manager for this tree, show error text
         if (!Auth::isManager($tree)) {
-            $error_text =   I18N::translate('Currently, you do not have the user rights to change call number categories.') . '<br>' .
+            $error_text =   I18N::translate('Currently, you do not have the user rights to change call number categories.') . ' ' .
                             I18N::translate('In order to change call number categories, you need to have a "Manager" role for the corresponding tree.');
 
             return view(
                 self::viewsNamespace() . '::error',
                 [
+				'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
                 'text' => $error_text,
                 ]
             );
@@ -1230,7 +1232,6 @@ class RepositoryHierarchy extends AbstractModule implements
                 return $this->viewResponse(
                     self::viewsNamespace() . '::error',
                     [
-						'tree'  => $tree,
 						'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
 						'text'  => I18N::translate('Error during update of the module preferences') . ': ' . $update_result,
                     ]
@@ -1267,7 +1268,6 @@ class RepositoryHierarchy extends AbstractModule implements
             return $this->viewResponse(
                 self::viewsNamespace() . '::error',
                 [
-                    'tree'  => $tree,
 					'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
                     'text'  => I18N::translate('The tree “%s” does not contain any repository', $tree->name()),
                 ]
