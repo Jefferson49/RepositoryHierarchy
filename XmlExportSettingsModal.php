@@ -43,6 +43,19 @@ use function view;
  */
 class XmlExportSettingsModal implements RequestHandlerInterface
 {
+	//Module service to search and find modules
+	private ModuleService $module_service;
+	
+	/**
+    * Constructor.
+    *
+    * @param ModuleService $module_service
+    */
+    public function __construct(ModuleService $module_service)
+    {
+        $this->module_service = $module_service;
+    }	
+	
     /**
      * Handle a request to view a modal for EAD XML settings
      *
@@ -58,8 +71,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         $delimiter_expression   = Validator::attributes($request)->string('delimiter_expression');
         $command                = Validator::attributes($request)->string('command');
 
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
         $repository  = Registry::repositoryFactory()->make($repository_xref, $tree);
 
         //If XML settings shall be loaded from administrator

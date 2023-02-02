@@ -66,6 +66,8 @@ class DownloadEADxmlService extends DownloadService
     //A flag, whether 'encodinganalog' tags are included in EAD XML
     private bool $use_encoding_analog;
 
+	//Module service to search and find modules
+    private ModuleService $module_service;
 
     /**
      * Constructor
@@ -86,7 +88,8 @@ class DownloadEADxmlService extends DownloadService
         $this->repository = $repository_hierarchy->getRepository();
         $this->user = $user;
         $this->use_encoding_analog = ($xml_type !== self::DOWNLOAD_OPTION_DDB_EAD);
-
+        $this->module_service = new ModuleService();
+		
         //Get language
         $language_tag = Session::get('language');
 
@@ -178,8 +181,7 @@ class DownloadEADxmlService extends DownloadService
      */
     private function addHeader(string $xml_type, DOMNode $dom): DOMNode
     {
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
         $user_id = $this->user->id();
 
         //<eadheader>

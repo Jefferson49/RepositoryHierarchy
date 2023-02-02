@@ -38,6 +38,19 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class XmlExportSettingsAction implements RequestHandlerInterface
 {
+	//Module service to search and find modules
+	private ModuleService $module_service;
+	
+	/**
+    * Constructor.
+    *
+    * @param ModuleService $module_service
+    */
+    public function __construct(ModuleService $module_service)
+    {
+        $this->module_service = $module_service;
+    }
+	
     /**
      * Handle a request to view a modal XML export settings
      *
@@ -54,8 +67,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $params             = (array) $request->getQueryParams();
 
         $admin_user_id = RepositoryHierarchy::ADMIN_USER_STRING;
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
 
         if ($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) {
             return response(
@@ -130,8 +142,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
             $user_id = $user->id();
         }
 
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
 
         //Save received values to preferences
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $finding_aid_title);

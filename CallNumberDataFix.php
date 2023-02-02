@@ -45,6 +45,7 @@ class CallNumberDataFix implements RequestHandlerInterface
 {
     use ViewResponseTrait;
 
+	//Module service to search and find modules
     private ModuleService $module_service;
 
     /**
@@ -54,7 +55,7 @@ class CallNumberDataFix implements RequestHandlerInterface
      */
     public function __construct(ModuleService $module_service)
     {
-        $this->module_service = new ModuleService();
+        $this->module_service = $module_service;
     }
 
     /**
