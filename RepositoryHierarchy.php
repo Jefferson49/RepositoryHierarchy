@@ -175,7 +175,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const CMD_SAVE_DELIM = 'save_delimiter';
     public const CMD_SAVE_REPO = 'save_repository';
     public const CMD_LOAD_REPO = 'load_repository';
-    public const CMD_DOWNLOAD_XML = 'download_xml';
+    public const CMD_DOWNLOAD = 'command_download';
     public const CMD_LOAD_ADMIN_XML_SETTINGS = 'load_admin_xml_settings';
 
     //Comands for repositories
@@ -1184,13 +1184,13 @@ class RepositoryHierarchy extends AbstractModule implements
         $delimiter_expression   = Validator::attributes($request)->string('delimiter_expression');
         $command                = Validator::attributes($request)->string('command');
 
-        if ($command === self::CMD_DOWNLOAD_XML) {
+        if ($command === self::CMD_DOWNLOAD) {
             $download_command = Validator::parsedBody($request)->string('download_command');
         }
 
         // Convert POST requests into GET requests for pretty URLs.
         if ($request->getMethod() === RequestMethodInterface::METHOD_POST) {
-            if ($command === self::CMD_DOWNLOAD_XML) {
+            if ($command === self::CMD_DOWNLOAD) {
                 return redirect(
                     route(
                         self::class,
