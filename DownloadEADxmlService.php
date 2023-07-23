@@ -565,7 +565,7 @@ class DownloadEADxmlService extends DownloadService
 
         //<unitid>
         if ($call_number !== '') {
-            $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', $call_number));
+            $unitid_dom = $did_dom->appendChild($this->ead_xml->createElement('unitid', e($call_number)));
             if ($this->use_encoding_analog) {
                 $unitid_dom->appendChild(new DOMAttr('encodinganalog', '3.1.1'));
             }
