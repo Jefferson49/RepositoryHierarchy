@@ -86,39 +86,41 @@ use Fisharebest\Webtrees\View;
 	<?= csrf_field() ?>
 </form>	
 
-<form method="post" action="<?= e(route(RepositoryHierarchy::class, [
-                        'tree'                              => $tree->name(),
-                        'xref'								=> $repository_hierarchy->getRepositoryXref(),
-                        'delimiter_expression'              => $delimiter_expression,
-                        'command'                           => RepositoryHierarchy::CMD_DOWNLOAD,
-                        ])) ?>" 
-		class="wt-page-options wt-page-options-ancestors-chart d-print-none">
-	<div class="row">
-		<label class="col-sm-3 col-form-label wt-page-options-label">
-			<?= MoreI18N::xlate('Download') ?>
-		</label>
-		<div class="col-sm-9 wt-page-options-value">			
-			<input class="btn btn-secondary" type="submit" value="<?= MoreI18N::xlate('Download') ?>">
-			<?= view('icons/spacer') ?>
-			<?= view('components/radios-inline', [
-                'name' => 'download_command',
-                'options' => DownloadService::getDownloadOptions(DownloadService::DOWNLOAD_OPTION_ALL),
-                'selected' => DownloadService::DOWNLOAD_OPTION_HTML,
-            ]) ?>
-			<?= view('icons/spacer') ?>
-			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
-						data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
-                            'tree'					=> $tree->name(),
-                            'xref'					=> $repository_hierarchy->getRepositoryXref(),
-                            'delimiter_expression'	=> $delimiter_expression,
-                            ])) ?>">
-				<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
-			</a>
-		</div>
-	</div>					
+<?php if ($delimiter_expression !== '') : ?>							
+	<form method="post" action="<?= e(route(RepositoryHierarchy::class, [
+							'tree'                              => $tree->name(),
+							'xref'								=> $repository_hierarchy->getRepositoryXref(),
+							'delimiter_expression'              => $delimiter_expression,
+							'command'                           => RepositoryHierarchy::CMD_DOWNLOAD,
+							])) ?>" 
+			class="wt-page-options wt-page-options-ancestors-chart d-print-none">
+		<div class="row">
+			<label class="col-sm-3 col-form-label wt-page-options-label">
+				<?= MoreI18N::xlate('Download') ?>
+			</label>
+			<div class="col-sm-9 wt-page-options-value">			
+				<input class="btn btn-secondary" type="submit" value="<?= MoreI18N::xlate('Download') ?>">
+				<?= view('icons/spacer') ?>
+				<?= view('components/radios-inline', [
+					'name' => 'download_command',
+					'options' => DownloadService::getDownloadOptions(DownloadService::DOWNLOAD_OPTION_ALL),
+					'selected' => DownloadService::DOWNLOAD_OPTION_HTML,
+				]) ?>
+				<?= view('icons/spacer') ?>
+				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
+							data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
+								'tree'					=> $tree->name(),
+								'xref'					=> $repository_hierarchy->getRepositoryXref(),
+								'delimiter_expression'	=> $delimiter_expression,
+								])) ?>">
+					<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
+				</a>
+			</div>
+		</div>					
 
-	<?= csrf_field() ?>
-</form>
+		<?= csrf_field() ?>
+	</form>
+<?php endif ?>		
 
 <?php if (($delimiter_expression !=='') && ($error === '')) : ?>
 	<div class="wt-ajax-load wt-page-content wt-chart wt-chart-ancestors">
