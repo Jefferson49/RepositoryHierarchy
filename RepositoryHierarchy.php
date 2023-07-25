@@ -1298,7 +1298,7 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         //Create call mumber category title service
-        $this->call_number_category_title_service = new C16Y($this->call_number_category_titles_po_file_path, $this->repository);
+        $this->call_number_category_title_service = new C16Y($this->call_number_category_titles_po_file_path, $tree->name(), $this->repository);
 
         //If requested, load stored delimiter expression
         if ($command === self::CMD_LOAD_ADMIN_DELIM) {
@@ -1445,7 +1445,7 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         //Create file for call number category titles
-        CallNumberCategory::saveC16YFile($this->call_number_category_titles_po_file_path, $this->repository->xref(), $this->root_category);
+        CallNumberCategory::saveC16YFile($this->call_number_category_titles_po_file_path, $tree->name(), $this->repository->xref(), $this->root_category);
 
 
         //Return the page view

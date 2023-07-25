@@ -55,10 +55,10 @@ class C16Y
      *
      * @return void
      */
-    public function __construct(string $path, Repository $repository)
+    public function __construct(string $path, string $tree_name, Repository $repository)
     {
-        $po_file = $path . $repository->xref() . '_' .  Session::get('language') .'.po';
-        $default_po_file = $path . $repository->xref() .'.po';
+        $po_file = $path . $tree_name . '_' . $repository->xref() . '_' .  Session::get('language') .'.po';
+        $default_po_file = $path . $tree_name . '_' . $repository->xref() .'.po';
 
         //Create locale (is required by the Translator for the plural rule)
         $locale = Locale::create(Session::get('language'));

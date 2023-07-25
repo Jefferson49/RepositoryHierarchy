@@ -378,9 +378,9 @@ class CallNumberCategory
      *
      * @return void
      */
-    public static function saveC16YFile(string $path, string $repository_xref, CallNumberCategory $root_category): void
+    public static function saveC16YFile(string $path, string $tree_name, string $repository_xref, CallNumberCategory $root_category): void
     {
-        $po_file = $path . $repository_xref . '.php';
+        $po_file = $path . $tree_name . '_' . $repository_xref . '.php';
 
         //Delete file if already existing
         if (file_exists($po_file)) {
