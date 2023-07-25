@@ -38,7 +38,7 @@ To specify delimiters, the module can handle single characters as well as comple
 <a name="Contents"></a>				
 ##  Table of contents
 This README file contains the following main sections:
-*   [Overview](#Overview)
+*   [Overview](Readme.md#Overview)
 *   [Screenshot](#Screenshot)
 *   [Table of contents](#Contents)
 *   [What are the benefits of using this module?](#Benefits)
@@ -75,7 +75,7 @@ This README file contains the following main sections:
 *   [How the module maps to Gedcom and to archive management concepts](#Mapping)
 *   [Translation](#Translation)
 *   [Bugs and feature requests](#Bugs)
-*   [Github repository](#Github)
+*   [Github repository](Readme.md#Github)
 
 <a name="Benefits"></a>
 ##  What are the benefits of using this module?
@@ -241,7 +241,7 @@ While the "{new}" placeholder should be modified, the rest of the call number, w
 
 <a name="Category-titles"></a>
 ###  Provide and show titles for call number categories
-While the Repository Hierarchy module can generate call number categories from call numbers, the webtrees and GEDCOM data model does not provide features to describe the call number categories. To fill this gap, the Repository Hierarchy module offers a feature to describe and view titles for the call number categories. 
+While the Repository Hierarchy module can generate call number categories from call numbers, the webtrees and GEDCOM data model does not provide features to describe the call number categories. To fill this gap, the Repository Hierarchy module offers a possibility to describe and view titles for the call number categories. 
 
 The following two screenshots show examples for the titles in the module browser front end and in an exported finding aid.
 
@@ -251,9 +251,9 @@ The following two screenshots show examples for the titles in the module browser
 
 In order to provide titles for call number categories, the Repository Hierarchy module uses a mechanism based on [gettext](https://en.wikipedia.org/wiki/Gettext) and .po files, which is frequently used for translation of software projects. In the context of the Repository Hierarchy module, call number categories are "translated" into titles.
 
-Everytime a Repository Hierarchy for a repository is shown in the browser front end, a gettext file is generated and stored in the /resources/caln/ folder of the Repository Hierarchy module. The gettext file with the name "\<Repository XREF\>.php" contains all call number categories of the related repository.
+Everytime a repository hierarchy for a repository is shown in the browser front end, a gettext file is generated and stored in the /resources/caln/ folder of the Repository Hierarchy module. The gettext file with the name "\<tree name\>_\<repository XREF\>.php" contains all call number categories of the related repository.
 
-In order to provide category titles, the user can use a .po editor like [Poedit](https://poedit.net/) and "translate" the call number categories into titles. It is also possible to use a simple text editor; however, a .po editor offers more comfortable features for .po updates and plausibility checks. The translation files need to have the following name: "\<Repository XREF\>_\<language tag\>.po". If a .po file is provided without language tag (i.e. "\<Repository XREF\>.po"), it is used as a default for all languages without specifically provided .po files.
+In order to provide category titles, a .po editor like [Poedit](https://poedit.net/) can be used to "translate" the call number categories into titles. It is also possible to use a simple text editor; however, a .po editor offers more comfortable features for .po updates and plausibility checks. The translation files need to have the following name: "\<tree name\>_\<repository XREF\>_\<language tag\>.po". If a .po file is provided without language tag (i.e. "\<tree name\>_\<repository XREF\>.po"), it is used as a default for all languages without specifically provided .po files.
 
 An example with the related files in the /resources/caln/ folder is shown in the following screenshot.
 
