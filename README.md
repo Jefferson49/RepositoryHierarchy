@@ -38,7 +38,7 @@ To specify delimiters, the module can handle single characters as well as comple
 <a name="Contents"></a>				
 ##  Table of contents
 This README file contains the following main sections:
-*   [Overview](Readme.md#Overview)
+*   [Overview](#repository-hierarchy-overview)
 *   [Screenshot](#Screenshot)
 *   [Table of contents](#Contents)
 *   [What are the benefits of using this module?](#Benefits)
