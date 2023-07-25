@@ -1,7 +1,6 @@
 [![Latest Release](https://img.shields.io/github/v/release/Jefferson49/RepositoryHierarchy?display_name=tag)](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest)
 [![webtrees major version](https://img.shields.io/badge/webtrees-v2.1.x-green)](https://webtrees.net/download)
-
-<a name="Overview"></a>				
+	
 ##  Repository Hierarchy Overview
 A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated. The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The EAD XML export is compatible with apeEAD, which allows data exchange with an archive portal.
 
@@ -31,53 +30,50 @@ To specify delimiters, the module can handle single characters as well as comple
 + For more complex string pattern recognition, regular expressions can be used, which contain the delimiter in brackets, e.g.: "Series( )Nr" or "\[a-z\](, )\[0-9\]"
 + Also, a set of delimiters or regular expressions can be used separated by ";", e.g.: "/;-" or "- ;Series( )Nr"
 
-<a name="Screenshot"></a>
 ##  Screenshot
 ![Screenshot](resources/img/screenshot.jpg)
-
-<a name="Contents"></a>				
+		
 ##  Table of contents
-This README file contains the following main sections:
+This README file contains the following main sections:What](
 *   [Overview](#repository-hierarchy-overview)
-*   [Screenshot](#Screenshot)
-*   [Table of contents](#Contents)
-*   [What are the benefits of using this module?](#Benefits)
-*   [Installation](#Installation)
-*   [Webtrees version](#Version)
-*   [Concepts of the Repository Hierarchy module](#Concepts)
-*   [**How to use the module?**](#Usage)
-    *   [Using delimiters](#Using-delimiters)
-    *   [Save and load options](#Using-save-load)
-    *   [Rename a call number category](#Using-rename)
-    *   [Add a new source to a call number category](#Using-add-source)
-    *   [Provide and show titles for call number categories](#Category-titles)
-    *   [Using a meta repository](#Meta-repository)
-    *   [Using a combined meta repository](#Combined-meta-repository)
-    *   [Generate and download a finding aid document](#Using-finding-aid)
-    *   [Demo download for a finding aid document](#Demo-finding-aid)
-    *   [Generate and download an EAD XML export](#Using-EAD-xml)
-    *   [Settings for EAD XML exports](#Using-xml-settings)
-    *   [Export data to an external archive management system](#Using-export)
-    *   [Create links between webtrees and an external archive management system](#Using-links)
-    *   [Show additional source and repository information in source citations](#Using-citations)
-    *   [Directly show media objects of source citations in individual facts](#Media-objects-in-citations)
-    *   [Preferences](#Prefences)
-*   [**Demo website and examples**](#Demo)
-    *   [Demo website and examples for a meta repository](#Meta_demo)
-*   [Some more background about archive and library management](#Background)
-    *   [Archival Arrangement](#Arrangement)
-    *   [Library classification](#Classification)
-    *   [Finding Aids](#Finding_aids)
-    *   [Call numbers](#Call_numbers)
-    *   [Relationship between Archival Arrangement and Call numbers](#Relationship)
-    *   [EAD standard for XML export of archival records](#EAD)
-    *   [apeEAD standard for XML export of finding aids](#apeEAD)
-*   [How the module maps to Gedcom and to archive management concepts](#Mapping)
-*   [Translation](#Translation)
-*   [Bugs and feature requests](#Bugs)
-*   [Github repository](Readme.md#Github)
+*   [Screenshot](#screenshot)
+*   [Table of contents](#table-of-contents)
+*   [What are the benefits of using this module?](#what-are-the-benefits-of-using-this-module)
+*   [Installation](#installation)
+*   [Webtrees version](#webtrees-version)
+*   [Concepts of the Repository Hierarchy module](#concepts-of-the-repository-hierarchy-module)
+*   [**How to use the module?**](#how-to-use-the-module)
+    *   [Using delimiters](#usage-of-a-single-delimiter)
+    *   [Save and load options](#save-and-load-options)
+    *   [Rename a call number category](#rename-a-call-number-category)
+    *   [Add a new source to a call number category](#add-a-new-source-to-a-call-number-category)
+    *   [Provide and show titles for call number categories](#provide-and-show-titles-for-call-number-categories)
+    *   [Using a meta repository](#using-a-meta-repository)
+    *   [Using a combined meta repository](#using-a-combined-meta-repository)
+    *   [Generate and download a finding aid document](#generate-and-download-a-finding-aid-document)
+    *   [Demo download for a finding aid document](#demo-download-for-a-finding-aid-document)
+    *   [Generate and download an EAD XML export](#generate-and-download-an-ead-xml-export)
+    *   [Settings for EAD XML exports](#settings-for-ead-xml-exports)
+    *   [Export data to an external archive management system](#export-data-to-an-external-archive-management-system)
+    *   [Create links between webtrees and an external archive management system](#create-links-between-webtrees-and-an-external-archive-management-system)
+    *   [Show additional source and repository information in source citations](#show-additional-source-and-repository-information-in-source-citations)
+    *   [Directly show media objects of source citations in individual facts](#directly-show-media-objects-of-source-citations-in-individual-facts)
+    *   [Preferences](#preferences)
+*   [**Demo website and examples**](#demo-website-and-examples)
+    *   [Demo website and examples for a meta repository](#demo-website-and-examples-for-a-meta-repository)
+*   [Some more background about archive and library management](#some-more-background-about-archive-and-library-management)
+    *   [Archival Arrangement](#archival-arrangement)
+    *   [Library classification](#library-classification)
+    *   [Finding Aids](#finding-aids)
+    *   [Call numbers](#call-numbers)
+    *   [Relationship between Archival Arrangement and Call numbers](#relationship-between-archival-arrangement-and-call-numbers)
+    *   [EAD standard for XML export of archival records](#ead-standard-for-xml-export-of-archival-records)
+    *   [apeEAD standard for XML export of finding aids](#apeead-standard-for-xml-export-of-finding-aids)
+*   [How the module maps to Gedcom and to archive management concepts](#how-the-module-maps-to-gedcom-and-to-archive-management-concepts)
+*   [Translation](#translation)
+*   [Bugs and feature requests](#bugs-and-feature-requests)
+*   [Github repository](#github-repository)
 
-<a name="Benefits"></a>
 ##  What are the benefits of using this module?
 + Provide a better overview of sources in a repository
 + Improve the insight into repository structures and content
@@ -89,7 +85,6 @@ This README file contains the following main sections:
 + Create links between webtrees and an external archive management system
 + Generate a standardized archive EAD XML file to export the data of a repository to an archive portal
 
-<a name="Installation"></a>
 ##  Installation
 + Download the [latest release](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest) of the module
 + Copy the folder "repository_hierarchy" into the "module_v4" folder of your webtrees installation
@@ -98,11 +93,9 @@ This README file contains the following main sections:
 	+ Go to "Control Panel/All Modules", and find the module called "Repository Hierarchy" (or corresponding translation)
 	+ Check if it has a tick for "Enabled"
 
-<a name="Version"></a>
 ##  Webtrees version  
 The latest release of the module was developed and tested with [webtrees 2.1.7](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
 
-<a name="Concepts"></a>
 ##  Concepts of the Repository Hierarchy module
 In the following, the concepts of the Repository Hierarchy module are described. 
 
@@ -132,10 +125,8 @@ Based on the identified call number categories, the module creates the following
 ###  Delimiter expressions for call numbers
 A delimiter is a sequence of one or more characters for specifying the boundary between separate, independent regions in a text. In the Repository Hierarchy module, delimiters are used to cut call numbers into sub-strings of call number categories. The call number categories will be used to construct a hierarchy of call numbers.
 
-<a name="Usage"></a>
 ##  How to use the module?
 
-<a name="Using-delimiters"></a>
 ###  Usage of a single delimiter
 A single delimiter is used by providing a single character or a sequence of characters in the related input form ("delimiter expression"). 
 
@@ -213,7 +204,6 @@ Example:
 
 Like for a set of simple delimiters, the delimiter expressions are evaluated from left to right. Please refer to the description and example for a set of simple delimiters.
 
-<a name="Using-save-load"></a>
 ###  Save and load options
 By pressing certain radio buttons in the front end, certain load and save operations can be executed while pressing the "view" button. 
 
@@ -229,17 +219,14 @@ If the "load delimiter expression" radio button is activated while the "view" bu
 
 If the "load delimiter expression from administrator" radio button is activated while the "view" button is pressed, the module will load a stored delimiter expression of the administrator(s) if available.
 
-<a name="Using-rename"></a>
 ###  Rename a call number category
 By opening the "Rename" link close to a call number category, a data fix page with a search/replace form is opened, where the name of the chosen call number can be modified.
 
-<a name="Using-add-source"></a>
 ###  Add a new source to a call number category
 By opening the "Add new source" link close to a call number category, a form is opened, which allows to add a new source to the chosen call number. When opening the form, a "{new}" placeholder is inserted, which should be modified by the user.
 
 While the "{new}" placeholder should be modified, the rest of the call number, which consists of the call number category hierarchy should only be modified if the "route" or "path" of the call number category shall also be changed. If the intention is to simple add a new source to an existing call number category, only the "{new}" placeholder should be changed.
 
-<a name="Category-titles"></a>
 ###  Provide and show titles for call number categories
 While the Repository Hierarchy module can generate call number categories from call numbers, the webtrees and GEDCOM data model does not provide features to describe the call number categories. To fill this gap, the Repository Hierarchy module offers a possibility to describe and view titles for the call number categories. 
 
@@ -259,7 +246,6 @@ An example with the related files in the /resources/caln/ folder is shown in the
 
 ![Screenshot for call number category .po files](resources/img/sreenshot_caln_po_files.jpg)
 
-<a name="Meta-repository"></a>
 ###  Using a meta repository
 A meta repository provides the possibility to view sources of a set of repositories in a shared hierarchy. The basic idea is to share a common namespace for call number categories between sources from different repositories. The common namespace can also be seen as common archival arrangement for the related sources.
 
@@ -271,7 +257,6 @@ All the sources, which are planned to be integrated in the meta respository, nee
 
 Given that the mentioned definiton and assignment of the meta repository is available, it can be used and viewed with the Repository Hierarchy module. The handling is the same like for a single repository, but it provides the means to view and organize a much broader range of sources.
 
-<a name="Combined-meta-repository"></a>
 ###  Using a combined meta repository
 The Repository Hierarchy module offers a feature to combine a meta repository with a base repository. Like in the last chapter, the intention is again to share a common namespace between the meta repository and the base repository. By combining the base repository, it is not necessary to add the meta repository to each of the sources of the base repository. This is especially useful, if the base repository is the "home" of the user's genealogy and contains a lot of sources. 
 
@@ -287,15 +272,14 @@ In order to link the meta repository to the base repository, the XREF of the met
 
 Given that the mentioned definiton and assignment of the meta repository is available, the Repository Hierarchy module will include all the sources of the meta repository when viewing the structure of the base repository. The handling is the same like for a single repository, but it provides the means to view and organize a much broader range of sources. It is even possible to view all sources of a webtrees tree in one Repository Hierarchy view.
 
-More details can be found in the [chapter Demo website and examples](#Demo).
+More details can be found in the [chapter Demo website and examples](#demo-website-and-examples).
 
-<a name="Using-finding-aid"></a>
 ### Generate and download a finding aid document
 A [finding aid](https://en.wikipedia.org/wiki/Finding_aid) document contains detailed, indexed, and processed metadata and other information about a specific collection of source records within an archive. More simple, it is a (hiearchical) list of sources in an archive with additional metadata. 
 
 The **benefit of a finding aid document is to provide a fast overview of the available sources for a user/visitor of an archive**. It also provides insights about the structure of the archive and the kind of sources, which can be found in the archive.
 
-With the Repository Hierarchy module, webtrees can generate a finding aid document for a chosen repository. After selecting the Repository Hierarchy module from the list menu, a repository can be chosen and a [delimiter expression](#Using-delimiters) needs to be provided. The chosen delimiter expression will be used to generate and view a hierarchical structure for the repository.
+With the Repository Hierarchy module, webtrees can generate a finding aid document for a chosen repository. After selecting the Repository Hierarchy module from the list menu, a repository can be chosen and a [delimiter expression](#usage-of-a-single-delimiter) needs to be provided. The chosen delimiter expression will be used to generate and view a hierarchical structure for the repository.
 
 Based on the generated repository and call number structure, a finding aid document can be generated and downloaded by **clicking** the **"Download" button** and selecting one of the options **"Finding aid as HTML"** or **"Finding aid as PDF"**. 
 
@@ -308,27 +292,24 @@ The generated finding aid document contains the following metadata for each of t
 
 ![Screenshot](resources/img/screenshot_finding_aid.jpg)
 
-<a name="Demo-finding-aid"></a>
 ### Demo download for a finding aid document
 
 An example for a finding aid document can be downloaded with the following [link](https://www.familienforschung-hemprich.de/index.php/de/pdf-download-3?task=download.send&id=13&catid=2&m=0).
 
 In page 1-6 of this example, a preface was added with a word processing software. The pages starting from page 7 were generated by the Repository Hierarchy module. 
 
-<a name="Using-EAD-xml"></a>
 ### Generate and download an EAD XML export
-With the Repository Hierarchy module, webtrees can generate an [EAD XML](#EAD) export for a chosen repository. The export is provided in [apeEAD](#apeEAD) XML. 
+With the Repository Hierarchy module, webtrees can generate an [EAD XML](#ead-standard-for-xml-export-of-archival-records) export for a chosen repository. The export is provided in [apeEAD](#apeead-standard-for-xml-export-of-finding-aids) XML. 
 
 The EAD XML export contains:
 + Metadata about the repository (i.e. name, address, ...)
 + Metadata about the repository structure (i.e. hierarchy, call numbers, fonds, collections, files, ...)
 + Metadata about the sources in the repository (i.e. title, author, date range, ...)
 
-After selecting the Repository Hierarchy module from the list menu, a repository can be chosen and a [delimiter expression](#Using-delimiters) needs to be provided. The chosen delimiter expression will be used to generate and view a hierarchical structure for the repository.
+After selecting the Repository Hierarchy module from the list menu, a repository can be chosen and a [delimiter expression](#usage-of-a-single-delimiter) needs to be provided. The chosen delimiter expression will be used to generate and view a hierarchical structure for the repository.
 
 Based on the generated repository and call number structure, an EAD XML export can be generated and downloaded by **clicking** the **"Download" button** and selecting the option **"EAD XML"**. 
 
-<a name="Using-xml-settings"></a>
 ### Settings for EAD XML exports
 In order to generate EAD XML exports, some settings need to be provided. 
 
@@ -336,7 +317,7 @@ The EAD XML settings can be provided by **clicking** the **"EAD XML settings" bu
 
 Within the EAD XML settings window, a button is available to load the settings from an administrator. Hence, if an administrator provided values for the EAD XML settings, they can be loaded and used.
 
-The [apeEAD](#apeEAD) standard, which is used for the export, requires to provide at least the following values:
+The [apeEAD](#apeead-standard-for-xml-export-of-finding-aids) standard, which is used for the export, requires to provide at least the following values:
 + Finding aid title
 + Country code
 + Main agency code
@@ -350,9 +331,8 @@ The Repository Hierarchy module will provide a default proposal for the values.
 
 The **main agency code** is an unique code identifying the archival institution maintaining the described collection; encoded according to ISO 15511 (ISIL). The main agency code is officially assigned to archives by a national authority. As a substitute value (e.g. for a private or inofficial archive), the country code and "-XXXXX" might be chosen, e.g. FR-XXXXX.
 
-<a name="Using-export"></a>
 ### Export data to an external archive management system
-The EAD XML exports described in the section "[Generate and download an EAD XML export](#Using-EAD-xml)" can be used to transfer data from webtrees to an external archive management system.
+The EAD XML exports described in the section "[Generate and download an EAD XML export](#generate-and download-an-ead-xml-export)" can be used to transfer data from webtrees to an external archive management system.
 
 Some examples for archive management systems:
 + [AtoM](https://www.accesstomemory.org/)
@@ -363,7 +343,6 @@ The EAD export of the Repository Hierarchy module was tested with AtoM. Further 
 
 For re-importing EAD XML from the same webtrees repository, the AtoM setting "Ignore matches and import as new" should be used. The re-import will generate a new (parallel) archival institution in AtoM. To add (newly imported) sources to the exiting archival institution, they can be selected from the imported structure and moved within AtoM to the available structure. Please note that AtoM does not offer features to sync and update existing records. For more details, please refer to the [AtoM documentation for XML imports](https://www.accesstomemory.org/en/docs/2.6/user-manual/import-export/import-xml#matching-critera-for-description-xml-imports).
 
-<a name="Using-links"></a>
 ### Create links between webtrees and an external archive management system
 When exporting webtrees data to an external archive system, linking between webtrees and the external system helps to connect the two systems and to keep redundancy at a mimimum.
 
@@ -385,7 +364,6 @@ Within webtrees, the Repository Hierarchy module can provide links to the relate
 
 ![Screenshot](resources/img/screenshot_AtoM_link_in_webtrees.jpg)
 
-<a name="Using-citations"></a>
 ### Show additional source and repository information in source citations
 The Repository Hierarchy modules provides a feature to show extended information within source citations. If one of the following GEDCOM tags is available and contains content, it is shown in the user interface:
 + REPO (name of repository)
@@ -397,9 +375,8 @@ The Repository Hierarchy modules provides a feature to show extended information
 
 In order to activate this feature, the setting "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations" needs to be selected in the control panel.
 
-Note:Additionally, it is possible to show links to AtoM (as an external archive management system) within the source citations. The details are described in the related [chapter](#Using-links).
+Note:Additionally, it is possible to show links to AtoM (as an external archive management system) within the source citations. The details are described in the related [chapter](#create-links-between-webtrees-and-an-external-archive-management-system).
 
-<a name="Media-objects-in-citations"></a>
 ### Directly show media objects of source citations in individual facts
 The Repository Hierarchy modules provides a feature to directly show media objects of source citations in individual facts and not subordinated in the source citation.
 
@@ -411,7 +388,6 @@ The Repository Hierarchy modules provides a feature to directly show media objec
 
 In order to activate this feature, the setting "Directly show media objects of sources in facts and not subordinated within source citations." needs to be selected in the control panel.
 
-<a name="Prefences"></a>
 ###  Preferences
 The following preferences can be activated/deactivated by administrators in the control panel.
 
@@ -455,7 +431,6 @@ The following preferences can be activated/deactivated by administrators in the 
 + [AtoM](https://www.accesstomemory.org/) base ULR to be used for the generation of links to an [AtoM](https://www.accesstomemory.org/) archive management system.
 + Repositories, for which [AtoM](https://www.accesstomemory.org/) linking is used.
 
-<a name="Demo"></a>
 ## Demo website and examples
 The following links provide access to a demo website, which demonstrates some of the module features.
 
@@ -465,7 +440,6 @@ The following links provide access to a demo website, which demonstrates some of
 
 + Example for an [**Individual Record**](https://www.familienforschung-hemprich.de/webtrees2/index.php?route=%2Fwebtrees2%2Ftree%2Fhemprich%2Findividual%2FI6684%2FLeonhard-Kastler&language=en-GB) with source citations
 
-<a name="Meta_demo"></a>
 ### Demo website and examples for a meta repository
 Additionally to the above demo website links, the following links, examples, and GEDCOM snippets demonstrate the features of the Repository Hierarchy module, which make use of a meta repository.
 
@@ -534,7 +508,6 @@ Source with "single" source repository citations (if using a combined meta repos
 
 It is important to notice that both examples are equaly working and both make use of the meta repository. However, the second example avoids redundancy and needs less work.
 
-<a name="Background"></a>
 ## Some more background about archive and library management
 In archive (or library) management, archival arrangements, library classifications, finding aids, and call numbers are frequently used to:
 + define a structure for an archive
@@ -543,25 +516,20 @@ In archive (or library) management, archival arrangements, library classificatio
 
 In the following, some of the typical concepts are briefly described.
 
-<a name="Arrangement"></a>
 ### Archival Arrangement
 [Wikipedia](https://en.wikipedia.org/wiki/Finding_aid): "Arrangement is the manner in which \[the archive] has been ordered \[...]. Hierarchical levels of arrangement are typically composed of record groups containing series, which in turn contain boxes, folders, and items."
 
-<a name="Classification"></a>
 ### Library classification
 [Wikipedia](https://en.wikipedia.org/wiki/Library_classification): "A library classification is a system of knowledge distribution by which library resources are arranged and ordered systematically."
 
-<a name="Finding_aids"></a>
 ###  Finding Aids
 [Archive Portal Europe](https://www.archivesportaleurope.net/?show=help): "A finding aid is a structured description of archival materials per collection or fonds up to item level"
 
 [Wikipedia](https://en.wikipedia.org/wiki/Finding_aid): "A finding aid for an archive is an organization tool, a document containing detailed, indexed, and processed metadata and other information about a specific collection of records within an archive."
 
-<a name="Call_numbers"></a>
 ### Call numbers
 [Wikipedia](https://en.wikipedia.org/wiki/Library_classification): "\[...] a call number (essentially a book's address) based on the classification system in use at the particular library will be assigned to the work using the notation of the system."
 
-<a name="Relationship"></a>
 ### Relationship between Archival Arrangement and Call numbers
 A lot of archives (and libraries) map the archival arrangement (or library classification) into the call numbers of the sources. 
 
@@ -578,21 +546,18 @@ In this case, the call numbers might have the following structure:
 
 Therefore, the hierarchy of the archival arrangement is represented in the "route" or the "path" of the call number. 
 
-<a name="EAD"></a>
 ### EAD standard for XML export of archival records
 Encoded Archival Description ([EAD](https://www.loc.gov/ead/)) is a standard for encoding descriptive information regarding archival records. The EAD standard provides a **XML export format**, which allows to describe and export the content and structure of archives and sources. It also provides data structures to describe and export finding aids.
 
 See also: [Wikipedia](https://en.wikipedia.org/wiki/Encoded_Archival_Description)
 
-<a name="apeEAD"></a>
 ### apeEAD standard for XML export of finding aids
-[apeEAD](https://www.archivesportaleurope.net/tools/for-content-providers/standards/apeead/) is a standard, which was designed and published by the [Archive Portal Europe](https://www.archivesportaleurope.net/). As a sub-set of [EAD](#EAD), apeEAD was specifically designed for encoding archival finding aids. As specification of the standard, the Archive Portal Europe provides a [table](http://apex-project.eu/images/docs/apeEAD_finding_aid_table_201210.pdf) with the used EAD XML tags and a [description and best practice guide](http://apex-project.eu/images/docs/apenet_ead_finding_aid_holdings_guide.pdf) for usind ape EAD.
+[apeEAD](https://www.archivesportaleurope.net/tools/for-content-providers/standards/apeead/) is a standard, which was designed and published by the [Archive Portal Europe](https://www.archivesportaleurope.net/). As a sub-set of [EAD](#ead-standard-for-xml-export-of-archival-records), apeEAD was specifically designed for encoding archival finding aids. As specification of the standard, the Archive Portal Europe provides a [table](http://apex-project.eu/images/docs/apeEAD_finding_aid_table_201210.pdf) with the used EAD XML tags and a [description and best practice guide](http://apex-project.eu/images/docs/apenet_ead_finding_aid_holdings_guide.pdf) for usind ape EAD.
 
 The Archive Portal Europe also provides a validation tool. With the [apeEAD data preparation tool](https://github.com/ArchivesPortalEuropeFoundation/ape-dpt), EAD XML exports can be validated against the apeEAD standard. Details are described in a [manual](http://apex-project.eu/index.php/en/outcomes/tools-and-manuals/data-preparation-tool-manual).
 
 The XML exports of the Repository Hiararchy module were developed and tested to pass the validation of the apeEAD data preparation tool.
 
-<a name="Mapping"></a>
 ## How the module maps to Gedcom and to archive management concepts
 In order to manage archives and sources, Gedcom and webtrees basically provide the following data structures:
 + Repository
@@ -610,7 +575,6 @@ The following table describes how the concepts from archive and library manageme
 |Call number|Call number|Call number|
 |Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
-<a name="Translation"></a>
 ## Translation
 You can help to translate this module. The translation is based on [gettext](https://en.wikipedia.org/wiki/Gettext) and uses .po files, which can be found in [/resources/lang/](https://github.com/Jefferson49/RepositoryHierarchy/tree/main/resources/lang). You can use a local editor like [Poedit](https://poedit.net/) or notepad++ to work on translations and provide them in the [Github repository](https://github.com/Jefferson49/RepositoryHierarchy) of the module. You can do this via a pull request (if you know how to do), or by opening a new issue and attaching a .po file. Updated translations will be included in the next release of this module.
 
@@ -620,10 +584,8 @@ Currently, the following languages are already available:
 + French
 + German
 
-<a name="Bugs"></a>
 ## Bugs and feature requests
 If you experience any bugs or have a feature request for this webtrees custom module, you can [create a new issue](https://github.com/Jefferson49/RepositoryHierarchy/issues).
 
-<a name="Github"></a>
 ##  Github repository  
 https://github.com/Jefferson49/RepositoryHierarchy
