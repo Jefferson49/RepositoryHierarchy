@@ -129,12 +129,12 @@ class XmlExportSettingsAction implements RequestHandlerInterface
         $repository_xref   		= Validator::attributes($request)->string('xref');
         $user               	= Validator::attributes($request)->user();
 
-		$finding_aid_title		= Validator::parsedBody($request)->string('finding_aid_title', '');
-		$country_code  			= Validator::parsedBody($request)->string('country_code', '');
-		$main_agency_code		= Validator::parsedBody($request)->string('main_agency_code', '');
-		$finding_aid_identifier = Validator::parsedBody($request)->string('finding_aid_identifier', '');
-		$finding_aid_url  		= Validator::parsedBody($request)->string('finding_aid_url', '');
-		$finding_aid_publisher  = Validator::parsedBody($request)->string('finding_aid_publisher', '');
+		$finding_aid_title		= Validator::parsedBody($request)->string(RepositoryHierarchy::PREF_FINDING_AID_TITLE, '');
+		$country_code  			= Validator::parsedBody($request)->string(RepositoryHierarchy::PREF_COUNTRY_CODE, '');
+		$main_agency_code		= Validator::parsedBody($request)->string(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE, '');
+		$finding_aid_identifier = Validator::parsedBody($request)->string(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER, '');
+		$finding_aid_url  		= Validator::parsedBody($request)->string(RepositoryHierarchy::PREF_FINDING_AID_URL, '');
+		$finding_aid_publisher  = Validator::parsedBody($request)->string(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER, '');
 
         if ($save_as_admin) {
             $user_id = RepositoryHierarchy::ADMIN_USER_STRING;
