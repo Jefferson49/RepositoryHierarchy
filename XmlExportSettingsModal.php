@@ -68,8 +68,8 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         $tree                   = Validator::attributes($request)->tree();
         $user                   = Validator::attributes($request)->user();
         $repository_xref        = Validator::attributes($request)->string('xref');
-        $delimiter_expression   = Validator::attributes($request)->string('delimiter_expression');
         $command                = Validator::attributes($request)->string('command');
+        $delimiter_expression   = Validator::queryParams($request)->string('delimiter_expression');
 
         $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
         $repository  = Registry::repositoryFactory()->make($repository_xref, $tree);
@@ -105,10 +105,10 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                             [
                                 'tree'                  => $tree->name(),
                                 'xref'                  => $repository_xref,
-                                'delimiter_expression'  => $delimiter_expression,
                                 'command'               => DownloadService::DOWNLOAD_OPTION_PDF,
                             ]
-                        )
+                        ) .
+                        '&delimiter_expression=' . $delimiter_expression
                     ),
                     'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, Functions::removeHtmlTags($repository->fullName())),
                     'show_load_from_admin'      => true,
