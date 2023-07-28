@@ -149,12 +149,12 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_ATOM_BASE_URL = 'atom_base_url';
     public const PREF_ATOM_REPOSITORIES = 'atom_repositories';
     public const PREF_XML_VERSION = 'xml_version_';
-    public const PREF_FINDING_AID_TITLE = 'finding_aid_title_';
+    public const PREF_FINDING_AID_TITLE = 'fi_aid_title_';
     public const PREF_COUNTRY_CODE = 'country_code_';
-    public const PREF_MAIN_AGENCY_CODE = 'main_agency_code_';
-    public const PREF_FINDING_AID_IDENTIFIER = 'finding_aid_id_';
-    public const PREF_FINDING_AID_URL = 'finding_aid_url_';
-    public const PREF_FINDING_AID_PUBLISHER = 'finding_aid_publ_';
+    public const PREF_MAIN_AGENCY_CODE = 'agency_code_';
+    public const PREF_FINDING_AID_IDENTIFIER = 'fi_aid_id_';
+    public const PREF_FINDING_AID_URL = 'fi_aid_url_';
+    public const PREF_FINDING_AID_PUBLISHER = 'fi_aid_publ_';
     public const PREF_ALLOW_ADMIN_XML_SETTINGS = 'allow_admin_xml_settings';
     public const PREF_SHOW_FINDING_AID_CATEGORY_TITLE = 'show_finding_aid_category_title';
     public const PREF_SHOW_FINDING_AID_ADDRESS = 'show_finding_aid_address';
@@ -165,6 +165,13 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_USE_META_REPOSITORIES = 'use_meta_repositories';
     public const PREF_ALLOW_RENAME = 'allow_rename';
     public const PREF_ALLOW_NEW_SOURCE = 'allow_new_source';
+
+    //Old prefences/settings not used any more, but needed for version updates
+    public const OLD_PREF_FINDING_AID_TITLE = 'finding_aid_title_';
+    public const OLD_PREF_FINDING_AID_IDENTIFIER = 'finding_aid_id_';
+    public const OLD_PREF_FINDING_AID_URL = 'finding_aid_url_';
+    public const OLD_PREF_FINDING_AID_PUBLISHER = 'finding_aid_publ_';
+    public const OLD_PREF_MAIN_AGENCY_CODE = 'main_agency_code_';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';
