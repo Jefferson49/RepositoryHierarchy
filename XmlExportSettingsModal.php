@@ -57,18 +57,19 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     }	
 
     /**
-    * Update preferences/settings from former module versions
+    * Update EAD/XML preferences/settings from former module versions
     *
-    * @param int $tree_id
-    * @param string $repository_xref
-    * @param int $user_id
-    * @param string $delimiter_expression
+    * @param int                 $tree_id
+    * @param string              $repository_xref
+    * @param int                 $user_id
+    * @param string              $delimiter_expression
     *
     * @return void
     */
-    public function updatePreferenes(int $tree_id, string $repository_xref, int $user_id, string $delimiter_expression)
+    public static function updatePreferenes(int $tree_id, string $repository_xref, int $user_id, string $delimiter_expression)
     {
-        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $module_service = new ModuleService();
+        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 
         $replaces_list = [
             ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_TITLE, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_TITLE],
@@ -92,7 +93,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
 
                         //If URL matches old webtrees URL without pretty URLs (before bugfix #25), create new default URL
                         if (($replace_pair['search'] === RepositoryHierarchy::OLD_PREF_FINDING_AID_URL) && str_contains($old_setting, '%2Fdelimiter_expression%2F')) {
-                            $old_setting = $this->defaultURL( $tree_id, $repository_xref,  $delimiter_expression);
+                            $old_setting = self::defaultURL( $tree_id, $repository_xref,  $delimiter_expression);
                         }
 
                         //Save old setting to new preference name
@@ -116,7 +117,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     *
     * @return string
     */
-    public function defaultURL(int $tree_id, string $repository_xref, string $delimiter_expression): string
+    public static function defaultURL(int $tree_id, string $repository_xref, string $delimiter_expression): string
     {
         return route(RepositoryHierarchy::class, [
             'tree'                  => $tree_id,
@@ -143,7 +144,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         $delimiter_expression   = Validator::queryParams($request)->string('delimiter_expression');
 
         $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
-        $repository  = Registry::repositoryFactory()->make($repository_xref, $tree);
+        $repository = Registry::repositoryFactory()->make($repository_xref, $tree);
 
         //If XML settings shall be loaded from administrator
         if (($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) &&
@@ -155,7 +156,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         }
 
         //Update old preferences/settings
-        $this->updatePreferenes($tree->id(), $repository_xref, $user_id, $delimiter_expression);
+        self::updatePreferenes($tree->id(), $repository_xref, $user_id, $delimiter_expression);
 
 
         $locale = Locale::create(Session::get('language'));

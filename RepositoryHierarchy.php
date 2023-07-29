@@ -1420,6 +1420,10 @@ class RepositoryHierarchy extends AbstractModule implements
             if ($title === '') {
                 $error_text = $this->errorTextWithHeader('<b>'. I18N::translate('XML export settings not found. Please open EAD XML settings and provide settings.') . '</b>' . '<p>');
             } else {
+
+                //Update EAD XML settings
+                XmlExportSettingsModal::updatePreferenes($tree->id(), $xref, $user->id(), $delimiter_expression);
+
                 //Initialize EAD XML
                 $download_ead_xml_service = new DownloadEADxmlService($xml_type, $this, $this->root_category, $user);
 
