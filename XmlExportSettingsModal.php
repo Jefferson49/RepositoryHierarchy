@@ -55,6 +55,47 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     {
         $this->module_service = $module_service;
     }	
+
+    /**
+    * Update preferences/settings from former module versions
+    *
+    * @return void
+    */
+    public function updatePreferenes(int $tree_id, string $repository_xref, int $user_id)
+    {
+        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
+
+        $replaces_list = [
+            ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_TITLE, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_TITLE],
+            ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_IDENTIFIER, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER],
+            ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_URL, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_URL],
+            ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_PUBLISHER, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER],
+            ['search'   => RepositoryHierarchy::OLD_PREF_MAIN_AGENCY_CODE, 'replace'  => RepositoryHierarchy::PREF_MAIN_AGENCY_CODE],
+        ];
+
+        foreach ($replaces_list as $replace_pair) {
+
+            foreach ([$user_id, RepositoryHierarchy::ADMIN_USER_STRING] as $user_id_in_pref) {
+
+                $old_setting = $repository_hierarchy->getPreference($replace_pair['search'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, '');
+                $new_setting = $repository_hierarchy->getPreference($replace_pair['replace'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, '');
+
+                if ($old_setting !== '') {
+
+                    //If new preference does not already exist
+                    if ($new_setting === '') {
+
+                        //Save old setting to new preference name
+                        $repository_hierarchy->setPreference($replace_pair['replace'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, $old_setting);
+                    }
+        
+                    //Delete old setting
+                    $repository_hierarchy->setPreference($replace_pair['search'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, '');
+                }
+    
+            }
+        }
+    }	
 	
     /**
      * Handle a request to view a modal for EAD XML settings
@@ -70,7 +111,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         $repository_xref        = Validator::attributes($request)->string('xref');
         $delimiter_expression   = Validator::attributes($request)->string('delimiter_expression');
         $command                = Validator::attributes($request)->string('command');
-
+    
         $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
         $repository  = Registry::repositoryFactory()->make($repository_xref, $tree);
 
@@ -82,6 +123,10 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         } else {
             $user_id = $user->id();
         }
+
+        //Update old preferences/settings
+        $this->updatePreferenes($tree->id(), $repository_xref, $user_id);
+
 
         $locale = Locale::create(Session::get('language'));
         //ISO-3166 country code
