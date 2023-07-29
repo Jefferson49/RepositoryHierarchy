@@ -126,7 +126,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
             'command'               => DownloadService::DOWNLOAD_OPTION_PDF,
             ]
             ) .
-            '&delimiter_expression=' . $delimiter_expression;
+            '?delimiter_expression=' . $delimiter_expression;
     }
 
     /**
