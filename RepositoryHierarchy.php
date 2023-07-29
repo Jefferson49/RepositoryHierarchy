@@ -30,6 +30,7 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
+use Exception;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Localization\Translation;
@@ -266,7 +267,6 @@ class RepositoryHierarchy extends AbstractModule implements
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::MODULE_NAME_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/delimiter_expression/'.self::DELIMITER_ATTRIBUTE_DEFAULT.
             '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT,
             $this
         )
@@ -307,7 +307,6 @@ class RepositoryHierarchy extends AbstractModule implements
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::XML_SETTINGS_MODAL_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/delimiter_expression/'.self::DELIMITER_ATTRIBUTE_DEFAULT.
             '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
         )
             ->allows(RequestMethodInterface::METHOD_POST);
@@ -498,7 +497,7 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         return '_' . basename(__DIR__) . '_';
     }
-	
+
     /**
      * View module settings in control panel
      *
@@ -662,7 +661,8 @@ class RepositoryHierarchy extends AbstractModule implements
 
     public function listUrl(Tree $tree, array $parameters = []): string
     {
-        $parameters['tree'] = $tree->name();
+        $parameters['tree']                  = $tree->name();
+        $parameters['delimiter_expression']  = '';
 
         return route(RepositoryHierarchy::class, $parameters);
     }
@@ -1185,45 +1185,43 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $tree                   = Validator::attributes($request)->tree();
-        $user                   = Validator::attributes($request)->user();
-        $xref                   = Validator::attributes($request)->string('xref');
-        $delimiter_expression   = Validator::attributes($request)->string('delimiter_expression');
-        $command                = Validator::attributes($request)->string('command');
+        $tree                      = Validator::attributes($request)->tree();
+        $user                      = Validator::attributes($request)->user();
+        $xref                      = Validator::attributes($request)->string('xref');
+        $command                   = Validator::attributes($request)->string('command');
 
-        if ($command === self::CMD_DOWNLOAD) {
-            $download_command = Validator::parsedBody($request)->string('download_command');
+        try {
+            $delimiter_expression = Validator::parsedBody($request)->string('delimiter_expression');
+        }
+        catch (Exception $ex) {
+            $delimiter_expression = Validator::queryParams($request)->string('delimiter_expression');
         }
 
         // Convert POST requests into GET requests for pretty URLs.
         if ($request->getMethod() === RequestMethodInterface::METHOD_POST) {
-            if ($command === self::CMD_DOWNLOAD) {
-                return redirect(
-                    route(
-                        self::class,
-                        [
-                            'tree'                  => $tree->name(),
-                            'xref'                  => $xref,
-                            'delimiter_expression'  => $delimiter_expression,
-                            'command'               => $download_command,
-                        ]
-                    )
-                );
-            } else {
-                return redirect(
-                    route(
-                        self::class,
-                        [
-                            'tree'                  => $tree->name(),
-                            'xref'                  => Validator::parsedBody($request)->isXref()->string('xref'),
-                            'delimiter_expression'  => Validator::parsedBody($request)->string('delimiter_expression'),
-                            'command'               => Validator::parsedBody($request)->string('command'),
-                        ]
-                    )
-                );
-            }
-        }
 
+            if ($command === self::CMD_DOWNLOAD) {
+
+                $command = Validator::parsedBody($request)->string('download_command');
+            }
+            else {
+                $command = Validator::parsedBody($request)->string('command');
+                $xref    = Validator::parsedBody($request)->isXref()->string('xref');
+            }
+
+            return redirect(
+                route(
+                    self::class,
+                    [
+                        'tree'                  => $tree->name(),
+                        'xref'                  => $xref,
+                        'delimiter_expression'  => $delimiter_expression,
+                        'command'               => $command,
+                    ]
+                )
+            );
+        }
+    
         //Variable for error texts; default is empty
         $error_text = '';
 
