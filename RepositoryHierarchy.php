@@ -607,6 +607,36 @@ class RepositoryHierarchy extends AbstractModule implements
     }
 
     /**
+     * Check if module version is new and start update activities if needed
+     *
+     * @return void
+     */
+    public function checkModuleVersionUpdate(): void
+    {
+        //If new custom module version is detected
+        if ($this->getPreference(self::PREF_MODULE_VERSION) !== self::CUSTOM_VERSION) {
+
+            //Update prefences stored in database
+            $update_result = $this->updatePreferences();
+
+            //Show flash message for error or sucessful update of preferences
+            if ($update_result !== '') {
+
+                $message = I18N::translate('Error while trying to update the custom module "%s" to the new module version %s: ' . $update_result, $this->title(), self::CUSTOM_VERSION);
+                FlashMessages::addMessage($message, 'danger');
+            } 
+            else {
+
+                $message = I18N::translate('The preferences for the custom module "%s" were sucessfully updated to the new module version %s.', $this->title(), self::CUSTOM_VERSION);
+                FlashMessages::addMessage($message, 'success');	    
+                
+                //Update custom module version
+                $this->setPreference(self::PREF_MODULE_VERSION, self::CUSTOM_VERSION);
+            }
+        }        
+    }
+
+    /**
      * Update the preferences (after new module version is detected)
      *
      * @return string
@@ -1225,24 +1255,8 @@ class RepositoryHierarchy extends AbstractModule implements
         //Variable for error texts; default is empty
         $error_text = '';
 
-        //Check module version
-        if ($this->getPreference(self::PREF_MODULE_VERSION) !== self::CUSTOM_VERSION) {
-            $this->setPreference(self::PREF_MODULE_VERSION, self::CUSTOM_VERSION);
-
-            //Update prefences stored in database
-            $update_result = $this->updatePreferences();
-
-            //If error during update of preferences, show error message
-            if ($update_result !== '') {
-                return $this->viewResponse(
-                    self::viewsNamespace() . '::error',
-                    [
-						'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
-						'text'  => I18N::translate('Error during update of the module preferences') . ': ' . $update_result,
-                    ]
-                );
-            }
-        }
+        //Check module version and update preferences etc.
+        $this->checkModuleVersionUpdate();
 
         //If requested, load stored repository and reset delimiter
         if ($command === self::CMD_LOAD_REPO) {
