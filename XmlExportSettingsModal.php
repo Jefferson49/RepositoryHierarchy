@@ -30,6 +30,7 @@ use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Session;
+use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -66,7 +67,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     *
     * @return void
     */
-    public static function updatePreferenes(int $tree_id, string $repository_xref, int $user_id, string $delimiter_expression)
+    public static function updatePreferenes(Tree $tree, string $repository_xref, int $user_id, string $delimiter_expression)
     {
         $module_service = new ModuleService();
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
@@ -83,8 +84,8 @@ class XmlExportSettingsModal implements RequestHandlerInterface
 
             foreach ([$user_id, RepositoryHierarchy::ADMIN_USER_STRING] as $user_id_in_pref) {
 
-                $old_setting = $repository_hierarchy->getPreference($replace_pair['search'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, '');
-                $new_setting = $repository_hierarchy->getPreference($replace_pair['replace'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, '');
+                $old_setting = $repository_hierarchy->getPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, '');
+                $new_setting = $repository_hierarchy->getPreference($replace_pair['replace'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, '');
 
                 if ($old_setting !== '') {
 
@@ -93,15 +94,15 @@ class XmlExportSettingsModal implements RequestHandlerInterface
 
                         //If URL matches old webtrees URL without pretty URLs (before bugfix #25), create new default URL
                         if (($replace_pair['search'] === RepositoryHierarchy::OLD_PREF_FINDING_AID_URL) && str_contains($old_setting, '%2Fdelimiter_expression%2F')) {
-                            $old_setting = self::defaultURL( $tree_id, $repository_xref,  $delimiter_expression);
+                            $old_setting = self::defaultURL($tree, $repository_xref,  $delimiter_expression);
                         }
 
                         //Save old setting to new preference name
-                        $repository_hierarchy->setPreference($replace_pair['replace'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, $old_setting);
+                        $repository_hierarchy->setPreference($replace_pair['replace'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, $old_setting);
                     }
         
                     //Delete old setting (i.e. set to '')
-                    $repository_hierarchy->setPreference($replace_pair['search'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, '');
+                    $repository_hierarchy->setPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, '');
                 }
     
             }
@@ -117,10 +118,10 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     *
     * @return string
     */
-    public static function defaultURL(int $tree_id, string $repository_xref, string $delimiter_expression): string
+    public static function defaultURL(Tree $tree, string $repository_xref, string $delimiter_expression): string
     {
         return route(RepositoryHierarchy::class, [
-            'tree'                  => $tree_id,
+            'tree'                  => $tree->name(),
             'xref'                  => $repository_xref,
             'command'               => DownloadService::DOWNLOAD_OPTION_PDF,
             ]
@@ -156,7 +157,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         }
 
         //Update old preferences/settings
-        self::updatePreferenes($tree->id(), $repository_xref, $user_id, $delimiter_expression);
+        self::updatePreferenes($tree, $repository_xref, $user_id, $delimiter_expression);
 
 
         $locale = Locale::create(Session::get('language'));
@@ -168,7 +169,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
 
         if ($finding_aid_url === '') {
 
-            $finding_aid_url = $this->defaultURL( $tree->id(), $repository_xref,  $delimiter_expression);
+            $finding_aid_url = $this->defaultURL( $tree, $repository_xref,  $delimiter_expression);
         } 
 
         return response(

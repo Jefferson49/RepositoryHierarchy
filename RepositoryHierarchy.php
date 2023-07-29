@@ -1436,7 +1436,7 @@ class RepositoryHierarchy extends AbstractModule implements
             } else {
 
                 //Update EAD XML settings
-                XmlExportSettingsModal::updatePreferenes($tree->id(), $xref, $user->id(), $delimiter_expression);
+                XmlExportSettingsModal::updatePreferenes($tree, $xref, $user->id(), $delimiter_expression);
 
                 //Initialize EAD XML
                 $download_ead_xml_service = new DownloadEADxmlService($xml_type, $this, $this->root_category, $user);
