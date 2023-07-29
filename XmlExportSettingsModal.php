@@ -124,9 +124,9 @@ class XmlExportSettingsModal implements RequestHandlerInterface
             'tree'                  => $tree->name(),
             'xref'                  => $repository_xref,
             'command'               => DownloadService::DOWNLOAD_OPTION_PDF,
+            'delimiter_expression'  => $delimiter_expression,
             ]
-            ) .
-            '?delimiter_expression=' . $delimiter_expression;
+        ); 
     }
 
     /**
