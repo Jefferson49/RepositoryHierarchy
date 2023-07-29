@@ -85,11 +85,16 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                     //If new preference does not already exist
                     if ($new_setting === '') {
 
+                        //If URL matches old webtrees URL without pretty URLs (before bugfix #25), reset the URL
+                        if (($replace_pair['search'] === RepositoryHierarchy::OLD_PREF_FINDING_AID_URL) && str_contains($old_setting, '%2Fdelimiter_expression%2F')) {
+                            $old_setting = '';
+                        }
+
                         //Save old setting to new preference name
                         $repository_hierarchy->setPreference($replace_pair['replace'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, $old_setting);
                     }
         
-                    //Delete old setting
+                    //Delete old setting (i.e. set to '')
                     $repository_hierarchy->setPreference($replace_pair['search'] . $tree_id . '_' . $repository_xref . '_' . $user_id_in_pref, '');
                 }
     
@@ -133,6 +138,19 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         $country_code = $locale->territory()->code();
         $main_agency_code_default = $country_code . '-XXXXX';
 
+        $finding_aid_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, '');
+
+        if ($finding_aid_url === '') {
+
+            $finding_aid_url = route(RepositoryHierarchy::class, [
+                    'tree'                  => $tree->name(),
+                    'xref'                  => $repository_xref,
+                    'command'               => DownloadService::DOWNLOAD_OPTION_PDF,
+                ]
+            ) .
+            '&delimiter_expression=' . $delimiter_expression;
+        } 
+
         return response(
             view(
                 RepositoryHierarchy::viewsNamespace() . '::modals/xml-export-settings',
@@ -143,18 +161,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                     'country_code'              => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_COUNTRY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $country_code),
                     'main_agency_code'          => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_MAIN_AGENCY_CODE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $main_agency_code_default),
                     'finding_aid_identifier'    => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER . $tree->id() . '_' . $repository_xref . '_' . $user_id, I18N::translate('Finding aid')),
-                    'finding_aid_url'           => $repository_hierarchy->getPreference(
-                        RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id,
-                        route(
-                            RepositoryHierarchy::class,
-                            [
-                                'tree'                  => $tree->name(),
-                                'xref'                  => $repository_xref,
-                                'command'               => DownloadService::DOWNLOAD_OPTION_PDF,
-                            ]
-                        ) .
-                        '&delimiter_expression=' . $delimiter_expression
-                    ),
+                    'finding_aid_url'           => $finding_aid_url,
                     'finding_aid_publisher'     => $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER . $tree->id() . '_' . $repository_xref . '_' . $user_id, Functions::removeHtmlTags($repository->fullName())),
                     'show_load_from_admin'      => true,
                 ]
