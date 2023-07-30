@@ -546,7 +546,6 @@ class DownloadEADxmlService extends DownloadService
      */
     private function addFile(string $xml_type, DOMNode $dom, Source $source)
     {
-        $fact_values = Functions::sourceValuesByTag($source, $this->repository);
         $call_number = $this->repository_hierarchy->call_number_of_source[$source->xref()];
 
         //<c>
@@ -558,7 +557,7 @@ class DownloadEADxmlService extends DownloadService
         $did_dom = $c_dom->appendChild($this->ead_xml->createElement('did'));
 
         //<unittitle>
-        $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', e($fact_values['SOUR:TITL'])));
+        $unittitle_node =$did_dom->appendChild($this->ead_xml->createElement('unittitle', e($this->repository_hierarchy->title_of_source[$source->xref()])));
         if ($this->use_encoding_analog) {
             $unittitle_node->appendChild(new DOMAttr('encodinganalog', '3.1.2'));
         }
@@ -572,9 +571,9 @@ class DownloadEADxmlService extends DownloadService
         }
 
         //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
-        if (isset($fact_values['SOUR:DATA:EVEN:DATE'])) {
+        if (isset($this->repository_hierarchy->date_range_of_source[$source->xref()])) {
             $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
-            $unitdate_node->appendChild(new DOMAttr('normal', Functions::removeHtmlTags($fact_values['SOUR:DATA:EVEN:DATE'])));
+            $unitdate_node->appendChild(new DOMAttr('normal', Functions::removeHtmlTags($this->repository_hierarchy->date_range_of_source[$source->xref()])));
             if ($this->use_encoding_analog) {
                 $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
             }
@@ -583,7 +582,7 @@ class DownloadEADxmlService extends DownloadService
         //<dao>
         $dao_node =$did_dom->appendChild($this->ead_xml->createElement('dao'));
         $dao_node->appendChild(new DOMAttr('xlink:href', $source->url()));
-        $dao_node->appendChild(new DOMAttr('xlink:title', $fact_values['SOUR:TITL']));
+        $dao_node->appendChild(new DOMAttr('xlink:title', $this->repository_hierarchy->title_of_source[$source->xref()]));
 
 
         //<note> link to webtrees, needed for AtoM, only. For simplicity reasons, always include to XML

@@ -47,7 +47,6 @@ use Fisharebest\Webtrees\View;
     <?php $sources = $repository_hierarchy->sortSourcesByCallNumber($sources) ?>
     <?php foreach ($sources as $source) : ?>
     <table class="finding-aid-table">
-        <?php $source_facts = Functions::sourceValuesByTag($source, $repository_hierarchy->getRepository()) ?>
         <?php $call_number = $repository_hierarchy->call_number_of_source[$source->xref()] ?>
         <tr> 
             <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>               
@@ -69,7 +68,7 @@ use Fisharebest\Webtrees\View;
         </tr>
         <tr> 
             <td><?= I18N::translate('Author') ?></td>               
-            <td><?= isset($source_facts['SOUR:AUTH']) ? $source_facts['SOUR:AUTH'] : '' ?></td>
+            <td><?= isset($repository_hierarchy->author_of_source[$source->xref()]) ? $repository_hierarchy->author_of_source[$source->xref()] : '' ?></td>
             <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
                 <td><?= e(Functions::displayISODateRangeForSource($source, '--')) ?></td>      
             <?php else : ?>
