@@ -256,6 +256,14 @@ class RepositoryHierarchy extends AbstractModule implements
 
         //Path for .po files (if call number category titles are used)
         $this->call_number_category_titles_po_file_path = __DIR__ . '/resources/caln/';  
+
+        //Initialization of source data tables
+        $this->title_of_source = [];
+        $this->author_of_source = [];
+        $this->call_number_of_source = [];
+        $this->date_range_of_source = [];
+        $this->date_range_text_of_source = [];
+        $this->iso_date_range_text_of_source = [];
     }
 
     /**
@@ -761,7 +769,7 @@ class RepositoryHierarchy extends AbstractModule implements
             self::viewsNamespace() . '::options',
             [
             CallNumberCategory::VAR_REPOSITORY_XREF     => $this->repository_xref,
-            CallNumberCategory::VAR_CATEGORY_FULL_NAME => $this->data_fix_category_full_name,
+            CallNumberCategory::VAR_CATEGORY_FULL_NAME  => $this->data_fix_category_full_name,
             CallNumberCategory::VAR_CATEGORY_NAME       => $this->data_fix_category_name,
             self::VAR_DATA_FIX_CATEGORY_NAME_REPLACE    => $this->data_fix_category_name,
             self::VAR_DATA_FIX_TYPES                    => [Source::RECORD_TYPE => MoreI18N::xlate('Sources')],
@@ -1001,8 +1009,12 @@ class RepositoryHierarchy extends AbstractModule implements
      *
      * @return void
      */
-    private function createDataTablesForSources(Collection $sources, Repository $repository, Repository $meta_repository): void
+    private function createDataTablesForSources(Collection $sources, Repository $repository, Repository $meta_repository = null): void
     {
+        if ($meta_repository === null) {
+            $meta_repository = $repository;
+        }
+
         foreach ($sources as $source) {
             foreach ($source->facts() as $fact) {
 
@@ -1454,7 +1466,12 @@ class RepositoryHierarchy extends AbstractModule implements
             }
 
             //Create data tables for sources
-            $this->createDataTablesForSources($linked_sources, $this->repository, $this->meta_repository);
+            if (isset ($this->meta_repository)) {
+                $this->createDataTablesForSources($linked_sources, $this->repository, $this->meta_repository);
+            }
+            else {
+                $this->createDataTablesForSources($linked_sources, $this->repository);
+            }
 
             //Sort linked sources
             $linked_sources = $this->sortSourcesByCallNumber($linked_sources);
