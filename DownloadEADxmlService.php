@@ -547,7 +547,7 @@ class DownloadEADxmlService extends DownloadService
     private function addFile(string $xml_type, DOMNode $dom, Source $source)
     {
         $fact_values = Functions::sourceValuesByTag($source, $this->repository);
-        $call_number = Functions::getCallNumberForSource($source, $this->repository_hierarchy->getAllRepositories());
+        $call_number = $this->repository_hierarchy->call_number_of_source[$source->xref()];
 
         //<c>
         $c_dom = $dom->appendChild($this->ead_xml->createElement('c'));

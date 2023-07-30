@@ -466,31 +466,6 @@ class Functions
     }
 
     /**
-     * Get call number for a source
-     *
-     * @param Source $source
-     * @param array  $repositories [Repository]
-     *
-     * @return string
-     */
-    public static function getCallNumberForSource(Source $source, array $repositories = []): string
-    {
-        if (empty($repositories)) {
-            $source_facts = self::sourceValuesByTag($source);
-        } else {
-            foreach ($repositories as $repository) {
-                $source_facts = self::sourceValuesByTag($source, $repository);
-
-                if (isset($source_facts['SOUR:REPO:CALN'])) {
-                    break;
-                }
-            }
-        }
-
-        return isset($source_facts['SOUR:REPO:CALN']) ? $source_facts['SOUR:REPO:CALN'] : '';
-    }
-
-    /**
      * Get xref of default repository
      *
      * @param AbstractModule $module

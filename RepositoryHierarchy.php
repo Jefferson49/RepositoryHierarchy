@@ -238,6 +238,12 @@ class RepositoryHierarchy extends AbstractModule implements
     //The call number category title service, which is used
     private C16Y $call_number_category_title_service;
 
+    //Tables for fast access to source data
+    public array $title_of_source;
+    public array $author_of_source;
+    public array $call_number_of_source;
+    public array $date_range_of_source;
+
     /**
      * Constructor
      */
@@ -247,7 +253,7 @@ class RepositoryHierarchy extends AbstractModule implements
         $this->data_fix_service = new DataFixService();
 
         //Path for .po files (if call number category titles are used)
-        $this->call_number_category_titles_po_file_path = __DIR__ . '/resources/caln/';
+        $this->call_number_category_titles_po_file_path = __DIR__ . '/resources/caln/';  
     }
 
     /**
@@ -979,21 +985,66 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         return $sources->sort(
             function (Source $source1, Source $source2) {
-                return strnatcmp(self::getCallNumberForSourceInHierarchy($source1), self::getCallNumberForSourceInHierarchy($source2));
+                return strnatcmp($this->title_of_source[$source1->xref()], $this->title_of_source[$source2->xref()]);
             }
         );
     }
 
     /**
-     * Get call number for source in hierarchy
+     * Create source data tables
      *
-     * @param Source $source
+     * @param Collection $sources
+     * @param Repository $repository
+     * @param Repository $meta_repository
      *
-     * @return string
+     * @return void
      */
-    private function getCallNumberForSourceInHierarchy(Source $source): string
+    private function createDataTablesForSources(Collection $sources, Repository $repository, Repository $meta_repository): void
     {
-        return Functions::getCallNumberForSource($source, $this->getAllRepositories());
+        foreach ($sources as $source) {
+            foreach ($source->facts() as $fact) {
+
+                $call_number_meta_repository = '';
+                $call_number_repository = '';
+
+                switch($fact->tag()) {
+
+                    case 'SOUR:AUTH':
+                        $this->author_of_source[$source->xref()] = $fact->value();
+
+                    case 'SOUR:TITL':
+                        $this->title_of_source[$source->xref()] = $fact->value();
+
+                    case 'SOUR:REPO':
+                        if ($fact->value() === '@'. $meta_repository->xref() . '@') {
+                            $call_number_meta_repository = $fact->attribute('CALN');
+                        }
+
+                        if ($fact->value() === '@'. $repository->xref() . '@') {
+                            $call_number_repository = $fact->attribute('CALN');
+                        }
+
+                    case 'SOUR:DATA':
+                        //Get date range
+                        $date_range_text = Functions::displayISODateRangeForSource($source);
+
+                        if ($date_range_text !== '') {
+                            $this->date_range_of_source[$source->xref()] = $date_range_text;
+                        }
+
+                    }
+
+                    //If call number of meta repository was found, take it. Otherwise take call number of repository
+                    if ($call_number_meta_repository !== '') {
+                        $this->call_number_of_source[$source->xref()] = $call_number_meta_repository;
+                    }
+                    elseif ($call_number_repository !== '') {
+                        $this->call_number_of_source[$source->xref()] = $call_number_repository;
+                }
+            }
+        }
+
+        return;
     }
 
     /**
@@ -1397,6 +1448,9 @@ class RepositoryHierarchy extends AbstractModule implements
                 $linked_sources = $linked_sources->merge($linked_record_service->linkedSources($this->meta_repository));
             }
 
+            //Create data tables for sources
+            $this->createDataTablesForSources($linked_sources, $this->repository, $this->meta_repository);
+
             //Sort linked sources
             $linked_sources = $this->sortSourcesByCallNumber($linked_sources);
 
@@ -1405,7 +1459,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
             //Generate the (recursive) hierarchy of call numbers
             foreach ($linked_sources as $source) {
-                $call_number = Functions::getCallNumberForSource($source, $this->getAllRepositories());
+                $call_number = $this->call_number_of_source[$source->xref()];
 
                 //If call number is empty, assign empty category and default delimiter
                 if ($call_number === '') {
