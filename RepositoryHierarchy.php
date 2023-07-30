@@ -660,6 +660,8 @@ class RepositoryHierarchy extends AbstractModule implements
     public function updatePreferences(): string
     {
         //Currently empty. Might be used in further versions of the module
+        //Updates for URL of EAD XML are handled in: XmlExportSettingsModal::updatePreferenes
+
         $error = '';
         return $error;
     }
