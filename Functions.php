@@ -264,31 +264,6 @@ class Functions
     }
 
     /**
-     * Get places for a source
-     *
-     * @param Source $source
-     *
-     * @return array
-     */
-    public static function getPlacesForSource(Source $source): array
-    {
-        $places = [];
-
-        if ($source->facts(['DATA'])->isNotEmpty()) {
-            $data = $source->facts(['DATA'])->first();
-
-            preg_match_all('/3 PLAC (.{1,32})/', $data->gedcom(), $matches, PREG_SET_ORDER);
-
-            if (!empty($matches[0])) {
-                $match = $matches[0];
-                array_push($places, $match[1]);
-            }
-        }
-
-        return $places;
-    }
-
-    /**
      * Validate whether a string is an URL
      *
      * @param string $url
