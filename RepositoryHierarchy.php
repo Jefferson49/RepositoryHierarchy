@@ -301,8 +301,7 @@ class RepositoryHierarchy extends AbstractModule implements
             CreateSourceModal::class,
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::CREATE_SOURCE_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/source_call_number/'.self::SOURCE_CALL_NUMBER_ATTRIBUTE_DEFAULT
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT
         )
             ->allows(RequestMethodInterface::METHOD_POST);
 
@@ -311,9 +310,7 @@ class RepositoryHierarchy extends AbstractModule implements
             CallNumberDataFix::class,
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::FIX_CALL_NUMBER_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/category_name/'.self::CATEGORY_NAME_ATTRIBUTE_DEFAULT.
-            '/category_full_name/'.self::CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT
         )
             ->allows(RequestMethodInterface::METHOD_POST);
 
@@ -327,7 +324,7 @@ class RepositoryHierarchy extends AbstractModule implements
         )
             ->allows(RequestMethodInterface::METHOD_POST);
 
-        //Register a route for the XML export settings ation
+        //Register a route for the XML export settings action
         $router ->get(
             XmlExportSettingsAction::class,
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.

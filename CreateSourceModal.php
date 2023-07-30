@@ -41,7 +41,7 @@ use function view;
 class CreateSourceModal implements RequestHandlerInterface
 {
     /**
-     * Handle the create source model request
+     * Handle the create source modal request
      *
      * @param ServerRequestInterface $request
      *
@@ -49,10 +49,11 @@ class CreateSourceModal implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $tree = Validator::attributes($request)->tree();
-        $user = Validator::attributes($request)->user();
-        $source_repository = Validator::attributes($request)->string('xref');
-        $source_call_number = Validator::attributes($request)->string('source_call_number');
+        $tree               = Validator::attributes($request)->tree();
+        $user               = Validator::attributes($request)->user();
+        $source_repository  = Validator::attributes($request)->string('xref');
+
+        $source_call_number = Validator::queryParams($request)->string('source_call_number');
 
         //If no user is logged in, show error text
         if (Auth::accessLevel($tree, $user) === Auth::PRIV_PRIVATE) {
