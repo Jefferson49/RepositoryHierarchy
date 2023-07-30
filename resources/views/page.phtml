@@ -128,8 +128,25 @@ use Fisharebest\Webtrees\View;
 		<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 		<?php foreach ($categories as $category) : ?>
 			<?= view(RepositoryHierarchy::viewsNamespace() . '::tree', [
-                    'repository_hierarchy' => $repository_hierarchy,
-                    'category' => $category,
+                    'repository_hierarchy'              => $repository_hierarchy,
+                    'category'                          => $category,
+					'PREF_SHOW_CATEGORY_TITLE'          => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_TITLE, '0'),
+					'PREF_SHOW_DATE_RANGE_FOR_CATEGORY' => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0'),
+					'PREF_SHOW_CATEGORY_LABEL'          => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_LABEL, '1'),
+					'PREF_SHOW_TRUNCATED_CATEGORY'      => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CATEGORY, '1'),
+					'PREF_SHOW_TRUNCATED_CALL_NUMBER'   => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1'),
+					'PREF_ALLOW_RENAME'                 => $repository_hierarchy->getPreference($repository_hierarchy::PREF_ALLOW_RENAME, '1'),
+					'PREF_ALLOW_NEW_SOURCE'             => $repository_hierarchy->getPreference($repository_hierarchy::PREF_ALLOW_NEW_SOURCE, '1'),
+					'PREF_SHOW_TITLE'                   => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_TITLE, '1'),
+					'PREF_SHOW_XREF'                    => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_XREF, '1'),
+					'PREF_SHOW_AUTHOR'                  => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_AUTHOR, '1'),
+					'PREF_SHOW_DATE_RANGE'              => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1'),
+					'trans_Call_Number_Category'        => I18N::translate('Call Number Category'),
+					'trans_Rename'                      => I18N::translate('Rename'),
+					'trans_Add_new_source'              => I18N::translate('Add new source'),
+					'trans_Author'                      => I18N::translate('Author'),			   
+					'xlate_Title'                       => MoreI18N::xlate('Title'),
+					'xlate_Date_range'                  => MoreI18N::xlate('Date range'),
                     ]) ?>
 		<?php endforeach ?>	
 	</div>
