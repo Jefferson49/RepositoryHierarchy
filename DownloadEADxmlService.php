@@ -329,7 +329,7 @@ class DownloadEADxmlService extends DownloadService
         $date_range = $root_category->getOverallDateRange();
 
         if ($date_range !== null) {
-            $date_range_text = Functions::getISOformatForDateRange($date_range);
+            $date_range_text = Functions::displayISOformatForDateRange($date_range);
 
             $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
             $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
@@ -424,7 +424,7 @@ class DownloadEADxmlService extends DownloadService
         $date_range = $root_category->getOverallDateRange();
 
         if ($date_range !== null) {
-            $date_range_text = Functions::getISOformatForDateRange($date_range);
+            $date_range_text = Functions::displayISOformatForDateRange($date_range);
 
             $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
             $unitdate_node->appendChild(new DOMAttr('normal', $date_range_text));
@@ -523,7 +523,7 @@ class DownloadEADxmlService extends DownloadService
         $date_range = $call_number_category->getOverallDateRange();
 
         if ($date_range !== null) {
-            $date_range_text = Functions::getISOformatForDateRange($date_range);
+            $date_range_text = Functions::displayISOformatForDateRange($date_range);
 
             $unitdate_dom = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
             $unitdate_dom->appendChild(new DOMAttr('normal', $date_range_text));
@@ -571,9 +571,9 @@ class DownloadEADxmlService extends DownloadService
         }
 
         //<unitdate>        example: <unitdate normal="1900-01-01/1902-12-31">Laufzeit</unitdate>
-        if (isset($this->repository_hierarchy->date_range_of_source[$source->xref()])) {
+        if (isset($this->repository_hierarchy->iso_date_range_text_of_source[$source->xref()])) {
             $unitdate_node = $did_dom->appendChild($this->ead_xml->createElement('unitdate', MoreI18N::xlate('Date range')));
-            $unitdate_node->appendChild(new DOMAttr('normal', Functions::removeHtmlTags($this->repository_hierarchy->date_range_of_source[$source->xref()])));
+            $unitdate_node->appendChild(new DOMAttr('normal', Functions::removeHtmlTags($this->repository_hierarchy->iso_date_range_text_of_source[$source->xref()])));
             if ($this->use_encoding_analog) {
                 $unitdate_node->appendChild(new DOMAttr('encodinganalog', '3.1.3'));
             }

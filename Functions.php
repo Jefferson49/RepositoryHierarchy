@@ -170,42 +170,21 @@ class Functions
     }
 
     /**
-     * Display the date range for a source
+     * Display a date range
      *
-     * @param Source $source
+     * @param Date   $date_range
      * @param Tree   $tree
      * @param string $date   format
      *
      * @return string
      */
-    public static function displayDateRangeForSource(Source $source, Tree $tree = null, string $date_format = null): string
+    public static function displayDateRange(Date $date_range = null, Tree $tree = null, string $date_format = null): string
     {
-        $date_range = self::getDateRangeForSource($source);
-
         if (($date_range !== null) && $date_range->isOK()) {
             return $date_range->display($tree, $date_format);
         } else {
             return '';
         }
-    }
-
-    /**
-     * Display the date range for a source in ISO format
-     *
-     * @param Source $source
-     * @param string $delimiter [ISO 8601 allows: '/' odr '--']
-     *
-     * @return string
-     */
-    public static function displayISODateRangeForSource(Source $source, string $delimiter = '/'): string
-    {
-        $date_range = self::getDateRangeForSource($source);
-
-        if (($date_range !== null) && $date_range->isOK()) {
-            return self::getISOformatForDateRange($date_range, $delimiter);
-        }
-
-        return '';
     }
 
     /**
@@ -216,7 +195,7 @@ class Functions
      *
      * @return string
      */
-    public static function getISOformatForDateRange(Date $date_range, string $delimiter = '/'): string
+    public static function displayISOformatForDateRange(Date $date_range = null, string $delimiter = '/'): string
     {
         if (($date_range !== null) && $date_range->isOK()) {
             $min_date = $date_range->minimumDate();

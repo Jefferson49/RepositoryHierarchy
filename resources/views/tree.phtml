@@ -113,11 +113,11 @@ use Fisharebest\Webtrees\I18N;
 								<?= e($source->facts(['AUTH'])->first()->value()) ?>
 							<?php endif ?>	
 
-							<?php if (($source->facts(['DATA'])->isNotEmpty()) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1')))) : ?>
+							<?php if (isset($repository_hierarchy->date_range_text_of_source[$source->xref()]) && (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE, '1')))) : ?>
 								—
 								<?= MoreI18N::xlate('Date range') ?>:
 								<?php //Do not escape, because it is already escaped in the method  ?>
-								<?= Functions::displayDateRangeForSource($source, $repository_hierarchy->getTree()) ?>
+								<?= $repository_hierarchy->date_range_text_of_source[$source->xref()] ?>
 							<?php endif ?>
 						</li>
 					<?php endforeach ?>	

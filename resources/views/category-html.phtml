@@ -58,19 +58,20 @@ use Fisharebest\Webtrees\View;
             <?php endif ?>        
         </tr>
         <tr> 
-            <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>		<?php //Do not escape, because it is already escaped in the method  ?>
+            <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>		
+            <?php //Do not escape, because it is already escaped in the method  ?>
             <td><?= $source->fullName()	?></td>                    
-            <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
+            <?php if (isset($repository_hierarchy->iso_date_range_text_of_source[$source->xref()])) : ?>
                 <td><?= MoreI18N::xlate('Date range') ?>:</td>
             <?php else : ?>
                 <td></td>
             <?php endif ?>
         </tr>
         <tr> 
-            <td><?= I18N::translate('Author') ?></td>               
-            <td><?= isset($repository_hierarchy->author_of_source[$source->xref()]) ? $repository_hierarchy->author_of_source[$source->xref()] : '' ?></td>
-            <?php if (Functions::displayISODateRangeForSource($source) !== '') : ?>
-                <td><?= e(Functions::displayISODateRangeForSource($source, '--')) ?></td>      
+            <td><?= I18N::translate('Author') ?></td>    
+            <td><?= isset($repository_hierarchy->author_of_source[$source->xref()]) ? e($repository_hierarchy->author_of_source[$source->xref()]) : '' ?></td>
+            <?php if (isset($repository_hierarchy->iso_date_range_text_of_source[$source->xref()])) : ?>
+                <td><?= e($repository_hierarchy->iso_date_range_text_of_source[$source->xref()]) ?></td>      
             <?php else : ?>
                 <td></td>                 
             <?php endif ?>

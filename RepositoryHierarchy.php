@@ -243,6 +243,8 @@ class RepositoryHierarchy extends AbstractModule implements
     public array $author_of_source;
     public array $call_number_of_source;
     public array $date_range_of_source;
+    public array $date_range_text_of_source;
+    public array $iso_date_range_text_of_source;
 
     /**
      * Constructor
@@ -1025,12 +1027,15 @@ class RepositoryHierarchy extends AbstractModule implements
                         }
 
                     case 'SOUR:DATA':
-                        //Get date range
-                        $date_range_text = Functions::displayISODateRangeForSource($source);
 
-                        if ($date_range_text !== '') {
-                            $this->date_range_of_source[$source->xref()] = $date_range_text;
-                        }
+                        //Get and store date range information
+                        $date_range = Functions::getDateRangeForSource($source);
+
+                        if ($date_range !== null) {
+                            $this->date_range_of_source[$source->xref()] = $date_range;
+                            $this->date_range_text_of_source[$source->xref()] = Functions::displayDateRange($date_range);
+                            $this->iso_date_range_text_of_source[$source->xref()] = Functions::displayISOformatForDateRange($date_range);    
+                        } 
 
                     }
 
@@ -1478,7 +1483,7 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         //Calculate date ranges for the whole hierarchy of call number categories
-        $date_range = $this->getRootCategory()->calculateDateRange();
+        $date_range = $this->getRootCategory()->calculateDateRange($this->date_range_of_source);
 
         //If download of EAD XML is requested, create and return download
         if (DownloadService::isXmlDownloadCommand($command)) {

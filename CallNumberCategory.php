@@ -276,11 +276,11 @@ class CallNumberCategory
     /**
      * Calculate date range
      *
-     * @param CallNumberCategory
+     * @param array $date_ranges_of_sources  A table, which contains the date ranges for all known sources
      *
      * @return Date
      */
-    public function calculateDateRange(): ?Date
+    public function calculateDateRange(array $date_ranges_of_sources): ?Date
     {
         $date_ranges = [];
 
@@ -288,7 +288,7 @@ class CallNumberCategory
         $sub_categories = $this->getSubCategories();
 
         foreach ($sub_categories as $sub_category) {
-            $date_range = $sub_category->calculateDateRange();
+            $date_range = $sub_category->calculateDateRange($date_ranges_of_sources);
             if ($date_range !== null) {
                 array_push($date_ranges, $date_range);
             }
@@ -298,8 +298,10 @@ class CallNumberCategory
         $sources = $this->sources;
 
         foreach ($sources as $source) {
-            $date_range = Functions::getDateRangeForSource($source);
-            if ($date_range !== null) {
+
+            if (array_key_exists($source->xref(), $date_ranges_of_sources)) {
+
+                $date_range = $date_ranges_of_sources[$source->xref()];
                 array_push($date_ranges, $date_range);
             }
         }
@@ -348,7 +350,7 @@ class CallNumberCategory
     public function displayISODateRange(string $delimiter = '/'): string
     {
         if (($this->overall_date_range !== null) && $this->overall_date_range->isOK()) {
-            return Functions::getISOformatForDateRange($this->overall_date_range, $delimiter);
+            return Functions::displayISOformatForDateRange($this->overall_date_range, $delimiter);
         }
         return '';
     }
