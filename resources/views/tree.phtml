@@ -155,7 +155,6 @@ $tree_name = $repository_hierarchy->getTree()->name();
 			</div>
 
 			<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
-			<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 			<?php foreach ($categories as $sub_category) : ?>			
 				<?= view(RepositoryHierarchy::viewsNamespace() . '::tree', [
                     'repository_hierarchy'              => $repository_hierarchy,

@@ -356,22 +356,6 @@ class CallNumberCategory
     }
 
     /**
-     * Sort call number categories by call number
-     *
-     * @param Collection $categories
-     *
-     * @return Collection
-     */
-    public static function sortCallNumberCategoriesByName(Collection $categories): Collection
-    {
-        return $categories->sort(
-            function (CallNumberCategory $category1, CallNumberCategory $category2) {
-                return strnatcmp($category1->getFullName(), $category2->getFullName());
-            }
-        );
-    }
-
-    /**
      * Save a file with C16Y data for call number category titles
      *
      * @param string             $path
@@ -412,8 +396,6 @@ class CallNumberCategory
      */
     public static function writeCallNumberCategoryTitleToStream($stream, CallNumberCategory $category): void
     {
-        //$sub_categories = Functions::getCollectionForArray($category->getSubCategories());
-        //$sub_categories = CallNumberCategory::sortCallNumberCategoriesByName($sub_categories);
         $sub_categories = $category->getSubCategories();
 
         foreach ($sub_categories as $sub_category) {

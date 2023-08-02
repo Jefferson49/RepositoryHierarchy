@@ -125,7 +125,6 @@ use Fisharebest\Webtrees\View;
 <?php if (($delimiter_expression !=='') && ($error === '')) : ?>
 	<div class="wt-ajax-load wt-page-content wt-chart wt-chart-ancestors">
 		<?php $categories = Functions::getCollectionForArray($repository_hierarchy->getRootCategory()->getSubCategories()) ?>
-		<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 		<?php foreach ($categories as $category) : ?>
 			<?= view(RepositoryHierarchy::viewsNamespace() . '::tree', [
                     'repository_hierarchy'              => $repository_hierarchy,

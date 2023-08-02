@@ -35,7 +35,6 @@ use Illuminate\Support\Collection;
 <?php endif ?>
 
 <?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
-<?php $categories = CallNumberCategory::sortCallNumberCategoriesByName($categories) ?>
 
 <?php foreach ($categories as $sub_category) : ?>
     <?= view(RepositoryHierarchy::viewsNamespace() . '::table-of-contents', [
