@@ -994,7 +994,7 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         return $sources->sort(
             function (Source $source1, Source $source2) {
-                return strnatcmp($this->title_of_source[$source1->xref()], $this->title_of_source[$source2->xref()]);
+                return strnatcmp($this->call_number_of_source[$source1->xref()], $this->call_number_of_source[$source2->xref()]);
             }
         );
     }
@@ -1015,10 +1015,11 @@ class RepositoryHierarchy extends AbstractModule implements
         }
 
         foreach ($sources as $source) {
-            foreach ($source->facts() as $fact) {
 
-                $call_number_meta_repository = '';
-                $call_number_repository = '';
+            $call_number_meta_repository = '';
+            $call_number_repository = '';
+
+            foreach ($source->facts() as $fact) {
 
                 switch($fact->tag()) {
 
@@ -1048,16 +1049,19 @@ class RepositoryHierarchy extends AbstractModule implements
                             $this->iso_date_range_text_of_source[$source->xref()] = Functions::displayISOformatForDateRange($date_range);    
                         } 
 
-                    }
-
-                    //If call number of meta repository was found, take it. Otherwise take call number of repository
-                    if ($call_number_meta_repository !== '') {
-                        $this->call_number_of_source[$source->xref()] = $call_number_meta_repository;
-                    }
-                    elseif ($call_number_repository !== '') {
-                        $this->call_number_of_source[$source->xref()] = $call_number_repository;
                 }
             }
+
+            //If call number of meta repository was found, take it. Otherwise take call number of repository
+            if ($call_number_meta_repository !== '') {
+                $this->call_number_of_source[$source->xref()] = $call_number_meta_repository;
+            }
+            elseif ($call_number_repository !== '') {
+                $this->call_number_of_source[$source->xref()] = $call_number_repository;
+            }
+            else {
+                $this->call_number_of_source[$source->xref()] = '';
+            }               
         }
 
         return;
