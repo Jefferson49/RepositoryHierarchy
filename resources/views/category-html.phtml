@@ -52,7 +52,7 @@ use Fisharebest\Webtrees\View;
             <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>               
             <td class="finding-aid-table-middle-column"><b><?= e($call_number) ?></b></td>
             <?php if ($show_wt_links) : ?>
-                <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>"><?= e($source->xref()) ?></a></td>            
+                <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>" target="_blank"><?= e($source->xref()) ?></a></td>            
             <?php else : ?>
                 <td class="finding-aid-table-last-column"></td>
             <?php endif ?>        
