@@ -9,12 +9,12 @@ use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
 
 /**
- * @var Tree      		 	$tree
- * @var string      		$title
- * @var RepositoryHierarchy	$repository_hierarchy
- * @var string      		$delimiter_expression
- * @var string             	$error
- * @var string             	$command
+ * @var Tree                $tree
+ * @var string              $title
+ * @var RepositoryHierarchy $repository_hierarchy
+ * @var string              $delimiter_expression
+ * @var string              $error
+ * @var string              $command
  */
 
 ?>
@@ -56,10 +56,10 @@ use Fisharebest\Webtrees\View;
 				<?= view('icons/spacer') ?>
 				<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_ICON, '1'))) : ?>							
 					<?= view('icons/help') ?>
-				<?php endif ?>			
+				<?php endif ?>
 				<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_LINK, '1'))) : ?>							
 					<?= I18N::translate('Help') ?>
-				<?php endif ?>			
+				<?php endif ?>
 			</a>
 		</label>
 		<div class="col-sm-9 wt-page-options-value">
@@ -86,19 +86,19 @@ use Fisharebest\Webtrees\View;
 	<?= csrf_field() ?>
 </form>	
 
-<?php if ($delimiter_expression !== '') : ?>							
+<?php if ($delimiter_expression !== '') : ?>
 	<form method="post" action="<?= e(route(RepositoryHierarchy::class, [
-							'tree'                              => $tree->name(),
-							'xref'								=> $repository_hierarchy->getRepositoryXref(),
-							'delimiter_expression'              => $delimiter_expression,
-							'command'                           => RepositoryHierarchy::CMD_DOWNLOAD,
+							'tree'                  => $tree->name(),
+							'xref'                  => $repository_hierarchy->getRepositoryXref(),
+							'delimiter_expression'  => $delimiter_expression,
+							'command'               => RepositoryHierarchy::CMD_DOWNLOAD,
 							])) ?>" 
 			class="wt-page-options wt-page-options-ancestors-chart d-print-none">
 		<div class="row">
 			<label class="col-sm-3 col-form-label wt-page-options-label">
 				<?= MoreI18N::xlate('Download') ?>
 			</label>
-			<div class="col-sm-9 wt-page-options-value">			
+			<div class="col-sm-9 wt-page-options-value">
 				<input class="btn btn-secondary" type="submit" value="<?= MoreI18N::xlate('Download') ?>">
 				<?= view('icons/spacer') ?>
 				<?= view('components/radios-inline', [
@@ -109,26 +109,32 @@ use Fisharebest\Webtrees\View;
 				<?= view('icons/spacer') ?>
 				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
 							data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
-								'tree'					=> $tree->name(),
-								'xref'					=> $repository_hierarchy->getRepositoryXref(),
-								'delimiter_expression'	=> $delimiter_expression,
+								'tree'                  => $tree->name(),
+								'xref'                  => $repository_hierarchy->getRepositoryXref(),
+								'delimiter_expression'  => $delimiter_expression,
 								])) ?>">
 					<input class="btn btn-secondary" type="submit" value="<?= I18N::translate('EAD XML settings') ?>">
 				</a>
 			</div>
-		</div>					
+		</div>
 
 		<?= csrf_field() ?>
 	</form>
-<?php endif ?>		
+<?php endif ?>
 
 <?php if (($delimiter_expression !=='') && ($error === '')) : ?>
 	<div class="wt-ajax-load wt-page-content wt-chart wt-chart-ancestors">
 		<?php $categories = Functions::getCollectionForArray($repository_hierarchy->getRootCategory()->getSubCategories()) ?>
-		<?php foreach ($categories as $category) : ?>
+		<?php foreach ($categories as $sub_category) : ?>
 			<?= view(RepositoryHierarchy::viewsNamespace() . '::tree', [
-                    'repository_hierarchy'              => $repository_hierarchy,
-                    'category'                          => $category,
+					'repository_xref'                   => $repository_hierarchy->getRepositoryXref(),
+					'tree_name'                         => $repository_hierarchy->getTree()->name(),
+					'author_of_source'                  => $repository_hierarchy->author_of_source,
+					'call_number_of_source'             => $repository_hierarchy->call_number_of_source,
+					'truncated_call_number_of_source'   => $repository_hierarchy->truncated_call_number_of_source,
+					'date_range_text_of_source'         => $repository_hierarchy->date_range_text_of_source,
+                    'category'                          => $sub_category,
+					'callNumberCategoryTitleService'    => $repository_hierarchy->getCallNumberCategoryTitleService(),
 					'PREF_SHOW_CATEGORY_TITLE'          => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_TITLE, '0'),
 					'PREF_SHOW_DATE_RANGE_FOR_CATEGORY' => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0'),
 					'PREF_SHOW_CATEGORY_LABEL'          => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_LABEL, '1'),
@@ -143,11 +149,11 @@ use Fisharebest\Webtrees\View;
 					'trans_Call_Number_Category'        => I18N::translate('Call Number Category'),
 					'trans_Rename'                      => I18N::translate('Rename'),
 					'trans_Add_new_source'              => I18N::translate('Add new source'),
-					'trans_Author'                      => I18N::translate('Author'),			   
+					'trans_Author'                      => I18N::translate('Author'), 
 					'xlate_Title'                       => MoreI18N::xlate('Title'),
 					'xlate_Date_range'                  => MoreI18N::xlate('Date range'),
                     ]) ?>
-		<?php endforeach ?>	
+		<?php endforeach ?>
 	</div>
 <?php endif ?>
 

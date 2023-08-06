@@ -242,6 +242,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public array $title_of_source;
     public array $author_of_source;
     public array $call_number_of_source;
+    public array $truncated_call_number_of_source;
     public array $date_range_of_source;
     public array $date_range_text_of_source;
     public array $iso_date_range_text_of_source;
@@ -1250,6 +1251,7 @@ class RepositoryHierarchy extends AbstractModule implements
         else {
             $category->addSource($source);
             $category->addTruncatedCallNumber($source, $call_number_chunk);
+            $this->truncated_call_number_of_source[$source->xref()] = $call_number_chunk;
         }
     }
 

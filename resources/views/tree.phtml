@@ -3,40 +3,41 @@
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 /**
- * @var  RepositoryHierarchy	$repository_hierarchy
- * @var  CallNumberCategory		$category
- * @var  bool					$PREF_SHOW_CATEGORY_LABEL
- * @var  bool					$PREF_SHOW_TRUNCATED_CATEGORY
- * @var  bool					$PREF_SHOW_DATE_RANGE_FOR_CATEGORY
- * @var  bool					$PREF_SHOW_CATEGORY_TITLE
- * @var  bool					$PREF_ALLOW_RENAME
- * @var  bool					$PREF_SHOW_TRUNCATED_CALL_NUMBER
- * @var  bool					$PREF_ALLOW_NEW_SOURCE
- * @var  bool					$PREF_SHOW_TITLE
- * @var  bool					$PREF_SHOW_XREF
- * @var  bool					$PREF_SHOW_AUTHOR
- * @var  bool					$PREF_SHOW_DATE_RANGE
+ * @var RepositoryHierarchy    $repository_hierarchy
+ * @var string                 $repository_xref
+ * @var string                 $tree_name
+ * @var array                  $author_of_source
+ * @var array                  $call_number_of_source
+ * @var array                  $truncated_call_number_of_source
+ * @var array                  $date_range_text_of_source
+ * @var CallNumberCategory     $category
+ * @var C16Y                   $callNumberCategoryTitleService
  * 
- * @var  string                 $trans_Call_Number_Category
- * @var  string                 $trans_Rename
- * @var  string                 $trans_Add_new_source
- * @var  string                 $trans_Author
+ * @var bool                   $PREF_SHOW_CATEGORY_LABEL
+ * @var bool                   $PREF_SHOW_TRUNCATED_CATEGORY
+ * @var bool                   $PREF_SHOW_DATE_RANGE_FOR_CATEGORY
+ * @var bool                   $PREF_SHOW_CATEGORY_TITLE
+ * @var bool                   $PREF_ALLOW_RENAME
+ * @var bool                   $PREF_SHOW_TRUNCATED_CALL_NUMBER
+ * @var bool                   $PREF_ALLOW_NEW_SOURCE
+ * @var bool                   $PREF_SHOW_TITLE
+ * @var bool                   $PREF_SHOW_XREF
+ * @var bool                   $PREF_SHOW_AUTHOR
+ * @var bool                   $PREF_SHOW_DATE_RANGE
+ * 
+ * @var string                 $trans_Call_Number_Category
+ * @var string                 $trans_Rename
+ * @var string                 $trans_Add_new_source
+ * @var string                 $trans_Author
 
- * @var  string                 $xlate_Title
- * @var  string                 $xlate_Date_range
+ * @var string                 $xlate_Title
+ * @var string                 $xlate_Date_range
  */
 
 $e_category_Id = e($category->getId());
 $category_full_name = $category->getFullName();
-$repository_xref = $repository_hierarchy->getRepositoryXref();
-$tree_name = $repository_hierarchy->getTree()->name();
 
 ?>
-
-
-
-
-
 
 <div class="d-flex">
 	<span class="wt-chart-horizontal-spacer d-inline-block"></span>
@@ -50,28 +51,29 @@ $tree_name = $repository_hierarchy->getTree()->name();
 
 		<?php if ($PREF_SHOW_CATEGORY_LABEL) : ?>
 			<b><?= $trans_Call_Number_Category . ': ' ?></b>
-		<?php endif ?>		
+		<?php endif ?>
 
 		<?php if ($PREF_SHOW_TRUNCATED_CATEGORY) : ?>
 			<b><?= e($category->getFrontEndName()) ?> </b>
-		<?php else : ?>		
+		<?php else : ?>
 			<b><?= e($category->getFrontEndName(true)) ?></b>
-		<?php endif ?>	
+		<?php endif ?>
 
-		<?php $title = $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
+		<?php $title = $callNumberCategoryTitleService->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
 		<?php if (($title !== '') && ($PREF_SHOW_CATEGORY_TITLE)): ?>
 			(
 				<?= e($title) ?>
 			)
-		<?php endif ?>		
+		<?php endif ?>
 
-		<?php if (($category->getOverallDateRange() !== null) && ($PREF_SHOW_DATE_RANGE_FOR_CATEGORY)) : ?>
+		<?php $overallDateRange = $category->getOverallDateRange() ?>
+		<?php if (($overallDateRange !== null) && ($PREF_SHOW_DATE_RANGE_FOR_CATEGORY)) : ?>
 			—
 			<?= $xlate_Date_range ?>:
 			<?php //Do not escape, because it is already escaped in the method  ?>
-			<?= $category->getOverallDateRange()->display() ?>
+			<?= $overallDateRange->display() ?>
 		<?php endif ?>
-	</button>			
+	</button>
 	<?= view('icons/spacer') ?>
 	<?php if ((strpos($category_full_name, CallNumberCategory::EMPTY_CATEGORY_NAME) === false) and (strpos($category_full_name, CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
 		<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
@@ -86,7 +88,7 @@ $tree_name = $repository_hierarchy->getTree()->name();
 					<?= $trans_Rename ?>
 				</a>
 				<?= view('icons/spacer') ?>
-			<?php endif ?>	
+			<?php endif ?>
 			<?php if ($PREF_ALLOW_NEW_SOURCE) : ?>
 				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
 							data-wt-href="<?= e(route(CreateSourceModal::class, [
@@ -95,70 +97,75 @@ $tree_name = $repository_hierarchy->getTree()->name();
                                 'source_call_number' => $category_full_name,
                                 ])) ?>">
 					<?= view('icons/source') ?>
-					<?= $trans_Add_new_source ?>	
+					<?= $trans_Add_new_source ?>
 				</a>
-			<?php endif ?>		
+			<?php endif ?>
 		</button>
-	<?php endif ?>		
+	<?php endif ?>
 </div>
 <div id="category_id-<?= $e_category_Id ?>" class="collapse show mb-4">
 	<div class="d-flex">
 		<div class="wt-chart-horizontal-indent position-relative">
 		</div>
 		<div>
-			<div class="d-flex">	
+			<div class="d-flex">
 				<ul>
-					<?php $sources = Functions::getCollectionForArray($category->getSources()) ?>
-            		<?php $sources = $repository_hierarchy->sortSourcesByCallNumber($sources) ?>
+					<?php $sources = $category->getSources() ?>
 					<?php foreach ($sources as $source) : ?>
 						<?php $e_source_url = e($source->url()) ?>
 						<?php $source_full_name = $source->fullName() ?>
 						<?php $source_xref = $source->xref() ?>
 						<li>
 							<?php if($PREF_SHOW_TRUNCATED_CALL_NUMBER): ?>
-								<a href="<?= $e_source_url ?>"><?= e($category->getTruncatedCallNumber($source)) ?></a>
+								<a href="<?= $e_source_url ?>"><?= e($truncated_call_number_of_source[$source_xref]) ?></a>
 							<?php else : ?>
-								<a href="<?= $e_source_url ?>"><?= e($repository_hierarchy->call_number_of_source[$source_xref]) ?></a>
+								<a href="<?= $e_source_url ?>"><?= e($call_number_of_source[$source_xref]) ?></a>
 							<?php endif ?>
 
 							<?php if (($source_full_name != '') && $PREF_SHOW_TITLE) : ?>
 								—
-								<?= $xlate_Title?>:						
+								<?= $xlate_Title?>:
 								<a href="<?= $e_source_url ?>">
 									<?php //Do not escape, because it is already escaped in the method  ?>
-									<?= $source_full_name ?>				
+									<?= $source_full_name ?>
 								</a>
 							<?php endif ?>
 
-							<?php if ($PREF_SHOW_XREF) : ?>							
+							<?php if ($PREF_SHOW_XREF) : ?>
 								—
-								<a href="<?= $e_source_url ?>">	
+								<a href="<?= $e_source_url ?>">
 									<?= e('('. $source_xref . ')') ?>
 								</a>
-							<?php endif ?>							
+							<?php endif ?>
 
-							<?php if (isset($repository_hierarchy->author_of_source[$source_xref]) && $PREF_SHOW_AUTHOR) : ?>
+							<?php if (isset($author_of_source[$source_xref]) && $PREF_SHOW_AUTHOR) : ?>
 								—
 								<?= $trans_Author ?>:
-								<?= e($repository_hierarchy->author_of_source[$source_xref]) ?>
-							<?php endif ?>	
+								<?= e($author_of_source[$source_xref]) ?>
+							<?php endif ?>
 
-							<?php if (isset($repository_hierarchy->date_range_text_of_source[$source_xref]) && $PREF_SHOW_DATE_RANGE) : ?>
+							<?php if (isset($date_range_text_of_source[$source_xref]) && $PREF_SHOW_DATE_RANGE) : ?>
 								—
 								<?= $xlate_Date_range ?>:
-								<?php //Do not escape, because it is already escaped in the method  ?>
-								<?= $repository_hierarchy->date_range_text_of_source[$source_xref] ?>
+								<?php //Do not escape, because it is already escaped before  ?>
+								<?= $date_range_text_of_source[$source_xref] ?>
 							<?php endif ?>
 						</li>
-					<?php endforeach ?>	
+					<?php endforeach ?>
 				</ul>
 			</div>
 
 			<?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>
-			<?php foreach ($categories as $sub_category) : ?>			
+			<?php foreach ($categories as $sub_category) : ?>
 				<?= view(RepositoryHierarchy::viewsNamespace() . '::tree', [
-                    'repository_hierarchy'              => $repository_hierarchy,
+					'repository_xref'                   => $repository_xref,
+					'tree_name'                         => $tree_name,
+					'author_of_source'                  => $author_of_source,
+					'call_number_of_source'             => $call_number_of_source,
+					'truncated_call_number_of_source'   => $truncated_call_number_of_source,
+					'date_range_text_of_source'         => $date_range_text_of_source,
                     'category'                          => $sub_category,
+					'callNumberCategoryTitleService'    => $callNumberCategoryTitleService,
 					'PREF_SHOW_CATEGORY_LABEL'          => $PREF_SHOW_CATEGORY_LABEL,
 					'PREF_SHOW_TRUNCATED_CATEGORY'      => $PREF_SHOW_TRUNCATED_CATEGORY,
 					'PREF_SHOW_DATE_RANGE_FOR_CATEGORY' => $PREF_SHOW_DATE_RANGE_FOR_CATEGORY,
@@ -173,12 +180,12 @@ $tree_name = $repository_hierarchy->getTree()->name();
 					'trans_Call_Number_Category'        => $trans_Call_Number_Category,
 					'trans_Rename'                      => $trans_Rename,
 					'trans_Add_new_source'              => $trans_Add_new_source,
-					'trans_Author'                      => $trans_Author,			   
+					'trans_Author'                      => $trans_Author,
 					'xlate_Title'                       => $xlate_Title,
 					'xlate_Date_range'                  => $xlate_Date_range,
 					]) ?>
-			<?php endforeach ?>	
-		</div>	
+			<?php endforeach ?>
+		</div>
 	</div>
-</div>	
+</div>
     
