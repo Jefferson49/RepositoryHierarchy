@@ -271,34 +271,6 @@ class Functions
     }
 
     /**
-     * Get the date range for a source
-     *
-     * @param Source $source
-     *
-     * @return Date
-     */
-    public static function getDateRangeForSource(Source $source): ?Date
-    {
-        $dates = [];
-        $dates_found = 0;
-
-        if ($source->facts(['DATA'])->isNotEmpty()) {
-            foreach ($source->facts(['DATA']) as $data) {
-                preg_match_all('/3 DATE (.{1,32})/', $data->gedcom(), $matches, PREG_PATTERN_ORDER);
-
-                foreach ($matches[1] as $match) {
-                    array_push($dates, new Date($match));
-                    $dates_found++;
-                }
-            }
-        }
-
-        $date_range = Functions::getOverallDateRange($dates);
-
-        return ($dates_found > 0) ? $date_range : null;
-    }
-
-    /**
      * Get overall date range for a set of date ranges,
      * i.e. minimum and maximum dates of all the date ranges
      *

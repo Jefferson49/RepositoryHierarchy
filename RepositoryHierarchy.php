@@ -36,6 +36,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\UserInterface;
+use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\I18N;
@@ -1019,6 +1020,8 @@ class RepositoryHierarchy extends AbstractModule implements
 
             $call_number_meta_repository = '';
             $call_number_repository = '';
+            $dates = [];
+            $dates_found = 0;
 
             foreach ($source->facts() as $fact) {
 
@@ -1041,17 +1044,23 @@ class RepositoryHierarchy extends AbstractModule implements
 
                     case 'SOUR:DATA':
 
-                        //Get and store date range information
-                        $date_range = Functions::getDateRangeForSource($source);
-
-                        if ($date_range !== null) {
-                            $this->date_range_of_source[$source->xref()] = $date_range;
-                            $this->date_range_text_of_source[$source->xref()] = Functions::displayDateRange($date_range);
-                            $this->iso_date_range_text_of_source[$source->xref()] = Functions::displayISOformatForDateRange($date_range);    
-                        } 
-
+                        preg_match_all('/3 DATE (.{1,35})/', $fact->gedcom(), $matches, PREG_PATTERN_ORDER);
+                
+                        foreach ($matches[1] as $match) {
+                            array_push($dates, new Date($match));
+                            $dates_found++;
+                        }
                 }
             }
+
+            //If dates were found, calculate date range and save values
+            if ($dates_found !== 0) {
+
+                $date_range = Functions::getOverallDateRange($dates);
+                $this->date_range_of_source[$source->xref()] = $date_range;
+                $this->date_range_text_of_source[$source->xref()] = Functions::displayDateRange($date_range);
+                $this->iso_date_range_text_of_source[$source->xref()] = Functions::displayISOformatForDateRange($date_range);    
+            } 
 
             //If call number of meta repository was found, take it. Otherwise take call number of repository
             if ($call_number_meta_repository !== '') {
