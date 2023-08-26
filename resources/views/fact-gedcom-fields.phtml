@@ -73,6 +73,9 @@ foreach ($keys as $key) {
             <?php $label = '<span class="label">' . MoreI18N::xlate('Source') . '</span>' ?>
             <?php $value = '<span class="field" dir="auto"><a href="' . e($source->url()) . '">' . $source->fullName() . '</a></span>' ?>
             <?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
+
+            <?php //Additionally show icon to copy source citation?>
+            <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'xref' => $source->xref(), 'gedcom' => $gedcom,]) ?>
         </div>
 
         <div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">

@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Fact;
+
+/**
+ * @var Fact $fact
+ */
+
+?>
+
+<a class="btn btn-link btn-sm" href="#" data-wt-post-url="
+    <?= e(route(PasteSourceCitationAction::class, [
+        'tree' => $fact->record()->tree()->name(), 
+        'xref' => $fact->record()->xref(), 
+        'fact_id' => $fact->id()
+        ])) ?>" title="<?= I18N::translate('Paste Source Citation') ?>">
+    
+    <?= view('icons/copy') ?>
+    <span class="visually-hidden"><?= I18N::translate('Paste Source Citation') ?></span>
+</a>

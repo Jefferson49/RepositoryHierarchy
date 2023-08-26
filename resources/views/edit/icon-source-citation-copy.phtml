@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Tree;
+
+/**
+ * @var Tree    $tree
+ * @var string  $xref
+ * @var string  $gedcom
+ */
+
+?>
+
+<a class="btn btn-link btn-sm" href="#" data-wt-post-url="
+    <?= e(route(CopySourceCitationAction::class, [
+        'tree'    => $tree->name(),
+        'xref'    => $xref,
+        'gedcom'  => $gedcom,
+    ])) ?>" title="<?= I18N::translate('Copy Source Citation') ?>">
+    
+    <?= view('icons/copy') ?>
+    <span class="visually-hidden"><?= I18N::translate('Copy Source Citation') ?></span>
+</a>

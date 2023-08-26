@@ -97,6 +97,8 @@ class RepositoryHierarchy extends AbstractModule implements
     protected const REPO_ACTIONS_IN_ROUTE = 'repositoryhierarchy_repo_actions';
     protected const XML_SETTINGS_MODAL_IN_ROUTE = 'repositoryhierarchy_xml_settings_modal';
     protected const XML_SETTINGS_ACTION_IN_ROUTE = 'repositoryhierarchy_xml_settings_action';
+    protected const COPY_SOURCE_CITATION_ACTION_IN_ROUTE = 'repositoryhierarchy_copy_citation_action';
+    protected const PASTE_SOURCE_CITATION_ACTION_IN_ROUTE = 'repositoryhierarchy_paste_citation_action';
     protected const TREE_ATTRIBUTE_DEFAULT = '{tree}';
     protected const XREF_ATTRIBUTE_DEFAULT = '{xref}';
     protected const DELIMITER_ATTRIBUTE_DEFAULT = '{delimiter_expression}';
@@ -105,6 +107,7 @@ class RepositoryHierarchy extends AbstractModule implements
     protected const SOURCE_CALL_NUMBER_ATTRIBUTE_DEFAULT = '{source_call_number}';
     protected const CATEGORY_NAME_ATTRIBUTE_DEFAULT = '{category_name}';
     protected const CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT = '{category_full_name}';
+    protected const FACT_ID_ATTRIBUTE_DEFAULT = '{fact_id}';
 
     //Strings cooresponding to variable names
     public const VAR_DATA_FIX = 'data_fix';
@@ -166,6 +169,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_USE_META_REPOSITORIES = 'use_meta_repositories';
     public const PREF_ALLOW_RENAME = 'allow_rename';
     public const PREF_ALLOW_NEW_SOURCE = 'allow_new_source';
+    public const PREF_CITATION_GEDCOM = 'citation_gedcom';
 
     //Old prefences/settings not used any more, but needed for version updates
     public const OLD_PREF_FINDING_AID_TITLE = 'finding_aid_title_';
@@ -336,6 +340,25 @@ class RepositoryHierarchy extends AbstractModule implements
         )
             ->allows(RequestMethodInterface::METHOD_POST);
 
+        //Register a route for the copy source citation action
+        $router ->get(
+            CopySourceCitationAction::class,
+            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+            '/'.self::COPY_SOURCE_CITATION_ACTION_IN_ROUTE.
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT
+        )
+            ->allows(RequestMethodInterface::METHOD_POST);
+
+        //Register a route for the paste source citation action
+        $router ->get(
+            PasteSourceCitationAction::class,
+            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+            '/'.self::PASTE_SOURCE_CITATION_ACTION_IN_ROUTE.
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
+        )
+            ->allows(RequestMethodInterface::METHOD_POST);
+
         //Register a namespace for the views
         View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
 
@@ -347,6 +370,9 @@ class RepositoryHierarchy extends AbstractModule implements
 		{
             View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
         }
+
+        //Register a custom view for fact edit links in order to allow pasting source citations
+        View::registerCustomView('::fact-edit-links', $this->name() . '::fact-edit-links');
     }
 
     /**
