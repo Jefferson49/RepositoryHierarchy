@@ -25,17 +25,14 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
-use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\Registry;
-use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-use function redirect;
 use function response;
 
 /**
@@ -51,18 +48,10 @@ class CopySourceCitation implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $tree    = Validator::attributes($request)->tree();
-        $user    = Validator::attributes($request)->user();
-        $xref    = Validator::attributes($request)->isXref()->string('xref');
         $gedcom  = Validator::queryParams($request)->string('gedcom', '');
 
-        $record  = Registry::gedcomRecordFactory()->make($xref, $tree);
-        $record  = Auth::checkRecordAccess($record, true);
-
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
-
-        //Save received GEDCOM
-        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_CITATION_GEDCOM .  '_' . $tree->id() . '_' . $user->id(), $gedcom);
+        //Save received GEDCOM to session
+        Session::put(RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), $gedcom);
 
         FlashMessages::addMessage(I18N::translate('The source citation was copied to an internal clipboard.'));
 

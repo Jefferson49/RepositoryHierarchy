@@ -27,7 +27,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Registry;
-use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -48,17 +48,13 @@ class PasteSourceCitation implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $tree    = Validator::attributes($request)->tree();
-        $user    = Validator::attributes($request)->user();
         $xref    = Validator::attributes($request)->isXref()->string('xref');
         $fact_id = Validator::attributes($request)->string('fact_id');
 
         $record = Registry::gedcomRecordFactory()->make($xref, $tree);
         $record = Auth::checkRecordAccess($record, true);
 
-        $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
-
-        $source_citation_gedcom = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id() . '_' . $user->id(), '');
+        $source_citation_gedcom = Session::get(RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), '');
 
         foreach ($record->facts([], false, null, true) as $fact) {
             if ($fact->id() === $fact_id && $fact->canEdit()) {

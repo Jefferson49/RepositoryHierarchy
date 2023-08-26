@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\Fact;
-use Fisharebest\Webtrees\Family;
-use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Session;
 
 /**
  * @var Fact        $fact
@@ -22,13 +21,15 @@ use Fisharebest\Webtrees\Individual;
         <?= view('edit/icon-fact-delete', ['fact' => $fact]) ?>
 
         <?php //Additionally show icon to paste source citations; only show for individual and family views?>
-        <?php if (in_array($fact->record()->tag(), ['INDI', 'FAM'])) : ?>
-            <?php //Dont show certain tags, where source citations are not allowed?>
-            <?php if (!in_array($fact->tag(), [
-                'INDI:SOUR', 'INDI:NOTE', 'INDI:OBJE', 'INDI:CHAN', 'INDI:SUBM', 'INDI:ALIA', 'INDI:ANCI', 'INDI:DESI', 'INDI:RFN', 'INDI:AFN', 'INDI:RIN', 'INDI:REFN', 
-                'FAM:SOUR', 'FAM:NOTE', 'FAM:OBJE', 'FAM:NCHI', 'FAM:SUBM','FAM:CHAN', 'FAM:REFN', 'FAM:RIN',])) : ?>
-                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-paste', ['fact' => $fact]) ?>
-            <?php endif ?>          
-        <?php endif ?>
+        <?php if (Session::has(RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $fact->record()->tree()->id())) : ?>
+            <?php if (in_array($fact->record()->tag(), ['INDI', 'FAM'])) : ?>
+                <?php //Dont show certain tags, where source citations are not allowed?>
+                <?php if (!in_array($fact->tag(), [
+                    'INDI:SOUR', 'INDI:NOTE', 'INDI:OBJE', 'INDI:CHAN', 'INDI:SUBM', 'INDI:ALIA', 'INDI:ANCI', 'INDI:DESI', 'INDI:RFN', 'INDI:AFN', 'INDI:RIN', 'INDI:REFN', 
+                    'FAM:SOUR', 'FAM:NOTE', 'FAM:OBJE', 'FAM:NCHI', 'FAM:SUBM','FAM:CHAN', 'FAM:REFN', 'FAM:RIN',])) : ?>
+                    <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-paste', ['fact' => $fact]) ?>
+                <?php endif ?>          
+            <?php endif ?>
+        <?php endif ?>   
     </div>
 <?php endif ?>
