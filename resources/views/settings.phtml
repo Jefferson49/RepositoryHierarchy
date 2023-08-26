@@ -26,6 +26,7 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$allow_admin_delimiter
  * @var  bool		$show_source_facts_in_citations
  * @var  bool		$show_media_after_citations
+ * @var  bool		$enable_copy_paste_citations
  * @var  bool		$show_finding_aid_category_title
  * @var  bool		$show_finding_aid_address
  * @var  bool		$show_finding_aid_wt_links
@@ -94,7 +95,8 @@ use Fisharebest\Webtrees\View;
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Allow users to load stored delimiter expressions from administrator.'), 'name' => RepositoryHierarchy::PREF_ALLOW_ADMIN_DELIMITER, 'checked' => $allow_admin_delimiter]) ?>
             </div>
-            <div class="row"><?= view('icons/spacer') ?></div> 
+            <div class="row"><?= view('icons/spacer') ?></div>
+
             <h3><?= I18N::translate('Settings for source citations') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'checked' => $show_source_facts_in_citations]) ?>
@@ -102,7 +104,11 @@ use Fisharebest\Webtrees\View;
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Directly show media objects of sources in facts and not subordinated within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, 'checked' => $show_media_after_citations]) ?>
             </div>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Enable copy/paste mechanism for source citations in the individual and family view.'), 'name' => RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, 'checked' => $enable_copy_paste_citations]) ?>
+            </div>
             <div class="row"><?= view('icons/spacer') ?></div> 
+
             <h3><?= I18N::translate('Settings for finding aid exports') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show titles of call number categories (if available from .po file).'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, 'checked' => $show_finding_aid_category_title]) ?>
@@ -123,16 +129,19 @@ use Fisharebest\Webtrees\View;
                 <?= view('components/checkbox', ['label' => I18N::translate('Show links within table of contents in finding aid export (not available for PDF export).'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, 'checked' => $show_finding_aid_toc_links]) ?>
             </div>
             <div class="row"><?= view('icons/spacer') ?></div> 
+
             <h3><?= I18N::translate('Settings for EAD XML exports') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Allow users to load stored XML settings from administrator.'), 'name' => RepositoryHierarchy::PREF_ALLOW_ADMIN_XML_SETTINGS, 'checked' => $allow_admin_xml_settings]) ?>
             </div>
             <div class="row"><?= view('icons/spacer') ?></div> 
+
             <h3><?= I18N::translate('Settings for Meta Repositories') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Use Meta Repositories.'), 'name' => RepositoryHierarchy::PREF_USE_META_REPOSITORIES, 'checked' => $use_meta_repositories]) ?>
             </div>            
             <div class="row"><?= view('icons/spacer') ?></div> 
+
             <h3><?= I18N::translate('Settings for linking to external archive management tools') ?></h3>
             <div class="row">            
                 <?= I18N::translate('The following settings apply if AtoM (https://www.accesstomemory.org) is used as an external archive management system.') ?>

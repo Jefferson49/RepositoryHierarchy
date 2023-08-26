@@ -75,8 +75,10 @@ foreach ($keys as $key) {
             <?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 
             <?php //Additionally show icon to copy source citation?>
-            <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'xref' => $source->xref(), 'gedcom' => $gedcom,]) ?>
-        </div>
+            <?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))) : ?>
+                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'xref' => $source->xref(), 'gedcom' => $gedcom,]) ?>
+            <?php endif ?>
+            </div>
 
         <div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
 

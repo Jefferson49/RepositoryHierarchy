@@ -170,6 +170,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_ALLOW_RENAME = 'allow_rename';
     public const PREF_ALLOW_NEW_SOURCE = 'allow_new_source';
     public const PREF_CITATION_GEDCOM = 'citation_gedcom';
+    public const PREF_ENABLE_COPY_PASTE_CITATIONS ='enable_copy_paste_citations';
 
     //Old prefences/settings not used any more, but needed for version updates
     public const OLD_PREF_FINDING_AID_TITLE = 'finding_aid_title_';
@@ -570,6 +571,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_ALLOW_ADMIN_DELIMITER            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
                 self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
                 self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	=> boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
+                self::PREF_ENABLE_COPY_PASTE_CITATIONS   	=> boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
                 self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE  => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
                 self::PREF_SHOW_FINDING_AID_ADDRESS         => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
                 self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
@@ -615,6 +617,7 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, isset($params[self::PREF_SHOW_MEDIA_AFTER_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, isset($params[self::PREF_ENABLE_COPY_PASTE_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, isset($params[self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, isset($params[self::PREF_SHOW_FINDING_AID_ADDRESS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS]) ? '1' : '0');
