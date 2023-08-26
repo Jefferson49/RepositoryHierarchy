@@ -26,6 +26,8 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\FlashMessages;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Validator;
@@ -34,6 +36,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function redirect;
+use function response;
 
 /**
  * Copy a source citation.
@@ -61,8 +64,10 @@ class CopySourceCitationAction implements RequestHandlerInterface
         //Save received GEDCOM
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_CITATION_GEDCOM .  '_' . $tree->id() . '_' . $user->id(), $gedcom);
 
-        $url = Validator::parsedBody($request)->isLocalUrl()->string('url', $record->url());
+        FlashMessages::addMessage(I18N::translate('The source citation was copied to an internal clipboard.'));
 
-        return redirect($url);
+        //$url = Validator::parsedBody($request)->isLocalUrl()->string('url', $record->url());
+
+        return response(); //redirect($url);
     }
 }
