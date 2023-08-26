@@ -97,8 +97,8 @@ class RepositoryHierarchy extends AbstractModule implements
     protected const REPO_ACTIONS_IN_ROUTE = 'repositoryhierarchy_repo_actions';
     protected const XML_SETTINGS_MODAL_IN_ROUTE = 'repositoryhierarchy_xml_settings_modal';
     protected const XML_SETTINGS_ACTION_IN_ROUTE = 'repositoryhierarchy_xml_settings_action';
-    protected const COPY_SOURCE_CITATION_ACTION_IN_ROUTE = 'repositoryhierarchy_copy_citation_action';
-    protected const PASTE_SOURCE_CITATION_ACTION_IN_ROUTE = 'repositoryhierarchy_paste_citation_action';
+    protected const COPY_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_copy_citation';
+    protected const PASTE_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_paste_citation';
     protected const TREE_ATTRIBUTE_DEFAULT = '{tree}';
     protected const XREF_ATTRIBUTE_DEFAULT = '{xref}';
     protected const DELIMITER_ATTRIBUTE_DEFAULT = '{delimiter_expression}';
@@ -342,18 +342,18 @@ class RepositoryHierarchy extends AbstractModule implements
 
         //Register a route for the copy source citation action
         $router ->get(
-            CopySourceCitationAction::class,
+            CopySourceCitation::class,
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::COPY_SOURCE_CITATION_ACTION_IN_ROUTE.
+            '/'.self::COPY_SOURCE_CITATION_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT
         )
             ->allows(RequestMethodInterface::METHOD_POST);
 
         //Register a route for the paste source citation action
         $router ->get(
-            PasteSourceCitationAction::class,
+            PasteSourceCitation::class,
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::PASTE_SOURCE_CITATION_ACTION_IN_ROUTE.
+            '/'.self::PASTE_SOURCE_CITATION_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
             '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
         )

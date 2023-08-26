@@ -26,6 +26,8 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\FlashMessages;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Validator;
@@ -34,11 +36,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function redirect;
+use function response;
 
 /**
- * Paste a cite citation.
+ * Copy a source citation.
  */
-class PasteSourceCitationAction implements RequestHandlerInterface
+class CopySourceCitation implements RequestHandlerInterface
 {
     /**
      * @param ServerRequestInterface $request
@@ -50,26 +53,19 @@ class PasteSourceCitationAction implements RequestHandlerInterface
         $tree    = Validator::attributes($request)->tree();
         $user    = Validator::attributes($request)->user();
         $xref    = Validator::attributes($request)->isXref()->string('xref');
-        $fact_id = Validator::attributes($request)->string('fact_id');
+        $gedcom  = Validator::queryParams($request)->string('gedcom', '');
 
-        $record = Registry::gedcomRecordFactory()->make($xref, $tree);
-        $record = Auth::checkRecordAccess($record, true);
+        $record  = Registry::gedcomRecordFactory()->make($xref, $tree);
+        $record  = Auth::checkRecordAccess($record, true);
 
         $module_service = new ModuleService();
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 
-        $source_citation_gedcom = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id() . '_' . $user->id(), '');
+        //Save received GEDCOM
+        $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_CITATION_GEDCOM .  '_' . $tree->id() . '_' . $user->id(), $gedcom);
 
-        foreach ($record->facts([], false, null, true) as $fact) {
-            if ($fact->id() === $fact_id && $fact->canEdit()) {
-                $new_gedcom = $fact->gedcom() . "\n" . $source_citation_gedcom;
-                $record->updateFact($fact_id, $new_gedcom, false);
-                break;
-            }
-        }
+        FlashMessages::addMessage(I18N::translate('The source citation was copied to an internal clipboard.'));
 
-        $url = Validator::parsedBody($request)->isLocalUrl()->string('url', $record->url());
-
-        return redirect($url);
+        return response();
     }
 }
