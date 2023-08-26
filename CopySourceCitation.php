@@ -53,7 +53,7 @@ class CopySourceCitation implements RequestHandlerInterface
         //Save received GEDCOM to session
         Session::put(RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), $gedcom);
 
-        FlashMessages::addMessage(I18N::translate('The source citation was copied to an internal clipboard.'));
+        FlashMessages::addMessage(I18N::translate('The source citation was copied to an internal clipboard. The source citation can be added to other facts/events by using an icon in the edit area of the fact/event.'));
 
         return response();
     }
