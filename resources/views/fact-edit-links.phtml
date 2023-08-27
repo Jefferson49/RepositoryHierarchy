@@ -30,7 +30,7 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
             <?php if (in_array($fact->record()->tag(), ['INDI', 'FAM'])) : ?>
                 <?php //Dont show certain tags, where source citations are not allowed?>
                 <?php if (!in_array($fact->tag(), [
-                    'INDI:SOUR', 'INDI:NOTE', 'INDI:OBJE', 'INDI:CHAN', 'INDI:SUBM', 'INDI:ALIA', 'INDI:ANCI', 'INDI:DESI', 'INDI:RFN', 'INDI:AFN', 'INDI:RIN', 'INDI:REFN', 
+                    'INDI:SOUR', 'INDI:NOTE', 'INDI:OBJE', 'INDI:CHAN', 'INDI:SUBM', 'INDI:ALIA', 'INDI:ANCI', 'INDI:DESI', 'INDI:RFN', 'INDI:AFN', 'INDI:RIN', 'INDI:REFN', 'INDI:RESN', 
                     'FAM:SOUR', 'FAM:NOTE', 'FAM:OBJE', 'FAM:NCHI', 'FAM:SUBM','FAM:CHAN', 'FAM:REFN', 'FAM:RIN',])) : ?>
                     <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-paste', ['fact' => $fact]) ?>
                 <?php endif ?>          
