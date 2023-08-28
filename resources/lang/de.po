@@ -29,8 +29,8 @@ msgid ""
 "fact/event."
 msgstr ""
 "Das Quellen-Zitat wurde in eine interne Zwischenablage kopiert. Mit Hilfe "
-"eines Icons im Eingabebereich von Fakten/Ereignissen, kann das Quellen-Zitat "
-"zu anderen Fakten/Ereignissen hinzugefügt werden."
+"eines Icons im Eingabebereich von Tatsachen/Ereignissen, kann das Quellen-Zitat "
+"zu anderen Tatsachen/Ereignissen hinzugefügt werden."
 
 #: CreateSourceModal.php:60
 msgid ""
@@ -624,7 +624,7 @@ msgid ""
 "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source "
 "citations."
 msgstr ""
-"Zusätzliche Fakten  (REPO, REPO:CALN, REFN, NOTE) innerhalb von Quellen-"
+"Zusätzliche Tatsachen  (REPO, REPO:CALN, REFN, NOTE) innerhalb von Quellen-"
 "Zitaten anzeigen."
 
 #: resources/views/settings.phtml:105
@@ -632,7 +632,7 @@ msgid ""
 "Directly show media objects of sources in facts and not subordinated within "
 "source citations."
 msgstr ""
-"Medien-Objekte von Quellen direkt innerhalb der Fakten von Personen anzeigen "
+"Medien-Objekte von Quellen direkt innerhalb der Tatsachen von Personen anzeigen "
 "und nicht untergeordnet innerhalb von Quellen-Zitaten."
 
 #: resources/views/settings.phtml:108
