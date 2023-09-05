@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2023-09-04 07:22+0200\n"
+"POT-Creation-Date: 2023-09-05 06:40+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,14 +23,17 @@ msgid "Default call number category"
 msgstr "Defaultwert für Signatur-Kategorie"
 
 #: CopySourceCitation.php:56
+msgid "The source citation was copied to an internal clipboard."
+msgstr "Das Quellen-Zitat wurde in eine interne Zwischenablage gespeichert."
+
+#: CopySourceCitation.php:57
 msgid ""
-"The source citation was copied to an internal clipboard. The source citation "
-"can be added to other facts/events by using an icon in the edit area of the "
-"fact/event."
+"The source citation can be added to other facts/events by clicling on the "
+"source icon in the edit area of the fact/event."
 msgstr ""
-"Das Quellen-Zitat wurde in eine interne Zwischenablage kopiert. Mit Hilfe "
-"eines Icons im Eingabebereich von Tatsachen/Ereignissen, kann das Quellen-"
-"Zitat zu anderen Tatsachen/Ereignissen hinzugefügt werden."
+"Durch Klicken auf das Quellen-Symbol im Eingabebereich von Tatsachen/"
+"Ereignissen, kann das Quellen-Zitat zu anderen Tatsachen/Ereignissen "
+"hinzugefügt werden."
 
 #: CreateSourceModal.php:60
 msgid ""
@@ -552,7 +555,7 @@ msgstr "Titel für Signatur-Kategorien anzeigen (wenn verfügbar aus .po Datei).
 
 #: resources/views/settings.phtml:63
 msgid "Show help icon after label for delimiter expression."
-msgstr "Hilfe-Icon nach dem Label für den Delimiter Ausdruck anzeigen."
+msgstr "Hilfe-Symbol nach dem Label für den Delimiter Ausdruck anzeigen."
 
 #: resources/views/settings.phtml:66
 msgid "Show help link after label for delimiter expression."
@@ -749,9 +752,6 @@ msgstr "Speichern"
 #: resources/views/source-facts-within-citation.phtml:62
 msgid "Link to archival description in AtoM"
 msgstr "Link zur archivalischen Beschreibung in AtoM"
-
-#~ msgid "The source citation was copied to an internal clipboard."
-#~ msgstr "Das Quellen-Zitat wurde in eine interne Zwischenablage gespeichert."
 
 #~ msgid "Error during update of the module preferences"
 #~ msgstr "Fehler beim Aktualisieren der Modul-Einstellungen"
