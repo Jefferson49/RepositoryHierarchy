@@ -58,6 +58,7 @@ This README file contains the following main sections:What](
     *   [Create links between webtrees and an external archive management system](#create-links-between-webtrees-and-an-external-archive-management-system)
     *   [Show additional source and repository information in source citations](#show-additional-source-and-repository-information-in-source-citations)
     *   [Directly show media objects of source citations in individual facts](#directly-show-media-objects-of-source-citations-in-individual-facts)
+    *   [Copy-Paste mechanism for source citations in the individual and family view](#copy-paste-mechanism-for-source-citations-in-the-individual-and-family-view)
     *   [Preferences](#preferences)
 *   [**Demo website and examples**](#demo-website-and-examples)
     *   [Demo website and examples for a meta repository](#demo-website-and-examples-for-a-meta-repository)
@@ -388,6 +389,14 @@ The Repository Hierarchy modules provides a feature to directly show media objec
 
 In order to activate this feature, the setting "Directly show media objects of sources in facts and not subordinated within source citations." needs to be selected in the control panel.
 
+### Copy-Paste mechanism for source citations in the individual and family view
+The Repository Hierarchy module provides a feature to copy/paste source citations. If this feature is activated in the module settings, a copy icon is shown on the right hand side of each source citation. By clicking on the icon, the source citation can be copied to an internal clipboard. If a source citation is available in the clipboard, a source icon is shown in the edit area of all facts/events, which allow to use source citations. By clicking on the source icon, the source citation can be copied from the clipboard to the fact/event.
+
+**Screenshot: Copy/Paste of source citations**
+![Screenshot](resources/img/screenshot_copy_paste_source_citations.jpg)
+
+In order to activate this feature, the setting "Enable copy/paste mechanism for source citations in the individual and family view" needs to be selected in the control panel.
+
 ###  Preferences
 The following preferences can be activated/deactivated by administrators in the control panel.
 
@@ -409,6 +418,7 @@ The following preferences can be activated/deactivated by administrators in the 
 #### Preferences for source citations
 + Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.
 + Directly show media objects of sources in facts and not sub-ordinated within source citations.
++ Enable copy/paste mechanism for source citations in the individual and family view.
 
 #### Preferences for finding aid export
 + Show titles of call number categories (if available from .po file).
