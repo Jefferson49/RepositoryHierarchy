@@ -54,7 +54,7 @@ class PasteSourceCitation implements RequestHandlerInterface
         $record = Registry::gedcomRecordFactory()->make($xref, $tree);
         $record = Auth::checkRecordAccess($record, true);
 
-        $source_citation_gedcom = Session::get(RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), '');
+        $source_citation_gedcom = Session::get(RepositoryHierarchy::activeModuleName() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), '');
 
         foreach ($record->facts([], false, null, true) as $fact) {
             if ($fact->id() === $fact_id && $fact->canEdit()) {
