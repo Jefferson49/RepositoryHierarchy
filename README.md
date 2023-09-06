@@ -93,9 +93,10 @@ This README file contains the following main sections:What](
     + Login to webtrees as an administrator
 	+ Go to "Control Panel/All Modules", and find the module called "Repository Hierarchy" (or corresponding translation)
 	+ Check if it has a tick for "Enabled"
++ If the feature ["copy-paste mechanism for source citations in the individual and family view"](#copy-paste-mechanism-for-source-citations-in-the-individual-and-family-view) shall be used in paralell with the [vesta custom modules](https://github.com/vesta-webtrees-2-custom-modules), a vesta version 2.1.17.0.4 or later needs to be installed.
 
 ##  Webtrees version  
-The latest release of the module was developed and tested with [webtrees 2.1.7](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
+The latest release of the module was developed and tested with [webtrees 2.1.17](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
 
 ##  Concepts of the Repository Hierarchy module
 In the following, the concepts of the Repository Hierarchy module are described. 
