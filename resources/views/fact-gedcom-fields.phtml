@@ -9,9 +9,9 @@ use Fisharebest\Webtrees\Elements\AbstractXrefElement;
 use Fisharebest\Webtrees\Elements\XrefSource;
 use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\GedcomRecord;
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 
@@ -23,6 +23,22 @@ use Fisharebest\Webtrees\Tree;
 
 $module_service = new ModuleService();
 $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+
+//If copy source citation icon shall be shown, check if individual or family view and wether editable
+if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))) {
+
+    if ((Session::get('last_page_name') === "individual.php") && Session::has('last_page_parameter')){
+        $individual  = Registry::individualFactory()->make(Session::get('last_page_parameter'), $tree);
+        $showSourceCitationIcon = $individual->canEdit();
+    }
+    elseif ((Session::get('last_page_name') === "family.php") && Session::has('last_page_parameter')){
+        $family  = Registry::familyFactory()->make(Session::get('last_page_parameter'), $tree);
+        $showSourceCitationIcon = $family->canEdit();
+    }
+    else {
+        $showSourceCitationIcon = false;
+    }
+} 
 
 $hierarchy = explode(':', $parent);
 
@@ -75,7 +91,7 @@ foreach ($keys as $key) {
             <?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 
             <?php //Additionally show icon to copy source citation?>
-            <?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))) : ?>
+            <?php if ($showSourceCitationIcon) : ?>
                 <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'xref' => $source->xref(), 'gedcom' => $gedcom,]) ?>
             <?php endif ?>
             </div>
