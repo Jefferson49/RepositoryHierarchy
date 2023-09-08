@@ -18,7 +18,6 @@ use Fisharebest\Webtrees\Tree;
 <a class="btn btn-link btn-sm" href="#" data-wt-post-url="
     <?= e(route(CopySourceCitation::class, [
         'tree'    => $tree->name(),
-        'xref'    => $xref,
         'gedcom'  => $gedcom,
     ])) ?>" title="<?= I18N::translate('Copy source citation to clipboard') ?>">
     

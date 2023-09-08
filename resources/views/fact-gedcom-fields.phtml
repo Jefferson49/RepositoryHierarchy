@@ -92,7 +92,7 @@ foreach ($keys as $key) {
 
             <?php //Additionally show icon to copy source citation?>
             <?php if ($showSourceCitationIcon) : ?>
-                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'xref' => $source->xref(), 'gedcom' => $gedcom,]) ?>
+                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'gedcom' => $gedcom,]) ?>
             <?php endif ?>
             </div>
 
