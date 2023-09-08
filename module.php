@@ -38,6 +38,7 @@ require __DIR__ . '/C16Y.php';
 require __DIR__ . '/CallNumberCategory.php';
 require __DIR__ . '/CallNumberDataFix.php';
 require __DIR__ . '/CopySourceCitation.php';
+require __DIR__ . '/DeleteSourceCitation.php';
 require __DIR__ . '/CreateSourceModal.php';
 require __DIR__ . '/DownloadService.php';
 require __DIR__ . '/DownloadEADxmlService.php';

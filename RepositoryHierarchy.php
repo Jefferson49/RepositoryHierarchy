@@ -99,6 +99,7 @@ class RepositoryHierarchy extends AbstractModule implements
     protected const XML_SETTINGS_ACTION_IN_ROUTE = 'repositoryhierarchy_xml_settings_action';
     protected const COPY_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_copy_citation';
     protected const PASTE_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_paste_citation';
+    protected const DELETE_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_delete_citation';
     protected const TREE_ATTRIBUTE_DEFAULT = '{tree}';
     protected const XREF_ATTRIBUTE_DEFAULT = '{xref}';
     protected const DELIMITER_ATTRIBUTE_DEFAULT = '{delimiter_expression}';
@@ -355,6 +356,16 @@ class RepositoryHierarchy extends AbstractModule implements
             PasteSourceCitation::class,
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::PASTE_SOURCE_CITATION_IN_ROUTE.
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
+        )
+            ->allows(RequestMethodInterface::METHOD_POST);
+
+        //Register a route for the delete source citation action
+        $router ->get(
+            DeleteSourceCitation::class,
+            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+            '/'.self::DELETE_SOURCE_CITATION_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
             '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
         )

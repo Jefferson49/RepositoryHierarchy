@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Tree;
+
+/**
+ * @var Tree    $tree
+ * @var string  $xref
+ * @var string  $fact_id
+ * @var string  $gedcom
+ */
+
+?>
+
+<a class="btn btn-link btn-sm" href="#" data-wt-post-url="
+    <?= e(route(DeleteSourceCitation::class, [
+        'tree'    => $tree->name(),
+        'xref'    => $xref,
+        'fact_id' => $fact_id,
+        'gedcom'  => $gedcom,
+    ])) ?>" title="<?= I18N::translate('Delete source citation') ?>">
+    
+    <?= view('icons/delete') ?>
+    <span class="visually-hidden"><?= I18N::translate('Delete source citation') ?></span>
+</a>

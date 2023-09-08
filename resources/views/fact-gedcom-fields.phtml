@@ -30,11 +30,13 @@ if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABL
     if ((Session::get('last_page_name') === "individual.php") && Session::has('last_page_parameter')){
         $individual  = Registry::individualFactory()->make(Session::get('last_page_parameter'), $tree);
         $showSourceCitationIcon = $individual->canEdit();
+        $xref = $individual->xref();
         $facts = $individual->facts();
     }
     elseif ((Session::get('last_page_name') === "family.php") && Session::has('last_page_parameter')){
         $family  = Registry::familyFactory()->make(Session::get('last_page_parameter'), $tree);
         $showSourceCitationIcon = $family->canEdit();
+        $xref = $family->xref();
         $facts = $family->facts();
     }
     else {
@@ -110,7 +112,7 @@ foreach ($keys as $key) {
             <?php //Additionally show icon to copy source citation?>
             <?php if ($showSourceCitationIcon) : ?>
                 <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'xref' => $source->xref(), 'gedcom' => $gedcom,]) ?>
-                <?= $fact_id ?>
+                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-delete', ['tree' => $tree, 'xref' => $xref, 'fact_id' => $fact_id, 'gedcom' => $gedcom,]) ?>
                 <?php endif ?>
             </div>
 
