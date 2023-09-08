@@ -57,7 +57,9 @@ class DeleteSourceCitation implements RequestHandlerInterface
 
         foreach ($record->facts([], false, null, true) as $fact) {
             if ($fact->id() === $fact_id && $fact->canEdit()) {
-                $new_gedcom = str_replace($gedcom, '', $fact->gedcom());
+                $old_gedcom = $fact->gedcom();
+                $last_pos = strrpos($old_gedcom, $gedcom);
+                $new_gedcom = substr($old_gedcom, 0, $last_pos).str_replace($gedcom, '', substr($old_gedcom, $last_pos));
                 $record->updateFact($fact_id, $new_gedcom, false);
                 break;
             }
