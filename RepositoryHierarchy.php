@@ -363,11 +363,13 @@ class RepositoryHierarchy extends AbstractModule implements
         //Register a namespace for the views
         View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
 
-        //Register a custom view for facts in order to show additional
-        //source facts in citations, media objects in facts, or AtoM links
+        //Register a custom view for facts in order to show additional source facts in citations, media objects in facts, or AtoM links
+        //Also used to show additonal icons to copy/delete source citations
         if 	( 	(boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) or
 			 	(boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) or
-			 	(boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')))	) 
+			 	(boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0'))) or
+			 	(boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')))
+            ) 
 		{
             View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
         }
