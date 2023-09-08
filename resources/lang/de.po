@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2023-09-05 06:40+0200\n"
+"POT-Creation-Date: 2023-09-08 07:24+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -60,13 +60,13 @@ msgstr "Findbuch als HTML"
 msgid "Finding aid as PDF"
 msgstr "Findbuch als PDF"
 
-#: RepositoryHierarchy.php:388 RepositoryHierarchy.php:918
+#: RepositoryHierarchy.php:399 RepositoryHierarchy.php:929
 #: RepositoryHierarchyHelpTexts.php:69 RepositoryHierarchyHelpTexts.php:79
 #: RepositoryHierarchyHelpTexts.php:89 RepositoryHierarchyHelpTexts.php:98
 msgid "Repository Hierarchy"
 msgstr "Archiv Hierarchie"
 
-#: RepositoryHierarchy.php:401
+#: RepositoryHierarchy.php:412
 msgid ""
 "A hierarchical structured list of the sources of an archive based on the "
 "call numbers of the sources"
@@ -74,12 +74,12 @@ msgstr ""
 "Eine hierarchisch strukturierte Liste der Quellen in einem Archiv, basierend "
 "auf den Signaturen der Quellen"
 
-#: RepositoryHierarchy.php:646
+#: RepositoryHierarchy.php:657
 #, php-format
 msgid "The preferences for the module “%s” were updated."
 msgstr "Die Einstellungen für das Modul %s wurden aktualisiert."
 
-#: RepositoryHierarchy.php:669
+#: RepositoryHierarchy.php:680
 #, php-format
 msgid ""
 "Error while trying to update the custom module \"%s\" to the new module "
@@ -88,7 +88,7 @@ msgstr ""
 "Fehler während der Aktualisierung des benutzerspezifischen Moduls \"%s\" auf "
 "die neue Modul-Version %s: "
 
-#: RepositoryHierarchy.php:674
+#: RepositoryHierarchy.php:685
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
@@ -97,14 +97,14 @@ msgstr ""
 "Die Einstellungen für das benutzerdefinierte Modul \"%s\" wurden für die "
 "neue Modul-Version %s erfolgreich aktualisiert."
 
-#: RepositoryHierarchy.php:772
+#: RepositoryHierarchy.php:783
 msgid ""
 "The Repository Hierarchy data fix cannot be used in the \"control panel\"."
 msgstr ""
 "Die Datenkorrektur für Archiv Hierarchie kann unter \"Verwaltung\" nicht "
 "genutzt werden."
 
-#: RepositoryHierarchy.php:773
+#: RepositoryHierarchy.php:784
 msgid ""
 "The data fix can be called from the user front end by clicking on the link "
 "to rename a call number category."
@@ -112,19 +112,19 @@ msgstr ""
 "Die Datenkorrektur kann aus der Bentutzeroberfläche aufgerufen werden, indem "
 "der Link für die Umbenennung einer Signatur-Kategorie angeclickt wird."
 
-#: RepositoryHierarchy.php:778 RepositoryHierarchy.php:792
-#: RepositoryHierarchy.php:1401
+#: RepositoryHierarchy.php:789 RepositoryHierarchy.php:803
+#: RepositoryHierarchy.php:1412
 msgid "Error in custom module"
 msgstr "Fehler in benutzerspezifischem Modul"
 
-#: RepositoryHierarchy.php:786
+#: RepositoryHierarchy.php:797
 msgid ""
 "Currently, you do not have the user rights to change call number categories."
 msgstr ""
 "Aktuell verfügen Sie nicht über die erforderlichen Benutzer Rechte, um "
 "Signatur-Kategorien zu ändern."
 
-#: RepositoryHierarchy.php:787
+#: RepositoryHierarchy.php:798
 msgid ""
 "In order to change call number categories, you need to have a \"Manager\" "
 "role for the corresponding tree."
@@ -132,53 +132,53 @@ msgstr ""
 "Um Signatur-Kategorien zu ändern, benötigen Sie die Rolle \"Verwalter\" für "
 "den zugehörigen Stammbaum."
 
-#: RepositoryHierarchy.php:920
+#: RepositoryHierarchy.php:931
 #, php-format
 msgid "Repository Hierarchy of: %s"
 msgstr "Archiv Hierarchie von: %s"
 
-#: RepositoryHierarchy.php:1174
+#: RepositoryHierarchy.php:1185
 msgid "Regular expression not accepted"
 msgstr "Regulärer Ausdruck nicht akzeptiert"
 
-#: RepositoryHierarchy.php:1183
+#: RepositoryHierarchy.php:1194
 msgid "No valid delimiter or valid regular expression for delimiter found."
 msgstr "Kein valider Delimiter oder valider Ausdruck für Delimiter gefunden."
 
-#: RepositoryHierarchy.php:1304
+#: RepositoryHierarchy.php:1315
 msgid "load delimiter expression from administrator"
 msgstr "Delimiter Ausdruck von Administrator laden"
 
-#: RepositoryHierarchy.php:1310
+#: RepositoryHierarchy.php:1321
 msgid "none"
 msgstr "Keine"
 
-#: RepositoryHierarchy.php:1311
+#: RepositoryHierarchy.php:1322
 msgid "save repository"
 msgstr "Archiv speichern"
 
-#: RepositoryHierarchy.php:1312
+#: RepositoryHierarchy.php:1323
 msgid "load repository"
 msgstr "Archiv laden"
 
-#: RepositoryHierarchy.php:1313
+#: RepositoryHierarchy.php:1324
 msgid "save delimiter expression"
 msgstr "Delimiter Ausdruck speichern"
 
-#: RepositoryHierarchy.php:1314
+#: RepositoryHierarchy.php:1325
 msgid "load delimiter expression"
 msgstr "Delimiter Ausdruck laden"
 
-#: RepositoryHierarchy.php:1379
+#: RepositoryHierarchy.php:1390
 msgid "Could not load repository. No repository stored."
 msgstr "Archiv konnte nicht geladen werden. Kein Archiv gespeichert."
 
-#: RepositoryHierarchy.php:1402
+#: RepositoryHierarchy.php:1413
 #, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "Der Stammbaum \"%s\" enthält kein Archiv"
 
-#: RepositoryHierarchy.php:1441
+#: RepositoryHierarchy.php:1452
 msgid ""
 "Could not load delimiter expression from administrator. No administrator "
 "delimiter expression stored."
@@ -186,17 +186,17 @@ msgstr ""
 "Delimiter Ausdruck von Administrator konnte nicht geladen werden. Kein "
 "Delimiter Ausdruck von Administrator gespeichert."
 
-#: RepositoryHierarchy.php:1450
+#: RepositoryHierarchy.php:1461
 msgid "Could not load delimiter expression. No delimiter expression stored."
 msgstr ""
 "Delimiter Ausdruck konnte nicht geladen werden. Kein Delimiter Ausdruck "
 "gespeichert."
 
-#: RepositoryHierarchy.php:1473
+#: RepositoryHierarchy.php:1484
 msgid "Error in delimiter expression"
 msgstr "Fehler in Delimiter Ausdruck"
 
-#: RepositoryHierarchy.php:1480 RepositoryHierarchyHelpTexts.php:106
+#: RepositoryHierarchy.php:1491 RepositoryHierarchyHelpTexts.php:106
 msgid ""
 "Please note that the following characters need to be escaped if not used as "
 "meta characters in a regular expression"
@@ -205,26 +205,26 @@ msgstr ""
 "versehen werden müssen, falls sie nicht als Meta-Zeichen in einem regulären "
 "Ausdruck verwendet werden"
 
-#: RepositoryHierarchy.php:1483 RepositoryHierarchyHelpTexts.php:107
+#: RepositoryHierarchy.php:1494 RepositoryHierarchyHelpTexts.php:107
 msgid "For example, use"
 msgstr "Nutzen Sie zum Beispiel"
 
-#: RepositoryHierarchy.php:1483 RepositoryHierarchy.php:1484
+#: RepositoryHierarchy.php:1494 RepositoryHierarchy.php:1495
 #: RepositoryHierarchyHelpTexts.php:107
 msgid "instead of"
 msgstr "statt"
 
-#: RepositoryHierarchy.php:1483 RepositoryHierarchyHelpTexts.php:60
+#: RepositoryHierarchy.php:1494 RepositoryHierarchyHelpTexts.php:60
 #: RepositoryHierarchyHelpTexts.php:61 RepositoryHierarchyHelpTexts.php:62
 #: RepositoryHierarchyHelpTexts.php:107
 msgid "or"
 msgstr "oder"
 
-#: RepositoryHierarchy.php:1484
+#: RepositoryHierarchy.php:1495
 msgid "if the characters shall be used as plain text."
 msgstr "wenn die Zeichen als reiner Text verwendet werden sollen."
 
-#: RepositoryHierarchy.php:1554
+#: RepositoryHierarchy.php:1565
 msgid ""
 "XML export settings not found. Please open EAD XML settings and provide "
 "settings."
@@ -232,7 +232,7 @@ msgstr ""
 "Einstellungen für XML Export nicht gefunden. Bitte öffnen Sie die EAD XML "
 "Einstellungen und legen die Einstellungen fest."
 
-#: RepositoryHierarchy.php:1573 RepositoryHierarchy.php:1582
+#: RepositoryHierarchy.php:1584 RepositoryHierarchy.php:1593
 #: XmlExportSettingsModal.php:181 XmlExportSettingsModal.php:184
 #: resources/views/finding-aid.phtml:26 resources/views/finding-aid.phtml:69
 msgid "Finding aid"
@@ -393,6 +393,15 @@ msgstr "Autor"
 #: resources/views/edit/icon-source-citation-copy.phtml:26
 msgid "Copy source citation to clipboard"
 msgstr "Quellen-Zitat in die Zwischenablage kopieren"
+
+#: resources/views/edit/icon-source-citation-delete.phtml:19
+msgid "Are you sure you want to delete the source citation?"
+msgstr "Sind Sie sicher, dass Sie das Quellen-Zitat löschen möchten?"
+
+#: resources/views/edit/icon-source-citation-delete.phtml:25
+#: resources/views/edit/icon-source-citation-delete.phtml:28
+msgid "Delete source citation"
+msgstr "Quellen-Zitat löschen"
 
 #: resources/views/edit/icon-source-citation-paste.phtml:21
 #: resources/views/edit/icon-source-citation-paste.phtml:24

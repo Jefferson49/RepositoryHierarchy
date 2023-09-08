@@ -16,7 +16,7 @@ use Fisharebest\Webtrees\Tree;
 
 ?>
 
-<a class="btn btn-link btn-sm" href="#" data-wt-post-url="
+<a class="btn btn-link btn-sm" href="#" data-wt-confirm="<?= I18N::translate('Are you sure you want to delete the source citation?') ?>" data-wt-post-url="
     <?= e(route(DeleteSourceCitation::class, [
         'tree'    => $tree->name(),
         'xref'    => $xref,
