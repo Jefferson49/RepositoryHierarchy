@@ -2,15 +2,11 @@
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
-use Fisharebest\Webtrees\Elements\AbstractXrefElement;
-use Fisharebest\Webtrees\Elements\XrefSource;
-use Fisharebest\Webtrees\Gedcom;
-use Fisharebest\Webtrees\GedcomRecord;
+use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
-use Fisharebest\Webtrees\Tree;
 
 /**
  * @var \Fisharebest\Webtrees\Tree $tree
@@ -28,25 +24,43 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 
 		<?php $element = Registry::elementFactory()->make($fact->tag()) ?>
 
-		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
-			<?php //Do not escape, because it is already escaped in the method  ?>
-			<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
-		<?php endif ?>
-
 		<?php if ($fact->tag() === 'SOUR:REPO') : ?>
-			<?php 	$xref = str_replace('@', '', $fact->value()) ?>
-			<?php 	$caln_string = $fact->attribute('CALN') ?>
-			<?php 	$element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
+			<?php $xref = str_replace('@', '', $fact->value()) ?>
+			<?php $repository = Registry::repositoryFactory()->make($xref, $tree) ?>
+			<?php $caln_string = $fact->attribute('CALN') ?>
+			<?php $caln_element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
 
 			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
-				<?php //Do not escape, because it is already escaped in the method  ?>
-				<?= $element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
+				<?php if ($caln_string === '') : ?>
+					<?php //Do not escape, because it is already escaped in the method  ?>
+					<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+				<?php else : ?>
+					<?php $id = Registry::idFactory()->id() ?>
+					<?php $expanded = false ?>
+					<div>
+						<button type="button" class="btn btn-text p-0" href="#<?= e($id) ?>" data-bs-toggle="collapse" aria-controls="<?= e($id) ?>" aria-expanded="<?= $expanded ? 'true' : 'false' ?>">
+							<?= view('icons/expand') ?>
+							<?= view('icons/collapse') ?>
+						</button>
+
+						<?php $label = '<span class="label">' . MoreI18N::xlate('Repository') . '</span>' ?>
+						<?php $value = '<span class="field" dir="auto"><a href="' . e($repository->url()) . '">' . $repository->fullName() . '</a></span>' ?>
+						<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
+
+					</div>
+					<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
+						<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+							<?php //Do not escape, because it is already escaped in the method  ?>
+							<?= $caln_element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
+						<?php endif ?>
+					</div>
+				<?php endif ?>
 			<?php endif ?>
 
 			<?php $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, '')) ?>
 			<?php if (($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') &&
-                        (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
-                        in_array($tree->name() . ':' . $xref, $atom_repositories)) : ?>
+						(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
+						in_array($tree->name() . ':' . $xref, $atom_repositories)) : ?>
 				<div>
 					<span class="label">AtoM</span>
 					: 
@@ -64,6 +78,11 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 						</a>
 					</span>
 				</div>
+			<?php endif ?>
+		<?php else: ?>
+			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+				<?php //Do not escape, because it is already escaped in the method  ?>
+				<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
 			<?php endif ?>
 		<?php endif ?>
 	<?php endif ?>
