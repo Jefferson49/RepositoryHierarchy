@@ -1,0 +1,35 @@
+<?php
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Source;
+
+/**
+ * @var \Fisharebest\Webtrees\Tree $tree
+ * @var Source $source
+ * @var string $caln_string
+ */
+
+$module_service = new ModuleService();
+$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+
+?> 
+<div>
+	<span class="label">AtoM</span>
+	: 
+	<span class="value align-top">
+		<?php if($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_SLUG, RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER) === RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER) : ?>
+			<?php $atom_slug = DownloadEADxmlService::getAtoMSlug($caln_string) ?>
+		<?php else : ?>
+			<?php $atom_slug = DownloadEADxmlService::getAtoMSlug($source->fullName()) ?>
+		<?php endif ?>
+		
+		<a href="<?= e($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '')) . '/index.php/' . e($atom_slug) ?>">
+			<bdi>
+				<?= I18N::translate('Link to archival description in AtoM') ?>
+			</bdi>
+		</a>
+	</span>
+</div>

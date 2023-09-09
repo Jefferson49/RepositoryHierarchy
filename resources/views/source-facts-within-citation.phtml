@@ -15,6 +15,7 @@ use Fisharebest\Webtrees\Source;
 
 $module_service = new ModuleService();
 $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, ''));
 
 ?> 
  
@@ -29,9 +30,12 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 			<?php $repository = Registry::repositoryFactory()->make($xref, $tree) ?>
 			<?php $caln_string = $fact->attribute('CALN') ?>
 			<?php $caln_element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
+			<?php $show_atom_links = ($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') &&
+			                         (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
+			                         (in_array($tree->name() . ':' . $xref, $atom_repositories)) ?>
 
 			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
-				<?php if ($caln_string === '') : ?>
+				<?php if ($caln_string === '' && !$show_atom_links) : ?>
 					<?php //Do not escape, because it is already escaped in the method  ?>
 					<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
 				<?php else : ?>
@@ -46,39 +50,19 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 						<?php $label = '<span class="label">' . MoreI18N::xlate('Repository') . '</span>' ?>
 						<?php $value = '<span class="field" dir="auto"><a href="' . e($repository->url()) . '">' . $repository->fullName() . '</a></span>' ?>
 						<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
-
 					</div>
 					<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
 						<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
 							<?php //Do not escape, because it is already escaped in the method  ?>
 							<?= $caln_element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
 						<?php endif ?>
+						<?php if ($show_atom_links) : ?>
+							<?= view(RepositoryHierarchy::viewsNamespace() . '::atom-links', ['tree' => $tree, 'source' => $source, 'caln_string' => $caln_string]) ?>					
+						<?php endif ?>					
 					</div>
 				<?php endif ?>
 			<?php endif ?>
 
-			<?php $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, '')) ?>
-			<?php if (($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') &&
-						(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
-						in_array($tree->name() . ':' . $xref, $atom_repositories)) : ?>
-				<div>
-					<span class="label">AtoM</span>
-					: 
-					<span class="value align-top">
-						<?php if($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_SLUG, RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER) === RepositoryHierarchy::PREF_ATOM_SLUG_CALL_NUMBER) : ?>
-							<?php $atom_slug = DownloadEADxmlService::getAtoMSlug($caln_string) ?>
-						<?php else : ?>
-							<?php $atom_slug = DownloadEADxmlService::getAtoMSlug($source->fullName()) ?>
-						<?php endif ?>
-						
-						<a href="<?= e($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '')) . '/index.php/' . e($atom_slug) ?>">
-							<bdi>
-								<?= I18N::translate('Link to archival description in AtoM') ?>
-							</bdi>
-						</a>
-					</span>
-				</div>
-			<?php endif ?>
 		<?php else: ?>
 			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
 				<?php //Do not escape, because it is already escaped in the method  ?>
