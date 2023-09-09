@@ -36,7 +36,7 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 					<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
 				<?php else : ?>
 					<?php $id = Registry::idFactory()->id() ?>
-					<?php $expanded = false ?>
+					<?php $expanded = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPAND_REPOS_IN_CITATIONS, '0')) ?>
 					<div>
 						<button type="button" class="btn btn-text p-0" href="#<?= e($id) ?>" data-bs-toggle="collapse" aria-controls="<?= e($id) ?>" aria-expanded="<?= $expanded ? 'true' : 'false' ?>">
 							<?= view('icons/expand') ?>
