@@ -21,53 +21,46 @@ $atom_repositories = explode(',', $repository_hierarchy->getPreference(Repositor
  
 <?php $facts = $source->facts() ?>
 <?php foreach ($facts as $fact) : ?>
-    <?php if (in_array($fact->tag(), ['SOUR:REPO','SOUR:REFN','SOUR:NOTE'])) : ?>
 
-		<?php $element = Registry::elementFactory()->make($fact->tag()) ?>
+	<?php $element = Registry::elementFactory()->make($fact->tag()) ?>
 
-		<?php if ($fact->tag() === 'SOUR:REPO') : ?>
-			<?php $xref = str_replace('@', '', $fact->value()) ?>
-			<?php $repository = Registry::repositoryFactory()->make($xref, $tree) ?>
-			<?php $caln_string = $fact->attribute('CALN') ?>
-			<?php $caln_element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
-			<?php $show_atom_links = ($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') &&
-			                         (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
-			                         (in_array($tree->name() . ':' . $xref, $atom_repositories)) ?>
+	<?php if ($fact->tag() === 'SOUR:REPO') : ?>
+		<?php $xref = str_replace('@', '', $fact->value()) ?>
+		<?php $repository = Registry::repositoryFactory()->make($xref, $tree) ?>
+		<?php $caln_string = $fact->attribute('CALN') ?>
+		<?php $caln_element = Registry::elementFactory()->make('SOUR:REPO:CALN') ?>
+		<?php $show_atom_links = ($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_BASE_URL, '') !== '') &&
+									(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
+									(in_array($tree->name() . ':' . $xref, $atom_repositories)) ?>
 
-			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
-				<?php if ($caln_string === '' && !$show_atom_links) : ?>
-					<?php //Do not escape, because it is already escaped in the method  ?>
-					<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
-				<?php else : ?>
-					<?php $id = Registry::idFactory()->id() ?>
-					<?php $expanded = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPAND_REPOS_IN_CITATIONS, '0')) ?>
-					<div>
-						<button type="button" class="btn btn-text p-0" href="#<?= e($id) ?>" data-bs-toggle="collapse" aria-controls="<?= e($id) ?>" aria-expanded="<?= $expanded ? 'true' : 'false' ?>">
-							<?= view('icons/expand') ?>
-							<?= view('icons/collapse') ?>
-						</button>
-
-						<?php $label = '<span class="label">' . MoreI18N::xlate('Repository') . '</span>' ?>
-						<?php $value = '<span class="field" dir="auto"><a href="' . e($repository->url()) . '">' . $repository->fullName() . '</a></span>' ?>
-						<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
-					</div>
-					<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
-						<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
-							<?php //Do not escape, because it is already escaped in the method  ?>
-							<?= $caln_element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
-						<?php endif ?>
-						<?php if ($show_atom_links) : ?>
-							<?= view(RepositoryHierarchy::viewsNamespace() . '::atom-links', ['tree' => $tree, 'source' => $source, 'caln_string' => $caln_string]) ?>					
-						<?php endif ?>					
-					</div>
-				<?php endif ?>
-			<?php endif ?>
-
-		<?php else: ?>
-			<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+			<?php if ($caln_string === '' && !$show_atom_links) : ?>
 				<?php //Do not escape, because it is already escaped in the method  ?>
 				<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+			<?php else : ?>
+				<?php $id = Registry::idFactory()->id() ?>
+				<?php $expanded = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPAND_REPOS_IN_CITATIONS, '0')) ?>
+				<div>
+					<button type="button" class="btn btn-text p-0" href="#<?= e($id) ?>" data-bs-toggle="collapse" aria-controls="<?= e($id) ?>" aria-expanded="<?= $expanded ? 'true' : 'false' ?>">
+						<?= view('icons/expand') ?>
+						<?= view('icons/collapse') ?>
+					</button>
+
+					<?php $label = '<span class="label">' . MoreI18N::xlate('Repository') . '</span>' ?>
+					<?php $value = '<span class="field" dir="auto"><a href="' . e($repository->url()) . '">' . $repository->fullName() . '</a></span>' ?>
+					<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
+				</div>
+				<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
+					<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+						<?php //Do not escape, because it is already escaped in the method  ?>
+						<?= $caln_element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
+					<?php endif ?>
+					<?php if ($show_atom_links) : ?>
+						<?= view(RepositoryHierarchy::viewsNamespace() . '::atom-links', ['tree' => $tree, 'source' => $source, 'caln_string' => $caln_string]) ?>					
+					<?php endif ?>					
+				</div>
 			<?php endif ?>
 		<?php endif ?>
 	<?php endif ?>
+
 <?php endforeach ?>

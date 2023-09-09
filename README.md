@@ -56,7 +56,7 @@ This README file contains the following main sections:What](
     *   [Settings for EAD XML exports](#settings-for-ead-xml-exports)
     *   [Export data to an external archive management system](#export-data-to-an-external-archive-management-system)
     *   [Create links between webtrees and an external archive management system](#create-links-between-webtrees-and-an-external-archive-management-system)
-    *   [Show additional source and repository information in source citations](#show-additional-source-and-repository-information-in-source-citations)
+    *   [Show additional repository information in source citations](#show-additional-repository-information-in-source-citations)
     *   [Directly show media objects of source citations in individual facts](#directly-show-media-objects-of-source-citations-in-individual-facts)
     *   [Copy-Paste mechanism for source citations in the individual and family view](#copy-paste-mechanism-for-source-citations-in-the-individual-and-family-view)
     *   [Preferences](#preferences)
@@ -366,16 +366,16 @@ Within webtrees, the Repository Hierarchy module can provide links to the relate
 
 ![Screenshot](resources/img/screenshot_AtoM_link_in_webtrees.jpg)
 
-### Show additional source and repository information in source citations
+### Show additional repository information in source citations
 The Repository Hierarchy modules provides a feature to show extended information within source citations. If one of the following GEDCOM tags is available and contains content, it is shown in the user interface:
 + REPO (name of repository)
 + REPO:CALN (call number of the source in the repository)
-+ REFN (user reference numbers)
-+ NOTE (notes of the source)
 
 ![Screenshot](resources/img/screenshot_source_citation_in_webtrees.jpg)
 
-In order to activate this feature, the setting "Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations" needs to be selected in the control panel.
+In order to activate this feature, the setting "Show additional source facts (REPO, REPO:CALN) within source citations" needs to be selected in the control panel.
+
+Note: An additional setting exists to define whether repositories are automatically expanded in source citations.
 
 Note:Additionally, it is possible to show links to AtoM (as an external archive management system) within the source citations. The details are described in the related [chapter](#create-links-between-webtrees-and-an-external-archive-management-system).
 
@@ -417,7 +417,8 @@ The following preferences can be activated/deactivated by administrators in the 
 + Allow users to load stored delimiter expressions from administrator.
 
 #### Preferences for source citations
-+ Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source citations.
++ Show additional source facts (REPO, REPO:CALN) within source citations.
++ Automatically expand repositories in source citations. Applies only if "Show additional source facts" is activated.
 + Directly show media objects of sources in facts and not sub-ordinated within source citations.
 + Enable copy/paste mechanism for source citations in the individual and family view.
 
@@ -433,7 +434,7 @@ The following preferences can be activated/deactivated by administrators in the 
 + Allow users to load stored XML settings from administrator.
 
 #### Preferences for Meta Repositories
-+ Use Meta Repositories.
++ Use meta repositories.
 
 #### Preferences for linking to external archive management tools
 + Show link to AtoM records within source citations.

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2023-09-09 07:42+0200\n"
+"POT-Creation-Date: 2023-09-09 12:00+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -376,6 +376,10 @@ msgstr "EAD XML Einstellungen"
 msgid "The EAD XML settings have been changed"
 msgstr "Die EAD XML Einstellungen wurden gespeichert"
 
+#: resources/views/atom-links.phtml:31
+msgid "Link to archival description in AtoM"
+msgstr "Link zur archivalischen Beschreibung in AtoM"
+
 #: resources/views/category-html.phtml:24
 #: resources/views/category-html.phtml:52
 msgid "Call number"
@@ -623,12 +627,10 @@ msgid "Settings for source citations"
 msgstr "Einstellungen für Quellen-Zitate"
 
 #: resources/views/settings.phtml:103
-msgid ""
-"Show additional source facts (REPO, REPO:CALN, REFN, NOTE) within source "
-"citations."
+msgid "Show additional source facts (REPO, REPO:CALN) within source citations."
 msgstr ""
-"Zusätzliche Tatsachen  (REPO, REPO:CALN, REFN, NOTE) innerhalb von Quellen-"
-"Zitaten anzeigen."
+"Zusätzliche Tatsachen  (REPO, REPO:CALN) innerhalb von Quellen-Zitaten "
+"anzeigen."
 
 #: resources/views/settings.phtml:106
 msgid ""
@@ -757,10 +759,6 @@ msgstr ""
 #: resources/views/settings.phtml:193
 msgid "save"
 msgstr "Speichern"
-
-#: resources/views/source-facts-within-citation.phtml:76
-msgid "Link to archival description in AtoM"
-msgstr "Link zur archivalischen Beschreibung in AtoM"
 
 #~ msgid "Error during update of the module preferences"
 #~ msgstr "Fehler beim Aktualisieren der Modul-Einstellungen"
