@@ -10,13 +10,9 @@ use Fisharebest\Webtrees\Elements\XrefSource;
 use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\Registry;
-use Fisharebest\Webtrees\Services\IndividualFactsService;
-use Fisharebest\Webtrees\Services\LinkedRecordService;
 use Fisharebest\Webtrees\Services\ModuleService;
-use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
-use Illuminate\Support\Collection;
 
 /**
  * @var string $gedcom
@@ -25,88 +21,7 @@ use Illuminate\Support\Collection;
  */
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
-
-$linked_record_service = new LinkedRecordService();
-$individual_facts_service = new IndividualFactsService($linked_record_service, $module_service);
-
-
-//Check if individual or family view and wether editable
-//Decide whether to show copy source citation icon
-
-if ((Session::get('last_page_name') === "individual.php") && Session::has('last_page_parameter')){
-    $individual  = Registry::individualFactory()->make(Session::get('last_page_parameter'), $tree);
-    $showCopySourceCitationIcon = $individual->canEdit() && boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'));
-    $xref = $individual->xref();
-    $facts = $individual->facts();
-    $family_facts = $individual_facts_service->familyFacts($individual, new Collection);
-    $facts = $facts->merge($family_facts);
-    $xref_type = 'INDI';
-}
-elseif ((Session::get('last_page_name') === "family.php") && Session::has('last_page_parameter')){
-    $family  = Registry::familyFactory()->make(Session::get('last_page_parameter'), $tree);
-    $showCopySourceCitationIcon = $family->canEdit() && boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'));
-    $xref = $family->xref();
-    $facts = $family->facts();
-    $xref_type = 'FAM';
-}
-else {
-    $showCopySourceCitationIcon = false;
-    $facts = [];
-    $xref_type = '';
-}
-
-//Check that count of occurances in facts is only one
-//Also evaluate position of source citation within all citations in the fact
-
-$fact_id = '';
-$count_citations_in_different_facts = 0;
-$position = 0;
-$matches = [];
-
-foreach ($facts as $fact) {
-
-    $fact_tag = $fact->tag();
-
-    if (str_starts_with($parent, $fact->tag())) {
-
-        $fact_gedcom = $fact->gedcom();
-
-        if (str_contains($fact->gedcom(), $gedcom)) {
-            $related_fact = $fact;
-            $fact_id = $fact->id();
-            $count_citations_in_different_facts++;
-
-            preg_match_all('/\n(2 SOUR [^\n]+)/', $fact->gedcom(), $matches);
-        }    
-    }
-}
-
-$citation_position = 0;
-
-if (isset($matches[1])) {
-    $matched_citations =  $matches[1];
-    $number_of_citations = sizeof($matched_citations);
-
-    for ($i = 0; $i < sizeof($matched_citations); $i++) {
-        if (str_starts_with($gedcom, $matched_citations[$i])) {
-            $citation_position = $i + 1;
-        }
-    }
-}
-else{ 
-    $number_of_citations = 0;
-}
-
-//Decide whether to show icons to delete or move up/down citations
-$showDeleteSourceCitationIcon = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_DELETE_CITATIONS, '0')) 
-    && ($count_citations_in_different_facts === 1);
-
-$showMoveUpSourceCitationIcon = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0'))
-    && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position > 1);
-
-$showMoveDownSourceCitationIcon = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0')) 
-    && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position < $number_of_citations);
+$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName()); 
 
 $hierarchy = explode(':', $parent);
 
@@ -158,18 +73,12 @@ foreach ($keys as $key) {
             <?php $value = '<span class="field" dir="auto"><a href="' . e($source->url()) . '">' . $source->fullName() . '</a></span>' ?>
             <?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 
-            <?php //Additionally show icon to copy source citation?>
-            <?php if ($showCopySourceCitationIcon) : ?>
-                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'xref' => $source->xref(), 'gedcom' => $gedcom,]) ?>
-            <?php endif ?>
-            <?php if ($showDeleteSourceCitationIcon) : ?>
-                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-delete', ['tree' => $tree, 'xref' => $xref, 'fact_id' => $fact_id, 'xref_type' => $xref_type, 'gedcom' => $gedcom,]) ?>
-            <?php endif ?>
-            <?php if ($showMoveUpSourceCitationIcon) : ?>
-                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-move', ['tree' => $tree, 'xref' => $xref, 'fact_id' => $fact_id, 'xref_type' => $xref_type, 'gedcom' => $gedcom, 'old_position' => $citation_position, 'new_position' => $citation_position - 1,]) ?>
-            <?php endif ?>
-            <?php if ($showMoveDownSourceCitationIcon) : ?>
-                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-move', ['tree' => $tree, 'xref' => $xref, 'fact_id' => $fact_id, 'xref_type' => $xref_type, 'gedcom' => $gedcom, 'old_position' => $citation_position, 'new_position' => $citation_position + 1]) ?>
+            <?php //Additionally show icons to copy/delete/move source citation?>
+            <?php if (      boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))
+                        or  boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_DELETE_CITATIONS, '0'))
+                        or  boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0')) )  : ?>
+
+                <?= view(RepositoryHierarchy::viewsNamespace() . '::copy-delete-move-source-citations', ['tree' => $tree, 'parent' => $parent, 'gedcom' => $gedcom,]) ?>
             <?php endif ?>
         </div>
 
