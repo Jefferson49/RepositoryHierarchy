@@ -460,6 +460,9 @@ msgstr ""
 msgid "Settings for source citations"
 msgstr "Instellingen voor bronvermeldingen"
 
+msgid "Show additional source facts (REPO, REPO:CALN) within source citations."
+msgstr "Toon extra bronfeiten (REPO, REPO:CALN) binnen bronvermeldingen."
+
 msgid ""
 "Automatically expand repositories in source citations. Applies only if \"Show "
 "additional source facts\" is activated."
