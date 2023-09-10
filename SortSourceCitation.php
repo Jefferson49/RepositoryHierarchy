@@ -27,7 +27,6 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Registry;
-use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,7 +35,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function redirect;
 
 /**
- * Sort cite citations.
+ * Sort source citations
  */
 class SortSourceCitation implements RequestHandlerInterface
 {
@@ -47,16 +46,20 @@ class SortSourceCitation implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $tree         = Validator::attributes($request)->tree();
-        $xref         = Validator::attributes($request)->isXref()->string('xref');
-        $fact_id      = Validator::attributes($request)->string('fact_id');
-        $gedcom       = Validator::queryParams($request)->string('gedcom', '');
-        $old_position = Validator::queryParams($request)->integer('old_position', 1);
-        $new_position = Validator::queryParams($request)->integer('new_position', 1);
+        $tree              = Validator::attributes($request)->tree();
+        $xref              = Validator::attributes($request)->isXref()->string('xref');
+        $fact_id           = Validator::attributes($request)->string('fact_id');
+        $gedcom            = Validator::queryParams($request)->string('gedcom', '');
+        $matched_citations = Validator::queryParams($request)->array('matched_citations');
+        $old_position      = Validator::queryParams($request)->integer('old_position', 1);
+        $new_position      = Validator::queryParams($request)->integer('new_position', 1);
 
         $record = Registry::gedcomRecordFactory()->make($xref, $tree);
         $record = Auth::checkRecordAccess($record, true);
 
+
+
+        
         $url = Validator::parsedBody($request)->isLocalUrl()->string('url', $record->url());
 
         return redirect($url);

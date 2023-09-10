@@ -75,7 +75,8 @@ foreach ($facts as $fact) {
             $fact_id = $fact->id();
             $count_citations_in_different_facts++;
 
-            preg_match_all('/\n(2 SOUR [^\n]+)/', $fact->gedcom(), $matches);
+            //reg exp from: fact-sources.phtml
+            preg_match_all('/\n(2 SOUR\b.*(?:\n[^2].*)*)/', $fact->gedcom(), $matches, PREG_PATTERN_ORDER);
         }    
     }
 }
@@ -87,7 +88,8 @@ if (isset($matches[1])) {
     $number_of_citations = sizeof($matched_citations);
 
     for ($i = 0; $i < sizeof($matched_citations); $i++) {
-        if (str_starts_with($gedcom, $matched_citations[$i])) {
+        //if (str_starts_with($gedcom, $matched_citations[$i])) {
+        if ($gedcom === $matched_citations[$i]) {
             $citation_position = $i + 1;
         }
     }
@@ -143,39 +145,41 @@ foreach ($keys as $key) {
 
 <?php if ($showCopySourceCitationIcon) : ?>
     <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', [
-        'tree'         => $tree, 
-        'xref'         => $xref, 
-        'gedcom'       => $gedcom,
+        'tree'              => $tree, 
+        'xref'              => $xref, 
+        'gedcom'            => $gedcom,
         ]) ?>
 <?php endif ?>
 <?php if ($showDeleteSourceCitationIcon) : ?>
     <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-delete', [
-        'tree'         => $tree, 
-        'xref'         => $xref, 
-        'fact_id'      => $fact_id, 
-        'xref_type'    => $xref_type, 
-        'gedcom'       => $gedcom,
+        'tree'              => $tree, 
+        'xref'              => $xref, 
+        'fact_id'           => $fact_id, 
+        'xref_type'         => $xref_type, 
+        'gedcom'            => $gedcom,
         ]) ?>
 <?php endif ?>
 <?php if ($showMoveUpSourceCitationIcon) : ?>
     <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-move', [
-        'tree'         => $tree, 
-        'xref'         => $xref, 
-        'fact_id'      => $fact_id, 
-        'xref_type'    => $xref_type, 
-        'gedcom'       => $gedcom, 
-        'old_position' => $citation_position, 
-        'new_position' => $citation_position - 1,
+        'tree'              => $tree, 
+        'xref'              => $xref, 
+        'fact_id'           => $fact_id, 
+        'xref_type'         => $xref_type, 
+        'gedcom'            => $gedcom, 
+        'matched_citations' => $matched_citations,
+        'old_position'      => $citation_position, 
+        'new_position'      => $citation_position - 1,
         ]) ?>
 <?php endif ?>
 <?php if ($showMoveDownSourceCitationIcon) : ?>
     <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-move', [
-        'tree'         => $tree, 
-        'xref'         => $xref, 
-        'fact_id'      => $fact_id, 
-        'xref_type'    => $xref_type, 
-        'gedcom'       => $gedcom, 
-        'old_position' => $citation_position,
-        'new_position' => $citation_position + 1,
+        'tree'              => $tree, 
+        'xref'              => $xref, 
+        'fact_id'           => $fact_id, 
+        'xref_type'         => $xref_type, 
+        'gedcom'            => $gedcom, 
+        'matched_citations' => $matched_citations,
+        'old_position'      => $citation_position,
+        'new_position'      => $citation_position + 1,
         ]) ?>
 <?php endif ?>

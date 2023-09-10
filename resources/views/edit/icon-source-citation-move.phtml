@@ -12,6 +12,7 @@ use Fisharebest\Webtrees\Tree;
  * @var string  $xref
  * @var string  $fact_id
  * @var string  $gedcom
+ * @var array   $matched_citations
  * @var int     $old_position
  * @var int     $new_position
  */
@@ -20,12 +21,13 @@ use Fisharebest\Webtrees\Tree;
 
 <a class="btn btn-link btn-sm" href="#" data-wt-post-url="
     <?= e(route(SortSourceCitation::class, [
-        'tree'         => $tree->name(),
-        'xref'         => $xref,
-        'fact_id'      => $fact_id,
-        'gedcom'       => $gedcom,
-        'old_position' => $old_position,
-        'new_position' => $new_position,
+        'tree'              => $tree->name(),
+        'xref'              => $xref,
+        'fact_id'           => $fact_id,
+        'gedcom'            => $gedcom,
+        'matched_citations' => $matched_citations,       
+        'old_position'      => $old_position,
+        'new_position'      => $new_position,
     ])) ?>" title="<?= I18N::translate('Sort source citation - move up/down') ?>">
     
     <?php if ($new_position < $old_position) : ?>

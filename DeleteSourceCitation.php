@@ -38,7 +38,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function redirect;
 
 /**
- * Paste a cite citation.
+ * Delete a source citation.
  */
 class DeleteSourceCitation implements RequestHandlerInterface
 {
