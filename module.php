@@ -45,6 +45,7 @@ require __DIR__ . '/DownloadEADxmlService.php';
 require __DIR__ . '/DownloadFindingAidService.php';
 require __DIR__ . '/Functions.php';
 require __DIR__ . '/PasteSourceCitation.php';
+require __DIR__ . '/SortSourceCitation.php';
 require __DIR__ . '/RepositoryHierarchy.php';
 require __DIR__ . '/RepositoryHierarchyHelpTexts.php';
 require __DIR__ . '/vendor/matriphe/php-iso-639-master/src/ISO639.php';

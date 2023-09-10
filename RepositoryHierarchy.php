@@ -172,6 +172,8 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_ALLOW_NEW_SOURCE = 'allow_new_source';
     public const PREF_CITATION_GEDCOM = 'citation_gedcom';
     public const PREF_ENABLE_COPY_PASTE_CITATIONS ='enable_copy_paste_citations';
+    public const PREF_ENABLE_DELETE_CITATIONS ='enable_delete_citations';
+    public const PREF_ENABLE_SORT_CITATIONS ='enable_sort_citations';
 
     //Old prefences/settings not used any more, but needed for version updates
     public const OLD_PREF_FINDING_AID_TITLE = 'finding_aid_title_';
@@ -364,6 +366,16 @@ class RepositoryHierarchy extends AbstractModule implements
         //Register a route for the delete source citation action
         $router ->get(
             DeleteSourceCitation::class,
+            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+            '/'.self::DELETE_SOURCE_CITATION_IN_ROUTE.
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
+        )
+            ->allows(RequestMethodInterface::METHOD_POST);
+
+        //Register a route for the sort source citation action
+        $router ->get(
+            SortSourceCitation::class,
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::DELETE_SOURCE_CITATION_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
@@ -583,6 +595,8 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
                 self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	=> boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
                 self::PREF_ENABLE_COPY_PASTE_CITATIONS   	=> boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
+                self::PREF_ENABLE_DELETE_CITATIONS   	    => boolval($this->getPreference(self::PREF_ENABLE_DELETE_CITATIONS, '0')),
+                self::PREF_ENABLE_SORT_CITATIONS        	=> boolval($this->getPreference(self::PREF_ENABLE_SORT_CITATIONS, '0')),
                 self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE  => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
                 self::PREF_SHOW_FINDING_AID_ADDRESS         => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
                 self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
@@ -629,6 +643,8 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, isset($params[self::PREF_SHOW_MEDIA_AFTER_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, isset($params[self::PREF_ENABLE_COPY_PASTE_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_ENABLE_DELETE_CITATIONS, isset($params[self::PREF_ENABLE_DELETE_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_ENABLE_SORT_CITATIONS, isset($params[self::PREF_ENABLE_SORT_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, isset($params[self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, isset($params[self::PREF_SHOW_FINDING_AID_ADDRESS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS]) ? '1' : '0');

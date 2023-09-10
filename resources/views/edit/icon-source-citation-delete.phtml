@@ -11,6 +11,7 @@ use Fisharebest\Webtrees\Tree;
  * @var Tree    $tree
  * @var string  $xref
  * @var string  $fact_id
+ * @var string  $xref_type
  * @var string  $gedcom
  */
 
@@ -18,10 +19,11 @@ use Fisharebest\Webtrees\Tree;
 
 <a class="btn btn-link btn-sm" href="#" data-wt-confirm="<?= I18N::translate('Are you sure you want to delete the source citation?') ?>" data-wt-post-url="
     <?= e(route(DeleteSourceCitation::class, [
-        'tree'    => $tree->name(),
-        'xref'    => $xref,
-        'fact_id' => $fact_id,
-        'gedcom'  => $gedcom,
+        'tree'       => $tree->name(),
+        'xref'       => $xref,
+        'fact_id'    => $fact_id,
+        'xref_type'  => $xref_type,
+        'gedcom'     => $gedcom,
     ])) ?>" title="<?= I18N::translate('Delete source citation') ?>">
     
     <?= view('icons/delete') ?>
