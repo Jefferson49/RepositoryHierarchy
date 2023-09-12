@@ -88,9 +88,9 @@ if (isset($matches[1])) {
     $number_of_citations = sizeof($matched_citations);
 
     for ($i = 0; $i < sizeof($matched_citations); $i++) {
-        //if (str_starts_with($gedcom, $matched_citations[$i])) {
+
         if ($gedcom === $matched_citations[$i]) {
-            $citation_position = $i + 1;
+            $citation_position = $i;
         }
     }
 }
@@ -103,43 +103,10 @@ $showDeleteSourceCitationIcon = boolval($repository_hierarchy->getPreference(Rep
     && ($count_citations_in_different_facts === 1);
 
 $showMoveUpSourceCitationIcon = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0'))
-    && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position > 1);
+    && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position > 0);
 
 $showMoveDownSourceCitationIcon = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0')) 
-    && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position < $number_of_citations);
-
-$hierarchy = explode(':', $parent);
-
-// Merge CONT records onto their parent line.
-$gedcom = preg_replace('/\n\d CONT ?/', "\r", $gedcom);
-
-preg_match_all('/^(\d+) (\w+) ?(.*)/m', $gedcom, $matches);
-[, $levels, $tags, $values] = $matches;
-$levels   = array_map(static fn (string $x): int => (int) $x, $levels);
-$keys     = array_keys($levels);
-$elements = [];
-
-$private_level = PHP_INT_MAX;
-
-foreach ($keys as $key) {
-    $hierarchy[$levels[$key]] = $tags[$key];
-    $full_tag                 = implode(':', array_slice($hierarchy, 0, 1 + $levels[$key]));
-    $elements[$key]           = Registry::elementFactory()->make($full_tag);
-
-    if ($elements[$key] instanceof AbstractXrefElement && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[$key], $match) === 1) {
-        $record = Registry::gedcomRecordFactory()->make($match[1], $tree);
-
-        if ($record instanceof GedcomRecord && !$record->canShow()) {
-            $private_level = min($private_level, $levels[$key]);
-        }
-    }
-
-    if ($levels[$key] >= $private_level) {
-        $values[$key] = '';
-    } else {
-        $private_level = PHP_INT_MAX;
-    }
-}
+    && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position < $number_of_citations -1);
 
 ?>
 
@@ -165,7 +132,6 @@ foreach ($keys as $key) {
         'xref'              => $xref, 
         'fact_id'           => $fact_id, 
         'xref_type'         => $xref_type, 
-        'gedcom'            => $gedcom, 
         'matched_citations' => $matched_citations,
         'old_position'      => $citation_position, 
         'new_position'      => $citation_position - 1,
@@ -177,7 +143,6 @@ foreach ($keys as $key) {
         'xref'              => $xref, 
         'fact_id'           => $fact_id, 
         'xref_type'         => $xref_type, 
-        'gedcom'            => $gedcom, 
         'matched_citations' => $matched_citations,
         'old_position'      => $citation_position,
         'new_position'      => $citation_position + 1,
