@@ -26,6 +26,7 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 $hierarchy = explode(':', $parent);
 
 // Merge CONT records onto their parent line.
+$gedcom_with_cont = $gedcom;
 $gedcom = preg_replace('/\n\d CONT ?/', "\r", $gedcom);
 
 preg_match_all('/^(\d+) (\w+) ?(.*)/m', $gedcom, $matches);
@@ -78,7 +79,7 @@ foreach ($keys as $key) {
                         or  boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_DELETE_CITATIONS, '0'))
                         or  boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0')) )  : ?>
 
-                <?= view(RepositoryHierarchy::viewsNamespace() . '::copy-delete-move-source-citations', ['tree' => $tree, 'parent' => $parent, 'gedcom' => $gedcom,]) ?>
+                <?= view(RepositoryHierarchy::viewsNamespace() . '::copy-delete-move-source-citations', ['tree' => $tree, 'parent' => $parent, 'gedcom' => $gedcom_with_cont,]) ?>
             <?php endif ?>
         </div>
 
