@@ -23,6 +23,7 @@ use Fisharebest\Webtrees\Tree;
 
 $module_service = new ModuleService();
 $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$showSourceCitationIcon = false;
 
 //If copy source citation icon shall be shown, check if individual or family view and wether editable
 if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))) {
@@ -34,9 +35,6 @@ if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABL
     elseif ((Session::get('last_page_name') === "family.php") && Session::has('last_page_parameter')){
         $family  = Registry::familyFactory()->make(Session::get('last_page_parameter'), $tree);
         $showSourceCitationIcon = $family->canEdit();
-    }
-    else {
-        $showSourceCitationIcon = false;
     }
 } 
 
