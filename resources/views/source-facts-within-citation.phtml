@@ -61,6 +61,9 @@ $atom_repositories = explode(',', $repository_hierarchy->getPreference(Repositor
 				</div>
 			<?php endif ?>
 		<?php endif ?>
+	<?php elseif ($fact->tag() === 'SOUR:OBJE') : ?>
+		<?php $element = Registry::elementFactory()->make('SOUR:OBJE') ?>
+		<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
 	<?php endif ?>
 
 <?php endforeach ?>
