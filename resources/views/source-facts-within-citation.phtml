@@ -16,6 +16,7 @@ use Fisharebest\Webtrees\Source;
 $module_service = new ModuleService();
 $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, ''));
+$media_objects_labels_of_source = [];
 
 ?> 
  
@@ -63,7 +64,28 @@ $atom_repositories = explode(',', $repository_hierarchy->getPreference(Repositor
 		<?php endif ?>
 	<?php elseif ($fact->tag() === 'SOUR:OBJE') : ?>
 		<?php $element = Registry::elementFactory()->make('SOUR:OBJE') ?>
-		<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+		<?php array_push($media_objects_labels_of_source, $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree)) ?>
 	<?php endif ?>
-
 <?php endforeach ?>
+
+<?php //Show all media objects of the source ?>
+<?php if (sizeof($media_objects_labels_of_source) > 0) : ?>
+	<?php $id = Registry::idFactory()->id() ?>
+	<?php $expanded = false ?>
+	<div>
+		<button type="button" class="btn btn-text p-0" href="#<?= e($id) ?>" data-bs-toggle="collapse" aria-controls="<?= e($id) ?>" aria-expanded="<?= $expanded ? 'true' : 'false' ?>">
+			<?= view('icons/expand') ?>
+			<?= view('icons/collapse') ?>
+		</button>
+
+		<?php $label = '<span class="label">' .I18N::translate('Media objects of source') . '</span>' ?>
+		<?php $value = '' ?>
+		<?= I18N::translate('%1$s: %2$s', $label, $value) ?>
+	</div>
+	<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
+		<?php foreach ($media_objects_labels_of_source as $label) : ?>
+			<?php //Do not escape, because it is already escaped in the label method  ?>
+			<?= $label ?>
+		<?php endforeach ?>
+	</div>
+<?php endif ?>
