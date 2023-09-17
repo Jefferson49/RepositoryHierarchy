@@ -69,7 +69,8 @@ $media_objects_labels_of_source = [];
 <?php endforeach ?>
 
 <?php //Show all media objects of the source ?>
-<?php if (sizeof($media_objects_labels_of_source) > 0) : ?>
+<?php if (	boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, '0')) 
+			&& sizeof($media_objects_labels_of_source) > 0) : ?>
 	<?php $id = Registry::idFactory()->id() ?>
 	<?php $expanded = false ?>
 	<div>
