@@ -1,0 +1,29 @@
+<?php
+
+use Fisharebest\Webtrees\Media;
+use Fisharebest\Webtrees\Registry;
+
+?>
+
+<?php $media = Registry::mediaFactory()->make($xref, $tree) ?>
+<?php if ($media instanceof Media) : ?>
+    <div class="jc-simple-media-display">
+        <div class="wt-media-link row row-cols-auto p-1 gy-3">
+        <?php foreach ($media->mediaFiles() as $media_file) : ?>
+            <div class="wt-media-link-image col">
+                <?= $media_file->displayImage(100, 100, 'contain', []) ?>
+            </div>
+        <?php endforeach ?>
+        </div>
+        <div class="row wt-media-link-title px-1">
+            <a href="<?= e($media->url()) ?>"><?= $media->fullName() ?></a>
+        </div>
+        <?php if (preg_match_all('/\n(1 NOTE\b.*(?:\n[^1].*)*)/', $media->gedcom(), $matches, PREG_SET_ORDER) > 0) : ?>
+            <div class="wt-fact-notes mt-2">
+                <?php foreach ($matches as $match) : ?>
+                    <?= view('fact-gedcom-fields', ['gedcom' => $match[1], 'parent' => $media->tag(), 'tree' => $media->tree()]) ?>
+                <?php endforeach ?>
+            </div>
+        <?php endif ?>
+    </div>
+<?php endif ?>
