@@ -574,7 +574,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
         if($simple_media_display !== null) {
 
-            $message =  '<b>' . I18N::translate('Warning') . ':</b><br>' . 
+            $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' . 
                         I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This might lead to unintended behavior. If using the %s module, it is recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
                         '<b>' . $simple_media_display->title() . '</b>', $this->title(), $this->title(), $simple_media_display->title(), $this->title());
             FlashMessages::addMessage($message, 'warning');
