@@ -43,6 +43,8 @@ use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\GedcomRecord;
+use Fisharebest\Webtrees\Http\RequestHandlers\FamilyPage;
+use Fisharebest\Webtrees\Http\RequestHandlers\IndividualPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
@@ -59,6 +61,7 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\DataFixService;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
+use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
@@ -69,6 +72,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function route;
@@ -77,6 +81,7 @@ use function route;
  * Main class to create and view a Repository Hierarchy
  */
 class RepositoryHierarchy extends AbstractModule implements
+    MiddlewareInterface,
     ModuleConfigInterface,
     ModuleCustomInterface,
     ModuleDataFixInterface,
@@ -196,6 +201,12 @@ class RepositoryHierarchy extends AbstractModule implements
     public const CMD_LOAD_REPO = 'load_repository';
     public const CMD_DOWNLOAD = 'command_download';
     public const CMD_LOAD_ADMIN_XML_SETTINGS = 'load_admin_xml_settings';
+
+    //Constants for page names
+    public const LAST_PAGE_NAME = 'last_page_name';
+    public const LAST_PAGE_PARAMETER = 'last_page_parameter';
+    public const PAGE_NAME_INDIVIDUAL = 'individual.php';
+    public const PAGE_NAME_FAMILY = 'family.php';
 
     //Comands for repositories
     public const CMD_SET_AS_START_REPO = 'set as start repository';
@@ -1324,6 +1335,36 @@ class RepositoryHierarchy extends AbstractModule implements
         ];
 
         return $options + $admin_option;
+    }
+   
+    /**
+     * A middleware method to identify, whether an individual or Family page is shown
+     *
+     * @param ServerRequestInterface  $request
+     * @param RequestHandlerInterface $handler
+     *
+     * @return ResponseInterface
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $route = Validator::attributes($request)->route();
+
+        switch ($route->name) {
+
+            case IndividualPage::class:
+                $xref = Validator::attributes($request)->isXref()->string('xref');
+                Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
+                Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_INDIVIDUAL);
+                break;
+
+            case FamilyPage::class:
+                $xref = Validator::attributes($request)->isXref()->string('xref');
+                Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
+                Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_FAMILY);
+                break;
+            }
+
+        return $handler->handle($request);
     }
 
     /**
