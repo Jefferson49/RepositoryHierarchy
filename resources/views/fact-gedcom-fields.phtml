@@ -6,6 +6,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Elements\AbstractXrefElement;
+use Fisharebest\Webtrees\Elements\XrefMedia;
 use Fisharebest\Webtrees\Elements\XrefSource;
 use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\GedcomRecord;
@@ -102,10 +103,14 @@ foreach ($keys as $key) {
 
             <?php array_shift($keys) ?>
             <?php foreach ($keys as $key) : ?>
-                <?php if (	($values[$key] !== '') &&
-							!((get_class($elements[$key]) === 'Fisharebest\Webtrees\Elements\XrefMedia') && (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))))				
-				) : ?>
-                    <?= $elements[$key]->labelValue(strtr($values[$key], ["\r" => "\n"]), $tree) ?>
+				<?php if ($values[$key] !== '') : ?>
+                    <?php if ($elements[$key] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[$key], $match) === 1) : ?>
+                        <?php if(!boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) : ?>
+                            <?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $match[1], 'tree' => $tree]); ?>
+                        <?php endif ?> 
+                    <?php else : ?>
+                        <?= $elements[$key]->labelValue(strtr($values[$key], ["\r" => "\n"]), $tree) ?>
+                    <?php endif ?>                
                 <?php endif ?>
             <?php endforeach ?>
         </div>
@@ -114,13 +119,15 @@ foreach ($keys as $key) {
 		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) : ?>
 			<?php foreach ($keys as $key) : ?>
 				<?php if ($values[$key] !== '') : ?>
-					<?php if (get_class($elements[$key]) === 'Fisharebest\Webtrees\Elements\XrefMedia') : ?>
-						<?= $elements[$key]->labelValue(strtr($values[$key], ["\r" => "\n"]), $tree) ?>
-					<?php endif ?>
+                    <?php if ($elements[$key] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[$key], $match) === 1) : ?>
+                        <?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $match[1], 'tree' => $tree]); ?>
+                    <?php endif ?>
 				<?php endif ?>
 			<?php endforeach ?>	
 		<?php endif ?>	
 	<?php endif ?>
+<?php elseif ($elements[0] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[0], $match) === 1) : ?>
+    <?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $match[1], 'tree' => $tree]); ?>
 <?php else : ?>
     <?php foreach ($keys as $key) : ?>
         <?php if ($values[$key] !== '') : ?>
