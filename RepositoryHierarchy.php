@@ -59,6 +59,7 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\DataFixService;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
+use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
@@ -556,6 +557,17 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function getAdminAction(ServerRequestInterface $request): ResponseInterface
     {
+        $module_service = new ModuleService();
+        $simple_media_display = $module_service->findByName('_jc-simple-media-display_');
+
+        if($simple_media_display !== null) {
+
+            $message =  '<b>' . I18N::translate('Warning') . ':</b><br>' . 
+                        I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This might lead to unintended behavior. If using the %s module, it is recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
+                        '<b>' . $simple_media_display->title() . '</b>', $this->title(), $this->title(), $simple_media_display->title(), $this->title());
+            FlashMessages::addMessage($message, 'warning');
+        }
+
         $this->layout = 'layouts/administration';
 
         return $this->viewResponse(
