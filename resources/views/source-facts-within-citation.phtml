@@ -81,7 +81,7 @@ $media_objects_labels_of_source = [];
 
 		<?php $label = '<span class="label">' .I18N::translate('Media objects of source') . '</span>' ?>
 		<?php $value = '' ?>
-		<?= I18N::translate('%1$s: %2$s', $label, $value) ?>
+		<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 	</div>
 	<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
 		<?php foreach ($media_objects_labels_of_source as $label) : ?>
