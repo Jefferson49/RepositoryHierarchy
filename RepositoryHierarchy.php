@@ -209,6 +209,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const LAST_PAGE_PARAMETER = 'last_page_parameter';
     public const PAGE_NAME_INDIVIDUAL = 'individual.php';
     public const PAGE_NAME_FAMILY = 'family.php';
+    public const PAGE_NAME_OTHER = 'other';
 
     //Comands for repositories
     public const CMD_SET_AS_START_REPO = 'set as start repository';
@@ -1377,6 +1378,9 @@ class RepositoryHierarchy extends AbstractModule implements
                 Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
                 Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_FAMILY);
                 break;
+
+            default:
+                Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_OTHER);                
             }
 
         return $handler->handle($request);
