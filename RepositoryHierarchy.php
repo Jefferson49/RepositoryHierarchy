@@ -571,14 +571,18 @@ class RepositoryHierarchy extends AbstractModule implements
     public function getAdminAction(ServerRequestInterface $request): ResponseInterface
     {
         $module_service = new ModuleService();
-        $simple_media_display = $module_service->findByName('_jc-simple-media-display_');
 
-        if($simple_media_display !== null) {
+        foreach(['_jc-simple-media-display_', '_webtrees-simple-media-display_'] as $custom_module_name) {
 
-            $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' . 
-                        I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This might lead to unintended behavior. If using the %s module, it is recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
-                        '<b>' . $simple_media_display->title() . '</b>', $this->title(), $this->title(), $simple_media_display->title(), $this->title());
-            FlashMessages::addMessage($message, 'warning');
+            $custom_module = $module_service->findByName($custom_module_name);
+
+            if($custom_module !== null) {
+
+                $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' . 
+                            I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This might lead to unintended behavior. If using the %s module, it is recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
+                            '<b>' . $custom_module->title() . '</b>', $this->title(), $this->title(), $custom_module->title(), $this->title());
+                FlashMessages::addMessage($message, 'warning');
+            }
         }
 
         $this->layout = 'layouts/administration';
