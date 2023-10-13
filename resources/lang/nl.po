@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2023-10-08 16:03+0200\n"
+"POT-Creation-Date: 2023-10-13 22:04+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
 "Language-Team: \n"
@@ -60,13 +60,13 @@ msgstr "Archieftoegang als HTML"
 msgid "Finding aid as PDF"
 msgstr "Archieftoegang als PDF"
 
-#: RepositoryHierarchy.php:408 RepositoryHierarchy.php:953
+#: RepositoryHierarchy.php:409 RepositoryHierarchy.php:958
 #: RepositoryHierarchyHelpTexts.php:69 RepositoryHierarchyHelpTexts.php:79
 #: RepositoryHierarchyHelpTexts.php:89 RepositoryHierarchyHelpTexts.php:98
 msgid "Repository Hierarchy"
 msgstr "Opslagplaatshiërarchie"
 
-#: RepositoryHierarchy.php:421
+#: RepositoryHierarchy.php:422
 msgid ""
 "A hierarchical structured list of the sources of an archive based on the "
 "call numbers of the sources"
@@ -74,11 +74,11 @@ msgstr ""
 "Een hiërarchisch gestructureerde lijst van de bronnen van een archief op "
 "basis van de oproepnummers van de bronnen"
 
-#: RepositoryHierarchy.php:578
+#: RepositoryHierarchy.php:582
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
-"This might lead to unintended behavior. If using the %s module, it is "
+"This can lead to unintended behavior. If using the %s module, it is urgently "
 "recommended to deactivate the \"%s\" module, because the identical "
 "functionality is also integrated in the %s module."
 msgstr ""
@@ -87,12 +87,12 @@ msgstr ""
 "gebruikt, is het aanbevolen om de module \"%s\" te deactiveren omdat de "
 "identieke functionaliteit ook in de module %s is geïntegreerd."
 
-#: RepositoryHierarchy.php:681
+#: RepositoryHierarchy.php:686
 #, php-format
 msgid "The preferences for the module “%s” were updated."
 msgstr "De voorkeuren voor de module \"%s\" zijn bijgewerkt."
 
-#: RepositoryHierarchy.php:704
+#: RepositoryHierarchy.php:709
 #, php-format
 msgid ""
 "Error while trying to update the custom module \"%s\" to the new module "
@@ -101,7 +101,7 @@ msgstr ""
 "Fout tijdens het bijwerken van de aangepaste module \"%s\" naar de nieuwe "
 "moduleversie %s: "
 
-#: RepositoryHierarchy.php:709
+#: RepositoryHierarchy.php:714
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
@@ -110,14 +110,14 @@ msgstr ""
 "De voorkeuren voor de aangepaste module \"%s\" zijn bijgewerkt naar de "
 "nieuwe moduleversie %s."
 
-#: RepositoryHierarchy.php:807
+#: RepositoryHierarchy.php:812
 msgid ""
 "The Repository Hierarchy data fix cannot be used in the \"control panel\"."
 msgstr ""
 "De gegevenscorrectie voor de opslagplaatshiërarchie kan niet worden gebruikt "
 "in het \"controlepaneel\"."
 
-#: RepositoryHierarchy.php:808
+#: RepositoryHierarchy.php:813
 msgid ""
 "The data fix can be called from the user front end by clicking on the link "
 "to rename a call number category."
@@ -125,19 +125,19 @@ msgstr ""
 "De gegevenscorrectie kan worden opgeroepen vanuit de gebruikersinterface "
 "door te klikken op de link voor het hernoemen van een oproepnummercategorie."
 
-#: RepositoryHierarchy.php:813 RepositoryHierarchy.php:827
-#: RepositoryHierarchy.php:1466
+#: RepositoryHierarchy.php:818 RepositoryHierarchy.php:832
+#: RepositoryHierarchy.php:1474
 msgid "Error in custom module"
 msgstr "Fout in aangepaste module"
 
-#: RepositoryHierarchy.php:821
+#: RepositoryHierarchy.php:826
 msgid ""
 "Currently, you do not have the user rights to change call number categories."
 msgstr ""
 "Momenteel heeft u niet de gebruikersrechten om oproepnummercategorieën te "
 "wijzigen."
 
-#: RepositoryHierarchy.php:822
+#: RepositoryHierarchy.php:827
 msgid ""
 "In order to change call number categories, you need to have a \"Manager\" "
 "role for the corresponding tree."
@@ -145,55 +145,55 @@ msgstr ""
 "Om oproepnummercategorieën te kunnen wijzigen, moet u een \"Manager\"-rol "
 "hebben voor de betreffende stamboom."
 
-#: RepositoryHierarchy.php:955
+#: RepositoryHierarchy.php:960
 #, php-format
 msgid "Repository Hierarchy of: %s"
 msgstr "Opslagplaatshiërarchie van: %s"
 
-#: RepositoryHierarchy.php:1209
+#: RepositoryHierarchy.php:1214
 msgid "Regular expression not accepted"
 msgstr "Reguliere expressie niet geaccepteerd"
 
-#: RepositoryHierarchy.php:1218
+#: RepositoryHierarchy.php:1223
 msgid "No valid delimiter or valid regular expression for delimiter found."
 msgstr ""
 "Geen geldig scheidingsteken of geldige reguliere expressie voor "
 "scheidingsteken gevonden."
 
-#: RepositoryHierarchy.php:1339
+#: RepositoryHierarchy.php:1344
 msgid "load delimiter expression from administrator"
 msgstr "scheidingstekenexpressie van beheerder laden"
 
-#: RepositoryHierarchy.php:1345
+#: RepositoryHierarchy.php:1350
 msgid "none"
 msgstr "geen"
 
-#: RepositoryHierarchy.php:1346
+#: RepositoryHierarchy.php:1351
 msgid "save repository"
 msgstr "opslagplaats opslaan"
 
-#: RepositoryHierarchy.php:1347
+#: RepositoryHierarchy.php:1352
 msgid "load repository"
 msgstr "opslagplaats laden"
 
-#: RepositoryHierarchy.php:1348
+#: RepositoryHierarchy.php:1353
 msgid "save delimiter expression"
 msgstr "scheidingstekenexpressie opslaan"
 
-#: RepositoryHierarchy.php:1349
+#: RepositoryHierarchy.php:1354
 msgid "load delimiter expression"
 msgstr "scheidingstekenexpressie laden"
 
-#: RepositoryHierarchy.php:1444
+#: RepositoryHierarchy.php:1452
 msgid "Could not load repository. No repository stored."
 msgstr "Kan de opslagplaats niet laden. Geen opslagplaats opgeslagen."
 
-#: RepositoryHierarchy.php:1467
+#: RepositoryHierarchy.php:1475
 #, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "De stamboom \"%s\" bevat geen opslagplaats"
 
-#: RepositoryHierarchy.php:1506
+#: RepositoryHierarchy.php:1514
 msgid ""
 "Could not load delimiter expression from administrator. No administrator "
 "delimiter expression stored."
@@ -201,17 +201,17 @@ msgstr ""
 "Kan scheidingstekenexpressie van beheerder niet laden. Geen "
 "scheidingstekenexpressie van de beheerder opgeslagen."
 
-#: RepositoryHierarchy.php:1515
+#: RepositoryHierarchy.php:1523
 msgid "Could not load delimiter expression. No delimiter expression stored."
 msgstr ""
 "Kan scheidingstekenexpressie niet laden. Geen scheidingstekenexpressie "
 "opgeslagen."
 
-#: RepositoryHierarchy.php:1538
+#: RepositoryHierarchy.php:1546
 msgid "Error in delimiter expression"
 msgstr "Fout in scheidingstekenexpressie"
 
-#: RepositoryHierarchy.php:1545 RepositoryHierarchyHelpTexts.php:106
+#: RepositoryHierarchy.php:1553 RepositoryHierarchyHelpTexts.php:106
 msgid ""
 "Please note that the following characters need to be escaped if not used as "
 "meta characters in a regular expression"
@@ -220,26 +220,26 @@ msgstr ""
 "escape-teken als ze niet worden gebruikt als metatekens in een reguliere "
 "expressie"
 
-#: RepositoryHierarchy.php:1548 RepositoryHierarchyHelpTexts.php:107
+#: RepositoryHierarchy.php:1556 RepositoryHierarchyHelpTexts.php:107
 msgid "For example, use"
 msgstr "Gebruik bijvoorbeeld"
 
-#: RepositoryHierarchy.php:1548 RepositoryHierarchy.php:1549
+#: RepositoryHierarchy.php:1556 RepositoryHierarchy.php:1557
 #: RepositoryHierarchyHelpTexts.php:107
 msgid "instead of"
 msgstr "in plaats van"
 
-#: RepositoryHierarchy.php:1548 RepositoryHierarchyHelpTexts.php:60
+#: RepositoryHierarchy.php:1556 RepositoryHierarchyHelpTexts.php:60
 #: RepositoryHierarchyHelpTexts.php:61 RepositoryHierarchyHelpTexts.php:62
 #: RepositoryHierarchyHelpTexts.php:107
 msgid "or"
 msgstr "of"
 
-#: RepositoryHierarchy.php:1549
+#: RepositoryHierarchy.php:1557
 msgid "if the characters shall be used as plain text."
 msgstr "als de tekens als tekst zonder opmaak moeten worden gebruikt."
 
-#: RepositoryHierarchy.php:1619
+#: RepositoryHierarchy.php:1627
 msgid ""
 "XML export settings not found. Please open EAD XML settings and provide "
 "settings."
@@ -247,7 +247,7 @@ msgstr ""
 "XML-exportinstellingen niet gevonden. Open EAD XML-instellingen en geef de "
 "instellingen op."
 
-#: RepositoryHierarchy.php:1638 RepositoryHierarchy.php:1647
+#: RepositoryHierarchy.php:1646 RepositoryHierarchy.php:1655
 #: XmlExportSettingsModal.php:181 XmlExportSettingsModal.php:184
 #: resources/views/finding-aid.phtml:26 resources/views/finding-aid.phtml:69
 msgid "Finding aid"
@@ -780,7 +780,7 @@ msgstr ""
 msgid "save"
 msgstr "opslaan"
 
-#: resources/views/source-facts-within-citation.phtml:82
+#: resources/views/source-facts-within-citation.phtml:85
 msgid "Media objects of source"
 msgstr "Mediaobjecten van bron"
 
