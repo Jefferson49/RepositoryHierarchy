@@ -579,9 +579,9 @@ class RepositoryHierarchy extends AbstractModule implements
             if($custom_module !== null) {
 
                 $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' . 
-                            I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This might lead to unintended behavior. If using the %s module, it is recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
+                            I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This can lead to unintended behavior. If using the %s module, it is urgently recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
                             '<b>' . $custom_module->title() . '</b>', $this->title(), $this->title(), $custom_module->title(), $this->title());
-                FlashMessages::addMessage($message, 'warning');
+                FlashMessages::addMessage($message, 'danger');
             }
         }
 
