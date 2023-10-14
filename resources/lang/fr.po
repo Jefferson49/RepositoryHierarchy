@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Jefferson49/RepositoryHierarchy\n"
-"POT-Creation-Date: 2023-10-13 22:07+0200\n"
-"PO-Revision-Date: 2023-10-13 22:09+0200\n"
+"POT-Creation-Date: 2023-10-14 15:55+0200\n"
+"PO-Revision-Date: 2023-10-14 15:55+0200\n"
 "Last-Translator: Jonathan Jaubart <dev@jaubart.com>\n"
 "Language-Team: Jonathan Jaubart <dev@jaubart.com>\n"
 "Language: fr\n"
@@ -14,21 +14,18 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: translate:1;translateContext:1c,2;plural:1,2\n"
+"X-Poedit-Flags-xgettext: --no-location\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: CallNumberCategory.php:184
 msgid "Sources without call number"
 msgstr "Sources sans cote"
 
-#: CallNumberCategory.php:186
 msgid "Default call number category"
 msgstr "Série par défaut"
 
-#: CopySourceCitation.php:56
 msgid "The source citation was copied to an internal clipboard."
 msgstr "La citation source a été copiée dans un presse-papiers interne."
 
-#: CopySourceCitation.php:57
 msgid ""
 "The source citation can be added to other facts/events by clicking on the "
 "source icon in the edit area of the fact/event."
@@ -36,7 +33,6 @@ msgstr ""
 "La citation source peut être ajoutée à d'autres faits/événements en cliquant "
 "sur l'icône source dans la zone d'édition du fait/événement."
 
-#: CreateSourceModal.php:60
 msgid ""
 "Currently, you do not have the user rights to create new sources. In order "
 "to create new sources, you need to be logged in as a user."
@@ -45,36 +41,27 @@ msgstr ""
 "connecter avec un utilisateur ayant les droits nécessaires pour créer de "
 "nouvelles sources."
 
-#: CreateSourceModal.php:66
 msgid "Create new sources"
 msgstr "Créer de nouvelles sources"
 
-#: DownloadService.php:64
 msgid "EAD XML"
 msgstr "XML EAD"
 
-#: DownloadService.php:71
 msgid "Finding aid as HTML"
 msgstr "Instrument de recher­che, au format HTML"
 
-#: DownloadService.php:72
 msgid "Finding aid as PDF"
 msgstr "Instrument de recher­che, au format PDF"
 
-#: RepositoryHierarchy.php:409 RepositoryHierarchy.php:958
-#: RepositoryHierarchyHelpTexts.php:69 RepositoryHierarchyHelpTexts.php:79
-#: RepositoryHierarchyHelpTexts.php:89 RepositoryHierarchyHelpTexts.php:98
 msgid "Repository Hierarchy"
 msgstr "État des fonds des dêpôts d'archives"
 
-#: RepositoryHierarchy.php:422
 msgid ""
 "A hierarchical structured list of the sources of an archive based on the "
 "call numbers of the sources"
 msgstr ""
 "Un état des fonds des sources d'un dépôt d'archives, basé sur leur cote"
 
-#: RepositoryHierarchy.php:582
 #, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. "
@@ -87,12 +74,10 @@ msgstr ""
 "recommandé de désactiver de toute urgence le module « %s », car la "
 "fonctionnalité identique est également intégrée dans le module %s."
 
-#: RepositoryHierarchy.php:686
 #, php-format
 msgid "The preferences for the module “%s” were updated."
 msgstr "Les préférences du module « %s » ont mises à jour."
 
-#: RepositoryHierarchy.php:709
 #, php-format
 msgid ""
 "Error while trying to update the custom module \"%s\" to the new module "
@@ -101,7 +86,6 @@ msgstr ""
 "Erreur lors de la tentative de mise à jour du module « %s » vers la nouvelle "
 "version du module %s :"
 
-#: RepositoryHierarchy.php:714
 #, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the "
@@ -110,14 +94,12 @@ msgstr ""
 "Les préférences du module « %s » ont été mises à jour avec succès vers la "
 "nouvelle version du module %s."
 
-#: RepositoryHierarchy.php:812
 msgid ""
 "The Repository Hierarchy data fix cannot be used in the \"control panel\"."
 msgstr ""
 "Le correcteur de données « État des fonds » ne peut pas être utilisé dans le "
 "Panneau de contrôle."
 
-#: RepositoryHierarchy.php:813
 msgid ""
 "The data fix can be called from the user front end by clicking on the link "
 "to rename a call number category."
@@ -125,70 +107,54 @@ msgstr ""
 "Le correcteur de données peut être utilisé depuis l'interface utilisateur en "
 "cliquant sur le lien pour renommer la série."
 
-#: RepositoryHierarchy.php:818 RepositoryHierarchy.php:832
-#: RepositoryHierarchy.php:1474
 msgid "Error in custom module"
 msgstr "Erreur dans le module"
 
-#: RepositoryHierarchy.php:826
 msgid ""
 "Currently, you do not have the user rights to change call number categories."
 msgstr "Vous n'avez pas la permission de modifier les séries."
 
-#: RepositoryHierarchy.php:827
 msgid ""
 "In order to change call number categories, you need to have a \"Manager\" "
 "role for the corresponding tree."
 msgstr "Seul les gestionnaires d'un arbre peuvent modifier les series."
 
-#: RepositoryHierarchy.php:960
 #, php-format
 msgid "Repository Hierarchy of: %s"
 msgstr "État des fonds pour : %s"
 
-#: RepositoryHierarchy.php:1214
 msgid "Regular expression not accepted"
 msgstr "L'expression régulière n'est pas valide"
 
-#: RepositoryHierarchy.php:1223
 msgid "No valid delimiter or valid regular expression for delimiter found."
 msgstr "Aucun délimiteur ou expression régulière valide n'a pu être trouvé."
 
-#: RepositoryHierarchy.php:1344
 msgid "load delimiter expression from administrator"
 msgstr "charger l'expression de délimitation de l'administrateur"
 
-#: RepositoryHierarchy.php:1350
 msgid "none"
 msgstr "aucun"
 
-#: RepositoryHierarchy.php:1351
 msgid "save repository"
 msgstr "enregistrer le dépôt d'archives"
 
-#: RepositoryHierarchy.php:1352
 msgid "load repository"
 msgstr "charger le dépôt d'archives"
 
-#: RepositoryHierarchy.php:1353
 msgid "save delimiter expression"
 msgstr "enregistrer l'expression de délimitation"
 
-#: RepositoryHierarchy.php:1354
 msgid "load delimiter expression"
 msgstr "charger l'expression de délimitation"
 
-#: RepositoryHierarchy.php:1452
 msgid "Could not load repository. No repository stored."
 msgstr ""
 "Le dépôt d'archives n'a pu être chargé. Aucun dépôt d'archives enregistré."
 
-#: RepositoryHierarchy.php:1475
 #, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "L'arbre « %s » ne contient aucun dépôt d'archives"
 
-#: RepositoryHierarchy.php:1514
 msgid ""
 "Could not load delimiter expression from administrator. No administrator "
 "delimiter expression stored."
@@ -196,17 +162,14 @@ msgstr ""
 "L'expression de délimitation de l'administrateur n'a pu être chargée. Aucune "
 "expression de délimitation enregistrée pour l'administrateur."
 
-#: RepositoryHierarchy.php:1523
 msgid "Could not load delimiter expression. No delimiter expression stored."
 msgstr ""
 "L'expression de délimitation n'a pu être chargée. Aucune expression de "
 "délimitation enregistrée."
 
-#: RepositoryHierarchy.php:1546
 msgid "Error in delimiter expression"
 msgstr "Erreur dans l'expression de délimitation"
 
-#: RepositoryHierarchy.php:1553 RepositoryHierarchyHelpTexts.php:106
 msgid ""
 "Please note that the following characters need to be escaped if not used as "
 "meta characters in a regular expression"
@@ -214,26 +177,18 @@ msgstr ""
 "Veuillez noter que les caractères suivants doivent être échappés s'ils ne "
 "sont pas utilisés comme méta-caractère dans l'expression régulière"
 
-#: RepositoryHierarchy.php:1556 RepositoryHierarchyHelpTexts.php:107
 msgid "For example, use"
 msgstr "Par exemple, utilisez"
 
-#: RepositoryHierarchy.php:1556 RepositoryHierarchy.php:1557
-#: RepositoryHierarchyHelpTexts.php:107
 msgid "instead of"
 msgstr "au lieu de"
 
-#: RepositoryHierarchy.php:1556 RepositoryHierarchyHelpTexts.php:60
-#: RepositoryHierarchyHelpTexts.php:61 RepositoryHierarchyHelpTexts.php:62
-#: RepositoryHierarchyHelpTexts.php:107
 msgid "or"
 msgstr "ou"
 
-#: RepositoryHierarchy.php:1557
 msgid "if the characters shall be used as plain text."
 msgstr "si les caractères doivent être affichés tels quels."
 
-#: RepositoryHierarchy.php:1627
 msgid ""
 "XML export settings not found. Please open EAD XML settings and provide "
 "settings."
@@ -241,17 +196,12 @@ msgstr ""
 "Les paramètres pour l'export XML n'ont pas été trouvés. Veuillez renseigner "
 "les paramètres pour l'export XML EAD dans les préférences."
 
-#: RepositoryHierarchy.php:1646 RepositoryHierarchy.php:1655
-#: XmlExportSettingsModal.php:181 XmlExportSettingsModal.php:184
-#: resources/views/finding-aid.phtml:26 resources/views/finding-aid.phtml:69
 msgid "Finding aid"
 msgstr "Instrument de recherche"
 
-#: RepositoryHierarchyHelpTexts.php:57
 msgid "How to use delimiter expressions?"
 msgstr "Comment utiliser les expressions de délimitation ?"
 
-#: RepositoryHierarchyHelpTexts.php:59
 msgid ""
 "A delimiter is a sequence of one or more characters for specifying the "
 "boundary between separate, independent regions in a text. Use delimiters to "
@@ -263,221 +213,152 @@ msgstr ""
 "pour extraire les séries à partir de la cote. Les séries sont utilisées pour "
 "construire une hiérarchie des cotes."
 
-#: RepositoryHierarchyHelpTexts.php:60
 msgid "Use a single delimiter, e.g."
 msgstr "Utiliser un délimiteur unique, par exemple"
 
-#: RepositoryHierarchyHelpTexts.php:61
 msgid "Use a set of delimiters separated by"
 msgstr "Utiliser un ensemble de délimiteurs, séparés par"
 
-#: RepositoryHierarchyHelpTexts.php:61 RepositoryHierarchyHelpTexts.php:63
 msgid "e.g."
 msgstr "par exemple"
 
-#: RepositoryHierarchyHelpTexts.php:62
 msgid ""
 "Use a regular expressions, which contain the delimiter in brackets, e.g."
 msgstr ""
 "Utiliser une expression régulière, contenant le délimiteur entre "
 "parenthèses, par exemple"
 
-#: RepositoryHierarchyHelpTexts.php:62 RepositoryHierarchyHelpTexts.php:63
-#: RepositoryHierarchyHelpTexts.php:66 RepositoryHierarchyHelpTexts.php:67
-#: RepositoryHierarchyHelpTexts.php:70 RepositoryHierarchyHelpTexts.php:76
-#: RepositoryHierarchyHelpTexts.php:77 RepositoryHierarchyHelpTexts.php:80
-#: RepositoryHierarchyHelpTexts.php:95 RepositoryHierarchyHelpTexts.php:96
-#: RepositoryHierarchyHelpTexts.php:97 RepositoryHierarchyHelpTexts.php:99
-#: RepositoryHierarchyHelpTexts.php:102 resources/views/category-html.phtml:25
 msgid "Fonds"
 msgstr "Fonds"
 
-#: RepositoryHierarchyHelpTexts.php:63
 msgid "Use a set of regular expressions separated by"
 msgstr "Utiliser un ensemble d'expressions régulières, séparées par"
 
-#: RepositoryHierarchyHelpTexts.php:63 RepositoryHierarchyHelpTexts.php:66
-#: RepositoryHierarchyHelpTexts.php:67 RepositoryHierarchyHelpTexts.php:71
-#: RepositoryHierarchyHelpTexts.php:76 RepositoryHierarchyHelpTexts.php:77
-#: RepositoryHierarchyHelpTexts.php:81
 msgid "Series"
 msgstr "Série"
 
-#: RepositoryHierarchyHelpTexts.php:64 RepositoryHierarchyHelpTexts.php:74
-#: RepositoryHierarchyHelpTexts.php:84 RepositoryHierarchyHelpTexts.php:93
 msgid "Example"
 msgstr "Exemple"
 
-#: RepositoryHierarchyHelpTexts.php:65 RepositoryHierarchyHelpTexts.php:75
-#: RepositoryHierarchyHelpTexts.php:85 RepositoryHierarchyHelpTexts.php:94
 msgid "Call numbers"
 msgstr "Cotes"
 
-#: RepositoryHierarchyHelpTexts.php:68 RepositoryHierarchyHelpTexts.php:78
-#: RepositoryHierarchyHelpTexts.php:88
 msgid "Delimiter expression"
 msgstr "Expression de délimitation"
 
-#: RepositoryHierarchyHelpTexts.php:86 RepositoryHierarchyHelpTexts.php:87
 msgid "Film Number"
 msgstr "Microfilm nº"
 
-#: RepositoryHierarchyHelpTexts.php:88 RepositoryHierarchyHelpTexts.php:90
 msgid "Film"
 msgstr "Microfilm"
 
-#: RepositoryHierarchyHelpTexts.php:88 RepositoryHierarchyHelpTexts.php:91
-#: RepositoryHierarchyHelpTexts.php:92 RepositoryHierarchyHelpTexts.php:97
-#: RepositoryHierarchyHelpTexts.php:101 RepositoryHierarchyHelpTexts.php:104
 msgid "Number"
 msgstr "nº"
 
-#: RepositoryHierarchyHelpTexts.php:95
 msgid "Biography Number"
 msgstr "Biographie nº"
 
-#: RepositoryHierarchyHelpTexts.php:96
 msgid "Photo Number"
 msgstr "Photographie nº"
 
-#: RepositoryHierarchyHelpTexts.php:97
 msgid "Delimiter expression:"
 msgstr "Expressions de délimitation :"
 
-#: RepositoryHierarchyHelpTexts.php:100
 msgid "Biography"
 msgstr "Biographie"
 
-#: RepositoryHierarchyHelpTexts.php:103
 msgid "Photo"
 msgstr "Photographie"
 
-#: RepositoryHierarchyHelpTexts.php:105
 msgid "Important Note"
 msgstr "Note importante"
 
-#: RepositoryHierarchyHelpTexts.php:107
 msgid "if they should be recognized as plain characters."
 msgstr "s'ils doivent être affichés tels quels."
 
-#: RepositoryHierarchyHelpTexts.php:108
 msgid "Detailed description"
 msgstr "Description détaillée"
 
-#: RepositoryHierarchyHelpTexts.php:110
 msgid "Information about regular expressions"
 msgstr "Informations sur les expressions régulières"
 
-#: RepositoryHierarchyHelpTexts.php:120 resources/views/page.phtml:61
 msgid "Help"
 msgstr "Aide"
 
-#: RepositoryHierarchyHelpTexts.php:121
 msgid "The help text has not yet been written for this item."
 msgstr "L'aide n'a pas encore été écrite sur ce sujet."
 
-#: XmlExportSettingsAction.php:107 resources/views/page.phtml:116
 msgid "EAD XML settings"
 msgstr "Paramètres d'export XML EAD"
 
-#: XmlExportSettingsAction.php:108
 msgid "The EAD XML settings have been changed"
 msgstr "Les paramètres d'export XML EAD ont été modifié"
 
-#: resources/views/atom-links.phtml:31
 msgid "Link to archival description in AtoM"
 msgstr "Lien vers la description des archives dans AtoM"
 
-#: resources/views/category-html.phtml:24
-#: resources/views/category-html.phtml:52
 msgid "Call number"
 msgstr "Cote"
 
-#: resources/views/category-html.phtml:55
 msgid "Gedcom-ID"
 msgstr "Identifiant Gedcom"
 
-#: resources/views/category-html.phtml:71 resources/views/page.phtml:152
 msgid "Author"
 msgstr "Auteur"
 
-#: resources/views/edit/icon-source-citation-copy.phtml:22
-#: resources/views/edit/icon-source-citation-copy.phtml:25
 msgid "Copy source citation to clipboard"
 msgstr "Copier la citation source dans le presse-papiers"
 
-#: resources/views/edit/icon-source-citation-paste.phtml:21
-#: resources/views/edit/icon-source-citation-paste.phtml:24
 msgid "Paste source citation from clipboard"
 msgstr "Coller la citation de la source à partir du presse-papiers"
 
-#: resources/views/finding-aid.phtml:70
 msgid "Generated on"
 msgstr "Généré le"
 
-#: resources/views/finding-aid.phtml:73
 msgid "Language of description"
 msgstr "Langue de description"
 
-#: resources/views/finding-aid.phtml:90
 msgid "Table of Contents - Archival Arrangement"
 msgstr "Table des matières - Cadre de classement"
 
-#: resources/views/finding-aid.phtml:100
 msgid "List of Sources"
 msgstr "Liste des sources"
 
-#: resources/views/modals/create-source.phtml:22
 msgid "Create a source"
 msgstr "Créer une source"
 
-#: resources/views/modals/source-fields.phtml:57
 msgid "new"
 msgstr "nouveau"
 
-#: resources/views/modals/xml-export-fields.phtml:22
-#: resources/views/modals/xml-export-fields.phtml:73
 msgid "Finding aid title"
 msgstr "Titre de l'instrument de recherche"
 
-#: resources/views/modals/xml-export-fields.phtml:30
-#: resources/views/modals/xml-export-fields.phtml:77
 msgid "Country code"
 msgstr "Code pays"
 
-#: resources/views/modals/xml-export-fields.phtml:38
-#: resources/views/modals/xml-export-fields.phtml:81
 msgid "Main agency code"
 msgstr "Identifiant international normalisé"
 
-#: resources/views/modals/xml-export-fields.phtml:46
-#: resources/views/modals/xml-export-fields.phtml:85
 msgid "Finding aid identifier"
 msgstr "Identifiant de l'instrument de recherche"
 
-#: resources/views/modals/xml-export-fields.phtml:54
 msgid "URL of the online finding aid"
 msgstr "Lien de l'instrument de recherche en ligne"
 
-#: resources/views/modals/xml-export-fields.phtml:62
 msgid "Publisher"
 msgstr "Éditeur"
 
-#: resources/views/modals/xml-export-fields.phtml:70
 msgid "Explanations"
 msgstr "Explications"
 
-#: resources/views/modals/xml-export-fields.phtml:74
 msgid "Title proper of the finding aid."
 msgstr "Titre de l'instrument de recherche."
 
-#: resources/views/modals/xml-export-fields.phtml:78
 msgid ""
 "Country name encoded according to ISO 3166-1, e.g. \"FR\" for \"France\"."
 msgstr ""
 "Code pays selon la norme ISO 3166-1, par exemple « FR » pour « France »."
 
-#: resources/views/modals/xml-export-fields.phtml:82
 msgid ""
 "Unique code identifying the archival institution maintaining the described "
 "collection; encoded according to ISO 15511 (ISIL). The main agency code is "
@@ -490,109 +371,84 @@ msgstr ""
 "Alternativement, une valeur constituée du code pays suivi de « -XXXXX » peut "
 "être utilisé, par exemple « FR-XXXXX »"
 
-#: resources/views/modals/xml-export-fields.phtml:86
 msgid "Unique identifyer for the finding aid document."
 msgstr "Identifiant unique pour l'instrument de recherche."
 
-#: resources/views/modals/xml-export-fields.phtml:89
 msgid "URL of the online finding aid (optional)"
 msgstr "Lien de l'instrument de recherche en ligne (optionnel)"
 
-#: resources/views/modals/xml-export-fields.phtml:90
 msgid "An URL, where the finding aid can be found oline."
 msgstr "Un lien où l'instrument de recherche peut être trouvé en ligne."
 
-#: resources/views/modals/xml-export-fields.phtml:93
 msgid "Publisher (optional)"
 msgstr "Éditeur (optionnel)"
 
-#: resources/views/modals/xml-export-fields.phtml:94
 msgid "Name of the editing institution or the publishing company."
 msgstr "Nom de la maison d'édition."
 
-#: resources/views/modals/xml-export-settings.phtml:22
 msgid "EAD XML export settings"
 msgstr "Paramètres d'export XML EAD"
 
-#: resources/views/modals/xml-export-settings.phtml:34
 msgid "Load settings from administrator"
 msgstr "Charger les paramètres de l'administrateur"
 
-#: resources/views/options.phtml:53 resources/views/options.phtml:83
 msgid "Search call number category"
 msgstr "Rechercher la série"
 
-#: resources/views/options.phtml:73
 msgid "Category full name"
 msgstr "Nom complet de la série"
 
-#: resources/views/options.phtml:93
 msgid "Replace by"
 msgstr "Remplacer par"
 
-#: resources/views/page.phtml:54
 msgid "Delimiter Expression for Call Numbers"
 msgstr "Expression de délimitation pour les séries"
 
-#: resources/views/page.phtml:72
 msgid "View and load/save options"
 msgstr "Afficher et charger/enregistrer les options"
 
-#: resources/views/page.phtml:75
 msgid "view"
 msgstr "afficher"
 
-#: resources/views/page.phtml:149
 msgid "Call Number Category"
 msgstr "Série"
 
-#: resources/views/page.phtml:150
 msgid "Rename"
 msgstr "Renommer"
 
-#: resources/views/page.phtml:151
 msgid "Add new source"
 msgstr "Ajouter une nouvelle source"
 
-#: resources/views/settings.phtml:57
 msgid "Settings for Repository Hierarchy list"
 msgstr "Paramètres pour la liste des états des fonds"
 
-#: resources/views/settings.phtml:59
 msgid "Show label before call number category."
 msgstr "Afficher le libellé avant la série."
 
-#: resources/views/settings.phtml:62 resources/views/settings.phtml:122
 msgid "Show titles of call number categories (if available from .po file)."
 msgstr "Afficher la traduction des séries (si disponible dans le fichier .po)"
 
-#: resources/views/settings.phtml:65
 msgid "Show help icon after label for delimiter expression."
 msgstr "Afficher l'icône d'aide après l'expression de délimitation."
 
-#: resources/views/settings.phtml:68
 msgid "Show help link after label for delimiter expression."
 msgstr "Afficher le lien pour l'aide après l'expression de délimitation."
 
-#: resources/views/settings.phtml:71
 msgid ""
 "Use truncated categories. The call number categories will be truncated and "
 "shown without the trunk."
 msgstr ""
 "Afficher le nom court des séries. Seul le nom court de la série sera affiché."
 
-#: resources/views/settings.phtml:74
 msgid ""
 "Use truncated call numbers. The call numbers will be truncated and shown "
 "without call number category."
 msgstr ""
 "Afficher les cotes sans la série. Les cotes seront affichées sans la série."
 
-#: resources/views/settings.phtml:77
 msgid "Show date range for call number categories."
 msgstr "Afficher le libellé avant la série."
 
-#: resources/views/settings.phtml:80
 msgid ""
 "Allow renaming of call number categories. Will show an icon and a link for "
 "renaming."
@@ -600,7 +456,6 @@ msgstr ""
 "Autoriser le changement de nom des séries. Une icône sera affichée avec un "
 "lien pour renommer la série."
 
-#: resources/views/settings.phtml:83
 msgid ""
 "Allow adding new sources to a call number category. Will show an icon and a "
 "link to add new sources."
@@ -608,39 +463,31 @@ msgstr ""
 "Autoriser l'ajout de nouvelles sources à la série. Une icône sera affichée "
 "avec un lien pour ajouter une nouvelle source."
 
-#: resources/views/settings.phtml:86
 msgid "Show the title of the sources."
 msgstr "Afficher le titre des sources."
 
-#: resources/views/settings.phtml:89
 msgid "Show the XREF of the sources."
 msgstr "Afficher l'identifiant « XREF » des sources."
 
-#: resources/views/settings.phtml:92
 msgid "Show the author of the sources."
 msgstr "Afficher l'auteur des sources."
 
-#: resources/views/settings.phtml:95
 msgid "Show the date range of the sources."
 msgstr "Afficher la plage de dates des sources."
 
-#: resources/views/settings.phtml:98
 msgid "Allow users to load stored delimiter expressions from administrator."
 msgstr ""
 "Autoriser les utilisateurs à charger les expression délimitation "
 "enregistrées par l'administrateur."
 
-#: resources/views/settings.phtml:102
 msgid "Settings for source citations"
 msgstr "Paramètres pour les citations de source"
 
-#: resources/views/settings.phtml:104
 msgid "Show additional source facts (REPO, REPO:CALN) within source citations."
 msgstr ""
 "Afficher les attributs additionnel (REPO, REPO:CALN) dans les citations de "
 "source."
 
-#: resources/views/settings.phtml:107
 msgid ""
 "Automatically expand repositories in source citations. Applies only if "
 "\"Show additional source facts\" is activated."
@@ -649,13 +496,11 @@ msgstr ""
 "S’applique uniquement si l’option « Afficher des faits sources "
 "supplémentaires » est activée."
 
-#: resources/views/settings.phtml:110
 msgid "Show all media objects of sources within a source citations."
 msgstr ""
 "Afficher tous les objets multimédias des sources dans les citations d’une "
 "source."
 
-#: resources/views/settings.phtml:113
 msgid ""
 "Directly show media objects of sources in facts and not subordinated within "
 "source citations."
@@ -663,7 +508,6 @@ msgstr ""
 "Montrer directement les objets médiatiques des sources dans les faits et non "
 "subordonnés dans les citations de Sources."
 
-#: resources/views/settings.phtml:116
 msgid ""
 "Enable copy/paste mechanism for source citations in the individual and "
 "family view."
@@ -671,29 +515,23 @@ msgstr ""
 "Activez le mécanisme de copier/coller pour les citations de sources dans la "
 "vue individuelle et familiale."
 
-#: resources/views/settings.phtml:120
 msgid "Settings for finding aid exports"
 msgstr "Paramètres pour la génération de l'instrument de recherche"
 
-#: resources/views/settings.phtml:125
 msgid "Include repository address within finding aid export."
 msgstr "Inclure l'adresse du dépôt d'archive dans l'instrument de recherche."
 
-#: resources/views/settings.phtml:128
 msgid "Include links to webtrees sources within finding aid export."
 msgstr "Inclure les liens des sources webtrees dans l'instrument de recherche."
 
-#: resources/views/settings.phtml:131
 msgid "Include table of contents within finding aid export."
 msgstr "Inclure une table des matières dans l'instrument de recherche."
 
-#: resources/views/settings.phtml:134
 msgid "Show titles within table of contents in finding aid export."
 msgstr ""
 "Afficher les titres dans la table des matières dans l'instrument de "
 "recherche."
 
-#: resources/views/settings.phtml:137
 msgid ""
 "Show links within table of contents in finding aid export (not available for "
 "PDF export)."
@@ -701,30 +539,24 @@ msgstr ""
 "Afficher les liens dans la table des matières de l'instrument de recherche "
 "(non disponible dans l'export PDF)."
 
-#: resources/views/settings.phtml:141
 msgid "Settings for EAD XML exports"
 msgstr "Paramètres pour l'export XML EAD (Encoded Archival Description)"
 
-#: resources/views/settings.phtml:143
 msgid "Allow users to load stored XML settings from administrator."
 msgstr ""
 "Autoriser les utilisateurs à charger les paramètres XML enregistrés par "
 "l'administrateur."
 
-#: resources/views/settings.phtml:147
 msgid "Settings for Meta Repositories"
 msgstr "Paramètres pour les méta-dépôt d'archives"
 
-#: resources/views/settings.phtml:149
 msgid "Use Meta Repositories."
 msgstr "Utiliser les méta-dépôt d'archives."
 
-#: resources/views/settings.phtml:153
 msgid "Settings for linking to external archive management tools"
 msgstr ""
 "Paramètres pour la connexion à des systèmes externes de gestion des archives"
 
-#: resources/views/settings.phtml:155
 msgid ""
 "The following settings apply if AtoM (https://www.accesstomemory.org) is "
 "used as an external archive management system."
@@ -732,11 +564,9 @@ msgstr ""
 "Les paramètres suivants sont applicables si AtoM (https://www.accesstomemory."
 "org) est utilisé comme système externe de gestion des archives."
 
-#: resources/views/settings.phtml:159 resources/views/settings.phtml:163
 msgid "Show link to AtoM records within source citations"
 msgstr "Afficher le lien des enregistrements AtoM dans les citations de source"
 
-#: resources/views/settings.phtml:163
 #, php-format
 msgid ""
 "Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be "
@@ -749,26 +579,21 @@ msgstr ""
 "source dans le système de gestion des archives AtoM. S'applique seulement si "
 "l'option « %s » est activée."
 
-#: resources/views/settings.phtml:170
 msgid "Use call numbers to create AtoM REST links (\"AtoM slugs\")"
 msgstr "Utiliser les cotes pour générer les liens REST AtoM (« AtoM slugs »)"
 
-#: resources/views/settings.phtml:171
 msgid "Use source titles to create AtoM REST links (\"AtoM slugs\")"
 msgstr ""
 "Utiliser le titre des sources pour générer les liens REST AtoM (« AtoM slugs "
 "»)"
 
-#: resources/views/settings.phtml:177
 msgid "Base URL for AtoM"
 msgstr "Lien URL racine d'AtoM"
 
-#: resources/views/settings.phtml:185
 msgid "Repositories, for which AtoM linking is used."
 msgstr ""
 "Dépôts d'archives pour lesquels la génération de liens AtoM est possible."
 
-#: resources/views/settings.phtml:190
 msgid ""
 "Format treename:xref. A list of several entries can be separated by comma, e."
 "g. \"my_tree:X1765,my_tree:X2987\""
@@ -776,11 +601,9 @@ msgstr ""
 "Format nom_de_l_arbre:repo_xref. Une liste de références, séparés par des "
 "virgules, par exemple `mon_arbre:X1765,mon_arbre:X2987`"
 
-#: resources/views/settings.phtml:197
 msgid "save"
 msgstr "enregistrer"
 
-#: resources/views/source-facts-within-citation.phtml:85
 msgid "Media objects of source"
 msgstr "Objets multimédias de la source"
 
