@@ -2,7 +2,7 @@
 [![webtrees major version](https://img.shields.io/badge/webtrees-v2.1.x-green)](https://webtrees.net/download)
 	
 ##  Repository Hierarchy Overview
-A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated. The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The EAD XML export is compatible with apeEAD, which allows data exchange with an archive portal.
+A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated. The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The module also includes additional features to improve the handling of sources, source citations, and media objects.
 
 The module uses delimiters to cut call numbers (of sources) into sub-strings and extracts call number categories. Based on the extracted categories, a hierarchical tree of call number categories with the related sources is constructed and shown.
 
