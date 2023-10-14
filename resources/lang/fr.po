@@ -30,7 +30,7 @@ msgstr "La citation source a été copiée dans un presse-papiers interne."
 
 #: CopySourceCitation.php:57
 msgid ""
-"The source citation can be added to other facts/events by clicling on the "
+"The source citation can be added to other facts/events by clicking on the "
 "source icon in the edit area of the fact/event."
 msgstr ""
 "La citation source peut être ajoutée à d'autres faits/événements en cliquant "

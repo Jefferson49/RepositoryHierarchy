@@ -28,7 +28,7 @@ msgstr "Das Quellen-Zitat wurde in eine interne Zwischenablage gespeichert."
 
 #: CopySourceCitation.php:57
 msgid ""
-"The source citation can be added to other facts/events by clicling on the "
+"The source citation can be added to other facts/events by clicking on the "
 "source icon in the edit area of the fact/event."
 msgstr ""
 "Durch Klicken auf das Quellen-Symbol im Eingabebereich von Tatsachen/"
