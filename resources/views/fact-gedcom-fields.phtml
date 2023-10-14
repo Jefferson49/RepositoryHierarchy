@@ -29,17 +29,25 @@ $showSourceCitationIcon = false;
 //If copy source citation icon shall be shown, check if individual or family view and wether editable
 if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))) {
 
-    if ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_INDIVIDUAL)
-        && Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER))
+    if ((   Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_INDIVIDUAL)
+            && (Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_TREE) === $tree->name())
+            && Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER))
     {
         $individual = Registry::individualFactory()->make(Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER), $tree);
-        $showSourceCitationIcon = $individual->canEdit();
+
+        if($individual !== null) {
+            $showSourceCitationIcon = $individual->canEdit();
+        }
     }
     elseif ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_FAMILY) 
+            && (Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_TREE) === $tree->name())
             && Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER))
     {
         $family = Registry::familyFactory()->make(Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER), $tree);
-        $showSourceCitationIcon = $family->canEdit();
+
+        if($family !== null) {
+            $showSourceCitationIcon = $family->canEdit();
+        }
     }
 } 
 

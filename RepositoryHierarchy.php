@@ -45,6 +45,11 @@ use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\Http\RequestHandlers\FamilyPage;
 use Fisharebest\Webtrees\Http\RequestHandlers\IndividualPage;
+use Fisharebest\Webtrees\Http\RequestHandlers\MediaPage;
+use Fisharebest\Webtrees\Http\RequestHandlers\NotePage;
+use Fisharebest\Webtrees\Http\RequestHandlers\RepositoryPage;
+use Fisharebest\Webtrees\Http\RequestHandlers\SourcePage;
+use Fisharebest\Webtrees\Http\RequestHandlers\SubmitterPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
@@ -206,6 +211,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
     //Constants for page names
     public const LAST_PAGE_NAME = 'last_page_name';
+    public const LAST_PAGE_TREE = 'last_page_tree';
     public const LAST_PAGE_PARAMETER = 'last_page_parameter';
     public const PAGE_NAME_INDIVIDUAL = 'individual.php';
     public const PAGE_NAME_FAMILY = 'family.php';
@@ -1372,19 +1378,31 @@ class RepositoryHierarchy extends AbstractModule implements
         switch ($route->name) {
 
             case IndividualPage::class:
+                $tree  = Validator::attributes($request)->treeOptional();
                 $xref = Validator::attributes($request)->isXref()->string('xref');
-                Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
                 Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_INDIVIDUAL);
+                Session::put($this->name() . self::LAST_PAGE_TREE, $tree->name());
+                Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
                 break;
 
             case FamilyPage::class:
+                $tree  = Validator::attributes($request)->treeOptional();
                 $xref = Validator::attributes($request)->isXref()->string('xref');
-                Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
                 Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_FAMILY);
+                Session::put($this->name() . self::LAST_PAGE_TREE, $tree->name());
+                Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
                 break;
 
-            default:
+            case MediaPage::class:
+            case NotePage::class:
+            case RepositoryPage::class:
+            case SourcePage::class:
+            case SubmitterPage::class:
+                $tree  = Validator::attributes($request)->treeOptional();
                 Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_OTHER);                
+                Session::put($this->name() . self::LAST_PAGE_TREE, $tree->name());
+                Session::put($this->name() . self::LAST_PAGE_PARAMETER, '');
+                break;
             }
 
         return $handler->handle($request);
