@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2023-10-14 15:57+0200\n"
+"POT-Creation-Date: 2023-10-17 18:51+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -64,19 +64,6 @@ msgstr ""
 "auf den Signaturen der Quellen"
 
 #, php-format
-msgid ""
-"The custom module \"%s\" is activated in parallel to the %s custom module. "
-"This can lead to unintended behavior. If using the %s module, it is urgently "
-"recommended to deactivate the \"%s\" module, because the identical "
-"functionality is also integrated in the %s module."
-msgstr ""
-"Das benutzerspezifische Modul \"%s\" ist parallel zum benutzerspezifische "
-"Modul %s aktiviert. Dies kann zu unbeabsichtigtem Verhalten führen. Bei "
-"Verwendung des Moduls %s wird dringend empfohlen, das Modul \"%s\" zu "
-"deaktivieren, weil die identische Funktion ebenfalls im Modul %s integriert "
-"ist."
-
-#, php-format
 msgid "The preferences for the module “%s” were updated."
 msgstr "Die Einstellungen für das Modul %s wurden aktualisiert."
 
@@ -124,6 +111,48 @@ msgid ""
 msgstr ""
 "Um Signatur-Kategorien zu ändern, benötigen Sie die Rolle \"Verwalter\" für "
 "den zugehörigen Stammbaum."
+
+#, php-format
+msgid ""
+"The custom module \"%s\" is activated in parallel to the %s custom module. "
+"This can lead to unintended behavior. If using the %s module, it is strongly "
+"recommended to deactivate the \"%s\" module, because the identical "
+"functionality is also integrated in the %s module."
+msgstr ""
+"Das benutzerspezifische Modul \"%s\" ist parallel zum benutzerspezifische "
+"Modul %s aktiviert. Dies kann zu unbeabsichtigtem Verhalten führen. Bei "
+"Verwendung des Moduls %s wird dringend empfohlen, das Modul \"%s\" zu "
+"deaktivieren, weil die identische Funktion ebenfalls im Modul %s integriert "
+"ist."
+
+#, php-format
+msgid ""
+"The custom module \"%s\" is activated in parallel to the %s custom module. "
+"This can lead to unintended behavior, because both of the modules have "
+"registered the same custom view \"%s\". It is strongly recommended to "
+"deactivate one of the modules."
+msgstr ""
+"Das benutzerspezifische Modul \"%s\" ist parallel zum benutzerspezifische "
+"Modul %s aktiviert. Dies kann zu unbeabsichtigtem Verhalten führen, weil "
+"beide Module die gleiche Custom View \"%s\" registriert haben. Es wird "
+"dringend empfohlen eines der beiden Module zu deaktivieren."
+
+msgid "Error"
+msgstr "Fehler"
+
+#, php-format
+msgid ""
+"The custom module view \"%s\" is not registered as replacement for the "
+"standard webtrees view. There might be another module installed, which "
+"registered the same custom view. This can lead to unintended behavior. It is "
+"strongly recommended to deactivate one of the modules. The path of the "
+"parallel view is: %s"
+msgstr ""
+"Der Custom View \"%s\" ist nicht als Ersatz für den Standard Custom View von "
+"webtrees registriert. Es könnte ein anderes Modul installiert sein, welches "
+"den gleiche Custom View registriert hat. Dies kann zu unerwartetem Verhalten "
+"führen. Es wird dringend empfohlen, eines der Module zu deaktivieren. Der "
+"Pfad für den Custom View ist: %s"
 
 #, php-format
 msgid "Repository Hierarchy of: %s"
