@@ -80,6 +80,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
 
 use function route;
 
@@ -269,6 +270,9 @@ class RepositoryHierarchy extends AbstractModule implements
     //The call number category title service, which is used
     private C16Y $call_number_category_title_service;
 
+    //A list of custom views, which are registered by the module
+    private Collection $custom_view_list;
+
     //Tables for fast access to source data
     public array $title_of_source;
     public array $author_of_source;
@@ -307,6 +311,9 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function boot(): void
     {
+        //Initialization of the custom view list
+        $this->custom_view_list = new Collection;
+
         $router = Registry::routeFactory()->routeMap();
 
         //Register a route for the class
@@ -392,9 +399,11 @@ class RepositoryHierarchy extends AbstractModule implements
         //Also used to show additonal icons to copy/delete source citation
         //Also used to show media objects with several images (code from jc-simple-media-display) 
         View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
+        $this->custom_view_list->add($this->name() . '::fact-gedcom-fields');
 
         //Register a custom view for fact edit links in order to allow pasting source citations
         View::registerCustomView('::fact-edit-links', $this->name() . '::fact-edit-links');
+        $this->custom_view_list->add($this->name() . '::fact-edit-links');
     }
 
     /**
@@ -548,7 +557,7 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public static function viewsNamespace(): string
     {
-        return self::activeModuleName();
+        return '_' . basename(__DIR__) . '_';
     }
 
     /**
@@ -570,20 +579,7 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function getAdminAction(ServerRequestInterface $request): ResponseInterface
     {
-        $module_service = new ModuleService();
-
-        foreach(['_jc-simple-media-display_', '_webtrees-simple-media-display_'] as $custom_module_name) {
-
-            $custom_module = $module_service->findByName($custom_module_name);
-
-            if($custom_module !== null) {
-
-                $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' . 
-                            I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This can lead to unintended behavior. If using the %s module, it is urgently recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
-                            '<b>' . $custom_module->title() . '</b>', $this->title(), $this->title(), $custom_module->title(), $this->title());
-                FlashMessages::addMessage($message, 'danger');
-            }
-        }
+        $this->checkCustomViewAvailability();
 
         $this->layout = 'layouts/administration';
 
@@ -898,6 +894,72 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         $record->updateRecord($this->updateGedcom($record, $params), false);
     }
+
+    /**
+     * Check availability of the registered custom views and show flash messages with warnings if any errors occur 
+     *
+     * @return void
+     */
+    private function checkCustomViewAvailability() : void {
+
+        $module_service = new ModuleService();
+        $custom_modules = $module_service->findByInterface(ModuleCustomInterface::class);
+        $alternative_view_found = false;
+
+        foreach($this->custom_view_list as $custom_view) {
+
+            [[$namespace], $view_name] = explode(View::NAMESPACE_SEPARATOR, $custom_view, 2);
+
+            foreach($custom_modules->forget($this->activeModuleName()) as $custom_module) {
+
+                $view = new View('test');
+
+                try {
+                    $file_name = $view->getFilenameForView($custom_module->name() . View::NAMESPACE_SEPARATOR . $view_name);
+                    $alternative_view_found = true;
+    
+                    //If a view of one of the custom modules is found, which are known to use the same view
+                    if (in_array($custom_module->name(), ['_jc-simple-media-display_', '_webtrees-simple-media-display_'])) {
+                        
+                        $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' .
+                                    I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This can lead to unintended behavior. If using the %s module, it is strongly recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
+                                    '<b>' . $custom_module->title() . '</b>', $this->title(), $this->title(), $custom_module->title(), $this->title());
+                    }
+                    else {
+                        $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' . 
+                                    I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This can lead to unintended behavior, because both of the modules have registered the same custom view "%s". It is strongly recommended to deactivate one of the modules.', 
+                                    '<b>' . $custom_module->title() . '</b>', $this->title(),  '<b>' . $view_name . '</b>');
+                    }
+                    FlashMessages::addMessage($message, 'danger');
+                }    
+                catch (RuntimeException $e) {
+                    //If no file name (i.e. view) was found, do nothing
+                }
+            }
+            if (!$alternative_view_found) {
+
+                $view = new View('test');
+
+                try {
+                    $file_name = $view->getFilenameForView($view_name);
+
+                    //Check if the view is registered with a file path other than the current module; e.g. another moduleS probably registered it with an unknown views namespace
+                    if (!str_contains($file_name, $this->resourcesFolder())) {
+                        throw new RuntimeException;
+                    }
+                }
+                catch (RuntimeException $e) {
+                    $message =  '<b>' . I18N::translate('Error') . ':</b><br>' .
+                                I18N::translate(
+                                    'The custom module view "%s" is not registered as replacement for the standard webtrees view. There might be another module installed, which registered the same custom view. This can lead to unintended behavior. It is strongly recommended to deactivate one of the modules. The path of the parallel view is: %s',
+                                    '<b>' . $custom_view . '</b>', '<b>' . $file_name  . '</b>');
+                    FlashMessages::addMessage($message, 'danger');
+                }
+            }
+        }
+        
+        return;
+    }   
 
     /**
      * Update Gedcom for a record
