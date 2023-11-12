@@ -68,6 +68,10 @@ $xrefs_of_media_objects = [];
 				<?php array_push($xrefs_of_media_objects, $match[1]) ?>
 			<?php endforeach ?>
 		<?php endif ?>
+	<?php else : ?>
+		<?php if($fact->tag() !== 'SOUR:CHAN') : ?>
+			<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>	
+		<?php endif ?>
 	<?php endif ?>
 <?php endforeach ?>
 
