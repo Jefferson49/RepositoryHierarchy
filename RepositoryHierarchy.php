@@ -60,6 +60,7 @@ use Fisharebest\Webtrees\Module\ModuleDataFixInterface;
 use Fisharebest\Webtrees\Module\ModuleDataFixTrait;
 use Fisharebest\Webtrees\Module\ModuleGlobalInterface;
 use Fisharebest\Webtrees\Module\ModuleGlobalTrait;
+use Fisharebest\Webtrees\Module\ModuleInterface;
 use Fisharebest\Webtrees\Module\ModuleListInterface;
 use Fisharebest\Webtrees\Module\ModuleListTrait;
 use Fisharebest\Webtrees\Registry;
@@ -158,9 +159,12 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_MODULE_VERSION = 'module_version';
     public const PREF_START_REPOSITORY = 'start_repository';
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
-    public const PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
-	public const PREF_SHOW_MEDIA_AFTER_CITATIONS = 'show_media_after_citations';
+    public const PREF_SHOW_REPO_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
+    public const PREF_EXPAND_REPOS_IN_CITATIONS ='expand_repos_in_citations';
     public const PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS ='show_source_media_in_citations';
+    public const PREF_SHOW_FURTHER_FACTS_IN_CITATIONS ='show_further_facts_in_citations';
+	public const PREF_SHOW_MEDIA_AFTER_CITATIONS = 'show_media_after_citations';
+    public const PREF_ENABLE_COPY_PASTE_CITATIONS ='enable_copy_paste_citations';
     public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for_category';
     public const PREF_SHOW_ATOM_LINKS ='show_atom_links';
     public const PREF_ATOM_SLUG ='atom_slug';
@@ -187,8 +191,6 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_ALLOW_RENAME = 'allow_rename';
     public const PREF_ALLOW_NEW_SOURCE = 'allow_new_source';
     public const PREF_CITATION_GEDCOM = 'citation_gedcom';
-    public const PREF_ENABLE_COPY_PASTE_CITATIONS ='enable_copy_paste_citations';
-    public const PREF_EXPAND_REPOS_IN_CITATIONS ='expand_repos_in_citations';
 
     //Old prefences/settings not used any more, but needed for version updates
     public const OLD_PREF_FINDING_AID_TITLE = 'finding_aid_title_';
@@ -196,6 +198,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const OLD_PREF_FINDING_AID_URL = 'finding_aid_url_';
     public const OLD_PREF_FINDING_AID_PUBLISHER = 'finding_aid_publ_';
     public const OLD_PREF_MAIN_AGENCY_CODE = 'main_agency_code_';
+    public const OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';
@@ -586,41 +589,42 @@ class RepositoryHierarchy extends AbstractModule implements
         return $this->viewResponse(
             self::viewsNamespace() . '::settings',
             [
-                'title'                                     => $this->title(),
-                self::PREF_SHOW_CATEGORY_LABEL              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
-                self::PREF_SHOW_CATEGORY_TITLE              => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_TITLE, '0')),
-                self::PREF_SHOW_HELP_ICON                   => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
-                self::PREF_SHOW_HELP_LINK                   => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
-                self::PREF_SHOW_TRUNCATED_CALL_NUMBER       => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
-                self::PREF_SHOW_TRUNCATED_CATEGORY          => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
-                self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY     => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '1')),
-                self::PREF_ALLOW_RENAME                     => boolval($this->getPreference(self::PREF_ALLOW_RENAME, '1')),
-                self::PREF_ALLOW_NEW_SOURCE                 => boolval($this->getPreference(self::PREF_ALLOW_NEW_SOURCE, '1')),
-                self::PREF_SHOW_TITLE                       => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
-                self::PREF_SHOW_XREF                        => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
-                self::PREF_SHOW_AUTHOR                      => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
-                self::PREF_SHOW_DATE_RANGE                  => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
-                self::PREF_ALLOW_ADMIN_DELIMITER            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
-                self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0')),
-                self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS   => boolval($this->getPreference(self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, '0')),
-                self::PREF_EXPAND_REPOS_IN_CITATIONS      	=> boolval($this->getPreference(self::PREF_EXPAND_REPOS_IN_CITATIONS, '0')),
-                self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	=> boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
-                self::PREF_ENABLE_COPY_PASTE_CITATIONS   	=> boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
-                self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE  => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
-                self::PREF_SHOW_FINDING_AID_ADDRESS         => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
-                self::PREF_SHOW_FINDING_AID_WT_LINKS        => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
-                self::PREF_SHOW_FINDING_AID_TOC             => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
-                self::PREF_SHOW_FINDING_AID_TOC_LINKS       => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
-                self::PREF_SHOW_FINDING_AID_TOC_TITLES      => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_TITLES, '1')),
-                self::PREF_ALLOW_ADMIN_XML_SETTINGS         => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
-                self::PREF_USE_META_REPOSITORIES            => boolval($this->getPreference(self::PREF_USE_META_REPOSITORIES, '0')),
-                self::PREF_ATOM_SLUG                        => $this->getPreference(self::PREF_ATOM_SLUG, self::PREF_ATOM_SLUG_CALL_NUMBER),
-                self::PREF_SHOW_ATOM_LINKS                  => boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')),
-                self::PREF_ATOM_BASE_URL                    => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
-                self::PREF_ATOM_REPOSITORIES                => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
+                'title'                                             => $this->title(),
+                self::PREF_SHOW_CATEGORY_LABEL                      => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
+                self::PREF_SHOW_CATEGORY_TITLE                      => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_TITLE, '0')),
+                self::PREF_SHOW_HELP_ICON                           => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
+                self::PREF_SHOW_HELP_LINK                           => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
+                self::PREF_SHOW_TRUNCATED_CALL_NUMBER               => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
+                self::PREF_SHOW_TRUNCATED_CATEGORY                  => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
+                self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY             => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '1')),
+                self::PREF_ALLOW_RENAME                             => boolval($this->getPreference(self::PREF_ALLOW_RENAME, '1')),
+                self::PREF_ALLOW_NEW_SOURCE                         => boolval($this->getPreference(self::PREF_ALLOW_NEW_SOURCE, '1')),
+                self::PREF_SHOW_TITLE                               => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
+                self::PREF_SHOW_XREF                                => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
+                self::PREF_SHOW_AUTHOR                              => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
+                self::PREF_SHOW_DATE_RANGE                          => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
+                self::PREF_ALLOW_ADMIN_DELIMITER                    => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
+                self::PREF_SHOW_REPO_FACTS_IN_CITATIONS             => boolval($this->getPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, '0')),
+                self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS           => boolval($this->getPreference(self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, '0')),
+                self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS          => boolval($this->getPreference(self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, '0')),
+                self::PREF_EXPAND_REPOS_IN_CITATIONS      	        => boolval($this->getPreference(self::PREF_EXPAND_REPOS_IN_CITATIONS, '0')),
+                self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	        => boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
+                self::PREF_ENABLE_COPY_PASTE_CITATIONS   	        => boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
+                self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE          => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
+                self::PREF_SHOW_FINDING_AID_ADDRESS                 => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
+                self::PREF_SHOW_FINDING_AID_WT_LINKS                => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
+                self::PREF_SHOW_FINDING_AID_TOC                     => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
+                self::PREF_SHOW_FINDING_AID_TOC_LINKS               => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
+                self::PREF_SHOW_FINDING_AID_TOC_TITLES              => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_TITLES, '1')),
+                self::PREF_ALLOW_ADMIN_XML_SETTINGS                 => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
+                self::PREF_USE_META_REPOSITORIES                    => boolval($this->getPreference(self::PREF_USE_META_REPOSITORIES, '0')),
+                self::PREF_ATOM_SLUG                                => $this->getPreference(self::PREF_ATOM_SLUG, self::PREF_ATOM_SLUG_CALL_NUMBER),
+                self::PREF_SHOW_ATOM_LINKS                          => boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')),
+                self::PREF_ATOM_BASE_URL                            => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
+                self::PREF_ATOM_REPOSITORIES                        => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
             ]
         );
-    }
+    }  
     
     /**
      * Save module settings after returning from control panel
@@ -649,8 +653,9 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_AUTHOR, isset($params[self::PREF_SHOW_AUTHOR]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE]) ? '1' : '0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER]) ? '1' : '0');
-            $this->setPreference(self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_REPO_FACTS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_EXPAND_REPOS_IN_CITATIONS, isset($params[self::PREF_EXPAND_REPOS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, isset($params[self::PREF_SHOW_MEDIA_AFTER_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, isset($params[self::PREF_ENABLE_COPY_PASTE_CITATIONS]) ? '1' : '0');
@@ -723,8 +728,16 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function updatePreferences(): string
     {
-        //Currently empty. Might be used in further versions of the module
-        //Updates for URL of EAD XML are handled in: XmlExportSettingsModal::updatePreferenes
+        //Rename old preferences
+        if (    $this->getPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS) === ''
+            &&  $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS) !== 'deleted') {
+
+            //Copy old value to new preference
+            $this->setPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS));
+            
+            //Set old preference value to deleted
+            $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'deleted');
+        } 
 
         $error = '';
         return $error;

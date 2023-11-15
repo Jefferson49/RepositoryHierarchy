@@ -24,8 +24,9 @@ use Fisharebest\Webtrees\View;
  * @var  bool		$show_author
  * @var  bool		$show_date_range
  * @var  bool		$allow_admin_delimiter
- * @var  bool		$show_source_facts_in_citations
+ * @var  bool		$show_repo_facts_in_citations
  * @var  bool		$show_source_media_in_citations
+ * @var  bool		$show_further_source_facts_in_citations
  * @var  bool		$expand_repos_in_citations
  * @var  bool		$show_media_after_citations
  * @var  bool		$enable_copy_paste_citations
@@ -101,7 +102,7 @@ use Fisharebest\Webtrees\View;
 
             <h3><?= I18N::translate('Settings for source citations') ?></h3>
             <div class="row">
-                <?= view('components/checkbox', ['label' => I18N::translate('Show additional source facts (REPO, REPO:CALN) within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'checked' => $show_source_facts_in_citations]) ?>
+                <?= view('components/checkbox', ['label' => I18N::translate('Show repository facts (SOUR:REPO, SOUR:REPO:CALN) within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_REPO_FACTS_IN_CITATIONS, 'checked' => $show_source_facts_in_citations]) ?>
             </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Automatically expand repositories in source citations. Applies only if "Show additional source facts" is activated.'), 'name' => RepositoryHierarchy::PREF_EXPAND_REPOS_IN_CITATIONS, 'checked' => $expand_repos_in_citations]) ?>
@@ -109,7 +110,9 @@ use Fisharebest\Webtrees\View;
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show all media objects of sources within a source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, 'checked' => $show_source_media_in_citations]) ?>
             </div>
-            <div class="row">
+           <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show further facts of sources (e.g. SOUR:PUBL, SOUR:NOTE, SOUR:REFN, ...) within source citations. Note: Repository facts and media objects can be selected by separate settings.'), 'name' => RepositoryHierarchy::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, 'checked' => $show_further_facts_in_citations]) ?>
+            </div>            <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Directly show media objects of sources in facts and not subordinated within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, 'checked' => $show_media_after_citations]) ?>
             </div>
             <div class="row">

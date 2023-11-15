@@ -21,6 +21,8 @@ $xrefs_of_media_objects = [];
 ?> 
  
 <?php $facts = $source->facts() ?>
+<?php $count_source_facts = 0 ?>
+
 <?php foreach ($facts as $fact) : ?>
 
 	<?php $element = Registry::elementFactory()->make($fact->tag()) ?>
@@ -34,10 +36,11 @@ $xrefs_of_media_objects = [];
 									(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
 									(in_array($tree->name() . ':' . $xref, $atom_repositories)) ?>
 
-		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_REPO_FACTS_IN_CITATIONS, '0'))) : ?>
 			<?php if ($caln_string === '' && !$show_atom_links) : ?>
 				<?php //Do not escape, because it is already escaped in the method  ?>
 				<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+				<?php $count_source_facts++ ?>
 			<?php else : ?>
 				<?php $id = Registry::idFactory()->id() ?>
 				<?php $expanded = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPAND_REPOS_IN_CITATIONS, '0')) ?>
@@ -52,12 +55,14 @@ $xrefs_of_media_objects = [];
 					<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 				</div>
 				<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
-					<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, '0'))) : ?>
+					<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_REPO_FACTS_IN_CITATIONS, '0'))) : ?>
 						<?php //Do not escape, because it is already escaped in the method  ?>
 						<?= $caln_element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
+						<?php $count_source_facts++ ?>
 					<?php endif ?>
 					<?php if ($show_atom_links) : ?>
-						<?= view(RepositoryHierarchy::viewsNamespace() . '::atom-links', ['tree' => $tree, 'source' => $source, 'caln_string' => $caln_string]) ?>					
+						<?= view(RepositoryHierarchy::viewsNamespace() . '::atom-links', ['tree' => $tree, 'source' => $source, 'caln_string' => $caln_string]) ?>
+						<?php $count_source_facts++ ?>				
 					<?php endif ?>					
 				</div>
 			<?php endif ?>
@@ -69,8 +74,11 @@ $xrefs_of_media_objects = [];
 			<?php endforeach ?>
 		<?php endif ?>
 	<?php else : ?>
-		<?php if($fact->tag() !== 'SOUR:CHAN') : ?>
-			<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>	
+		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, '0'))) : ?>
+			<?php if($fact->tag() !== 'SOUR:CHAN' && $fact->tag() !== 'SOUR:DATA' && $fact->tag() !== 'SOUR:TITL') : ?>
+				<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
+				<?php $count_source_facts++ ?>
+			<?php endif ?>
 		<?php endif ?>
 	<?php endif ?>
 <?php endforeach ?>
@@ -93,6 +101,11 @@ $xrefs_of_media_objects = [];
 	<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
 		<?php foreach ($xrefs_of_media_objects as $xref) : ?>
 			<?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $xref, 'tree' => $tree]); ?>
+			<?php $count_source_facts++ ?>
 		<?php endforeach ?>
 	</div>
+<?php endif ?>
+
+<?php if($count_source_facts >0) : ?>
+	<?= view('icons/footer') ?>
 <?php endif ?>

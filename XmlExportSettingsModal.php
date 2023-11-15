@@ -87,7 +87,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                 $old_setting = $repository_hierarchy->getPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, '');
                 $new_setting = $repository_hierarchy->getPreference($replace_pair['replace'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, '');
 
-                if ($old_setting !== '') {
+                if ($old_setting !== '' && $old_setting !== 'deleted') {
 
                     //If new preference does not already exist
                     if ($new_setting === '') {
@@ -101,8 +101,8 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                         $repository_hierarchy->setPreference($replace_pair['replace'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, $old_setting);
                     }
         
-                    //Delete old setting (i.e. set to '')
-                    $repository_hierarchy->setPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, '');
+                    //Delete old setting (i.e. set to 'deleted')
+                    $repository_hierarchy->setPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, 'deleted');
                 }
     
             }
