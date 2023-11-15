@@ -159,7 +159,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_MODULE_VERSION = 'module_version';
     public const PREF_START_REPOSITORY = 'start_repository';
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
-    public const PREF_SHOW_REPO_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
+    public const PREF_SHOW_REPO_FACTS_IN_CITATIONS = 'show_repo_facts_in_citations';
     public const PREF_EXPAND_REPOS_IN_CITATIONS ='expand_repos_in_citations';
     public const PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS ='show_source_media_in_citations';
     public const PREF_SHOW_FURTHER_FACTS_IN_CITATIONS ='show_further_facts_in_citations';
