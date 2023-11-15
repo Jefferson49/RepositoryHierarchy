@@ -314,6 +314,9 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function boot(): void
     {
+        //Check module version and update preferences etc.
+        $this->checkModuleVersionUpdate();
+
         //Initialization of the custom view list
         $this->custom_view_list = new Collection;
 
@@ -1525,9 +1528,6 @@ class RepositoryHierarchy extends AbstractModule implements
     
         //Variable for error texts; default is empty
         $error_text = '';
-
-        //Check module version and update preferences etc.
-        $this->checkModuleVersionUpdate();
 
         //If requested, load stored repository and reset delimiter
         if ($command === self::CMD_LOAD_REPO) {
