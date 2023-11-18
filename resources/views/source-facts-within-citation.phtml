@@ -17,6 +17,9 @@ $module_service = new ModuleService();
 $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, ''));
 $xrefs_of_media_objects = [];
+$shown_source_tags = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS));
+$expandable_source_tags = RepositoryHierarchy::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS->keys()->toArray();
+$expanded_source_tags = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS));
 
 ?> 
  
@@ -26,8 +29,9 @@ $xrefs_of_media_objects = [];
 <?php foreach ($facts as $fact) : ?>
 
 	<?php $element = Registry::elementFactory()->make($fact->tag()) ?>
+	<?php $fact_tag_within_citation = str_replace('SOUR:', '', $fact->tag())?>
 
-	<?php if ($fact->tag() === 'SOUR:REPO') : ?>
+	<?php if ($fact_tag_within_citation === 'REPO') : ?>
 		<?php $xref = str_replace('@', '', $fact->value()) ?>
 		<?php $repository = Registry::repositoryFactory()->make($xref, $tree) ?>
 		<?php $caln_string = $fact->attribute('CALN') ?>
@@ -36,14 +40,14 @@ $xrefs_of_media_objects = [];
 									(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
 									(in_array($tree->name() . ':' . $xref, $atom_repositories)) ?>
 
-		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_REPO_FACTS_IN_CITATIONS, '0'))) : ?>
+		<?php if (in_array('REPO', $shown_source_tags)) : ?>
 			<?php if ($caln_string === '' && !$show_atom_links) : ?>
 				<?php //Do not escape, because it is already escaped in the method  ?>
 				<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
 				<?php $count_source_facts++ ?>
 			<?php else : ?>
 				<?php $id = Registry::idFactory()->id() ?>
-				<?php $expanded = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPAND_REPOS_IN_CITATIONS, '0')) ?>
+				<?php $expanded = in_array('REPO', $expanded_source_tags) ?>
 				<div>
 					<button type="button" class="btn btn-text p-0" href="#<?= e($id) ?>" data-bs-toggle="collapse" aria-controls="<?= e($id) ?>" aria-expanded="<?= $expanded ? 'true' : 'false' ?>">
 						<?= view('icons/expand') ?>
@@ -55,7 +59,7 @@ $xrefs_of_media_objects = [];
 					<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 				</div>
 				<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
-					<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_REPO_FACTS_IN_CITATIONS, '0'))) : ?>
+					<?php if (in_array('REPO', $shown_source_tags)) : ?>
 						<?php //Do not escape, because it is already escaped in the method  ?>
 						<?= $caln_element->labelValue(strtr($caln_string, ["\r" => "\n"]), $tree) ?>
 						<?php $count_source_facts++ ?>
@@ -67,15 +71,29 @@ $xrefs_of_media_objects = [];
 				</div>
 			<?php endif ?>
 		<?php endif ?>
-	<?php elseif ($fact->tag() === 'SOUR:OBJE') : ?>
+	<?php elseif ($fact_tag_within_citation === 'OBJE') : ?>
 		<?php if (preg_match_all('/@(.*)@/', $fact->gedcom(), $matches, PREG_SET_ORDER) > 0) : ?>
 			<?php foreach ($matches as $match) : ?>
 				<?php array_push($xrefs_of_media_objects, $match[1]) ?>
 			<?php endforeach ?>
 		<?php endif ?>
 	<?php else : ?>
-		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, '0'))) : ?>
-			<?php if($fact->tag() !== 'SOUR:CHAN' && $fact->tag() !== 'SOUR:DATA' && $fact->tag() !== 'SOUR:TITL') : ?>
+		<?php if(in_array($fact_tag_within_citation, $shown_source_tags)) : ?>
+			<?php if(in_array($fact_tag_within_citation, $expandable_source_tags)) : ?>
+				<?php $id = Registry::idFactory()->id() ?>
+				<?php $expanded = in_array($fact_tag_within_citation, $expanded_source_tags) ?>
+				<div>
+					<button type="button" class="btn btn-text p-0" href="#<?= e($id) ?>" data-bs-toggle="collapse" aria-controls="<?= e($id) ?>" aria-expanded="<?= $expanded ? 'true' : 'false' ?>">
+						<?= view('icons/expand') ?>
+						<?= view('icons/collapse') ?>
+					</button>
+					<b><?= $element->label() ?></b>
+				</div>
+				<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
+					Fact
+					<?php $count_source_facts++ ?>
+				</div>
+			<?php else : ?>								
 				<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
 				<?php $count_source_facts++ ?>
 			<?php endif ?>
@@ -84,10 +102,10 @@ $xrefs_of_media_objects = [];
 <?php endforeach ?>
 
 <?php //Show all media objects of the source ?>
-<?php if (	boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, '0')) 
+<?php if (in_array('OBJE', $shown_source_tags) 
 			&& sizeof($xrefs_of_media_objects) > 0) : ?>
 	<?php $id = Registry::idFactory()->id() ?>
-	<?php $expanded = false ?>
+	<?php $expanded = in_array('OBJE', $expanded_source_tags) ?>
 	<div>
 		<button type="button" class="btn btn-text p-0" href="#<?= e($id) ?>" data-bs-toggle="collapse" aria-controls="<?= e($id) ?>" aria-expanded="<?= $expanded ? 'true' : 'false' ?>">
 			<?= view('icons/expand') ?>

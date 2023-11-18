@@ -39,6 +39,7 @@ use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\Contracts\ElementInterface;
 use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\FlashMessages;
@@ -163,6 +164,8 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_EXPAND_REPOS_IN_CITATIONS ='expand_repos_in_citations';
     public const PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS ='show_source_media_in_citations';
     public const PREF_SHOW_FURTHER_FACTS_IN_CITATIONS ='show_further_facts_in_citations';
+    public const PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS ='shown_source_facts_in_citations';
+    public const PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS ='explanded_facts_in_citations';
 	public const PREF_SHOW_MEDIA_AFTER_CITATIONS = 'show_media_after_citations';
     public const PREF_ENABLE_COPY_PASTE_CITATIONS ='enable_copy_paste_citations';
     public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for_category';
@@ -285,6 +288,12 @@ class RepositoryHierarchy extends AbstractModule implements
     public array $date_range_text_of_source;
     public array $iso_date_range_text_of_source;
 
+    //All source facts, which can be shown within source citations
+    public static Collection $ALL_SOURCE_FACTS_IN_CITATIONS;
+
+    //All source facts, which can be expanded within source citations
+    public static Collection $EXPANDABLE_SOURCE_FACTS_IN_CITATIONS;
+
     /**
      * Constructor
      */
@@ -319,6 +328,24 @@ class RepositoryHierarchy extends AbstractModule implements
 
         //Initialization of the custom view list
         $this->custom_view_list = new Collection;
+
+        $ignore_facts = ['TITL', 'CHAN'];
+
+        //Initialization of all source facts, which can be shown within source citations
+        self::$ALL_SOURCE_FACTS_IN_CITATIONS = Collection::make(Registry::elementFactory()->make('SOUR')->subtags())
+        ->filter(static fn (string $value, string $key): bool => !in_array($key, $ignore_facts, true))
+        ->mapWithKeys(static fn (string $value, string $key): array => [$key => 'SOUR:' . $key])
+        ->map(static fn (string $tag): ElementInterface => Registry::elementFactory()->make($tag))
+        ->filter(static fn (ElementInterface $element): bool => !$element instanceof UnknownElement)
+        ->map(static fn (ElementInterface $element): string => $element->label())
+        ->sort(I18N::comparator());
+
+        //Initialization of source facts, which can expanded within source citations
+        self::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS = Collection::make([
+            'REPO'  => MoreI18N::xlate('Repository'),
+            'OBJE' => MoreI18N::xlate('Media object'),
+            'DATA'  => MoreI18N::xlate('Data'),
+        ]);
 
         $router = Registry::routeFactory()->routeMap();
 
@@ -593,38 +620,40 @@ class RepositoryHierarchy extends AbstractModule implements
             self::viewsNamespace() . '::settings',
             [
                 'title'                                             => $this->title(),
-                self::PREF_SHOW_CATEGORY_LABEL                      => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
-                self::PREF_SHOW_CATEGORY_TITLE                      => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_TITLE, '0')),
-                self::PREF_SHOW_HELP_ICON                           => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
-                self::PREF_SHOW_HELP_LINK                           => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
-                self::PREF_SHOW_TRUNCATED_CALL_NUMBER               => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
-                self::PREF_SHOW_TRUNCATED_CATEGORY                  => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
-                self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY             => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '1')),
-                self::PREF_ALLOW_RENAME                             => boolval($this->getPreference(self::PREF_ALLOW_RENAME, '1')),
-                self::PREF_ALLOW_NEW_SOURCE                         => boolval($this->getPreference(self::PREF_ALLOW_NEW_SOURCE, '1')),
-                self::PREF_SHOW_TITLE                               => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
-                self::PREF_SHOW_XREF                                => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
-                self::PREF_SHOW_AUTHOR                              => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
-                self::PREF_SHOW_DATE_RANGE                          => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
-                self::PREF_ALLOW_ADMIN_DELIMITER                    => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
-                self::PREF_SHOW_REPO_FACTS_IN_CITATIONS             => boolval($this->getPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, '0')),
-                self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS           => boolval($this->getPreference(self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, '0')),
-                self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS          => boolval($this->getPreference(self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, '0')),
-                self::PREF_EXPAND_REPOS_IN_CITATIONS      	        => boolval($this->getPreference(self::PREF_EXPAND_REPOS_IN_CITATIONS, '0')),
-                self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	        => boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
-                self::PREF_ENABLE_COPY_PASTE_CITATIONS   	        => boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
-                self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE          => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
-                self::PREF_SHOW_FINDING_AID_ADDRESS                 => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
-                self::PREF_SHOW_FINDING_AID_WT_LINKS                => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
-                self::PREF_SHOW_FINDING_AID_TOC                     => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
-                self::PREF_SHOW_FINDING_AID_TOC_LINKS               => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
-                self::PREF_SHOW_FINDING_AID_TOC_TITLES              => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_TITLES, '1')),
-                self::PREF_ALLOW_ADMIN_XML_SETTINGS                 => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
-                self::PREF_USE_META_REPOSITORIES                    => boolval($this->getPreference(self::PREF_USE_META_REPOSITORIES, '0')),
-                self::PREF_ATOM_SLUG                                => $this->getPreference(self::PREF_ATOM_SLUG, self::PREF_ATOM_SLUG_CALL_NUMBER),
-                self::PREF_SHOW_ATOM_LINKS                          => boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')),
-                self::PREF_ATOM_BASE_URL                            => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
-                self::PREF_ATOM_REPOSITORIES                        => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
+                self::PREF_SHOW_CATEGORY_LABEL                 => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_LABEL, '1')),
+                self::PREF_SHOW_CATEGORY_TITLE                 => boolval($this->getPreference(self::PREF_SHOW_CATEGORY_TITLE, '0')),
+                self::PREF_SHOW_HELP_ICON                      => boolval($this->getPreference(self::PREF_SHOW_HELP_ICON, '1')),
+                self::PREF_SHOW_HELP_LINK                      => boolval($this->getPreference(self::PREF_SHOW_HELP_LINK, '1')),
+                self::PREF_SHOW_TRUNCATED_CALL_NUMBER          => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CALL_NUMBER, '1')),
+                self::PREF_SHOW_TRUNCATED_CATEGORY             => boolval($this->getPreference(self::PREF_SHOW_TRUNCATED_CATEGORY, '1')),
+                self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY        => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '1')),
+                self::PREF_ALLOW_RENAME                        => boolval($this->getPreference(self::PREF_ALLOW_RENAME, '1')),
+                self::PREF_ALLOW_NEW_SOURCE                    => boolval($this->getPreference(self::PREF_ALLOW_NEW_SOURCE, '1')),
+                self::PREF_SHOW_TITLE                          => boolval($this->getPreference(self::PREF_SHOW_TITLE, '1')),
+                self::PREF_SHOW_XREF                           => boolval($this->getPreference(self::PREF_SHOW_XREF, '1')),
+                self::PREF_SHOW_AUTHOR                         => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
+                self::PREF_SHOW_DATE_RANGE                     => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
+                self::PREF_ALLOW_ADMIN_DELIMITER               => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
+                self::PREF_SHOW_REPO_FACTS_IN_CITATIONS        => boolval($this->getPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, '0')),
+                self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS      => boolval($this->getPreference(self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, '0')),
+                self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS     => boolval($this->getPreference(self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, '0')),
+                self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS     => $this->getPreference(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, implode(',', self::$ALL_SOURCE_FACTS_IN_CITATIONS->keys()->toArray())),
+                self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS => $this->getPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, implode(',', self::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS->keys()->toArray())),
+                self::PREF_EXPAND_REPOS_IN_CITATIONS      	   => boolval($this->getPreference(self::PREF_EXPAND_REPOS_IN_CITATIONS, '0')),
+                self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	   => boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
+                self::PREF_ENABLE_COPY_PASTE_CITATIONS   	   => boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
+                self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE     => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
+                self::PREF_SHOW_FINDING_AID_ADDRESS            => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
+                self::PREF_SHOW_FINDING_AID_WT_LINKS           => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
+                self::PREF_SHOW_FINDING_AID_TOC                => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC, '1')),
+                self::PREF_SHOW_FINDING_AID_TOC_LINKS          => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
+                self::PREF_SHOW_FINDING_AID_TOC_TITLES         => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_TOC_TITLES, '1')),
+                self::PREF_ALLOW_ADMIN_XML_SETTINGS            => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_XML_SETTINGS, '1')),
+                self::PREF_USE_META_REPOSITORIES               => boolval($this->getPreference(self::PREF_USE_META_REPOSITORIES, '0')),
+                self::PREF_ATOM_SLUG                           => $this->getPreference(self::PREF_ATOM_SLUG, self::PREF_ATOM_SLUG_CALL_NUMBER),
+                self::PREF_SHOW_ATOM_LINKS                     => boolval($this->getPreference(self::PREF_SHOW_ATOM_LINKS, '0')),
+                self::PREF_ATOM_BASE_URL                       => $this->getPreference(self::PREF_ATOM_BASE_URL, ''),
+                self::PREF_ATOM_REPOSITORIES                   => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
             ]
         );
     }  
@@ -639,6 +668,9 @@ class RepositoryHierarchy extends AbstractModule implements
     public function postAdminAction(ServerRequestInterface $request): ResponseInterface
     {
         $params = (array) $request->getParsedBody();
+
+        $shown_source_facts_in_citations = Validator::parsedBody($request)->array(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS);
+        $explanded_facts_in_citations = Validator::parsedBody($request)->array(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS);
 
         //Save the received settings to the user preferences
         if ($params['save'] === '1') {
@@ -659,6 +691,8 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_REPO_FACTS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, implode(',', $shown_source_facts_in_citations));
+            $this->setPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, implode(',', $explanded_facts_in_citations));
             $this->setPreference(self::PREF_EXPAND_REPOS_IN_CITATIONS, isset($params[self::PREF_EXPAND_REPOS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, isset($params[self::PREF_SHOW_MEDIA_AFTER_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, isset($params[self::PREF_ENABLE_COPY_PASTE_CITATIONS]) ? '1' : '0');

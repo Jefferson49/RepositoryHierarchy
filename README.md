@@ -397,7 +397,7 @@ The Repository Hierarchy module provides a feature to directly show media object
 In order to activate this feature, the setting "Directly show media objects of sources in facts and not subordinated within source citations" needs to be selected in the control panel.
 
 ### Additionally show media objects of sources in individual and family facts
-The Repository Hierarchy module provides a feature to show media objects of sources in individual and family facts. The media objects are shown in a division "Media objects of source" below the source. The division is collapsed by default and can be un-collapsed with a mouse click.
+The Repository Hierarchy module provides a feature to show media objects of sources in individual and family facts. The media objects are shown in a division "Media objects of source" below the source. The division is collapsed by default and can be expanded with a mouse click.
 
 Please note that media objects of source citations have to be differentiated from media objects of sources. This chapter addresses media objects of **sources**. In the chapters above, Repository Hierarchy also offers features, which address media objects of **sources citations**.
 

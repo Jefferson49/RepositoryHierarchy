@@ -9,38 +9,40 @@ use Fisharebest\Webtrees\View;
 
 /**
  * @var  string		$title
- * @var  bool		$show_category_label
- * @var  bool		$show_category_title
- * @var  bool		$show_help_icon
- * @var  bool		$show_help_link
- * @var  bool		$show_category_expanded
- * @var  bool		$show_truncated_call_number
- * @var  bool		$show_date_range_for_category
- * @var  bool		$allow_rename
- * @var  bool		$allow_new_sources
- * @var  bool		$show_truncated_category
- * @var  bool		$show_title
- * @var  bool		$show_xref
- * @var  bool		$show_author
- * @var  bool		$show_date_range
- * @var  bool		$allow_admin_delimiter
- * @var  bool		$show_repo_facts_in_citations
- * @var  bool		$show_source_media_in_citations
- * @var  bool		$show_further_source_facts_in_citations
- * @var  bool		$expand_repos_in_citations
- * @var  bool		$show_media_after_citations
- * @var  bool		$enable_copy_paste_citations
- * @var  bool		$show_finding_aid_category_title
- * @var  bool		$show_finding_aid_address
- * @var  bool		$show_finding_aid_wt_links
- * @var  bool		$show_finding_aid_toc
- * @var  bool		$show_finding_aid_toc_links
- * @var  bool		$allow_admin_xml_settings
- * @var  bool		$use_meta_repositories
- * @var  bool		$show_atom_links
- * @var  string		$atom_slug
- * @var  string		$atom_base_url
- * @var  string		$atom_repositories
+ * @var  bool	    $show_category_label
+ * @var  bool	    $show_category_title
+ * @var  bool	    $show_help_icon
+ * @var  bool	    $show_help_link
+ * @var  bool	    $show_category_expanded
+ * @var  bool	    $show_truncated_call_number
+ * @var  bool	    $show_date_range_for_category
+ * @var  bool	    $allow_rename
+ * @var  bool	    $allow_new_sources
+ * @var  bool	    $show_truncated_category
+ * @var  bool	    $show_title
+ * @var  bool	    $show_xref
+ * @var  bool	    $show_author
+ * @var  bool	    $show_date_range
+ * @var  bool	    $allow_admin_delimiter
+ * @var  bool       $show_repo_facts_in_citations
+ * @var  bool       $show_source_media_in_citations
+ * @var  bool       $show_further_source_facts_in_citations
+ * @var  string     $shown_source_facts_in_citations
+ * @var  string     $explanded_facts_in_citations
+ * @var  bool       $expand_repos_in_citations
+ * @var  bool       $show_media_after_citations
+ * @var  bool       $enable_copy_paste_citations
+ * @var  bool       $show_finding_aid_category_title
+ * @var  bool       $show_finding_aid_address
+ * @var  bool       $show_finding_aid_wt_links
+ * @var  bool       $show_finding_aid_toc_links
+ * @var  bool       $allow_admin_xml_settings
+ * @var  bool	    $use_meta_repositories
+ * @var  bool	    $show_atom_links
+ * @var  string     $atom_slug
+ * @var  string     $atom_base_url
+ * @var  string     $atom_repositories
+ * 
  */
 
 ?>
@@ -101,18 +103,27 @@ use Fisharebest\Webtrees\View;
             <div class="row"><?= view('icons/spacer') ?></div>
 
             <h3><?= I18N::translate('Settings for source citations') ?></h3>
-            <div class="row">
-                <?= view('components/checkbox', ['label' => I18N::translate('Show repository facts (SOUR:REPO, SOUR:REPO:CALN) within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_REPO_FACTS_IN_CITATIONS, 'checked' => $show_repo_facts_in_citations]) ?>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label" for="<?= RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS ?>">
+                    <?= I18N::translate('Source facts to show for sources within source citations') ?>
+                </label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <?= view('components/select', ['name' => RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS . '[]', 'id' => RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, 'selected' => explode(',', $shown_source_facts_in_citations), 'options' => RepositoryHierarchy::$ALL_SOURCE_FACTS_IN_CITATIONS, 'class' => 'tom-select']) ?>
+                    </div>
+                </div>
             </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label" for="<?= RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS ?>">
+                    <?= I18N::translate('Automatically expand the following facts within source citations') ?>
+                </label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <?= view('components/select', ['name' => RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS . '[]', 'id' => RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, 'selected' => explode(',', $explanded_facts_in_citations), 'options' => RepositoryHierarchy::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS, 'class' => 'tom-select']) ?>
+                    </div>
+                </div>
+            </div>            
             <div class="row">
-                <?= view('components/checkbox', ['label' => I18N::translate('Automatically expand repositories in source citations. Applies only if "Show additional source facts" is activated.'), 'name' => RepositoryHierarchy::PREF_EXPAND_REPOS_IN_CITATIONS, 'checked' => $expand_repos_in_citations]) ?>
-            </div>
-            <div class="row">
-                <?= view('components/checkbox', ['label' => I18N::translate('Show all media objects of sources within a source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, 'checked' => $show_source_media_in_citations]) ?>
-            </div>
-           <div class="row">
-                <?= view('components/checkbox', ['label' => I18N::translate('Show further facts of sources (e.g. publication, notes, reference numbers, i.e. SOUR:PUBL, SOUR:NOTE, SOUR:REFN, ...) within source citations. Note: Repository facts and media objects can be selected by separate settings.'), 'name' => RepositoryHierarchy::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, 'checked' => $show_further_facts_in_citations]) ?>
-            </div>            <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Directly show media objects of sources in facts and not subordinated within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, 'checked' => $show_media_after_citations]) ?>
             </div>
             <div class="row">
