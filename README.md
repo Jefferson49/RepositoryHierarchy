@@ -56,11 +56,9 @@ This README file contains the following main sections:What](
     *   [Settings for EAD XML exports](#settings-for-ead-xml-exports)
     *   [Export data to an external archive management system](#export-data-to-an-external-archive-management-system)
     *   [Create links between webtrees and an external archive management system](#create-links-between-webtrees-and-an-external-archive-management-system)
-    *   [Show additional repository information in source citations](#show-additional-repository-information-in-source-citations)
-    *   [Directly show media objects of source citations in individual facts](#directly-show-media-objects-of-source-citations-in-individual-facts)
-    *   [Additionally show media objects of sources in individual and family facts](#additionally-show-media-objects-of-sources-in-individual-and-family-facts)
-    *   [Show further facts of sources within source citations](#show-further-facts-of-sources-within-source-citations)
+    *   [Show facts of sources within source citations](#show-facts-of-sources-within-source-citations)
     *   [Copy-Paste mechanism for source citations in the individual and family view](#copy-paste-mechanism-for-source-citations-in-the-individual-and-family-view)
+    *   [Directly show media objects of source citations in individual facts](#directly-show-media-objects-of-source-citations-in-individual-and-family-facts)
     *   [Show all images of media objects](#show-all-images-of-media-objects)
     *   [Preferences](#preferences)
 *   [**Demo website and examples**](#demo-website-and-examples)
@@ -372,18 +370,27 @@ Within webtrees, the Repository Hierarchy module can provide links to the relate
 
 ![Screenshot](resources/img/screenshot_AtoM_link_in_webtrees.jpg)
 
-### Show additional repository information in source citations
-The Repository Hierarchy module provides a feature to show extended information about repositories within source citations. If one of the following GEDCOM tags is available and contains content, it is shown in the user interface:
-+ REPO (name of repository)
-+ REPO:CALN (call number of the source in the repository)
+### Show facts of sources within source citations
 
-![Screenshot](resources/img/screenshot_source_citation_in_webtrees.jpg)
+The Repository Hierarchy module provides a feature to show the facts of sources (e.g. publication, notes, reference numbers, media objects, ...) within source citations. This helps to obtain the information about related sources more quickly. In the standard webtrees installation, only the title of a source with a link is shown.
 
-In order to activate this feature, the setting "Show additional source facts (REPO, REPO:CALN) within source citations" needs to be selected in the control panel.
+In the module settings, there is a selection field (see screenshot) to choose the source facts to be shown in source citations. For some facts, which have the character of a group, a second selection field is available to choose whether the group is automatically expanded or otherwise collapsed as a default. 
 
-Note: An additional setting exists to define whether repositories are automatically expanded in source citations.
+**Screenshot: Settings for source facts within source citations**
+![Screenshot](resources/img/settings_for_source_facts_in_source_citations.jpg)
 
-Note:Additionally, it is possible to show links to AtoM (as an external archive management system) within the source citations. The details are described in the related [chapter](#create-links-between-webtrees-and-an-external-archive-management-system).
+In the following screenshot, it can be seen how the information is provided in two section. One section for the source information and another section for the source citation.
+
+**Screenshot: Show further source facts within source citations**
+![Screenshot](resources/img/show_further_source_facts_within_citation.jpg)
+
+### Copy-Paste mechanism for source citations in the individual and family view
+The Repository Hierarchy module provides a feature to copy/paste source citations. If this feature is activated in the module settings, a copy icon is shown on the right hand side of each source citation. By clicking on the icon, the source citation can be copied to an internal clipboard. If a source citation is available in the clipboard, a source icon is shown in the edit area of all facts/events, which allow to use source citations. By clicking on the source icon, the source citation can be copied from the clipboard to the fact/event.
+
+**Screenshot: Copy/Paste of source citations**
+![Screenshot](resources/img/screenshot_copy_paste_source_citations.jpg)
+
+In order to activate this feature, the setting "Enable copy/paste mechanism for source citations in the individual and family view" needs to be selected in the control panel.
 
 ### Directly show media objects of source citations in individual and family facts
 The Repository Hierarchy module provides a feature to directly show media objects of source citations in individual and family facts (and not subordinated in the source citation).
@@ -395,37 +402,6 @@ The Repository Hierarchy module provides a feature to directly show media object
 ![Screenshot](resources/img/screenshot_media_objects_subordinated_in_citations.jpg)
 
 In order to activate this feature, the setting "Directly show media objects of sources in facts and not subordinated within source citations" needs to be selected in the control panel.
-
-### Additionally show media objects of sources in individual and family facts
-The Repository Hierarchy module provides a feature to show media objects of sources in individual and family facts. The media objects are shown in a division "Media objects of source" below the source. The division is collapsed by default and can be expanded with a mouse click.
-
-Please note that media objects of source citations have to be differentiated from media objects of sources. This chapter addresses media objects of **sources**. In the chapters above, Repository Hierarchy also offers features, which address media objects of **sources citations**.
-
-**Screenshot of family fact with media objects of a source:**
-![Screenshot](resources/img/media_objects_of_source.jpg)
-
-In order to activate this feature, the setting "Show all media objects of sources within a source citations" needs to be selected in the control panel.
-
-### Show further facts of sources within source citations
-
-The Repository Hierarchy module provides a feature to show further facts of sources (e.g. publication, notes, reference numbers, i.e. SOUR:PUBL, SOUR:NOTE, SOUR:REFN, ...) within source citations, since the standard webtrees installation only shows the title of a source with a link. 
-
-Additional notes:
-+ Repository facts and media objects can be selected by separate settings; please refer to the related chapters. 
-+ The following facts are currently not show: SOUR:DATA, SOUR:CHAN
-
-**Screenshot: Show further source facts within source citations**
-![Screenshot](resources/img/show_further_source_facts_within_citation.jpg)
-
-In order to activate this feature, the setting "Show further facts of sources (e.g. SOUR:PUBL, SOUR:NOTE, SOUR:REFN, ...) within source citations" needs to be selected in the control panel.
-
-### Copy-Paste mechanism for source citations in the individual and family view
-The Repository Hierarchy module provides a feature to copy/paste source citations. If this feature is activated in the module settings, a copy icon is shown on the right hand side of each source citation. By clicking on the icon, the source citation can be copied to an internal clipboard. If a source citation is available in the clipboard, a source icon is shown in the edit area of all facts/events, which allow to use source citations. By clicking on the source icon, the source citation can be copied from the clipboard to the fact/event.
-
-**Screenshot: Copy/Paste of source citations**
-![Screenshot](resources/img/screenshot_copy_paste_source_citations.jpg)
-
-In order to activate this feature, the setting "Enable copy/paste mechanism for source citations in the individual and family view" needs to be selected in the control panel.
 
 ### Show all images of media objects
 
@@ -458,10 +434,8 @@ The following preferences can be activated/deactivated by administrators in the 
 + Allow users to load stored delimiter expressions from administrator.
 
 #### Preferences for source citations
-+ Show additional source facts (REPO, REPO:CALN) within source citations.
-+ Automatically expand repositories in source citations. Applies only if "Show additional source facts" is activated.
-+ Show all media objects of sources within a source citations.
-+ Show further facts of sources (e.g. SOUR:PUBL, SOUR:NOTE, SOUR:REFN, ...) within source citations.
++ Show source facts for sources within source citations
++ Automatically expand souce facts within source citations
 + Directly show media objects of sources in facts and not sub-ordinated within source citations.
 + Enable copy/paste mechanism for source citations in the individual and family view.
 
