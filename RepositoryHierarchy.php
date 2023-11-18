@@ -345,6 +345,7 @@ class RepositoryHierarchy extends AbstractModule implements
             'REPO'  => MoreI18N::xlate('Repository'),
             'OBJE' => MoreI18N::xlate('Media object'),
             'DATA'  => MoreI18N::xlate('Data'),
+            'TEXT'  => MoreI18N::xlate('Text'),
         ]);
 
         $router = Registry::routeFactory()->routeMap();

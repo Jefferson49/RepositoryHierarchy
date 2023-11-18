@@ -3,6 +3,7 @@
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
 use Cissee\WebtreesExt\MoreI18N;
+use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ModuleService;
@@ -31,6 +32,7 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 	<?php $element = Registry::elementFactory()->make($fact->tag()) ?>
 	<?php $fact_tag_within_citation = str_replace('SOUR:', '', $fact->tag())?>
 
+	<?php //Show repository, call number and AtoM links?>
 	<?php if ($fact_tag_within_citation === 'REPO') : ?>
 		<?php $xref = str_replace('@', '', $fact->value()) ?>
 		<?php $repository = Registry::repositoryFactory()->make($xref, $tree) ?>
@@ -71,12 +73,16 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 				</div>
 			<?php endif ?>
 		<?php endif ?>
+
+	<?php //Collect media objects of the source ?>
 	<?php elseif ($fact_tag_within_citation === 'OBJE') : ?>
 		<?php if (preg_match_all('/@(.*)@/', $fact->gedcom(), $matches, PREG_SET_ORDER) > 0) : ?>
 			<?php foreach ($matches as $match) : ?>
 				<?php array_push($xrefs_of_media_objects, $match[1]) ?>
 			<?php endforeach ?>
 		<?php endif ?>
+
+	<?php //Show other source facts ?>
 	<?php else : ?>
 		<?php if(in_array($fact_tag_within_citation, $shown_source_tags)) : ?>
 			<?php if(in_array($fact_tag_within_citation, $expandable_source_tags)) : ?>
@@ -87,21 +93,29 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 						<?= view('icons/expand') ?>
 						<?= view('icons/collapse') ?>
 					</button>
-					<b><?= $element->label() ?></b>
+					<span class="label"><?= e($element->label()) ?></span>
 				</div>
 				<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
-					Fact
-					<?php $count_source_facts++ ?>
+					<?php if ($fact_tag_within_citation === 'TEXT') : ?>					
+						<span class="value align-top"><?= $element->value($fact->value(), $tree) ?></span>
+						<?php $count_source_facts++ ?>
+					<?php elseif ($fact_tag_within_citation === 'DATA') : ?>				
+						<?php preg_match_all('/\n2 (' . Gedcom::REGEX_TAG . ')( .*)?((\n[3-9].*)*)/', $fact->gedcom(), $matches, PREG_SET_ORDER) ?>
+						<?php foreach ($matches as $match) : ?>
+							<?= view('fact-gedcom-fields', ['gedcom' => $match[0], 'parent' => $fact->tag() . ':' . $match[1], 'tree' => $tree]) ?>
+							<?php $count_source_facts++ ?>
+						<?php endforeach; ?>
+					<?php endif ?>
 				</div>
-			<?php else : ?>								
+			<?php else : ?>
+				<?php //Do not escape, because it is already escaped in the method  ?>
 				<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
-				<?php $count_source_facts++ ?>
 			<?php endif ?>
 		<?php endif ?>
 	<?php endif ?>
 <?php endforeach ?>
 
-<?php //Show all media objects of the source ?>
+<?php //Show all media objects of the source, which were collected above ?>
 <?php if (in_array('OBJE', $shown_source_tags) 
 			&& sizeof($xrefs_of_media_objects) > 0) : ?>
 	<?php $id = Registry::idFactory()->id() ?>
@@ -124,6 +138,7 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 	</div>
 <?php endif ?>
 
+<?php //Show separator between source facts and source citation ?>
 <?php if($count_source_facts >0) : ?>
 	<?= view('icons/footer') ?>
 <?php endif ?>
