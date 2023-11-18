@@ -160,10 +160,6 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_MODULE_VERSION = 'module_version';
     public const PREF_START_REPOSITORY = 'start_repository';
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
-    public const PREF_SHOW_REPO_FACTS_IN_CITATIONS = 'show_repo_facts_in_citations';
-    public const PREF_EXPAND_REPOS_IN_CITATIONS ='expand_repos_in_citations';
-    public const PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS ='show_source_media_in_citations';
-    public const PREF_SHOW_FURTHER_FACTS_IN_CITATIONS ='show_further_facts_in_citations';
     public const PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS ='shown_source_facts_in_citations';
     public const PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS ='explanded_facts_in_citations';
 	public const PREF_SHOW_MEDIA_AFTER_CITATIONS = 'show_media_after_citations';
@@ -202,6 +198,10 @@ class RepositoryHierarchy extends AbstractModule implements
     public const OLD_PREF_FINDING_AID_PUBLISHER = 'finding_aid_publ_';
     public const OLD_PREF_MAIN_AGENCY_CODE = 'main_agency_code_';
     public const OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS = 'show_source_facts_in_citations';
+    public const OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS = 'show_repo_facts_in_citations';
+    public const OLD_PREF_EXPAND_REPOS_IN_CITATIONS ='expand_repos_in_citations';
+    public const OLD_PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS ='show_source_media_in_citations';
+    public const OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS ='show_further_facts_in_citations';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';
@@ -343,7 +343,7 @@ class RepositoryHierarchy extends AbstractModule implements
         //Initialization of source facts, which can expanded within source citations
         self::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS = Collection::make([
             'REPO'  => MoreI18N::xlate('Repository'),
-            'OBJE' => MoreI18N::xlate('Media object'),
+            'OBJE'  => MoreI18N::xlate('Media object'),
             'DATA'  => MoreI18N::xlate('Data'),
             'TEXT'  => MoreI18N::xlate('Text'),
         ]);
@@ -635,12 +635,8 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_AUTHOR                         => boolval($this->getPreference(self::PREF_SHOW_AUTHOR, '1')),
                 self::PREF_SHOW_DATE_RANGE                     => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
                 self::PREF_ALLOW_ADMIN_DELIMITER               => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
-                self::PREF_SHOW_REPO_FACTS_IN_CITATIONS        => boolval($this->getPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, '0')),
-                self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS      => boolval($this->getPreference(self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, '0')),
-                self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS     => boolval($this->getPreference(self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, '0')),
                 self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS     => $this->getPreference(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, implode(',', self::$ALL_SOURCE_FACTS_IN_CITATIONS->keys()->toArray())),
                 self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS => $this->getPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, implode(',', self::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS->keys()->toArray())),
-                self::PREF_EXPAND_REPOS_IN_CITATIONS      	   => boolval($this->getPreference(self::PREF_EXPAND_REPOS_IN_CITATIONS, '0')),
                 self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	   => boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
                 self::PREF_ENABLE_COPY_PASTE_CITATIONS   	   => boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
                 self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE     => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
@@ -689,12 +685,8 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_AUTHOR, isset($params[self::PREF_SHOW_AUTHOR]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE]) ? '1' : '0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER]) ? '1' : '0');
-            $this->setPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_REPO_FACTS_IN_CITATIONS]) ? '1' : '0');
-            $this->setPreference(self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, isset($params[self::PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS]) ? '1' : '0');
-            $this->setPreference(self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, isset($params[self::PREF_SHOW_FURTHER_FACTS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, implode(',', $shown_source_facts_in_citations));
             $this->setPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, implode(',', $explanded_facts_in_citations));
-            $this->setPreference(self::PREF_EXPAND_REPOS_IN_CITATIONS, isset($params[self::PREF_EXPAND_REPOS_IN_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, isset($params[self::PREF_SHOW_MEDIA_AFTER_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, isset($params[self::PREF_ENABLE_COPY_PASTE_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, isset($params[self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE]) ? '1' : '0');
@@ -765,21 +757,65 @@ class RepositoryHierarchy extends AbstractModule implements
      * @return string
      */
     public function updatePreferences(): string
-    {
+    {       
         //Rename old preferences
-        if (    $this->getPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS) === ''
+        if (    $this->getPreference(self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS) === ''
             &&  $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS) !== 'deleted') {
 
             //Copy old value to new preference
-            $this->setPreference(self::PREF_SHOW_REPO_FACTS_IN_CITATIONS, $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS));
+            $this->setPreference(self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS, $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS));
             
             //Set old preference value to deleted
             $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'deleted');
         } 
 
+        //Delete old preferences, i.e. set old preference value to deleted
+        $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'deleted');
+        $this->setPreference(self::OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, 'deleted');
+
+        //Move old preferences for source facts to new preferences
+        $old_facts_in_citations_preferences = [
+            [self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS,   'REPO', false],
+            [self::OLD_PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, 'OBJE', false],
+            [self::OLD_PREF_EXPAND_REPOS_IN_CITATIONS,      'REPO', true],
+        ];
+
+        foreach($old_facts_in_citations_preferences as $update) {
+            $this->updateShownFactsInCitationsPrerences($update[0], $update[1], $update[2]);
+        }
+        
         $error = '';
         return $error;
     }
+
+    /**
+     * Update preferences to show facts in citations
+     *
+     * @return void
+     */
+    public function updateShownFactsInCitationsPrerences(string $old_preference, string $gedcom_tag, $expanded = false) : void {
+
+        $new_preference = $expanded ? self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS : self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS;
+        $preference_value =$this->getPreference($new_preference, '');
+
+        if (!str_contains($preference_value, $gedcom_tag)) {
+            if ($preference_value === '') {
+                $preference_value = $gedcom_tag;
+            }
+            else {
+                $preference_value .= ',' . $gedcom_tag;
+            }
+        }
+
+        //Copy value to new preference
+        $this->setPreference($new_preference, $preference_value);
+
+        //Delete old preferences, i.e. set old preference value to deleted
+        $this->setPreference($old_preference, 'deleted');
+
+        return;
+    }
+
 
     /**
      * {@inheritDoc}
