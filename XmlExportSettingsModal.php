@@ -73,11 +73,11 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 
         $replaces_list = [
-            ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_TITLE, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_TITLE],
-            ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_IDENTIFIER, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER],
-            ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_URL, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_URL],
-            ['search'   => RepositoryHierarchy::OLD_PREF_FINDING_AID_PUBLISHER, 'replace'  => RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER],
-            ['search'   => RepositoryHierarchy::OLD_PREF_MAIN_AGENCY_CODE, 'replace'  => RepositoryHierarchy::PREF_MAIN_AGENCY_CODE],
+            ['search' => RepositoryHierarchy::OLD_PREF_FINDING_AID_TITLE,      'replace' => RepositoryHierarchy::PREF_FINDING_AID_TITLE],
+            ['search' => RepositoryHierarchy::OLD_PREF_FINDING_AID_IDENTIFIER, 'replace' => RepositoryHierarchy::PREF_FINDING_AID_IDENTIFIER],
+            ['search' => RepositoryHierarchy::OLD_PREF_FINDING_AID_URL,        'replace' => RepositoryHierarchy::PREF_FINDING_AID_URL],
+            ['search' => RepositoryHierarchy::OLD_PREF_FINDING_AID_PUBLISHER,  'replace' => RepositoryHierarchy::PREF_FINDING_AID_PUBLISHER],
+            ['search' => RepositoryHierarchy::OLD_PREF_MAIN_AGENCY_CODE,       'replace' => RepositoryHierarchy::PREF_MAIN_AGENCY_CODE],
         ];
 
         foreach ($replaces_list as $replace_pair) {
@@ -87,7 +87,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                 $old_setting = $repository_hierarchy->getPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, '');
                 $new_setting = $repository_hierarchy->getPreference($replace_pair['replace'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, '');
 
-                if ($old_setting !== '' && $old_setting !== 'deleted') {
+                if ($old_setting !== '' && $old_setting !== RepositoryHierarchy::PREF_DELETED) {
 
                     //If new preference does not already exist
                     if ($new_setting === '') {
@@ -101,8 +101,8 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                         $repository_hierarchy->setPreference($replace_pair['replace'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, $old_setting);
                     }
         
-                    //Delete old setting (i.e. set to 'deleted')
-                    $repository_hierarchy->setPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, 'deleted');
+                    //Delete old setting (i.e. set to deleted)
+                    $repository_hierarchy->setPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, RepositoryHierarchy::PREF_DELETED);
                 }
     
             }
