@@ -192,6 +192,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_CITATION_GEDCOM = 'citation_gedcom';
 
     //Old prefences/settings not used any more, but needed for version updates
+    public const PREF_DELETED = 'deleted';
     public const OLD_PREF_FINDING_AID_TITLE = 'finding_aid_title_';
     public const OLD_PREF_FINDING_AID_IDENTIFIER = 'finding_aid_id_';
     public const OLD_PREF_FINDING_AID_URL = 'finding_aid_url_';
@@ -323,9 +324,6 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function boot(): void
     {
-        //Check module version and update preferences etc.
-        $this->checkModuleVersionUpdate();
-
         //Initialization of the custom view list
         $this->custom_view_list = new Collection;
 
@@ -347,6 +345,9 @@ class RepositoryHierarchy extends AbstractModule implements
             'DATA'  => MoreI18N::xlate('Data'),
             'TEXT'  => MoreI18N::xlate('Text'),
         ]);
+
+        //Check module version and update preferences etc.
+        $this->checkModuleVersionUpdate();
 
         $router = Registry::routeFactory()->routeMap();
 
@@ -760,20 +761,21 @@ class RepositoryHierarchy extends AbstractModule implements
     {       
         //Rename old preferences
         if (    $this->getPreference(self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS) === ''
-            &&  $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS) !== 'deleted') {
+            &&  $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS) !== self::PREF_DELETED) {
 
             //Copy old value to new preference
             $this->setPreference(self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS, $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS));
-            
-            //Set old preference value to deleted
-            $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'deleted');
         } 
-
-        //Delete old preferences, i.e. set old preference value to deleted
-        $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, 'deleted');
-        $this->setPreference(self::OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, 'deleted');
+        $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);
 
         //Move old preferences for source facts to new preferences
+        if (    $this->getPreference(self::OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS) !== self::PREF_DELETED
+            &&  boolval($this->getPreference(self::OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, '0'))) {
+
+            $this->setPreference(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, implode(',', self::$ALL_SOURCE_FACTS_IN_CITATIONS->keys()->toArray()));
+            $this->setPreference(self::OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS, self::PREF_DELETED);
+        }
+
         $old_facts_in_citations_preferences = [
             [self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS,   'REPO', false],
             [self::OLD_PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS, 'OBJE', false],
@@ -784,6 +786,9 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->updateShownFactsInCitationsPrerences($update[0], $update[1], $update[2]);
         }
         
+        //Delete old preferences, i.e. set old preference value to deleted
+        $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);
+
         $error = '';
         return $error;
     }
@@ -794,6 +799,15 @@ class RepositoryHierarchy extends AbstractModule implements
      * @return void
      */
     public function updateShownFactsInCitationsPrerences(string $old_preference, string $gedcom_tag, $expanded = false) : void {
+
+        //Do nothing if old preference was not activated or has already been deleted
+        if ($this->getPreference($old_preference, '') === self::PREF_DELETED) return;
+
+        //If old preference was not activated, delete it and return
+        if (!boolval($this->getPreference($old_preference, '0'))) {
+            $this->setPreference($old_preference, self::PREF_DELETED);
+            return;
+        }
 
         $new_preference = $expanded ? self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS : self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS;
         $preference_value =$this->getPreference($new_preference, '');
@@ -811,7 +825,7 @@ class RepositoryHierarchy extends AbstractModule implements
         $this->setPreference($new_preference, $preference_value);
 
         //Delete old preferences, i.e. set old preference value to deleted
-        $this->setPreference($old_preference, 'deleted');
+        $this->setPreference($old_preference, self::PREF_DELETED);
 
         return;
     }
