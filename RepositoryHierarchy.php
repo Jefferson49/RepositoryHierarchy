@@ -637,7 +637,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_SHOW_DATE_RANGE                     => boolval($this->getPreference(self::PREF_SHOW_DATE_RANGE, '1')),
                 self::PREF_ALLOW_ADMIN_DELIMITER               => boolval($this->getPreference(self::PREF_ALLOW_ADMIN_DELIMITER, '1')),
                 self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS     => $this->getPreference(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, implode(',', self::$ALL_SOURCE_FACTS_IN_CITATIONS->keys()->toArray())),
-                self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS => $this->getPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, implode(',', self::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS->keys()->toArray())),
+                self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS  => $this->getPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, ''),
                 self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	   => boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
                 self::PREF_ENABLE_COPY_PASTE_CITATIONS   	   => boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
                 self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE     => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
