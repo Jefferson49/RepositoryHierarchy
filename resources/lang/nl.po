@@ -62,18 +62,15 @@ msgstr ""
 "Een hiërarchisch gestructureerde lijst van de bronnen van een archief op basis van de "
 "oproepnummers van de bronnen"
 
-#, php-format
 msgid "The preferences for the module “%s” were updated."
 msgstr "De voorkeuren voor de module \"%s\" zijn bijgewerkt."
 
-#, php-format
 msgid ""
 "Error while trying to update the custom module \"%s\" to the new module version %s: "
 msgstr ""
 "Fout tijdens het bijwerken van de aangepaste module \"%s\" naar de nieuwe "
 "moduleversie %s: "
 
-#, php-format
 msgid ""
 "The preferences for the custom module \"%s\" were sucessfully updated to the new "
 "module version %s."
@@ -107,7 +104,6 @@ msgstr ""
 "Om oproepnummercategorieën te kunnen wijzigen, moet u een \"Manager\"-rol hebben voor "
 "de betreffende stamboom."
 
-#, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. This can "
 "lead to unintended behavior. If using the %s module, it is strongly recommended to "
@@ -119,7 +115,6 @@ msgstr ""
 "aanbevolen om de module \"%s\" te deactiveren, omdat de identieke functionaliteit ook "
 "in de module %s is geïntegreerd."
 
-#, php-format
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. This can "
 "lead to unintended behavior, because both of the modules have registered the same "
@@ -133,7 +128,6 @@ msgstr ""
 msgid "Error"
 msgstr "Fout"
 
-#, php-format
 msgid ""
 "The custom module view \"%s\" is not registered as replacement for the standard "
 "webtrees view. There might be another module installed, which registered the same "
@@ -146,7 +140,6 @@ msgstr ""
 "wordt sterk aangeraden om een van de modules te deactiveren. Het pad van de "
 "parallelle weergave is: %s"
 
-#, php-format
 msgid "Repository Hierarchy of: %s"
 msgstr "Opslagplaatshiërarchie van: %s"
 
@@ -179,7 +172,6 @@ msgstr "scheidingstekenexpressie laden"
 msgid "Could not load repository. No repository stored."
 msgstr "Kan de opslagplaats niet laden. Geen opslagplaats opgeslagen."
 
-#, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "De stamboom \"%s\" bevat geen opslagplaats"
 
@@ -572,7 +564,6 @@ msgstr ""
 msgid "Show link to AtoM records within source citations"
 msgstr "Toon link naar AtoM-records binnen bronvermeldingen"
 
-#, php-format
 msgid ""
 "Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be used to "
 "link a webtrees source citation to the source view in an external AtoM archive "
