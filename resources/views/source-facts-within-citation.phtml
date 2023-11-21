@@ -6,6 +6,7 @@ use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
 
@@ -18,9 +19,9 @@ $module_service = new ModuleService();
 $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, ''));
 $xrefs_of_media_objects = [];
-$shown_source_tags = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS));
+$shown_source_tags = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, ''));
 $expandable_source_tags = RepositoryHierarchy::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS->keys()->toArray();
-$expanded_source_tags = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS));
+$expanded_source_tags = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, ''));
 
 ?> 
  
@@ -42,7 +43,7 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 									(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, '0'))) &&
 									(in_array($tree->name() . ':' . $xref, $atom_repositories)) ?>
 
-		<?php if (in_array('REPO', $shown_source_tags)) : ?>
+		<?php if (in_array('REPO', $shown_source_tags) && $repository instanceof Repository) : ?>
 			<?php if ($caln_string === '' && !$show_atom_links) : ?>
 				<?php //Do not escape, because it is already escaped in the method  ?>
 				<?= $element->labelValue(strtr($fact->value(), ["\r" => "\n"]), $tree) ?>
@@ -83,7 +84,7 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 		<?php endif ?>
 
 	<?php //Show other source facts ?>
-	<?php else : ?>
+	<?php elseif ($fact_tag_within_citation !== '') : ?>
 		<?php if(in_array($fact_tag_within_citation, $shown_source_tags)) : ?>
 			<?php if(in_array($fact_tag_within_citation, $expandable_source_tags)) : ?>
 				<?php $id = Registry::idFactory()->id() ?>
@@ -93,7 +94,10 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 						<?= view('icons/expand') ?>
 						<?= view('icons/collapse') ?>
 					</button>
-					<span class="label"><?= e($element->label()) ?></span>
+
+					<?php $label = '<span class="label">' .e($element->label()). '</span>' ?>
+					<?php $value = '' ?>
+					<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 				</div>
 				<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
 					<?php if ($fact_tag_within_citation === 'TEXT') : ?>					
@@ -116,8 +120,7 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 <?php endforeach ?>
 
 <?php //Show all media objects of the source, which were collected above ?>
-<?php if (in_array('OBJE', $shown_source_tags) 
-			&& sizeof($xrefs_of_media_objects) > 0) : ?>
+<?php if (in_array('OBJE', $shown_source_tags) && sizeof($xrefs_of_media_objects) > 0) : ?>
 	<?php $id = Registry::idFactory()->id() ?>
 	<?php $expanded = in_array('OBJE', $expanded_source_tags) ?>
 	<div>
