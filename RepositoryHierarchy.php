@@ -812,7 +812,7 @@ class RepositoryHierarchy extends AbstractModule implements
         $new_preference = $expanded ? self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS : self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS;
         $preference_value =$this->getPreference($new_preference, '');
 
-        if (!str_contains($preference_value, $gedcom_tag)) {
+        if (mb_strpos($preference_value, $gedcom_tag) === false) {
             if ($preference_value === '') {
                 $preference_value = $gedcom_tag;
             }
@@ -1045,7 +1045,7 @@ class RepositoryHierarchy extends AbstractModule implements
                     $file_name = $view->getFilenameForView($view_name);
 
                     //Check if the view is registered with a file path other than the current module; e.g. another moduleS probably registered it with an unknown views namespace
-                    if (!str_contains($file_name, $this->resourcesFolder())) {
+                    if (mb_strpos($file_name, $this->resourcesFolder()) === false) {
                         throw new RuntimeException;
                     }
                 }
