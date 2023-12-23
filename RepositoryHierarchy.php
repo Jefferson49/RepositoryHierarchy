@@ -783,7 +783,7 @@ class RepositoryHierarchy extends AbstractModule implements
         ];
 
         foreach($old_facts_in_citations_preferences as $update) {
-            $this->updateShownFactsInCitationsPrerences($update[0], $update[1], $update[2]);
+            $this->updateShownFactsInCitationsPreferences($update[0], $update[1], $update[2]);
         }
         
         //Delete old preferences, i.e. set old preference value to deleted
@@ -798,7 +798,7 @@ class RepositoryHierarchy extends AbstractModule implements
      *
      * @return void
      */
-    public function updateShownFactsInCitationsPrerences(string $old_preference, string $gedcom_tag, $expanded = false) : void {
+    public function updateShownFactsInCitationsPreferences(string $old_preference, string $gedcom_tag, $expanded = false) : void {
 
         //Do nothing if old preference was not activated or has already been deleted
         if ($this->getPreference($old_preference, '') === self::PREF_DELETED) return;
