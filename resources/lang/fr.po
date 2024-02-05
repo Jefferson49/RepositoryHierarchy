@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Jefferson49/RepositoryHierarchy\n"
-"POT-Creation-Date: 2023-11-18 17:38+0100\n"
-"PO-Revision-Date: 2023-11-18 17:39+0100\n"
+"POT-Creation-Date: 2024-02-05 07:14+0100\n"
+"PO-Revision-Date: 2024-02-05 07:14+0100\n"
 "Last-Translator: Jonathan Jaubart <dev@jaubart.com>\n"
 "Language-Team: Jonathan Jaubart <dev@jaubart.com>\n"
 "Language: fr\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: translate:1;translateContext:1c,2;plural:1,2\n"
@@ -339,29 +339,23 @@ msgstr "Auteur"
 msgid "Copy source citation to clipboard"
 msgstr "Copier la citation source dans le presse-papiers"
 
-msgid "Paste source citation from clipboard"
-msgstr "Coller la citation de la source à partir du presse-papiers"
-
 msgid "Are you sure you want to delete the source citation?"
 msgstr ""
 
-#, fuzzy
-#| msgid "Settings for source citations"
 msgid "Delete source citation"
-msgstr "Paramètres pour les citations de source"
+msgstr ""
 
 msgid "Sort source citation - move up/down"
 msgstr ""
 
-#, fuzzy
-#| msgid "Settings for source citations"
 msgid "Sort source citation - move up"
-msgstr "Paramètres pour les citations de source"
+msgstr ""
 
-#, fuzzy
-#| msgid "Settings for source citations"
 msgid "Sort source citation - move down"
-msgstr "Paramètres pour les citations de source"
+msgstr ""
+
+msgid "Paste source citation from clipboard"
+msgstr "Coller la citation de la source à partir du presse-papiers"
 
 msgid "Generated on"
 msgstr "Généré le"
@@ -374,6 +368,21 @@ msgstr "Table des matières - Cadre de classement"
 
 msgid "List of Sources"
 msgstr "Liste des sources"
+
+msgid "Name"
+msgstr ""
+
+msgid "Edit the name"
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Are you sure you want to delete this fact?"
+msgstr ""
+
+msgid "Delete this name"
+msgstr ""
 
 msgid "Create a source"
 msgstr "Créer une source"
@@ -470,15 +479,6 @@ msgstr "Renommer"
 msgid "Add new source"
 msgstr "Ajouter une nouvelle source"
 
-msgid "Call Number Category"
-msgstr "Série"
-
-msgid "Rename"
-msgstr "Renommer"
-
-msgid "Add new source"
-msgstr "Ajouter une nouvelle source"
-
 msgid "Settings for Repository Hierarchy list"
 msgstr "Paramètres pour la liste des états des fonds"
 
@@ -505,7 +505,6 @@ msgid ""
 "without call number category."
 msgstr ""
 "Afficher les cotes sans la série. Les cotes seront affichées sans la série."
-
 
 msgid "Show date range for call number categories."
 msgstr "Afficher le libellé avant la série."
