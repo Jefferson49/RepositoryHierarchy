@@ -439,6 +439,10 @@ class RepositoryHierarchy extends AbstractModule implements
         //Register a custom view for fact edit links in order to allow pasting source citations
         View::registerCustomView('::fact-edit-links', $this->name() . '::fact-edit-links');
         $this->custom_view_list->add($this->name() . '::fact-edit-links');
+
+        //Register a custom view for individual page name in order to allow pasting source citations in names
+        View::registerCustomView('::individual-page-name', $this->name() . '::individual-page-name');
+        $this->custom_view_list->add($this->name() . '::individual-page-name');
     }
 
     /**
