@@ -14,6 +14,8 @@ msgstr ""
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-Flags-xgettext: --no-location\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Flags-xgettext: --no-location\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "Sources without call number"
@@ -330,8 +332,6 @@ msgstr "EAD XML Einstellungen"
 msgid "The EAD XML settings have been changed"
 msgstr "Die EAD XML Einstellungen wurden gespeichert"
 
-msgid "Link to archival description in AtoM"
-msgstr "Link zur archivalischen Beschreibung in AtoM"
 
 msgid "Call number"
 msgstr "Signatur"
@@ -344,6 +344,21 @@ msgstr "Autor"
 
 msgid "Copy source citation to clipboard"
 msgstr "Quellen-Zitat in die Zwischenablage kopieren"
+
+msgid "Are you sure you want to delete the source citation?"
+msgstr "Sind Sie sicher, dass Sie das Quellen-Zitat löschen möchten?"
+
+msgid "Delete source citation"
+msgstr "Quellen-Zitat löschen"
+
+msgid "Sort source citation - move up/down"
+msgstr "Quellen-Zitat sortieren - bewege nach oben/unten"
+
+msgid "Sort source citation - move up"
+msgstr "Quellen-Zitat sortieren - bewege nach oben"
+
+msgid "Sort source citation - move down"
+msgstr "Quellen-Zitat sortieren - bewege nach unten"
 
 msgid "Paste source citation from clipboard"
 msgstr "Quellen-Zitat aus Zwischenablage einfügen"
@@ -542,6 +557,19 @@ msgstr ""
 "Aktiviere Copy/Paste-Mechanismus für Quellen-Zitate in der Personen und "
 "Familien-Ansicht."
 
+msgid ""
+"Enable delete mechanism for source citations in the individual and family "
+"view."
+msgstr ""
+"Aktiviere Mechanismus zum Löschen von Quellen-Zitaten in der Personen und "
+"Familien-Ansicht."
+
+msgid ""
+"Enable sort mechanism for source citations in the individual and family view."
+msgstr ""
+"Aktiviere Mechanismus zum Sortieren von Quellen-Zitaten in der Personen und "
+"Familien-Ansicht."
+
 msgid "Settings for finding aid exports"
 msgstr "Einstellungen für Findbuch-Exporte"
 
@@ -624,6 +652,9 @@ msgstr ""
 
 msgid "save"
 msgstr "Speichern"
+
+msgid "Link to archival description in AtoM"
+msgstr "Link zur archivalischen Beschreibung in AtoM"
 
 msgid "Media objects of source"
 msgstr "Medienobjekte der Quelle"

@@ -15,6 +15,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: translate:1;translateContext:1c,2;plural:1,2\n"
 "X-Poedit-Flags-xgettext: --no-location\n"
+"X-Poedit-Flags-xgettext: --no-location\n"
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "Sources without call number"
@@ -341,6 +342,27 @@ msgstr "Copier la citation source dans le presse-papiers"
 msgid "Paste source citation from clipboard"
 msgstr "Coller la citation de la source à partir du presse-papiers"
 
+msgid "Are you sure you want to delete the source citation?"
+msgstr ""
+
+#, fuzzy
+#| msgid "Settings for source citations"
+msgid "Delete source citation"
+msgstr "Paramètres pour les citations de source"
+
+msgid "Sort source citation - move up/down"
+msgstr ""
+
+#, fuzzy
+#| msgid "Settings for source citations"
+msgid "Sort source citation - move up"
+msgstr "Paramètres pour les citations de source"
+
+#, fuzzy
+#| msgid "Settings for source citations"
+msgid "Sort source citation - move down"
+msgstr "Paramètres pour les citations de source"
+
 msgid "Generated on"
 msgstr "Généré le"
 
@@ -448,6 +470,15 @@ msgstr "Renommer"
 msgid "Add new source"
 msgstr "Ajouter une nouvelle source"
 
+msgid "Call Number Category"
+msgstr "Série"
+
+msgid "Rename"
+msgstr "Renommer"
+
+msgid "Add new source"
+msgstr "Ajouter une nouvelle source"
+
 msgid "Settings for Repository Hierarchy list"
 msgstr "Paramètres pour la liste des états des fonds"
 
@@ -474,6 +505,7 @@ msgid ""
 "without call number category."
 msgstr ""
 "Afficher les cotes sans la série. Les cotes seront affichées sans la série."
+
 
 msgid "Show date range for call number categories."
 msgstr "Afficher le libellé avant la série."
@@ -533,6 +565,15 @@ msgid ""
 msgstr ""
 "Activez le mécanisme de copier/coller pour les citations de sources dans la "
 "vue individuelle et familiale."
+
+msgid ""
+"Enable delete mechanism for source citations in the individual and family "
+"view."
+msgstr ""
+
+msgid ""
+"Enable sort mechanism for source citations in the individual and family view."
+msgstr ""
 
 msgid "Settings for finding aid exports"
 msgstr "Paramètres pour la génération de l'instrument de recherche"

@@ -117,6 +117,8 @@ class RepositoryHierarchy extends AbstractModule implements
     protected const XML_SETTINGS_ACTION_IN_ROUTE = 'repositoryhierarchy_xml_settings_action';
     protected const COPY_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_copy_citation';
     protected const PASTE_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_paste_citation';
+    protected const DELETE_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_delete_citation';
+    protected const SORT_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_sort_citation';
     protected const TREE_ATTRIBUTE_DEFAULT = '{tree}';
     protected const XREF_ATTRIBUTE_DEFAULT = '{xref}';
     protected const DELIMITER_ATTRIBUTE_DEFAULT = '{delimiter_expression}';
@@ -190,6 +192,8 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_ALLOW_RENAME = 'allow_rename';
     public const PREF_ALLOW_NEW_SOURCE = 'allow_new_source';
     public const PREF_CITATION_GEDCOM = 'citation_gedcom';
+    public const PREF_ENABLE_DELETE_CITATIONS ='enable_delete_citations';
+    public const PREF_ENABLE_SORT_CITATIONS ='enable_sort_citations';
 
     //Old prefences/settings not used any more, but needed for version updates
     public const PREF_DELETED = 'deleted';
@@ -427,6 +431,26 @@ class RepositoryHierarchy extends AbstractModule implements
         )
             ->allows(RequestMethodInterface::METHOD_POST);
 
+        //Register a route for the delete source citation action
+        $router ->get(
+            DeleteSourceCitation::class,
+            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+            '/'.self::DELETE_SOURCE_CITATION_IN_ROUTE.
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
+        )
+            ->allows(RequestMethodInterface::METHOD_POST);
+
+        //Register a route for the sort source citation action
+        $router ->get(
+            SortSourceCitation::class,
+            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
+            '/'.self::SORT_SOURCE_CITATION_IN_ROUTE.
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
+            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
+        )
+            ->allows(RequestMethodInterface::METHOD_POST);
+
         //Register a namespace for the views
         View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
 
@@ -644,6 +668,8 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS  => $this->getPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, ''),
                 self::PREF_SHOW_MEDIA_AFTER_CITATIONS   	   => boolval($this->getPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0')),
                 self::PREF_ENABLE_COPY_PASTE_CITATIONS   	   => boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
+                self::PREF_ENABLE_DELETE_CITATIONS   	       => boolval($this->getPreference(self::PREF_ENABLE_DELETE_CITATIONS, '0')),
+                self::PREF_ENABLE_SORT_CITATIONS        	   => boolval($this->getPreference(self::PREF_ENABLE_SORT_CITATIONS, '0')),
                 self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE     => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
                 self::PREF_SHOW_FINDING_AID_ADDRESS            => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
                 self::PREF_SHOW_FINDING_AID_WT_LINKS           => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
@@ -694,6 +720,8 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, implode(',', $explanded_facts_in_citations));
             $this->setPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, isset($params[self::PREF_SHOW_MEDIA_AFTER_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, isset($params[self::PREF_ENABLE_COPY_PASTE_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_ENABLE_DELETE_CITATIONS, isset($params[self::PREF_ENABLE_DELETE_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_ENABLE_SORT_CITATIONS, isset($params[self::PREF_ENABLE_SORT_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, isset($params[self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, isset($params[self::PREF_SHOW_FINDING_AID_ADDRESS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS]) ? '1' : '0');

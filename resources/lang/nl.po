@@ -15,6 +15,8 @@ msgstr ""
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-Flags-xgettext: --no-location\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Flags-xgettext: --no-location\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "Sources without call number"
@@ -115,6 +117,7 @@ msgstr ""
 "aanbevolen om de module \"%s\" te deactiveren, omdat de identieke functionaliteit ook "
 "in de module %s is geïntegreerd."
 
+#: RepositoryHierarchy.php:684
 msgid ""
 "The custom module \"%s\" is activated in parallel to the %s custom module. This can "
 "lead to unintended behavior, because both of the modules have registered the same "
@@ -172,6 +175,8 @@ msgstr "scheidingstekenexpressie laden"
 msgid "Could not load repository. No repository stored."
 msgstr "Kan de opslagplaats niet laden. Geen opslagplaats opgeslagen."
 
+#: RepositoryHierarchy.php:1252
+#, php-format
 msgid "The tree “%s” does not contain any repository"
 msgstr "De stamboom \"%s\" bevat geen opslagplaats"
 
@@ -330,6 +335,27 @@ msgstr "Kopieer bronvermelding naar klembord"
 msgid "Paste source citation from clipboard"
 msgstr "Plak bronvermelding van klembord"
 
+msgid "Are you sure you want to delete the source citation?"
+msgstr ""
+
+#, fuzzy
+#| msgid "Settings for source citations"
+msgid "Delete source citation"
+msgstr "Instellingen voor bronvermeldingen"
+
+msgid "Sort source citation - move up/down"
+msgstr ""
+
+#, fuzzy
+#| msgid "Settings for source citations"
+msgid "Sort source citation - move up"
+msgstr "Instellingen voor bronvermeldingen"
+
+#, fuzzy
+#| msgid "Settings for source citations"
+msgid "Sort source citation - move down"
+msgstr "Instellingen voor bronvermeldingen"
+
 msgid "Generated on"
 msgstr "Gegenereerd op"
 
@@ -434,6 +460,15 @@ msgstr "Hernoemen"
 msgid "Add new source"
 msgstr "Nieuwe bron toevoegen"
 
+msgid "Call Number Category"
+msgstr "Oproepnummercategorie"
+
+msgid "Rename"
+msgstr "Hernoemen"
+
+msgid "Add new source"
+msgstr "Nieuwe bron toevoegen"
+
 msgid "Settings for Repository Hierarchy list"
 msgstr "Instellingen voor opslagplaatshiërarchieflijst"
 
@@ -517,6 +552,20 @@ msgstr ""
 "Kopiëren/plakken mechanisme inschakelen voor bronvermeldingen in de persoons- en "
 "gezinsweergave."
 
+msgid ""
+"Enable copy/paste mechanism for source citations in the individual and "
+"family view."
+msgstr ""
+
+msgid ""
+"Enable delete mechanism for source citations in the individual and family "
+"view."
+msgstr ""
+
+msgid ""
+"Enable sort mechanism for source citations in the individual and family view."
+msgstr ""
+
 msgid "Settings for finding aid exports"
 msgstr "Instellingen voor export van archieftoegangen"
 
@@ -564,6 +613,8 @@ msgstr ""
 msgid "Show link to AtoM records within source citations"
 msgstr "Toon link naar AtoM-records binnen bronvermeldingen"
 
+#: resources/views/settings.phtml:149
+#, php-format
 msgid ""
 "Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be used to "
 "link a webtrees source citation to the source view in an external AtoM archive "

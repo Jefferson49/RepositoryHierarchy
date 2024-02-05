@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Tree;
+
+/**
+ * @var Tree    $tree
+ * @var string  $xref
+ * @var string  $fact_id
+ * @var string  $gedcom
+ * @var array   $matched_citations
+ * @var int     $old_position
+ * @var int     $new_position
+ */
+
+?>
+
+<a class="btn btn-link btn-sm" href="#" data-wt-post-url="
+    <?= e(route(SortSourceCitation::class, [
+        'tree'              => $tree->name(),
+        'xref'              => $xref,
+        'fact_id'           => $fact_id,
+        'xref_type'         => $xref_type,
+        'matched_citations' => $matched_citations,       
+        'old_position'      => $old_position,
+        'new_position'      => $new_position,
+    ])) ?>" title="<?= I18N::translate('Sort source citation - move up/down') ?>">
+    
+    <?php if ($new_position < $old_position) : ?>
+        <?= view('icons/arrow-up') ?>
+        <span class="visually-hidden"><?= I18N::translate('Sort source citation - move up') ?></span>
+    <?php else : ?>
+        <?= view('icons/arrow-down') ?>
+        <span class="visually-hidden"><?= I18N::translate('Sort source citation - move down') ?></span>
+    <?php endif ?>
+</a>

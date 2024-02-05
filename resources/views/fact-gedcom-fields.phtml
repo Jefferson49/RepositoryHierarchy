@@ -12,7 +12,6 @@ use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ModuleService;
-use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 
@@ -54,6 +53,7 @@ if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABL
 $hierarchy = explode(':', $parent);
 
 // Merge CONT records onto their parent line.
+$gedcom_with_cont = $gedcom;
 $gedcom_with_cont = $gedcom;
 $gedcom = preg_replace('/\n\d CONT ?/', "\r", $gedcom);
 
@@ -102,9 +102,12 @@ foreach ($keys as $key) {
             <?php $value = '<span class="field" dir="auto"><a href="' . e($source->url()) . '">' . $source->fullName() . '</a></span>' ?>
             <?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 
-            <?php //Additionally show icon to copy source citation?>
-            <?php if ($showSourceCitationIcon) : ?>
-                <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-copy', ['tree' => $tree, 'gedcom' => $gedcom_with_cont,]) ?>
+            <?php //Additionally show icons to copy/delete/move source citation?>
+            <?php if (      boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))
+                        or  boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_DELETE_CITATIONS, '0'))
+                        or  boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0')) )  : ?>
+
+                <?= view(RepositoryHierarchy::viewsNamespace() . '::copy-delete-move-source-citations', ['tree' => $tree, 'parent' => $parent, 'gedcom' => $gedcom_with_cont,]) ?>
             <?php endif ?>
         </div>
 
