@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2024-02-05 07:12+0100\n"
+"POT-Creation-Date: 2024-02-05 07:21+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
 "Language-Team: \n"
@@ -377,21 +377,6 @@ msgstr "Inhoudsopgave - Archiefordening"
 
 msgid "List of Sources"
 msgstr "Bronnenlijst"
-
-msgid "Name"
-msgstr ""
-
-msgid "Edit the name"
-msgstr ""
-
-msgid "Copy"
-msgstr ""
-
-msgid "Are you sure you want to delete this fact?"
-msgstr ""
-
-msgid "Delete this name"
-msgstr ""
 
 msgid "Create a source"
 msgstr "Maak een bron"
