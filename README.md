@@ -58,6 +58,8 @@ This README file contains the following main sections:What](
     *   [Create links between webtrees and an external archive management system](#create-links-between-webtrees-and-an-external-archive-management-system)
     *   [Show facts of sources within source citations](#show-facts-of-sources-within-source-citations)
     *   [Copy-Paste mechanism for source citations in the individual and family view](#copy-paste-mechanism-for-source-citations-in-the-individual-and-family-view)
+    *   [Delete mechanism for source citations in the individual and family view](#delete-mechanism-for-source-citations-in-the-individual-and-family-view)
+    *   [Sort mechanism for source citations in the individual and family view](#sort-mechanism-for-source-citations-in-the-individual-and-family-view)
     *   [Directly show media objects of source citations in individual facts](#directly-show-media-objects-of-source-citations-in-individual-and-family-facts)
     *   [Show all images of media objects](#show-all-images-of-media-objects)
     *   [Preferences](#preferences)
@@ -88,6 +90,7 @@ This README file contains the following main sections:What](
 + Generate a standardized archive EAD XML file to export the data of a repository to an archive portal
 + Show more information about sources, source citations, archives, and images of sources/citations in the user frontend
 + Copy source citations from one fact/event to another fact/event by clicking icons in the user frontend
++ Sort and delete source citations within facts/events by clicking icons in the user frontend
 
 ##  Installation
 + Download the [latest release](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest) of the module
@@ -100,7 +103,7 @@ This README file contains the following main sections:What](
 + If Repository Hierarchy is used, **it is strongly recommended to deactivate the [**webtrees-simple-media-display**](https://github.com/JustCarmen/webtrees-simple-media-display) (control panel: "Media Display as in webtrees 2.0")**, because parallel activation can lead to unintended behavior. The identical functionality of the Simple Media Display module - even the same code - is also integrated in the Repository Hierarchy module.
 
 ##  Webtrees version  
-The latest release of the module was developed and tested with [webtrees 2.1.17](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
+The latest release of the module was developed and tested with [webtrees 2.1.18](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
 
 ##  Concepts of the Repository Hierarchy module
 In the following, the concepts of the Repository Hierarchy module are described. 
@@ -391,6 +394,24 @@ The Repository Hierarchy module provides a feature to copy/paste source citation
 ![Screenshot](resources/img/screenshot_copy_paste_source_citations.jpg)
 
 In order to activate this feature, the setting "Enable copy/paste mechanism for source citations in the individual and family view" needs to be selected in the control panel.
+
+### Delete mechanism for source citations in the individual and family view
+
+The Repository Hierarchy module provides a feature to delete source citations. If this feature is activated in the module settings, a delete icon is shown on the right hand side of each source citation. By clicking on the icon, the source citation can be deleted.
+
+**Screenshot: Delete source citations**
+![Screenshot](resources/img/screenshot_delete_source_citations.jpg)
+
+In order to activate this feature, the setting "Enable delete mechanism for source citations in the individual and family view" needs to be selected in the control panel.
+
+### Sort mechanism for source citations in the individual and family view
+
+The Repository Hierarchy module provides a feature to sort source citations. If this feature is activated in the module settings, arrow icons are shown on the right hand side of each source citation. By clicking on the move-up/move-down arrows, the source citations can be sorted.
+
+**Screenshot: Sort source citations**
+![Screenshot](resources/img/screenshot_sort_source_citations.jpg)
+
+In order to activate this feature, the setting "Enable sort mechanism for source citations in the individual and family view" needs to be selected in the control panel.
 
 ### Directly show media objects of source citations in individual and family facts
 The Repository Hierarchy module provides a feature to directly show media objects of source citations in individual and family facts (and not subordinated in the source citation).
