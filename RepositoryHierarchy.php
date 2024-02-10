@@ -163,7 +163,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_START_REPOSITORY = 'start_repository';
     public const PREF_VIRTUAL_REPOSITORY = 'virtual_repository';
     public const PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS ='shown_source_facts_in_citations';
-    public const PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS ='explanded_facts_in_citations';
+    public const PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS ='expanded_facts_in_citations';
 	public const PREF_SHOW_MEDIA_AFTER_CITATIONS = 'show_media_after_citations';
     public const PREF_ENABLE_COPY_PASTE_CITATIONS ='enable_copy_paste_citations';
     public const PREF_SHOW_DATE_RANGE_FOR_CATEGORY ='show_date_range_for_category';
@@ -207,6 +207,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const OLD_PREF_EXPAND_REPOS_IN_CITATIONS ='expand_repos_in_citations';
     public const OLD_PREF_SHOW_SOURCE_MEDIA_IN_CITATIONS ='show_source_media_in_citations';
     public const OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS ='show_further_facts_in_citations';
+    public const OLD_PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS ='explanded_facts_in_citations';
 
     //String for admin for use in preferences names
     public const ADMIN_USER_STRING = 'admin';
@@ -698,7 +699,7 @@ class RepositoryHierarchy extends AbstractModule implements
         $params = (array) $request->getParsedBody();
 
         $shown_source_facts_in_citations = Validator::parsedBody($request)->array(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS);
-        $explanded_facts_in_citations = Validator::parsedBody($request)->array(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS);
+        $expanded_facts_in_citations = Validator::parsedBody($request)->array(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS);
 
         //Save the received settings to the user preferences
         if ($params['save'] === '1') {
@@ -717,7 +718,7 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_SHOW_DATE_RANGE, isset($params[self::PREF_SHOW_DATE_RANGE]) ? '1' : '0');
             $this->setPreference(self::PREF_ALLOW_ADMIN_DELIMITER, isset($params[self::PREF_ALLOW_ADMIN_DELIMITER]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, implode(',', $shown_source_facts_in_citations));
-            $this->setPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, implode(',', $explanded_facts_in_citations));
+            $this->setPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, implode(',', $expanded_facts_in_citations));
             $this->setPreference(self::PREF_SHOW_MEDIA_AFTER_CITATIONS, isset($params[self::PREF_SHOW_MEDIA_AFTER_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, isset($params[self::PREF_ENABLE_COPY_PASTE_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_DELETE_CITATIONS, isset($params[self::PREF_ENABLE_DELETE_CITATIONS]) ? '1' : '0');
@@ -799,6 +800,15 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS, $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS));
         } 
         $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);
+		
+        if (    $this->getPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS) === ''
+            &&  $this->getPreference(self::OLD_PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS) !== self::PREF_DELETED) {
+
+            //Copy old value to new preference
+            $this->setPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, $this->getPreference(self::OLD_PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS));
+        } 
+        $this->setPreference(self::OLD_PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);		
+		
 
         //Move old preferences for source facts to new preferences
         if (    $this->getPreference(self::OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS) !== self::PREF_DELETED
