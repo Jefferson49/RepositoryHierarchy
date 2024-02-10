@@ -107,7 +107,7 @@ use Fisharebest\Webtrees\View;
                 </label>
                 <div class="col-sm-9">
                     <div class="input-group">
-                        <?= view('components/select', ['name' => RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS . '[]', 'id' => RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, 'selected' => explode(',', $show_source_facts_in_citations), 'options' => RepositoryHierarchy::$ALL_SOURCE_FACTS_IN_CITATIONS, 'class' => 'tom-select']) ?>
+                        <?= view('components/select', ['name' => RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS . '[]', 'id' => RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, 'selected' => explode(',', $shown_source_facts_in_citations), 'options' => RepositoryHierarchy::$ALL_SOURCE_FACTS_IN_CITATIONS, 'class' => 'tom-select']) ?>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@ use Fisharebest\Webtrees\View;
                 </label>
                 <div class="col-sm-9">
                     <div class="input-group">
-                        <?= view('components/select', ['name' => RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS . '[]', 'id' => RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, 'selected' => explode(',', $expanded_facts_in_citations), 'options' => RepositoryHierarchy::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS, 'class' => 'tom-select']) ?>
+                        <?= view('components/select', ['name' => RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS . '[]', 'id' => RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, 'selected' => explode(',', $explanded_facts_in_citations), 'options' => RepositoryHierarchy::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS, 'class' => 'tom-select']) ?>
                     </div>
                 </div>
             </div>            
