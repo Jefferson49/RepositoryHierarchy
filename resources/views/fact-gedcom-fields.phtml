@@ -55,7 +55,6 @@ $hierarchy = explode(':', $parent);
 
 // Merge CONT records onto their parent line.
 $gedcom_with_cont = $gedcom;
-$gedcom_with_cont = $gedcom;
 $gedcom = preg_replace('/\n\d CONT ?/', "\r", $gedcom);
 
 preg_match_all('/^(\d+) (\w+) ?(.*)/m', $gedcom, $matches);
