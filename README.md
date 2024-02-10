@@ -99,7 +99,7 @@ This README file contains the following main sections:What](
     + Login to webtrees as an administrator
 	+ Go to "Control Panel/All Modules", and find the module called "Repository Hierarchy" (or corresponding translation)
 	+ Check if it has a tick for "Enabled"
-+ If the feature ["copy-paste mechanism for source citations in the individual and family view"](#copy-paste-mechanism-for-source-citations-in-the-individual-and-family-view) shall be used in paralell with the [vesta custom modules](https://github.com/vesta-webtrees-2-custom-modules), a vesta version 2.1.17.0.4 or later needs to be installed.
++ If the feature ["copy-paste mechanism for source citations in the individual and family view"](#copy-paste-mechanism-for-source-citations-in-the-individual-and-family-view) shall be used in paralell with the [vesta custom modules](https://github.com/vesta-webtrees-2-custom-modules), a **vesta version 2.1.18.2.1 or later** needs to be installed. To use the paste mechanism within the names view, a specific setting in the control panel of "Vesta Classic Look & Feel" has to be selected: "Use compact layout except for names".
 + If Repository Hierarchy is used, **it is strongly recommended to deactivate the [**webtrees-simple-media-display**](https://github.com/JustCarmen/webtrees-simple-media-display) (control panel: "Media Display as in webtrees 2.0")**, because parallel activation can lead to unintended behavior. The identical functionality of the Simple Media Display module - even the same code - is also integrated in the Repository Hierarchy module.
 
 ##  Webtrees version  
