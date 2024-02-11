@@ -349,19 +349,19 @@ msgid "Copy source citation to clipboard"
 msgstr "Kopieer bronvermelding naar klembord"
 
 msgid "Are you sure you want to delete the source citation?"
-msgstr ""
+msgstr "Weet u zeker dat u de bronvermelding wilt verwijderen?"
 
 msgid "Delete source citation"
-msgstr ""
+msgstr "Bronvermelding verwijderen"
 
 msgid "Sort source citation - move up/down"
-msgstr ""
+msgstr "Bronvermelding sorteren - omhoog/omlaag"
 
 msgid "Sort source citation - move up"
-msgstr ""
+msgstr "Bronvermelding sorteren - omhoog"
 
 msgid "Sort source citation - move down"
-msgstr ""
+msgstr "Bronvermelding sorteren - omlaag"
 
 msgid "Paste source citation from clipboard"
 msgstr "Plak bronvermelding van klembord"
@@ -565,10 +565,14 @@ msgid ""
 "Enable delete mechanism for source citations in the individual and family "
 "view."
 msgstr ""
+"Verwijdermechanisme inschakelen voor bronvermeldingen in de persoons- en "
+"gezinsweergave."
 
 msgid ""
 "Enable sort mechanism for source citations in the individual and family view."
 msgstr ""
+"Sorteermechanisme inschakelen voor bronvermeldingen in de persoons- en "
+"gezinsweergave."
 
 msgid "Settings for finding aid exports"
 msgstr "Instellingen voor export van archieftoegangen"
