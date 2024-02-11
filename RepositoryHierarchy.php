@@ -105,7 +105,7 @@ class RepositoryHierarchy extends AbstractModule implements
     use ModuleDataFixTrait;
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.3.8';
+    public const CUSTOM_VERSION = '1.3.9';
 
     //Routes, attributes
     protected const MODULE_NAME_IN_ROUTE = 'repositoryhierarchy';
