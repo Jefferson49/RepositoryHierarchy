@@ -26,14 +26,15 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 
 $linked_record_service = new LinkedRecordService();
 $individual_facts_service = new IndividualFactsService($linked_record_service, $module_service);
-
+$can_edit = false;
 
 //Check if individual or family view and wether editable
 //Decide whether to show copy source citation icon
 
 if ((Session::get('last_page_name') === "individual.php") && Session::has('last_page_parameter')){
     $individual  = Registry::individualFactory()->make(Session::get('last_page_parameter'), $tree);
-    $showCopySourceCitationIcon = $individual->canEdit() && boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'));
+    $can_edit = $individual->canEdit();
+    $showCopySourceCitationIcon = $can_edit && boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'));
     $xref = $individual->xref();
     $facts = $individual->facts();
     $family_facts = $individual_facts_service->familyFacts($individual, new Collection);
@@ -42,7 +43,8 @@ if ((Session::get('last_page_name') === "individual.php") && Session::has('last_
 }
 elseif ((Session::get('last_page_name') === "family.php") && Session::has('last_page_parameter')){
     $family  = Registry::familyFactory()->make(Session::get('last_page_parameter'), $tree);
-    $showCopySourceCitationIcon = $family->canEdit() && boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'));
+    $can_edit = $family->canEdit();
+    $showCopySourceCitationIcon = $can_edit && boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'));
     $xref = $family->xref();
     $facts = $family->facts();
     $xref_type = 'FAM';
@@ -100,13 +102,13 @@ else{
 
 //Decide whether to show icons to delete or move up/down citations
 $showDeleteSourceCitationIcon = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_DELETE_CITATIONS, '0')) 
-    && ($count_citations_in_different_facts === 1);
+    && $can_edit && ($count_citations_in_different_facts === 1);
 
 $showMoveUpSourceCitationIcon = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0'))
-    && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position > 0);
+    && $can_edit && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position > 0);
 
 $showMoveDownSourceCitationIcon = boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, '0')) 
-    && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position < $number_of_citations -1);
+    && $can_edit && ($count_citations_in_different_facts === 1) && ($number_of_citations > 1) && ($citation_position < $number_of_citations -1);
 
 ?>
 
