@@ -34,6 +34,8 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
 
+use Composer\Autoload\ClassLoader;
+
 require __DIR__ . '/C16Y.php';
 require __DIR__ . '/CallNumberCategory.php';
 require __DIR__ . '/CallNumberDataFix.php';
@@ -48,9 +50,12 @@ require __DIR__ . '/PasteSourceCitation.php';
 require __DIR__ . '/SortSourceCitation.php';
 require __DIR__ . '/RepositoryHierarchy.php';
 require __DIR__ . '/RepositoryHierarchyHelpTexts.php';
-require __DIR__ . '/vendor/matriphe/php-iso-639-master/src/ISO639.php';
-require __DIR__ . '/vendor/vesta-webtrees-2-custom-modules/vesta_common/tree/master/patchedWebtrees/MoreI18N.php';
 require __DIR__ . '/XmlExportSettingsAction.php';
 require __DIR__ . '/XmlExportSettingsModal.php';
+
+$loader = new ClassLoader();
+$loader->addPsr4('Cissee\\WebtreesExt\\', __DIR__ . "/vendor/vesta-webtrees-2-custom-modules/vesta_common/patchedWebtrees");
+$loader->addPsr4('Matriphe\\ISO639\\', __DIR__ . "/vendor/matriphe/php-iso-639-master/src/");
+$loader->register();
 
 return app(RepositoryHierarchy::class);
