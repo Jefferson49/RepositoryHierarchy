@@ -1,7 +1,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/Jefferson49/RepositoryHierarchy?display_name=tag)](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest)
 [![webtrees major version](https://img.shields.io/badge/webtrees-v2.1.x-green)](https://webtrees.net/download)
 	
-##  Repository Hierarchy Overview
+##  Repository Hierarchy
 A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated. The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The module also includes additional features to improve the handling of sources, source citations, and media objects.
 
 The module uses delimiters to cut call numbers (of sources) into sub-strings and extracts call number categories. Based on the extracted categories, a hierarchical tree of call number categories with the related sources is constructed and shown.
@@ -76,6 +76,7 @@ This README file contains the following main sections:What](
 *   [How the module maps to Gedcom and to archive management concepts](#how-the-module-maps-to-gedcom-and-to-archive-management-concepts)
 *   [Translation](#translation)
 *   [Bugs and feature requests](#bugs-and-feature-requests)
++   [License](#license)
 *   [Github repository](#github-repository)
 
 ##  What are the benefits of using this module?
@@ -626,7 +627,7 @@ The following table describes how the concepts from archive and library manageme
 |Finding aid|List of sources for a selected repository|List of sources in a hierarchy of call number categories for a selected repository|
 
 ## Translation
-You can help to translate this module. The translation is based on [gettext](https://en.wikipedia.org/wiki/Gettext) and uses .po files, which can be found in [/resources/lang/](https://github.com/Jefferson49/RepositoryHierarchy/tree/main/resources/lang). You can use a local editor like [Poedit](https://poedit.net/) or [notepad++](https://notepad-plus-plus.org/) to work on translations and provide them in the [Github repository](https://github.com/Jefferson49/RepositoryHierarchy) of the module. You can do this via a pull request (if you know how to do), or by opening a new issue and attaching a .po file. Updated translations will be included in the next release of this module.
+You can help to translate this module. The translation is based on [gettext](https://en.wikipedia.org/wiki/Gettext) and uses .po files, which can be found in [/resources/lang/](resources/lang/). You can use a local editor like [Poedit](https://poedit.net/) or [notepad++](https://notepad-plus-plus.org/) to work on translations and provide them in the [Github repository](https://github.com/Jefferson49/RepositoryHierarchy) of the module. You can do this via a pull request (if you know how to do), or by opening a new issue and attaching a .po file. Updated translations will be included in the next release of this module.
 
 Currently, the following languages are already available:
 + English
@@ -636,6 +637,22 @@ Currently, the following languages are already available:
 
 ## Bugs and feature requests
 If you experience any bugs or have a feature request for this webtrees custom module, you can [create a new issue](https://github.com/Jefferson49/RepositoryHierarchy/issues).
+
+## License
++ [GNU General Public License, Version 3](LICENSE.md)
++ webtrees
+    + webtrees: online genealogy
+    + Copyright (C) 2024 [webtrees development team](http://webtrees.net)
++ Fancy Simple media display module (webtrees custom module)
+    + Copyright (C) 2024 [Carmen Just](https://justcarmen.nl)
++ Repository Hierarchy (webtrees custom module)
+    + Copyright (C) 2024 [Jefferson49](https://github.com/Jefferson49)
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/.
 
 ##  Github repository  
 https://github.com/Jefferson49/RepositoryHierarchy
