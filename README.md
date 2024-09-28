@@ -76,7 +76,8 @@ This README file contains the following main sections:What](
 *   [How the module maps to Gedcom and to archive management concepts](#how-the-module-maps-to-gedcom-and-to-archive-management-concepts)
 *   [Translation](#translation)
 *   [Bugs and feature requests](#bugs-and-feature-requests)
-+   [License](#license)
+*   [License](#license)
+*   [Development and Contributions](#development-and-contributions)
 *   [Github repository](#github-repository)
 
 ##  What are the benefits of using this module?
@@ -653,6 +654,10 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/.
+
+## Development and Contributions
++ Repository Hierarchy includes the [functionality](#show-all-images-of-media-objects) and the code of the [Fancy Simple media display module](https://github.com/JustCarmen/webtrees-simple-media-display), which was developed by [Carmen Just](https://justcarmen.nl)
++ Further contributions on [Github](https://github.com/Jefferson49/RepositoryHierarchy) are welcome!
 
 ##  Github repository  
 https://github.com/Jefferson49/RepositoryHierarchy
