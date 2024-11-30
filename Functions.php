@@ -32,18 +32,19 @@ use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\Date\AbstractCalendarDate;
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\Module\AbstractModule;
+use Fisharebest\Webtrees\Module\ModuleListInterface;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Repository;
-use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
+
 use RuntimeException;
 
 /**
  * General functions and utils, which can be used by several classes
  */
-class Functions
+class Functions extends \Jefferson49\Webtrees\Helpers\Functions
 {
     /**
      * Write DOM document to a stream
