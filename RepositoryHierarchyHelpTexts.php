@@ -25,7 +25,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\I18N;

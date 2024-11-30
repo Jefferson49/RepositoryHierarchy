@@ -24,7 +24,7 @@
 
 declare(strict_types=1);
 
-namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\I18N;

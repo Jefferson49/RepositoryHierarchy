@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Exception;
 use Fisharebest\Localization\Locale;

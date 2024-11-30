@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\IndividualFactsService;

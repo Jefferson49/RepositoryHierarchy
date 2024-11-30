@@ -32,12 +32,12 @@
 
 declare(strict_types=1);
 
-namespace Jefferson49\Webtrees\Module\RepositoryHierarchyNamespace;
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Composer\Autoload\ClassLoader;
 
 $loader = new ClassLoader();
-$loader->addPsr4('Jefferson49\\Webtrees\\Module\\RepositoryHierarchyNamespace\\', __DIR__);
+$loader->addPsr4('Jefferson49\\Webtrees\\Module\\RepositoryHierarchy\\', __DIR__);
 $loader->addPsr4('Jefferson49\\Webtrees\\Helpers\\', __DIR__ . "/vendor/Jefferson49/Webtrees/Helpers/");
 $loader->addPsr4('Cissee\\WebtreesExt\\', __DIR__ . "/vendor/vesta-webtrees-2-custom-modules/vesta_common/patchedWebtrees");
 $loader->addPsr4('Matriphe\\ISO639\\', __DIR__ . "/vendor/matriphe/php-iso-639-master/src/");
