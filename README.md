@@ -1,5 +1,6 @@
 [![Latest Release](https://img.shields.io/github/v/release/Jefferson49/RepositoryHierarchy?display_name=tag)](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest)
 [![webtrees major version](https://img.shields.io/badge/webtrees-v2.1.x-green)](https://webtrees.net/download)
+[![webtrees major version](https://img.shields.io/badge/webtrees-v2.2.x-green)](https://webtrees.net/download)
 	
 ##  Repository Hierarchy
 A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated. The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The module also includes additional features to improve the handling of sources, source citations, and media objects.
