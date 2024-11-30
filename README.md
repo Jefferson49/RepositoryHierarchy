@@ -3,7 +3,7 @@
 [![webtrees major version](https://img.shields.io/badge/webtrees-v2.2.x-green)](https://webtrees.net/download)
 	
 ##  Repository Hierarchy
-A [weebtrees](https://webtrees.net) custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated. The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The module also includes additional features to improve the handling of sources, source citations, and media objects.
+A [weebtrees](https://webtrees.net) 2.1/2.2 custom module to present the structure of a repository and its sources in a hierarchical manner. Based on the hierarchical structure, a finding aid document (HTML or PDF export) can be generated. The module also provides an EAD XML export, which enables data exchange and linking with an external archive management system. The module also includes additional features to improve the handling of sources, source citations, and media objects.
 
 The module uses delimiters to cut call numbers (of sources) into sub-strings and extracts call number categories. Based on the extracted categories, a hierarchical tree of call number categories with the related sources is constructed and shown.
 
@@ -106,7 +106,7 @@ This README file contains the following main sections:What](
 + If Repository Hierarchy is used, **it is strongly recommended to deactivate the [**webtrees-simple-media-display**](https://github.com/JustCarmen/webtrees-simple-media-display) (control panel: "Media Display as in webtrees 2.0")**, because parallel activation can lead to unintended behavior. The identical functionality of the Simple Media Display module - even the same code - is also integrated in the Repository Hierarchy module.
 
 ##  Webtrees version  
-The latest release of the module was developed and tested with [webtrees 2.1.18](https://webtrees.net/download), but should also run with any other webtrees 2.1 version.
+The latest release of the module was developed and tested with [webtrees 2.1.21 and 2.2.0](https://webtrees.net/download), but should also run with any other webtrees 2.1/2.2 version.
 
 ##  Concepts of the Repository Hierarchy module
 In the following, the concepts of the Repository Hierarchy module are described. 
