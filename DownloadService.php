@@ -118,7 +118,7 @@ class DownloadService
     {
         $resource = Functions::export($dom);
         $stream_factory = new Psr17Factory();
-        $response_factory = Functions::getInterfaceFromContainer(ResponseFactoryInterface::class);
+        $response_factory = Functions::getFromContainer(ResponseFactoryInterface::class);
         $stream = $stream_factory->createStreamFromResource($resource);
 
         return $response_factory->createResponse()
@@ -157,7 +157,7 @@ class DownloadService
         //Prepare and return the response
         $resource = $stream;
         $stream_factory = new Psr17Factory();
-        $response_factory = Functions::getInterfaceFromContainer(ResponseFactoryInterface::class);
+        $response_factory = Functions::getFromContainer(ResponseFactoryInterface::class);
         $stream = $stream_factory->createStreamFromResource($resource);
 
         return $response_factory->createResponse()
@@ -196,7 +196,7 @@ class DownloadService
         //Prepare and return the response
         $resource = $stream;
         $stream_factory = new Psr17Factory();
-        $response_factory = Functions::getInterfaceFromContainer(ResponseFactoryInterface::class);
+        $response_factory = Functions::getFromContainer(ResponseFactoryInterface::class);
         $stream = $stream_factory->createStreamFromResource($resource);
 
         return $response_factory->createResponse()
