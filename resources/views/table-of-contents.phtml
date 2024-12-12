@@ -27,11 +27,11 @@ use Illuminate\Support\Collection;
             <?php endif ?>
 
             <?php $title = $repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true)) ?>
-			<?php if (($title !== '') && $show_titles): ?>
-				(
-					<?= e($title) ?>
-				)
-		    <?php endif ?>	
+            <?php if (($title !== '') && $show_titles): ?>
+                (
+                    <?= e($title) ?>
+                )
+            <?php endif ?>
 <?php endif ?>
 
 <?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>

@@ -29,18 +29,18 @@ use Fisharebest\Webtrees\View;
                 <?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0'))): ?>
                     <?= e($repository_hierarchy->getCallNumberCategoryTitleService()->getCallNumberCategoryTitle($category->getFrontEndName(true))) ?>
                 <?php endif ?>
-                </td>      
+                </td>
             <?php if ($category->displayISODateRange() !== '') : ?>
-                <td class="finding-aid-table-last-column"><?= MoreI18N::xlate('Date range') ?>:<br><?= e($category->displayISODateRange('--')) ?></td>          
+                <td class="finding-aid-table-last-column"><?= MoreI18N::xlate('Date range') ?>:<br><?= e($category->displayISODateRange('--')) ?></td>
             <?php else : ?>
-                <td class="finding-aid-table-last-column"></td>          
-            <?php endif ?>        
+                <td class="finding-aid-table-last-column"></td>
+            <?php endif ?>
         </tr>
         <tr>
-            <td class="finding-aid-table-empty-row" colspan="3"></td>      
+            <td class="finding-aid-table-empty-row" colspan="3"></td>
         </tr>
         <tr>
-            <td class="finding-aid-table-separator-row" colspan="3"></td>      
+            <td class="finding-aid-table-separator-row" colspan="3"></td>
         </tr>
     </table>
     <?php $sources = Functions::getCollectionForArray($category->getSources()) ?>
@@ -48,39 +48,39 @@ use Fisharebest\Webtrees\View;
     <?php foreach ($sources as $source) : ?>
     <table class="finding-aid-table">
         <?php $call_number = $repository_hierarchy->call_number_of_source[$source->xref()] ?>
-        <tr> 
-            <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>               
+        <tr>
+            <td class="finding-aid-table-first-column"><?= I18N::translate('Call number') ?></td>
             <td class="finding-aid-table-middle-column"><b><?= e($call_number) ?></b></td>
             <?php if ($show_wt_links) : ?>
-                <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>" target="_blank"><?= e($source->xref()) ?></a></td>            
+                <td class="finding-aid-table-last-column"><?= I18N::translate('Gedcom-ID') . ': ' ?><a href="<?= e($source->url()) ?>" target="_blank"><?= e($source->xref()) ?></a></td>
             <?php else : ?>
                 <td class="finding-aid-table-last-column"></td>
-            <?php endif ?>        
+            <?php endif ?>
         </tr>
-        <tr> 
-            <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>		
+        <tr>
+            <td><?= MoreI18N::xlate('Source') ?>/<?= MoreI18N::xlate('Title') ?></td>
             <?php //Do not escape, because it is already escaped in the method  ?>
-            <td><?= $source->fullName()	?></td>                    
+            <td><?= $source->fullName()	?></td>
             <?php if (isset($repository_hierarchy->iso_date_range_text_of_source[$source->xref()])) : ?>
                 <td><?= MoreI18N::xlate('Date range') ?>:</td>
             <?php else : ?>
                 <td></td>
             <?php endif ?>
         </tr>
-        <tr> 
-            <td><?= I18N::translate('Author') ?></td>    
+        <tr>
+            <td><?= I18N::translate('Author') ?></td>
             <td><?= isset($repository_hierarchy->author_of_source[$source->xref()]) ? e($repository_hierarchy->author_of_source[$source->xref()]) : '' ?></td>
             <?php if (isset($repository_hierarchy->iso_date_range_text_of_source[$source->xref()])) : ?>
-                <td><?= e($repository_hierarchy->iso_date_range_text_of_source[$source->xref()]) ?></td>      
+                <td><?= e($repository_hierarchy->iso_date_range_text_of_source[$source->xref()]) ?></td>
             <?php else : ?>
-                <td></td>                 
+                <td></td>
             <?php endif ?>
         </tr>
         <tr>
-            <td class="finding-aid-table-separator-row" colspan="3"></td>      
+            <td class="finding-aid-table-separator-row" colspan="3"></td>
         </tr>
     </table>
-    <?php endforeach ?>	
+    <?php endforeach ?>
 <?php endif ?>
 
 <?php $categories = Functions::getCollectionForArray($category->getSubCategories()) ?>

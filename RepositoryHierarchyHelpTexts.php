@@ -87,7 +87,7 @@ I18N::translate('A delimiter is a sequence of one or more characters for specify
     + '. I18N::translate('Film Number'). ' 8
 + '. I18N::translate('Delimiter expression'). ': **'. I18N::translate('Film').'( )'. I18N::translate('Number').'**'.'
 + '. I18N::translate('Repository Hierarchy').':
-    + '.I18N::translate('Film').' 
+    + '.I18N::translate('Film').'
         + '.I18N::translate('Number').' 5
         + '.I18N::translate('Number').' 8
 ###### '.I18N::translate('Example').' 4:
@@ -97,10 +97,10 @@ I18N::translate('A delimiter is a sequence of one or more characters for specify
 + '. I18N::translate('Delimiter expression:'). ' **'. I18N::translate('Fonds').' \[A-D\](, );( )'. I18N::translate('Number').'**'.'
 + '. I18N::translate('Repository Hierarchy').':
     + '.I18N::translate('Fonds').' A,
-        + '.I18N::translate('Biography').' 
+        + '.I18N::translate('Biography').'
             + '.I18N::translate('Number').' 1
     + '.I18N::translate('Fonds').' D,
-        + '.I18N::translate('Photo').' 
+        + '.I18N::translate('Photo').'
             + '.I18N::translate('Number').' 7
 ##### '.I18N::translate('Important Note').'
 + '. I18N::translate('Please note that the following characters need to be escaped if not used as meta characters in a regular expression').': **' . RepositoryHierarchy::ESCAPE_CHARACTERS . RepositoryHierarchy::DELIMITER_SEPARATOR .'**

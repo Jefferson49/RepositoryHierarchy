@@ -15,11 +15,11 @@ use Fisharebest\Webtrees\Fact;
 
 <a class="btn btn-link btn-sm" href="#" data-wt-post-url="
     <?= e(route(PasteSourceCitation::class, [
-        'tree' => $fact->record()->tree()->name(), 
-        'xref' => $fact->record()->xref(), 
+        'tree' => $fact->record()->tree()->name(),
+        'xref' => $fact->record()->xref(),
         'fact_id' => $fact->id()
         ])) ?>" title="<?= I18N::translate('Paste source citation from clipboard') ?>">
-    
+
     <?= view('icons/source') ?>
     <span class="visually-hidden"><?= I18N::translate('Paste source citation from clipboard') ?></span>
 </a>

@@ -28,15 +28,15 @@ use Fisharebest\Webtrees\Tree;
                 'show_load_from_admin'	=> $show_load_from_admin,
             ])) ?>" id="wt-modal-form2">
 
-	<?php if($show_load_from_admin) : ?>
-		<div class="modal-footer">
-			<button type="submit" class="btn btn-secondary">
-				<?= I18N::translate('Load settings from administrator') ?>
-			</button>
-		</div>
-	<?php endif ?>
+    <?php if($show_load_from_admin) : ?>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-secondary">
+                <?= I18N::translate('Load settings from administrator') ?>
+            </button>
+        </div>
+    <?php endif ?>
 
-	<?= csrf_field() ?>
+    <?= csrf_field() ?>
 </form>
 
 <form method="post" action="<?= e(route(XmlExportSettingsAction::class, [
@@ -60,9 +60,9 @@ use Fisharebest\Webtrees\Tree;
                 'finding_aid_publisher'    	=> $finding_aid_publisher,
                 ]
             ) ?>
-	</div>
+    </div>
 
-	<?= view('modals/footer-save-cancel') ?>
+    <?= view('modals/footer-save-cancel') ?>
 
     <?= csrf_field() ?>
 </form>

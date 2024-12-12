@@ -40,7 +40,7 @@ use Fisharebest\Webtrees\View;
  * @var  string     $atom_slug
  * @var  string     $atom_base_url
  * @var  string     $atom_repositories
- * 
+ *
  */
 
 ?>
@@ -50,48 +50,48 @@ use Fisharebest\Webtrees\View;
 <h1><?=e($title) ?></h1>
 
 <div class="row mb-3">
-	<form method="post">
-		<?= csrf_field() ?>
-		<input type="hidden" name="save" id="save" value="1">
+    <form method="post">
+        <?= csrf_field() ?>
+        <input type="hidden" name="save" id="save" value="1">
         <div class="row mb-3 justify-content-between m-0">
-			<div class="row"><?= view('icons/spacer') ?></div> 
+            <div class="row"><?= view('icons/spacer') ?></div>
             <h3><?= I18N::translate('Settings for Repository Hierarchy list') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show label before call number category.'), 'name' => RepositoryHierarchy::PREF_SHOW_CATEGORY_LABEL, 'checked' => $show_category_label]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show titles of call number categories (if available from .po file).'), 'name' => RepositoryHierarchy::PREF_SHOW_CATEGORY_TITLE, 'checked' => $show_category_title]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show help icon after label for delimiter expression.'), 'name' => RepositoryHierarchy::PREF_SHOW_HELP_ICON, 'checked' => $show_help_icon]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show help link after label for delimiter expression.'), 'name' => RepositoryHierarchy::PREF_SHOW_HELP_LINK, 'checked' => $show_help_link]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Use truncated categories. The call number categories will be truncated and shown without the trunk.'), 'name' => RepositoryHierarchy::PREF_SHOW_TRUNCATED_CATEGORY, 'checked' => $show_truncated_category]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Use truncated call numbers. The call numbers will be truncated and shown without call number category.'), 'name' => RepositoryHierarchy::PREF_SHOW_TRUNCATED_CALL_NUMBER, 'checked' => $show_truncated_call_number]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show date range for call number categories.'), 'name' => RepositoryHierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, 'checked' => $show_date_range_for_category]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Allow renaming of call number categories. Will show an icon and a link for renaming.'), 'name' => RepositoryHierarchy::PREF_ALLOW_RENAME, 'checked' => $allow_rename]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Allow adding new sources to a call number category. Will show an icon and a link to add new sources.'), 'name' => RepositoryHierarchy::PREF_ALLOW_NEW_SOURCE, 'checked' => $allow_new_source]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show the title of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_TITLE, 'checked' => $show_title]) ?>
-			</div>
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show the XREF of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_XREF, 'checked' => $show_xref]) ?>
-			</div>
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show the author of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_AUTHOR, 'checked' => $show_author]) ?>
-			</div>			
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show the date range of the sources.'), 'name' => RepositoryHierarchy::PREF_SHOW_DATE_RANGE, 'checked' => $show_date_range]) ?>
             </div>
@@ -120,7 +120,7 @@ use Fisharebest\Webtrees\View;
                         <?= view('components/select', ['name' => RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS . '[]', 'id' => RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, 'selected' => explode(',', $expanded_facts_in_citations), 'options' => RepositoryHierarchy::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS, 'class' => 'tom-select']) ?>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Directly show media objects of sources in facts and not subordinated within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, 'checked' => $show_media_after_citations]) ?>
             </div>
@@ -133,18 +133,18 @@ use Fisharebest\Webtrees\View;
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Enable sort mechanism for source citations in the individual and family view.'), 'name' => RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, 'checked' => $enable_sort_citations]) ?>
             </div>
-            <div class="row"><?= view('icons/spacer') ?></div> 
+            <div class="row"><?= view('icons/spacer') ?></div>
 
             <h3><?= I18N::translate('Settings for finding aid exports') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show titles of call number categories (if available from .po file).'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, 'checked' => $show_finding_aid_category_title]) ?>
-			</div> 
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Include repository address within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_ADDRESS, 'checked' => $show_finding_aid_address]) ?>
-            </div>            
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Include links to webtrees sources within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, 'checked' => $show_finding_aid_wt_links]) ?>
-            </div>            
+            </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Include table of contents within finding aid export.'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_TOC, 'checked' => $show_finding_aid_toc]) ?>
             </div>
@@ -154,28 +154,28 @@ use Fisharebest\Webtrees\View;
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Show links within table of contents in finding aid export (not available for PDF export).'), 'name' => RepositoryHierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, 'checked' => $show_finding_aid_toc_links]) ?>
             </div>
-            <div class="row"><?= view('icons/spacer') ?></div> 
+            <div class="row"><?= view('icons/spacer') ?></div>
 
             <h3><?= I18N::translate('Settings for EAD XML exports') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Allow users to load stored XML settings from administrator.'), 'name' => RepositoryHierarchy::PREF_ALLOW_ADMIN_XML_SETTINGS, 'checked' => $allow_admin_xml_settings]) ?>
             </div>
-            <div class="row"><?= view('icons/spacer') ?></div> 
+            <div class="row"><?= view('icons/spacer') ?></div>
 
             <h3><?= I18N::translate('Settings for Meta Repositories') ?></h3>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Use Meta Repositories.'), 'name' => RepositoryHierarchy::PREF_USE_META_REPOSITORIES, 'checked' => $use_meta_repositories]) ?>
-            </div>            
-            <div class="row"><?= view('icons/spacer') ?></div> 
+            </div>
+            <div class="row"><?= view('icons/spacer') ?></div>
 
             <h3><?= I18N::translate('Settings for linking to external archive management tools') ?></h3>
-            <div class="row">            
+            <div class="row">
                 <?= I18N::translate('The following settings apply if AtoM (https://www.accesstomemory.org) is used as an external archive management system.') ?>
-            </div>                
+            </div>
             <div class="row">
                 <p></p>
                 <?= view('components/checkbox', ['label' => I18N::translate('Show link to AtoM records within source citations').'.', 'name' => RepositoryHierarchy::PREF_SHOW_ATOM_LINKS, 'checked' => $show_atom_links]) ?>
-            </div> 
+            </div>
             <div class="row">
                 <p></p>
                 <?= I18N::translate('Settings for the creation of AtoM REST links ("AtoM slugs"), which can be used to link a webtrees source citation to the source view in an external AtoM archive management system. Only applies if the option "%s" is activated.', I18N::translate('Show link to AtoM records within source citations'))?>
@@ -189,7 +189,7 @@ use Fisharebest\Webtrees\View;
                         RepositoryHierarchy::PREF_ATOM_SLUG_TITLE => I18N::translate('Use source titles to create AtoM REST links ("AtoM slugs")'),
                         ],
                     ]) ?>
-            </div>            
+            </div>
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="atom_base_url">
                     <?= I18N::translate('Base URL for AtoM') ?>
@@ -201,13 +201,13 @@ use Fisharebest\Webtrees\View;
             <div class="row">
                 <label class="col-sm-3 col-form-label wt-page-options-label" for="atom_repositories">
                     <?= I18N::translate('Repositories, for which AtoM linking is used.') ?>
-                </label>    			
+                </label>
                 <div class="col-sm-9 wt-page-options-value">
-	    			<input class="form-control" id="atom_repositories" name="atom_repositories" type="text" value="<?= e($atom_repositories) ?>">
-			    </div>
+        			<input class="form-control" id="atom_repositories" name="atom_repositories" type="text" value="<?= e($atom_repositories) ?>">
+                </div>
                 <p><?= I18N::translate('Format treename:xref. A list of several entries can be separated by comma, e.g. "my_tree:X1765,my_tree:X2987"') ?></p>
             </div>
-        </div>			
+        </div>
         <div class="col">
             <p></p>
             <button type="submit" class="btn btn-primary">
@@ -215,7 +215,7 @@ use Fisharebest\Webtrees\View;
                 <?= I18N::translate('save') ?>
             </button>
         </div>
-    </form>	
+    </form>
 </div>
 
 <?php View::push('javascript') ?>

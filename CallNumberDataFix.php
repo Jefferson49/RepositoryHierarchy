@@ -45,7 +45,7 @@ class CallNumberDataFix implements RequestHandlerInterface
 {
     use ViewResponseTrait;
 
-	//Module service to search and find modules
+    //Module service to search and find modules
     private ModuleService $module_service;
 
     /**
