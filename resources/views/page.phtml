@@ -9,13 +9,13 @@ use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
 
 /**
- * @var Tree                $tree
- * @var string              $title
- * @var RepositoryHierarchy $repository_hierarchy
- * @var string              $delimiter_expression
- * @var string              $error
- * @var string              $command
- */
+	* @var Tree                $tree
+	* @var string              $title
+	* @var RepositoryHierarchy $repository_hierarchy
+	* @var string              $delimiter_expression
+	* @var string              $error
+	* @var string              $command
+	*/
 
 ?>
 
@@ -31,9 +31,9 @@ use Fisharebest\Webtrees\View;
 </h2>
 
 <form method="post" action="<?= e(route(RepositoryHierarchy::class, [
-        'tree'		=> $tree->name(),
-        'xref'		=> $repository_hierarchy->getRepositoryXref(),
-        ])) ?>" 
+		'tree'		=> $tree->name(),
+		'xref'		=> $repository_hierarchy->getRepositoryXref(),
+		])) ?>"
 	class="wt-page-options wt-page-options-ancestors-chart d-print-none">
 
 	<div class="row">
@@ -42,10 +42,10 @@ use Fisharebest\Webtrees\View;
 		</label>
 		<div class="col-sm-9 wt-page-options-value">
 			<?= view('components/select-repository', [
-                'name' => 'xref',
-                'repository' => $repository_hierarchy->getRepository(),
-                'tree' => $tree,
-                'required' => true]) ?>
+				'name' => 'xref',
+				'repository' => $repository_hierarchy->getRepository(),
+				'tree' => $tree,
+				'required' => true]) ?>
 		</div>
 	</div>
 
@@ -54,10 +54,10 @@ use Fisharebest\Webtrees\View;
 			<?= I18N::translate('Delimiter Expression for Call Numbers') ?>
 			<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" data-wt-href="<?= e(route(RepositoryHierarchyHelpTexts::class, ['topic' => 'Delimiter Expression'])) ?>">
 				<?= view('icons/spacer') ?>
-				<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_ICON, '1'))) : ?>							
+				<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_ICON, '1'))) : ?>
 					<?= view('icons/help') ?>
 				<?php endif ?>
-				<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_LINK, '1'))) : ?>							
+				<?php if (boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_HELP_LINK, '1'))) : ?>
 					<?= I18N::translate('Help') ?>
 				<?php endif ?>
 			</a>
@@ -75,16 +75,16 @@ use Fisharebest\Webtrees\View;
 			<input class="btn btn-primary" type="submit" value="<?= I18N::translate('view') ?>">
 			<?= view('icons/spacer') ?>
 			<?= view('components/radios-inline', [
-                'name' => 'command',
-                'options' => $repository_hierarchy->getLoadSaveOptions(),
-                'selected' => RepositoryHierarchy::CMD_NONE,
-                ]) ?>
+				'name' => 'command',
+				'options' => $repository_hierarchy->getLoadSaveOptions(),
+				'selected' => RepositoryHierarchy::CMD_NONE,
+				]) ?>
 		</div>
 
 	</div>
 
 	<?= csrf_field() ?>
-</form>	
+</form>
 
 <?php if ($delimiter_expression !== '') : ?>
 	<form method="post" action="<?= e(route(RepositoryHierarchy::class, [
@@ -92,7 +92,7 @@ use Fisharebest\Webtrees\View;
 							'xref'                  => $repository_hierarchy->getRepositoryXref(),
 							'delimiter_expression'  => $delimiter_expression,
 							'command'               => RepositoryHierarchy::CMD_DOWNLOAD,
-							])) ?>" 
+							])) ?>"
 			class="wt-page-options wt-page-options-ancestors-chart d-print-none">
 		<div class="row">
 			<label class="col-sm-3 col-form-label wt-page-options-label">
@@ -107,7 +107,7 @@ use Fisharebest\Webtrees\View;
 					'selected' => DownloadService::DOWNLOAD_OPTION_HTML,
 				]) ?>
 				<?= view('icons/spacer') ?>
-				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
+				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal"
 							data-wt-href="<?= e(route(XmlExportSettingsModal::class, [
 								'tree'                  => $tree->name(),
 								'xref'                  => $repository_hierarchy->getRepositoryXref(),
@@ -133,7 +133,7 @@ use Fisharebest\Webtrees\View;
 					'call_number_of_source'             => $repository_hierarchy->call_number_of_source,
 					'truncated_call_number_of_source'   => $repository_hierarchy->truncated_call_number_of_source,
 					'date_range_text_of_source'         => $repository_hierarchy->date_range_text_of_source,
-                    'category'                          => $sub_category,
+					'category'                          => $sub_category,
 					'callNumberCategoryTitleService'    => $repository_hierarchy->getCallNumberCategoryTitleService(),
 					'PREF_SHOW_CATEGORY_TITLE'          => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_CATEGORY_TITLE, '0'),
 					'PREF_SHOW_DATE_RANGE_FOR_CATEGORY' => $repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_DATE_RANGE_FOR_CATEGORY, '0'),
@@ -149,10 +149,10 @@ use Fisharebest\Webtrees\View;
 					'trans_Call_Number_Category'        => I18N::translate('Call Number Category'),
 					'trans_Rename'                      => I18N::translate('Rename'),
 					'trans_Add_new_source'              => I18N::translate('Add new source'),
-					'trans_Author'                      => I18N::translate('Author'), 
+					'trans_Author'                      => I18N::translate('Author'),
 					'xlate_Title'                       => MoreI18N::xlate('Title'),
 					'xlate_Date_range'                  => MoreI18N::xlate('Date range'),
-                    ]) ?>
+					]) ?>
 		<?php endforeach ?>
 	</div>
 <?php endif ?>

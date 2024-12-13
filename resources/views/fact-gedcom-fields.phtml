@@ -39,7 +39,7 @@ if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABL
             $showSourceCitationIcon = $individual->canEdit();
         }
     }
-    elseif ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_FAMILY) 
+    elseif ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_FAMILY)
             && (Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_TREE) === $tree->name())
             && Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER))
     {
@@ -49,7 +49,7 @@ if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABL
             $showSourceCitationIcon = $family->canEdit();
         }
     }
-} 
+}
 
 $hierarchy = explode(':', $parent);
 
@@ -118,29 +118,29 @@ foreach ($keys as $key) {
 
             <?php array_shift($keys) ?>
             <?php foreach ($keys as $key) : ?>
-				<?php if ($values[$key] !== '') : ?>
+                <?php if ($values[$key] !== '') : ?>
                     <?php if ($elements[$key] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[$key], $match) === 1) : ?>
                         <?php if(!boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) : ?>
                             <?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $match[1], 'tree' => $tree]); ?>
-                        <?php endif ?> 
+                        <?php endif ?>
                     <?php else : ?>
                         <?= $elements[$key]->labelValue(strtr($values[$key], ["\r" => "\n"]), $tree) ?>
-                    <?php endif ?>                
+                    <?php endif ?>
                 <?php endif ?>
             <?php endforeach ?>
         </div>
 
-		<?php //Additionally show media objects after source citation?>
-		<?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) : ?>
-			<?php foreach ($keys as $key) : ?>
-				<?php if ($values[$key] !== '') : ?>
+        <?php //Additionally show media objects after source citation?>
+        <?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) : ?>
+            <?php foreach ($keys as $key) : ?>
+                <?php if ($values[$key] !== '') : ?>
                     <?php if ($elements[$key] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[$key], $match) === 1) : ?>
                         <?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $match[1], 'tree' => $tree]); ?>
                     <?php endif ?>
-				<?php endif ?>
-			<?php endforeach ?>	
-		<?php endif ?>	
-	<?php endif ?>
+                <?php endif ?>
+            <?php endforeach ?>
+        <?php endif ?>
+    <?php endif ?>
 <?php elseif ($elements[0] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[0], $match) === 1) : ?>
     <?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $match[1], 'tree' => $tree]); ?>
 <?php else : ?>

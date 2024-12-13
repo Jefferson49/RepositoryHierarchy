@@ -11,10 +11,10 @@ use Fisharebest\Webtrees\View;
 use function date;
 
 /**
- * @var string              $language_tag
- * @var RepositoryHierarchy $repository_hierarchy
- * @var bool                $forPDF
- */
+	* @var string              $language_tag
+	* @var RepositoryHierarchy $repository_hierarchy
+	* @var bool                $forPDF
+	*/
 
 ?>
 
@@ -33,12 +33,12 @@ use function date;
 				border: 0pt white;
 				width: 100%;
 				break-inside: avoid;
-			} 
+			}
 			.finding-aid-table-caption {
-				font-weight: 400; 
-				background-color: #d0d0d0; 
+				font-weight: 400;
+				background-color: #d0d0d0;
 				text-align: left;
-			}		
+			}
 			.finding-aid-table-empty-row {
 				font-size:3pt;
 				height: 3pt;
@@ -46,7 +46,7 @@ use function date;
 			.finding-aid-table-separator-row {
 				font-size:3pt;
 				height: 3pt;
-				border-top: 1pt solid black; 
+				border-top: 1pt solid black;
 			}
 			.finding-aid-table-first-column {
 				width: 75pt;
@@ -55,7 +55,7 @@ use function date;
 				width: 125pt;
 			}
 			td {
-				vertical-align: top;	
+				vertical-align: top;
 			}
 			<?php if($forPDF) : ?>
 			.finding-aid-table-middle-column {
@@ -89,20 +89,20 @@ use function date;
 		<?php if(boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC, '1'))) : ?>
 			<h2><?= I18N::translate('Table of Contents - Archival Arrangement') ?></h2>
 			<?= view(RepositoryHierarchy::viewsNamespace() . '::table-of-contents', [
-                'repository_hierarchy'	=> $repository_hierarchy,
-                'category'              => $repository_hierarchy->getRootCategory(),
-                'is_root_category'      => true,
-                'show_links'			=> !$forPDF && boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
-                'show_titles'			=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_TITLES, '0')),
-            ]) ?>
+				'repository_hierarchy'	=> $repository_hierarchy,
+				'category'              => $repository_hierarchy->getRootCategory(),
+				'is_root_category'      => true,
+				'show_links'			=> !$forPDF && boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_LINKS, '1')),
+				'show_titles'			=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_TOC_TITLES, '0')),
+			]) ?>
 		<?php endif ?>
 
 		<h2><?= I18N::translate('List of Sources') ?></h2>
 		<?= view(RepositoryHierarchy::viewsNamespace() . '::category-html', [
-            'category'          	=> $repository_hierarchy->getRootCategory(),
-            'repository_hierarchy'	=> $repository_hierarchy,
-            'is_root_category'		=> true,
-            'show_wt_links'			=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
-        ]) ?>
+			'category'          	=> $repository_hierarchy->getRootCategory(),
+			'repository_hierarchy'	=> $repository_hierarchy,
+			'is_root_category'		=> true,
+			'show_wt_links'			=> boolval($repository_hierarchy->getPreference($repository_hierarchy::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
+		]) ?>
 	</body>
 </html>

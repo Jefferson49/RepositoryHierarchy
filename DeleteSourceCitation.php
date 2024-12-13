@@ -63,7 +63,7 @@ class DeleteSourceCitation implements RequestHandlerInterface
             $individual  = Registry::individualFactory()->make($xref, $tree);
             $facts = $individual->facts();
             $family_facts = $individual_facts_service->familyFacts($individual, new Collection);
-            $facts = $facts->merge($family_facts);    
+            $facts = $facts->merge($family_facts);
         }
         elseif ($xref_type === 'FAM') {
             $family  = Registry::familyFactory()->make($xref, $tree);

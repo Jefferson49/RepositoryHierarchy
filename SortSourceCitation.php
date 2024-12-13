@@ -67,7 +67,7 @@ class SortSourceCitation implements RequestHandlerInterface
 
             for ($i = 0; $i < $old_position; $i++) {
                 $ordered_citations[$i] = $matched_citations[$i];
-            } 
+            }
 
             $ordered_citations[$old_position] = $matched_citations[$new_position];
             $ordered_citations[$new_position] = $matched_citations[$old_position];
@@ -80,7 +80,7 @@ class SortSourceCitation implements RequestHandlerInterface
 
             for ($i = 0; $i < $new_position; $i++) {
                 $ordered_citations[$i] = $matched_citations[$i];
-            } 
+            }
 
             $ordered_citations[$new_position] = $matched_citations[$old_position];
             $ordered_citations[$old_position] = $matched_citations[$new_position];
@@ -94,7 +94,7 @@ class SortSourceCitation implements RequestHandlerInterface
             $individual  = Registry::individualFactory()->make($xref, $tree);
             $facts = $individual->facts();
             $family_facts = $individual_facts_service->familyFacts($individual, new Collection);
-            $facts = $facts->merge($family_facts);    
+            $facts = $facts->merge($family_facts);
         }
         elseif ($xref_type === 'FAM') {
             $family  = Registry::familyFactory()->make($xref, $tree);

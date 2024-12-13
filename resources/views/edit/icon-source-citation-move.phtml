@@ -25,11 +25,11 @@ use Fisharebest\Webtrees\Tree;
         'xref'              => $xref,
         'fact_id'           => $fact_id,
         'xref_type'         => $xref_type,
-        'matched_citations' => $matched_citations,       
+        'matched_citations' => $matched_citations,
         'old_position'      => $old_position,
         'new_position'      => $new_position,
     ])) ?>" title="<?= I18N::translate('Sort source citation - move up/down') ?>">
-    
+
     <?php if ($new_position < $old_position) : ?>
         <?= view('icons/arrow-up') ?>
         <span class="visually-hidden"><?= I18N::translate('Sort source citation - move up') ?></span>
