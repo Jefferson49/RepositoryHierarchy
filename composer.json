@@ -1,0 +1,16 @@
+{
+    "repositories": [
+        {
+            "url": "https://github.com/Jefferson49/webtrees-common.git",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/matriphe/php-iso-639.git",
+            "type": "git"
+        }        
+    ],
+    "require": {
+        "jefferson49/webtrees-common": ">=1.0.0",
+        "matriphe/iso-639": "=1.3"
+    }
+}
