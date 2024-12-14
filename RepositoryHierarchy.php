@@ -305,6 +305,22 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function __construct()
     {
+        //Caution: Do not use the shared library jefferson47/webtrees-common within __construct(), 
+        //         because it might result in wrong autoload behavior
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return void
+     *
+     * @see \Fisharebest\Webtrees\Module\AbstractModule::boot()
+     */
+    public function boot(): void
+    {
+        //Check module version and update preferences etc.
+        $this->checkModuleVersionUpdate();
+
         //Create data fix service
         $this->data_fix_service = new DataFixService();
 
@@ -318,17 +334,7 @@ class RepositoryHierarchy extends AbstractModule implements
         $this->date_range_of_source = [];
         $this->date_range_text_of_source = [];
         $this->iso_date_range_text_of_source = [];
-    }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return void
-     *
-     * @see \Fisharebest\Webtrees\Module\AbstractModule::boot()
-     */
-    public function boot(): void
-    {
         //Initialization of the custom view list
         $this->custom_view_list = new Collection;
 
@@ -350,9 +356,6 @@ class RepositoryHierarchy extends AbstractModule implements
             'DATA'  => MoreI18N::xlate('Data'),
             'TEXT'  => MoreI18N::xlate('Text'),
         ]);
-
-        //Check module version and update preferences etc.
-        $this->checkModuleVersionUpdate();
 
         $router = Registry::routeFactory()->routeMap();
 
