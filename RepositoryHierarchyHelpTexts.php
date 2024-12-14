@@ -25,12 +25,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
-use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Factories\MarkdownFactory;
+use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

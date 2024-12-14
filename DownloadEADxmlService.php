@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
-use Cissee\WebtreesExt\MoreI18N;
 use DOMAttr;
 use DOMDocument;
 use DOMImplementation;
@@ -35,6 +34,7 @@ use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
+use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Matriphe\ISO639\ISO639;
 use Psr\Http\Message\ResponseInterface;
 
