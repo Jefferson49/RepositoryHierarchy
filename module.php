@@ -35,12 +35,33 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Composer\Autoload\ClassLoader;
+use Composer\InstalledVersions;
 
-$loader = new ClassLoader();
+$loader = new ClassLoader(__DIR__);
 $loader->addPsr4('Jefferson49\\Webtrees\\Module\\RepositoryHierarchy\\', __DIR__);
-$loader->addPsr4('Jefferson49\\Webtrees\\Helpers\\', __DIR__ . "/vendor/Jefferson49/Webtrees/Helpers/");
-$loader->addPsr4('Cissee\\WebtreesExt\\', __DIR__ . "/vendor/vesta-webtrees-2-custom-modules/vesta_common/patchedWebtrees");
-$loader->addPsr4('Matriphe\\ISO639\\', __DIR__ . "/vendor/matriphe/php-iso-639-master/src/");
+$loader->addPsr4('Matriphe\\ISO639\\', __DIR__ . "/vendor/matriphe/iso-639/src/");
 $loader->register();
+
+//Autoload the latest version of the common code library, which is shared between webtrees custom modules
+$loader = new ClassLoader(__DIR__ .'/vendor');
+
+try {
+    $autoload_common_library_version = InstalledVersions::getVersion('jefferson49/webtrees-common');
+}
+catch (\OutOfBoundsException $e) {
+    $autoload_common_library_version = '';
+}
+
+$local_composer_versions = require __DIR__ . '/vendor/composer/installed.php';
+$local_common_library_version = $local_composer_versions['versions']['jefferson49/webtrees-common']['version'];
+
+//If the found library is later than the current autoload version, prepend the found library to autoload
+//This ensures that always the latest library version is autoloaded
+if (version_compare($local_common_library_version, $autoload_common_library_version, '>')) {
+    $loader->addPsr4('Jefferson49\\Webtrees\\Helpers\\', __DIR__ . '/vendor/jefferson49/webtrees-common/Helpers');
+    $loader->addPsr4('Jefferson49\\Webtrees\\Internationalization\\', __DIR__. '/vendor/jefferson49/webtrees-common/Internationalization');    
+    $loader->addPsr4('Jefferson49\\Webtrees\\Log\\', __DIR__ . '/vendor/jefferson49/webtrees-common/Log');
+    $loader->register(true);    
+}
 
 return new RepositoryHierarchy();
