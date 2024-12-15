@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97f9d80043b7afd93cb6e8ba2ad74e15",
+    "content-hash": "a10688bb8628736a27ca313f043506bd",
     "packages": [
         {
             "name": "jefferson49/webtrees-common",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jefferson49/webtrees-common.git",
-                "reference": "847923c4882fd151b0bbe274fb42ecb2e418d69c"
+                "reference": "a313662a39d131fd4ccc5ff2f106994dda462080"
             },
             "require": {
                 "php": ">=7.4"
@@ -27,7 +27,7 @@
                 "webtree-module",
                 "webtrees"
             ],
-            "time": "2024-12-14T05:43:49+00:00"
+            "time": "2024-12-15T04:39:02+00:00"
         },
         {
             "name": "matriphe/iso-639",
