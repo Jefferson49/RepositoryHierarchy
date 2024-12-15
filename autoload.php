@@ -27,6 +27,10 @@
  * GNU General Public License for more details.
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * 
+ * autoload for webtrees custom module: RepositoryHierarchy
+ * 
  */
 
 
@@ -34,6 +38,18 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
-require_once __DIR__ . '/autoload.php';
+use Composer\Autoload\ClassLoader;
 
-return new RepositoryHierarchy();
+//Autoload the latest version of the common code library, which is shared between webtrees custom modules
+//Caution: This autoload needs to be executed before autoloading any other libraries from __DIR__/vendor
+require __DIR__ . '/vendor/jefferson49/webtrees-common/autoload_webtrees_common.php';
+
+//Autoload this webtrees custom module
+$loader = new ClassLoader(__DIR__);
+$loader->addPsr4('Jefferson49\\Webtrees\\Module\\RepositoryHierarchy\\', __DIR__);
+$loader->register();
+
+//Autoload matriphe/iso-639 language tag library
+$loader = new ClassLoader(__DIR__ . '/vendor');
+$loader->addPsr4('Matriphe\\ISO639\\', __DIR__ . "/vendor/matriphe/iso-639/src/");
+$loader->register();
