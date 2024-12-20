@@ -768,8 +768,16 @@ class RepositoryHierarchy extends AbstractModule implements
         //If new custom module version is detected
         if ($this->getPreference(self::PREF_MODULE_VERSION) !== self::CUSTOM_VERSION) {
 
+            //Update module files
+            if (require __DIR__ . '/../update_module_files.php') {
+                $update_result = '';    
+            }
+            else {
+                $update_result = I18N::translate('Error during updating the custom module files to a new version. ');                
+            }
+
             //Update prefences stored in database
-            $update_result = $this->updatePreferences();
+            $update_result .= $this->updatePreferences();
 
             //Show flash message for error or sucessful update of preferences
             if ($update_result !== '') {
@@ -795,6 +803,8 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function updatePreferences(): string
     {       
+        $error = '';
+
         //Rename old preferences
         if (    $this->getPreference(self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS) === ''
             &&  $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS) !== self::PREF_DELETED) {
@@ -834,7 +844,6 @@ class RepositoryHierarchy extends AbstractModule implements
         //Delete old preferences, i.e. set old preference value to deleted
         $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);
 
-        $error = '';
         return $error;
     }
 
