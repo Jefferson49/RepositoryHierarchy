@@ -42,14 +42,12 @@ use Composer\Autoload\ClassLoader;
 
 //Autoload the latest version of the common code library, which is shared between webtrees custom modules
 //Caution: This autoload needs to be executed before autoloading any other libraries from __DIR__/vendor
-require __DIR__ . '/vendor/jefferson49/webtrees-common/autoload_webtrees_common.php';
+require_once __DIR__ . '/vendor/jefferson49/webtrees-common/autoload.php';
 
 //Autoload this webtrees custom module
 $loader = new ClassLoader(__DIR__);
 $loader->addPsr4('Jefferson49\\Webtrees\\Module\\RepositoryHierarchy\\', __DIR__);
 $loader->register();
 
-//Autoload matriphe/iso-639 language tag library
-$loader = new ClassLoader(__DIR__ . '/vendor');
-$loader->addPsr4('Matriphe\\ISO639\\', __DIR__ . "/vendor/matriphe/iso-639/src/");
-$loader->register();
+//Autoload libraries, i.e. matriphe/iso-639 language tag library
+require_once __DIR__ . '/vendor/autoload.php';
