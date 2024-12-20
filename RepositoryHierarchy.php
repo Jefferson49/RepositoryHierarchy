@@ -105,7 +105,7 @@ class RepositoryHierarchy extends AbstractModule implements
     use ModuleDataFixTrait;
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.4.0';
+    public const CUSTOM_VERSION = '1.5.0';
 
     //Routes, attributes
     protected const MODULE_NAME_IN_ROUTE = 'repositoryhierarchy';
@@ -769,7 +769,7 @@ class RepositoryHierarchy extends AbstractModule implements
         if ($this->getPreference(self::PREF_MODULE_VERSION) !== self::CUSTOM_VERSION) {
 
             //Update module files
-            if (require __DIR__ . '/../update_module_files.php') {
+            if (require __DIR__ . '/update_module_files.php') {
                 $update_result = '';    
             }
             else {
