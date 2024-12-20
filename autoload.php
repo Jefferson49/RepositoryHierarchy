@@ -36,9 +36,16 @@
 
 declare(strict_types=1);
 
-namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
-
 use Composer\Autoload\ClassLoader;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
+
+
+//Check availability of correct webtrees-common library; update files if needed
+$file_system = new Filesystem(new LocalFilesystemAdapter(__DIR__));
+if (!$file_system->fileExists('/vendor/jefferson49/webtrees-common/autoload.php')) {
+    if (!require __DIR__ . '/update_module_files.php') return false;
+}
 
 //Autoload the latest version of the common code library, which is shared between webtrees custom modules
 //Caution: This autoload needs to be executed before autoloading any other libraries from __DIR__/vendor
