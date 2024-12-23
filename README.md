@@ -272,7 +272,7 @@ Given that the mentioned definiton and assignment of the meta repository is avai
 ###  Using a combined meta repository
 The Repository Hierarchy module offers a feature to combine a meta repository with a base repository. Like in the last chapter, the intention is again to share a common namespace between the meta repository and the base repository. By combining the base repository, it is not necessary to add the meta repository to each of the sources of the base repository. This is especially useful, if the base repository is the "home" of the user's genealogy and contains a lot of sources. 
 
-The Repository Hierarchy module will provide means to view a combined view of all the sources of the base repository and all the sources of the meta repository. In order to activate these features, the following setting needs to be selected in the control panel: "Use Meta Repositories".
+The Repository Hierarchy module will provide means to view a combined view of all the sources of the base repository and all the sources of the meta repository. In order to activate these features, the following setting needs to be selected in the **control panel: "Use Meta Repositories"**.
 
 To make the relationship between the repositories more visible, ít is proposed to use the same repository name and a prefix "Meta:" for the meta repository. An example is shown in the following screenshot. 
 
