@@ -773,7 +773,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 $update_result = '';    
             }
             else {
-                $update_result = I18N::translate('Error during updating the custom module files to a new version. ');                
+                $update_result = I18N::translate('Error during updating the custom module files to a new version.');                
             }
 
             //Update prefences stored in database

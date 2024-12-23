@@ -124,7 +124,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
                 </div>
             </div>
             <div class="row">
-                <?= view('components/checkbox', ['label' => I18N::translate('Directly show media objects of sources in facts and not subordinated within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, 'checked' => $show_media_after_citations]) ?>
+                <?= view('components/checkbox', ['label' => I18N::translate('Directly show media objects of source citations in facts and not subordinated within source citations.'), 'name' => RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, 'checked' => $show_media_after_citations]) ?>
             </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Enable copy/paste mechanism for source citations in the individual and family view.'), 'name' => RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, 'checked' => $enable_copy_paste_citations]) ?>

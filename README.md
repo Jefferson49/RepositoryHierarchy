@@ -425,7 +425,7 @@ The Repository Hierarchy module provides a feature to directly show media object
 **Screenshot of individual fact with media objects subordinated to source citation:**
 ![Screenshot](resources/img/screenshot_media_objects_subordinated_in_citations.jpg)
 
-In order to activate this feature, the setting "Directly show media objects of sources in facts and not subordinated within source citations" needs to be selected in the control panel.
+In order to activate this feature, the setting "Directly show media objects of source citations in facts and not subordinated within source citations" needs to be selected in the control panel.
 
 ### Show all images of media objects
 
@@ -460,7 +460,7 @@ The following preferences can be activated/deactivated by administrators in the 
 #### Preferences for source citations
 + Show source facts for sources within source citations
 + Automatically expand souce facts within source citations
-+ Directly show media objects of sources in facts and not sub-ordinated within source citations.
++ Directly show media objects of source citations in facts and not sub-ordinated within source citations.
 + Enable copy/paste mechanism for source citations in the individual and family view.
 
 #### Preferences for finding aid export
