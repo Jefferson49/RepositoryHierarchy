@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Repository Hierarchy\n"
-"POT-Creation-Date: 2024-12-23 19:02+0100\n"
+"POT-Creation-Date: 2024-12-26 07:26+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -69,8 +69,6 @@ msgstr ""
 msgid "The preferences for the module “%s” were updated."
 msgstr "Die Einstellungen für das Modul %s wurden aktualisiert."
 
-#, fuzzy
-#| msgid "Error during updating the custom module files to a new version. "
 msgid "Error during updating the custom module files to a new version."
 msgstr ""
 "Fehler während der Aktualisierung von Dateien des benutzerspezifischen "
@@ -578,6 +576,12 @@ msgid ""
 msgstr ""
 "Aktiviere Mechanismus zum Sortieren von Quellen-Zitaten in der Personen und "
 "Familien-Ansicht."
+
+msgid "Settings for media objects"
+msgstr "Einstellungen für Medienobjekte"
+
+msgid "Show notes of media objects below media objects."
+msgstr "Notizen von Medienobjekten unterhalb von Medienobjekten anzeigen."
 
 msgid "Settings for finding aid exports"
 msgstr "Einstellungen für Findbuch-Exporte"

@@ -32,6 +32,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
  * @var  bool       $enable_copy_paste_citations
  * @var  bool		$enable_delete_citations
  * @var  bool		$enable_sort_citations
+ * @var  bool		$show_notes_for_media_objects
  * @var  bool       $show_finding_aid_category_title
  * @var  bool       $show_finding_aid_address
  * @var  bool       $show_finding_aid_wt_links
@@ -134,6 +135,12 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
             </div>
             <div class="row">
                 <?= view('components/checkbox', ['label' => I18N::translate('Enable sort mechanism for source citations in the individual and family view.'), 'name' => RepositoryHierarchy::PREF_ENABLE_SORT_CITATIONS, 'checked' => $enable_sort_citations]) ?>
+            </div>
+            <div class="row"><?= view('icons/spacer') ?></div>
+
+            <h3><?= I18N::translate('Settings for media objects') ?></h3>
+            <div class="row">
+                <?= view('components/checkbox', ['label' => I18N::translate('Show notes of media objects below media objects.'), 'name' => RepositoryHierarchy::PREF_SHOW_NOTES_FOR_MEDIA_OBJECTS, 'checked' => $show_notes_for_media_objects]) ?>
             </div>
             <div class="row"><?= view('icons/spacer') ?></div>
 

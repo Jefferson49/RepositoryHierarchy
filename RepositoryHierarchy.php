@@ -194,6 +194,7 @@ class RepositoryHierarchy extends AbstractModule implements
     public const PREF_CITATION_GEDCOM = 'citation_gedcom';
     public const PREF_ENABLE_DELETE_CITATIONS ='enable_delete_citations';
     public const PREF_ENABLE_SORT_CITATIONS ='enable_sort_citations';
+    public const PREF_SHOW_NOTES_FOR_MEDIA_OBJECTS ='show_notes_for_media_objects';
 
     //Old prefences/settings not used any more, but needed for version updates
     public const PREF_DELETED = 'deleted';
@@ -674,6 +675,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_ENABLE_COPY_PASTE_CITATIONS   	   => boolval($this->getPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, '0')),
                 self::PREF_ENABLE_DELETE_CITATIONS   	       => boolval($this->getPreference(self::PREF_ENABLE_DELETE_CITATIONS, '0')),
                 self::PREF_ENABLE_SORT_CITATIONS        	   => boolval($this->getPreference(self::PREF_ENABLE_SORT_CITATIONS, '0')),
+                self::PREF_SHOW_NOTES_FOR_MEDIA_OBJECTS        => boolval($this->getPreference(self::PREF_SHOW_NOTES_FOR_MEDIA_OBJECTS, '1')),
                 self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE     => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, '0')),
                 self::PREF_SHOW_FINDING_AID_ADDRESS            => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, '1')),
                 self::PREF_SHOW_FINDING_AID_WT_LINKS           => boolval($this->getPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, '1')),
@@ -726,6 +728,7 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_ENABLE_COPY_PASTE_CITATIONS, isset($params[self::PREF_ENABLE_COPY_PASTE_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_DELETE_CITATIONS, isset($params[self::PREF_ENABLE_DELETE_CITATIONS]) ? '1' : '0');
             $this->setPreference(self::PREF_ENABLE_SORT_CITATIONS, isset($params[self::PREF_ENABLE_SORT_CITATIONS]) ? '1' : '0');
+            $this->setPreference(self::PREF_SHOW_NOTES_FOR_MEDIA_OBJECTS, isset($params[self::PREF_SHOW_NOTES_FOR_MEDIA_OBJECTS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE, isset($params[self::PREF_SHOW_FINDING_AID_CATEGORY_TITLE]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_ADDRESS, isset($params[self::PREF_SHOW_FINDING_AID_ADDRESS]) ? '1' : '0');
             $this->setPreference(self::PREF_SHOW_FINDING_AID_WT_LINKS, isset($params[self::PREF_SHOW_FINDING_AID_WT_LINKS]) ? '1' : '0');

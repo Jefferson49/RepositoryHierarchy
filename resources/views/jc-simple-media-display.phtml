@@ -1,7 +1,13 @@
 <?php
 
+namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
+
 use Fisharebest\Webtrees\Media;
 use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Services\ModuleService;
+
+$module_service = new ModuleService();
+$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 
 ?>
 
@@ -18,12 +24,14 @@ use Fisharebest\Webtrees\Registry;
         <div class="row wt-media-link-title px-1">
             <a href="<?= e($media->url()) ?>"><?= $media->fullName() ?></a>
         </div>
-        <?php if (preg_match_all('/\n(1 NOTE\b.*(?:\n[^1].*)*)/', $media->gedcom(), $matches, PREG_SET_ORDER) > 0) : ?>
-            <div class="wt-fact-notes mt-2">
-                <?php foreach ($matches as $match) : ?>
-                    <?= view('fact-gedcom-fields', ['gedcom' => $match[1], 'parent' => $media->tag(), 'tree' => $media->tree()]) ?>
-                <?php endforeach ?>
-            </div>
+        <?php if(boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_NOTES_FOR_MEDIA_OBJECTS, '1'))) : ?>
+            <?php if (preg_match_all('/\n(1 NOTE\b.*(?:\n[^1].*)*)/', $media->gedcom(), $matches, PREG_SET_ORDER) > 0) : ?>
+                <div class="wt-fact-notes mt-2">
+                    <?php foreach ($matches as $match) : ?>
+                        <?= view('fact-gedcom-fields', ['gedcom' => $match[1], 'parent' => $media->tag(), 'tree' => $media->tree()]) ?>
+                    <?php endforeach ?>
+                </div>
+            <?php endif ?>
         <?php endif ?>
     </div>
 <?php endif ?>
