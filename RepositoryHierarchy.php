@@ -1066,7 +1066,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
         foreach($this->custom_view_list as $custom_view) {
 
-            [[$namespace], $view_name] = explode(View::NAMESPACE_SEPARATOR, $custom_view, 2);
+            [[$namespace], $view_name] = explode(View::NAMESPACE_SEPARATOR, (string) $custom_view, 2);
 
             foreach($custom_modules->forget($this->activeModuleName()) as $custom_module) {
 
