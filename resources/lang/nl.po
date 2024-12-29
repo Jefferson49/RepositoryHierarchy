@@ -579,6 +579,12 @@ msgstr ""
 "Sorteermechanisme inschakelen voor bronvermeldingen in de persoons- en "
 "gezinsweergave."
 
+msgid "Settings for media objects"
+msgstr "Instellingen voor mediaobjecten"
+
+msgid "Show notes of media objects below media objects."
+msgstr "Toon notities van mediaobjecten onder mediaobjecten."
+
 msgid "Settings for finding aid exports"
 msgstr "Instellingen voor export van archieftoegangen"
 
