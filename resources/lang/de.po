@@ -25,14 +25,14 @@ msgid "Default call number category"
 msgstr "Defaultwert für Signatur-Kategorie"
 
 msgid "The source citation was copied to an internal clipboard."
-msgstr "Das Quellen-Zitat wurde in eine interne Zwischenablage gespeichert."
+msgstr "Die Quellenangabe wurde in eine interne Zwischenablage gespeichert."
 
 msgid ""
 "The source citation can be added to other facts/events by clicking on the "
 "source icon in the edit area of the fact/event."
 msgstr ""
 "Durch Klicken auf das Quellen-Symbol im Eingabebereich von Tatsachen/"
-"Ereignissen, kann das Quellen-Zitat zu anderen Tatsachen/Ereignissen "
+"Ereignissen, kann die Quellenangabe zu anderen Tatsachen/Ereignissen "
 "hinzugefügt werden."
 
 msgid ""
@@ -350,25 +350,25 @@ msgid "Author"
 msgstr "Autor"
 
 msgid "Copy source citation to clipboard"
-msgstr "Quellen-Zitat in die Zwischenablage kopieren"
+msgstr "Quellenangabe in die Zwischenablage kopieren"
 
 msgid "Are you sure you want to delete the source citation?"
-msgstr "Sind Sie sicher, dass Sie das Quellen-Zitat löschen möchten?"
+msgstr "Sind Sie sicher, dass Sie die Quellenangabe löschen möchten?"
 
 msgid "Delete source citation"
-msgstr "Quellen-Zitat löschen"
+msgstr "Quellenangabe löschen"
 
 msgid "Sort source citation - move up/down"
-msgstr "Quellen-Zitat sortieren - bewege nach oben/unten"
+msgstr "Quellenangabe sortieren - bewege nach oben/unten"
 
 msgid "Sort source citation - move up"
-msgstr "Quellen-Zitat sortieren - bewege nach oben"
+msgstr "Quellenangabe sortieren - bewege nach oben"
 
 msgid "Sort source citation - move down"
-msgstr "Quellen-Zitat sortieren - bewege nach unten"
+msgstr "Quellenangabe sortieren - bewege nach unten"
 
 msgid "Paste source citation from clipboard"
-msgstr "Quellen-Zitat aus Zwischenablage einfügen"
+msgstr "Quellenangabe aus Zwischenablage einfügen"
 
 msgid "Generated on"
 msgstr "Erzeugt am"
@@ -539,42 +539,42 @@ msgstr ""
 "Laden von gespeicherten Delimiter Ausdrücken vom Administrator erlauben."
 
 msgid "Settings for source citations"
-msgstr "Einstellungen für Quellen-Zitate"
+msgstr "Einstellungen für Quellenangaben"
 
 msgid "Source facts to show for sources within source citations"
 msgstr ""
-"Tatsachen von Quellen, die innerhalb von Quellen-Zitaten angezeigt werden "
+"Tatsachen von Quellen, die innerhalb von Quellenangaben angezeigt werden "
 "sollen"
 
 msgid "Automatically expand the following facts within source citations"
 msgstr ""
-"Die folgenden Tatsachen automatisch innerhalb von Quellen-Zitaten expandieren"
+"Die folgenden Tatsachen automatisch innerhalb von Quellenangaben expandieren"
 
 msgid ""
 "Directly show media objects of source citations in facts and not "
 "subordinated within source citations."
 msgstr ""
-"Medien-Objekte von Quellen-Zitaten direkt innerhalb der Tatsachen von "
-"Personen anzeigen und nicht untergeordnet innerhalb von Quellen-Zitaten."
+"Medien-Objekte von Quellenangaben direkt innerhalb der Tatsachen von "
+"Personen anzeigen und nicht untergeordnet innerhalb von Quellenangaben"
 
 msgid ""
 "Enable copy/paste mechanism for source citations in the individual and "
 "family view."
 msgstr ""
-"Aktiviere Copy/Paste-Mechanismus für Quellen-Zitate in der Personen und "
+"Aktiviere Copy/Paste-Mechanismus für Quellenangaben in der Personen und "
 "Familien-Ansicht."
 
 msgid ""
 "Enable delete mechanism for source citations in the individual and family "
 "view."
 msgstr ""
-"Aktiviere Mechanismus zum Löschen von Quellen-Zitaten in der Personen und "
+"Aktiviere Mechanismus zum Löschen von Quellenangaben in der Personen und "
 "Familien-Ansicht."
 
 msgid ""
 "Enable sort mechanism for source citations in the individual and family view."
 msgstr ""
-"Aktiviere Mechanismus zum Sortieren von Quellen-Zitaten in der Personen und "
+"Aktiviere Mechanismus zum Sortieren von Quellenangaben in der Personen und "
 "Familien-Ansicht."
 
 msgid "Settings for media objects"
@@ -629,7 +629,7 @@ msgstr ""
 "accesstomemory.org) als externes Archiv Management System verwendet wird."
 
 msgid "Show link to AtoM records within source citations"
-msgstr "Link zu AtoM Datensätzen innerhalb von Quellen-Zitaten anzeigen"
+msgstr "Link zu AtoM Datensätzen innerhalb von Quellenangaben anzeigen"
 
 #, php-format
 msgid ""
@@ -639,7 +639,7 @@ msgid ""
 "activated."
 msgstr ""
 "Einstellungen für die Erzeugung von AtoM REST-Links (\"AtoM slugs\"), welche "
-"genutzt werden können, um Quellen-Zitate in webtrees mit der Quellen-Ansicht "
+"genutzt werden können, um Quellenangaben in webtrees mit der Quellen-Ansicht "
 "in einem externen AtoM Archiv-Management-System zu verlinken. Nur anwendbar, "
 "wenn die Option \"%s\" aktiviert ist."
 
