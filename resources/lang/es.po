@@ -1,0 +1,678 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RepositoryHierarchy for webtrees 2\n"
+"POT-Creation-Date: 2025-02-08 10:11+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Flags-xgettext: --no-location\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Sources without call number"
+msgstr "Fuentes sin signatura"
+
+msgid "Default call number category"
+msgstr "Categoría de número de llamada por defecto"
+
+msgid "The source citation was copied to an internal clipboard."
+msgstr "La cita de la fuente se copió en un portapapeles interno."
+
+msgid ""
+"The source citation can be added to other facts/events by clicking on the "
+"source icon in the edit area of the fact/event."
+msgstr ""
+"La cita de la fuente puede añadirse a otros hechos/eventos haciendo clic en "
+"el icono de la fuente en el área de edición del hecho/evento."
+
+msgid ""
+"Currently, you do not have the user rights to create new sources. In order "
+"to create new sources, you need to be logged in as a user."
+msgstr ""
+"Actualmente, no dispone de derechos de usuario para crear nuevas fuentes. "
+"Para crear nuevas fuentes, debe iniciar sesión como usuario."
+
+msgid "Create new sources"
+msgstr "Crear nuevas fuentes"
+
+msgid "EAD XML"
+msgstr "EAD XML"
+
+msgid "Finding aid as HTML"
+msgstr "Ayuda para la búsqueda en HTML"
+
+msgid "Finding aid as PDF"
+msgstr "Ayuda en PDF"
+
+msgid "Repository Hierarchy"
+msgstr "Jerarquía de repositorios"
+
+msgid ""
+"A hierarchical structured list of the sources of an archive based on the "
+"call numbers of the sources"
+msgstr ""
+"Una lista estructurada jerárquicamente de las fuentes de un archivo basada "
+"en los números de llamada de las fuentes"
+
+#, php-format
+msgid "The preferences for the module \"%s\" were updated."
+msgstr "Se han actualizado las preferencias del módulo \"%s\"."
+
+msgid "Error during updating the custom module files to a new version."
+msgstr ""
+"Error al actualizar los archivos del módulo personalizado a una nueva "
+"versión."
+
+#, php-format
+msgid ""
+"Error while trying to update the custom module \"%s\" to the new module "
+"version %s: "
+msgstr ""
+"Error al intentar actualizar el módulo personalizado \"%s\" a la nueva "
+"versión del módulo %s: "
+
+#, php-format
+msgid ""
+"The preferences for the custom module \"%s\" were sucessfully updated to the "
+"new module version %s."
+msgstr ""
+"Las preferencias del módulo personalizado \"%s\" se han actualizado "
+"correctamente a la nueva versión del módulo %s."
+
+msgid ""
+"The Repository Hierarchy data fix cannot be used in the \"control panel\"."
+msgstr ""
+"El arreglo de datos de la jerarquía de repositorios no puede utilizarse en "
+"el \"panel de control\"."
+
+msgid ""
+"The data fix can be called from the user front end by clicking on the link "
+"to rename a call number category."
+msgstr ""
+"Se puede acceder a la fijación de datos desde la interfaz de usuario "
+"haciendo clic en el enlace para renombrar una categoría de número de llamada."
+
+msgid "Error in custom module"
+msgstr "Error en el módulo personalizado"
+
+msgid ""
+"Currently, you do not have the user rights to change call number categories."
+msgstr ""
+"Actualmente, no dispone de derechos de usuario para modificar las categorías "
+"de números de llamada."
+
+msgid ""
+"In order to change call number categories, you need to have a \"Manager\" "
+"role for the corresponding tree."
+msgstr ""
+"Para poder cambiar las categorías de números de llamada, debe tener un rol "
+"de \"Gestor\" para el árbol correspondiente."
+
+#, php-format
+msgid ""
+"The custom module \"%s\" is activated in parallel to the %s custom module. "
+"This can lead to unintended behavior. If using the %s module, it is strongly "
+"recommended to deactivate the \"%s\" module, because the identical "
+"functionality is also integrated in the %s module."
+msgstr ""
+"El módulo personalizado \"%s\" se activa en paralelo al módulo personalizado "
+"%s. Esto puede dar lugar a comportamientos no deseados. Si utiliza el módulo "
+"%s, se recomienda encarecidamente desactivar el módulo \"%s\", ya que la "
+"funcionalidad idéntica también está integrada en el módulo %s."
+
+#, php-format
+msgid ""
+"The custom module \"%s\" is activated in parallel to the %s custom module. "
+"This can lead to unintended behavior, because both of the modules have "
+"registered the same custom view \"%s\". It is strongly recommended to "
+"deactivate one of the modules."
+msgstr ""
+"El módulo personalizado \"%s\" se activa en paralelo al módulo personalizado "
+"%s. Esto puede provocar un comportamiento no deseado, ya que ambos módulos "
+"han registrado la misma vista personalizada \"%s\". Se recomienda "
+"encarecidamente desactivar uno de los módulos."
+
+msgid "Error"
+msgstr "Error"
+
+#, php-format
+msgid ""
+"The custom module view \"%s\" is not registered as replacement for the "
+"standard webtrees view. There might be another module installed, which "
+"registered the same custom view. This can lead to unintended behavior. It is "
+"strongly recommended to deactivate one of the modules. The path of the "
+"parallel view is: %s"
+msgstr ""
+"La vista personalizada del módulo \"%s\" no está registrada como reemplazo "
+"de la vista estándar de webtrees. Puede que haya otro módulo instalado que "
+"haya registrado la misma vista personalizada. Esto puede provocar un "
+"comportamiento no deseado. Se recomienda encarecidamente desactivar uno de "
+"los módulos. La ruta de la vista paralela es: %s"
+
+#, php-format
+msgid "Repository Hierarchy of: %s"
+msgstr "Jerarquía de repositorios de: %s"
+
+msgid "Regular expression not accepted"
+msgstr "Expresión regular no aceptada"
+
+msgid "No valid delimiter or valid regular expression for delimiter found."
+msgstr ""
+"No se ha encontrado un delimitador válido o una expresión regular válida "
+"para el delimitador."
+
+msgid "load delimiter expression from administrator"
+msgstr "cargar expresión delimitadora del administrador"
+
+msgid "none"
+msgstr "ninguno"
+
+msgid "save repository"
+msgstr "guardar repositorio"
+
+msgid "load repository"
+msgstr "cargar repositorio"
+
+msgid "save delimiter expression"
+msgstr "guardar expresión delimitadora"
+
+msgid "load delimiter expression"
+msgstr "expresión delimitadora de carga"
+
+msgid "Could not load repository. No repository stored."
+msgstr ""
+"No se ha podido cargar el repositorio. No hay ningún repositorio almacenado."
+
+#, php-format
+msgid "The tree \"%s\" does not contain any repository"
+msgstr "El árbol \"%s\" no contiene ningún repositorio"
+
+msgid ""
+"Could not load delimiter expression from administrator. No administrator "
+"delimiter expression stored."
+msgstr ""
+"No se ha podido cargar la expresión delimitadora del administrador. No se ha "
+"almacenado ninguna expresión delimitadora del administrador."
+
+msgid "Could not load delimiter expression. No delimiter expression stored."
+msgstr ""
+"No se ha podido cargar la expresión delimitadora. No se ha almacenado "
+"ninguna expresión delimitadora."
+
+msgid "Error in delimiter expression"
+msgstr "Error en la expresión delimitadora"
+
+msgid ""
+"Please note that the following characters need to be escaped if not used as "
+"meta characters in a regular expression"
+msgstr ""
+"Tenga en cuenta que los siguientes caracteres deben escaparse si no se "
+"utilizan como metacaracteres en una expresión regular"
+
+msgid "For example, use"
+msgstr "Por ejemplo, utilice"
+
+msgid "instead of"
+msgstr "en lugar de"
+
+msgid "or"
+msgstr "o"
+
+msgid "if the characters shall be used as plain text."
+msgstr "si los caracteres se utilizarán como texto sin formato."
+
+msgid ""
+"XML export settings not found. Please open EAD XML settings and provide "
+"settings."
+msgstr ""
+"No se ha encontrado la configuración de exportación XML. Por favor, abra la "
+"configuración XML de EAD y proporcione los ajustes."
+
+msgid "Finding aid"
+msgstr "Ayuda para el hallazgo"
+
+msgid "How to use delimiter expressions?"
+msgstr "¿Cómo utilizar las expresiones delimitadoras?"
+
+msgid ""
+"A delimiter is a sequence of one or more characters for specifying the "
+"boundary between separate, independent regions in a text. Use delimiters to "
+"cut call numbers into chunks of call number categories. The call number "
+"categories will be used to construct a hierarchy of call numbers."
+msgstr ""
+"Un delimitador es una secuencia de uno o más caracteres para especificar el "
+"límite entre regiones separadas e independientes en un texto. Utilice "
+"delimitadores para dividir los números de llamada en trozos de categorías de "
+"números de llamada. Las categorías de números de llamada se utilizarán para "
+"construir una jerarquía de números de llamada."
+
+msgid "Use a single delimiter, e.g."
+msgstr "Utilice un único delimitador, por ejemplo"
+
+msgid "Use a set of delimiters separated by"
+msgstr "Utilice un conjunto de delimitadores separados por"
+
+msgid "e.g."
+msgstr "por ejemplo"
+
+msgid ""
+"Use a regular expressions, which contain the delimiter in brackets, e.g."
+msgstr ""
+"Utilice expresiones regulares que contengan el delimitador entre paréntesis, "
+"por ejemplo"
+
+msgid "Fonds"
+msgstr "Fondo"
+
+msgid "Use a set of regular expressions separated by"
+msgstr "Utilice un conjunto de expresiones regulares separadas por"
+
+msgid "Series"
+msgstr "Serie"
+
+msgid "Example"
+msgstr "Ejemplo"
+
+msgid "Call numbers"
+msgstr "Números de llamada"
+
+msgid "Delimiter expression"
+msgstr "Expresión delimitadora"
+
+msgid "Film Number"
+msgstr "Número de película"
+
+msgid "Film"
+msgstr "Película"
+
+msgid "Number"
+msgstr "Número"
+
+msgid "Biography Number"
+msgstr "Número de biografía"
+
+msgid "Photo Number"
+msgstr "Número de foto"
+
+msgid "Delimiter expression:"
+msgstr "Expresión delimitadora:"
+
+msgid "Biography"
+msgstr "Biografía"
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Important Note"
+msgstr "Nota importante"
+
+msgid "if they should be recognized as plain characters."
+msgstr "si deben reconocerse como caracteres normales."
+
+msgid "Detailed description"
+msgstr "Descripción detallada"
+
+msgid "Information about regular expressions"
+msgstr "Información sobre expresiones regulares"
+
+msgid "Help"
+msgstr "Ayuda"
+
+msgid "The help text has not yet been written for this item."
+msgstr "Aún no se ha escrito el texto de ayuda para este elemento."
+
+msgid "EAD XML settings"
+msgstr "Ajustes EAD XML"
+
+msgid "The EAD XML settings have been changed"
+msgstr "Se ha modificado la configuración de EAD XML"
+
+msgid "Link to archival description in AtoM"
+msgstr "Enlace a la descripción del archivo en AtoM"
+
+msgid "Call number"
+msgstr "Número de llamada"
+
+msgid "Gedcom-ID"
+msgstr "Gedcom-ID"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Copy source citation to clipboard"
+msgstr "Copiar cita de la fuente en el portapapeles"
+
+msgid "Are you sure you want to delete the source citation?"
+msgstr "¿Estás seguro de que quieres borrar la cita de la fuente?"
+
+msgid "Delete source citation"
+msgstr "Suprimir la cita de la fuente"
+
+msgid "Sort source citation - move up/down"
+msgstr "Ordenar cita de fuente - subir/bajar"
+
+msgid "Sort source citation - move up"
+msgstr "Ordenar cita fuente - subir"
+
+msgid "Sort source citation - move down"
+msgstr "Ordenar cita de la fuente - desplazarse hacia abajo"
+
+msgid "Paste source citation from clipboard"
+msgstr "Pegar cita de la fuente desde el portapapeles"
+
+msgid "Generated on"
+msgstr "Generado en"
+
+msgid "Language of description"
+msgstr "Lengua de descripción"
+
+msgid "Table of Contents - Archival Arrangement"
+msgstr "Índice - Disposición de los archivos"
+
+msgid "List of Sources"
+msgstr "Lista de fuentes"
+
+msgid "Create a source"
+msgstr "Crear una fuente"
+
+msgid "new"
+msgstr "nuevo"
+
+msgid "Finding aid title"
+msgstr "Título de la ayuda"
+
+msgid "Country code"
+msgstr "Código del país"
+
+msgid "Main agency code"
+msgstr "Código de la agencia principal"
+
+msgid "Finding aid identifier"
+msgstr "Identificador de la ayuda"
+
+msgid "URL of the online finding aid"
+msgstr "URL de la ayuda para la búsqueda en línea"
+
+msgid "Publisher"
+msgstr "Editorial"
+
+msgid "Explanations"
+msgstr "Explicaciones"
+
+msgid "Title proper of the finding aid."
+msgstr "Título propio de la ayuda para la búsqueda."
+
+msgid ""
+"Country name encoded according to ISO 3166-1, e.g. \"FR\" for \"France\"."
+msgstr ""
+"Nombre del país codificado según la norma ISO 3166-1, por ejemplo \"FR\" "
+"para \"Francia\"."
+
+msgid ""
+"Unique code identifying the archival institution maintaining the described "
+"collection; encoded according to ISO 15511 (ISIL). The main agency code is "
+"officially assigned to archives by a national authority. As a substitute "
+"value, the country code and \"-XXXXX\" might be chosen, e.g. FR-XXXXX"
+msgstr ""
+"Código único que identifica a la institución archivística que mantiene el "
+"fondo descrito; codificado según la norma ISO 15511 (ISIL). El código "
+"principal del organismo es el asignado oficialmente a los archivos por una "
+"autoridad nacional. Como valor sustitutivo, puede elegirse el código del "
+"país y \"-XXXXX\", por ejemplo FR-XXXXX"
+
+msgid "Unique identifyer for the finding aid document."
+msgstr "Identificador único del documento de ayuda para la búsqueda."
+
+msgid "URL of the online finding aid (optional)"
+msgstr "URL de la ayuda para la búsqueda en línea (opcional)"
+
+msgid "An URL, where the finding aid can be found oline."
+msgstr "Una URL, donde se puede encontrar la ayuda para la búsqueda en línea."
+
+msgid "Publisher (optional)"
+msgstr "Editor (opcional)"
+
+msgid "Name of the editing institution or the publishing company."
+msgstr "Nombre de la institución editora o de la editorial."
+
+msgid "EAD XML export settings"
+msgstr "Ajustes de exportación EAD XML"
+
+msgid "Load settings from administrator"
+msgstr "Cargar la configuración desde el administrador"
+
+msgid "Search call number category"
+msgstr "Buscar por categoría de número de llamada"
+
+msgid "Category full name"
+msgstr "Nombre completo de la categoría"
+
+msgid "Replace by"
+msgstr "Sustituir por"
+
+msgid "Delimiter Expression for Call Numbers"
+msgstr "Expresión delimitadora para números de llamada"
+
+msgid "View and load/save options"
+msgstr "Opciones de visualización y carga/guardado"
+
+msgid "view"
+msgstr "ver"
+
+msgid "Call Number Category"
+msgstr "Número de llamada Categoría"
+
+msgid "Rename"
+msgstr "Cambie el nombre de"
+
+msgid "Add new source"
+msgstr "Añadir nueva fuente"
+
+msgid "Settings for Repository Hierarchy list"
+msgstr "Configuración de la lista de jerarquía de repositorios"
+
+msgid "Show label before call number category."
+msgstr "Mostrar etiqueta antes de la categoría de número de llamada."
+
+msgid "Show titles of call number categories (if available from .po file)."
+msgstr ""
+"Mostrar títulos de categorías de números de llamada (si están disponibles en "
+"el archivo .po)."
+
+msgid "Show help icon after label for delimiter expression."
+msgstr "Mostrar icono de ayuda tras la etiqueta de la expresión delimitadora."
+
+msgid "Show help link after label for delimiter expression."
+msgstr "Mostrar enlace de ayuda tras la etiqueta de la expresión delimitadora."
+
+msgid ""
+"Use truncated categories. The call number categories will be truncated and "
+"shown without the trunk."
+msgstr ""
+"Utilizar categorías truncadas. Las categorías de números de llamada se "
+"truncarán y se mostrarán sin el tronco."
+
+msgid ""
+"Use truncated call numbers. The call numbers will be truncated and shown "
+"without call number category."
+msgstr ""
+"Utilizar números de llamada truncados. Los números de llamada se truncarán y "
+"se mostrarán sin categoría de número de llamada."
+
+msgid "Show date range for call number categories."
+msgstr "Mostrar intervalo de fechas para las categorías de números de llamada."
+
+msgid ""
+"Allow renaming of call number categories. Will show an icon and a link for "
+"renaming."
+msgstr ""
+"Permitir cambiar el nombre de las categorías de números de llamada. Mostrará "
+"un icono y un enlace para cambiar el nombre."
+
+msgid ""
+"Allow adding new sources to a call number category. Will show an icon and a "
+"link to add new sources."
+msgstr ""
+"Permite añadir nuevas fuentes a una categoría de números de llamada. "
+"Mostrará un icono y un enlace para añadir nuevas fuentes."
+
+msgid "Show the title of the sources."
+msgstr "Muestra el título de las fuentes."
+
+msgid "Show the XREF of the sources."
+msgstr "Muestra el XREF de las fuentes."
+
+msgid "Show the author of the sources."
+msgstr "Mostrar el autor de las fuentes."
+
+msgid "Show the date range of the sources."
+msgstr "Mostrar el intervalo de fechas de las fuentes."
+
+msgid "Allow users to load stored delimiter expressions from administrator."
+msgstr ""
+"Permitir a los usuarios cargar expresiones delimitadoras almacenadas desde "
+"el administrador."
+
+msgid "Settings for source citations"
+msgstr "Configuración de las citas de fuentes"
+
+msgid "Source facts to show for sources within source citations"
+msgstr ""
+"Datos de la fuente para mostrar las fuentes dentro de las citas de fuentes"
+
+msgid "Automatically expand the following facts within source citations"
+msgstr "Amplíe automáticamente los siguientes datos en las citas de fuentes"
+
+msgid ""
+"Directly show media objects of source citations in facts and not "
+"subordinated within source citations."
+msgstr ""
+"Mostrar directamente los medios objetos de las citas de fuentes en hechos y "
+"no subordinados dentro de las citas de fuentes."
+
+msgid ""
+"Enable copy/paste mechanism for source citations in the individual and "
+"family view."
+msgstr ""
+"Habilitar el mecanismo de copiar/pegar para las citas de fuentes en la vista "
+"individual y familiar."
+
+msgid ""
+"Enable delete mechanism for source citations in the individual and family "
+"view."
+msgstr ""
+"Habilitar el mecanismo de eliminación de citas de fuentes en la vista "
+"individual y familiar."
+
+msgid ""
+"Enable sort mechanism for source citations in the individual and family view."
+msgstr ""
+"Habilitar el mecanismo de ordenación para las citas de fuentes en la vista "
+"individual y familiar."
+
+msgid "Settings for media objects"
+msgstr "Ajustes de los objetos multimedia"
+
+msgid "Show notes of media objects below media objects."
+msgstr "Mostrar notas de objetos multimedia debajo de objetos multimedia."
+
+msgid "Settings for finding aid exports"
+msgstr "Ajustes para la exportación de ayudas para la búsqueda"
+
+msgid "Include repository address within finding aid export."
+msgstr ""
+"Incluya la dirección del repositorio en la exportación de la ayuda para la "
+"búsqueda."
+
+msgid "Include links to webtrees sources within finding aid export."
+msgstr ""
+"Incluir enlaces a fuentes webtrees en la exportación de ayudas para la "
+"búsqueda."
+
+msgid "Include table of contents within finding aid export."
+msgstr "Incluir el índice en la exportación de la ayuda para la búsqueda."
+
+msgid "Show titles within table of contents in finding aid export."
+msgstr ""
+"Mostrar títulos dentro del índice en la exportación de la ayuda para la "
+"búsqueda."
+
+msgid ""
+"Show links within table of contents in finding aid export (not available for "
+"PDF export)."
+msgstr ""
+"Mostrar enlaces dentro del índice en la exportación de la ayuda para la "
+"búsqueda (no disponible para la exportación a PDF)."
+
+msgid "Settings for EAD XML exports"
+msgstr "Configuración de las exportaciones EAD XML"
+
+msgid "Allow users to load stored XML settings from administrator."
+msgstr ""
+"Permitir a los usuarios cargar configuraciones XML almacenadas desde el "
+"administrador."
+
+msgid "Settings for Meta Repositories"
+msgstr "Configuración de los meta-repositorios"
+
+msgid "Use Meta Repositories."
+msgstr "Utilizar meta-repositorios."
+
+msgid "Settings for linking to external archive management tools"
+msgstr "Ajustes para enlazar con herramientas externas de gestión de archivos"
+
+msgid ""
+"The following settings apply if AtoM (https://www.accesstomemory.org) is "
+"used as an external archive management system."
+msgstr ""
+"Los siguientes ajustes se aplican si se utiliza AtoM (https://www."
+"accesstomemory.org) como sistema externo de gestión de archivos."
+
+msgid "Show link to AtoM records within source citations"
+msgstr "Mostrar enlace a registros AtoM en citas de fuentes"
+
+#, php-format
+msgid ""
+"Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be "
+"used to link a webtrees source citation to the source view in an external "
+"AtoM archive management system. Only applies if the option \"%s\" is "
+"activated."
+msgstr ""
+"Ajustes para la creación de enlaces AtoM REST (\"AtoM slugs\"), que pueden "
+"utilizarse para enlazar una cita de fuente de webtrees con la vista de "
+"fuente en un sistema externo de gestión de archivos AtoM. Sólo se aplica si "
+"la opción \"%s\" está activada."
+
+msgid "Use call numbers to create AtoM REST links (\"AtoM slugs\")"
+msgstr ""
+"Utilizar números de llamada para crear enlaces AtoM REST (\"AtoM slugs\")"
+
+msgid "Use source titles to create AtoM REST links (\"AtoM slugs\")"
+msgstr ""
+"Utilizar títulos de origen para crear enlaces AtoM REST (\"AtoM slugs\")"
+
+msgid "Base URL for AtoM"
+msgstr "URL base para AtoM"
+
+msgid "Repositories, for which AtoM linking is used."
+msgstr "Repositorios, para los que se utiliza la vinculación AtoM."
+
+msgid ""
+"Format treename:xref. A list of several entries can be separated by comma, e."
+"g. \"my_tree:X1765,my_tree:X2987\""
+msgstr ""
+"Formato treename:xref. Una lista de varias entradas puede separarse por "
+"comas, por ejemplo \"mi_árbol:X1765,mi_árbol:X2987\""
+
+msgid "save"
+msgstr "guardar"
+
+msgid "Media objects of source"
+msgstr "Objetos multimedia de origen"
