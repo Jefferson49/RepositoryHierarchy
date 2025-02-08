@@ -754,7 +754,7 @@ class RepositoryHierarchy extends AbstractModule implements
             $this->setPreference(self::PREF_ATOM_BASE_URL, $atom_base_url);
             $this->setPreference(self::PREF_ATOM_REPOSITORIES, isset($params[self::PREF_ATOM_REPOSITORIES]) ? $params[self::PREF_ATOM_REPOSITORIES] : '');
 
-            $message = I18N::translate('The preferences for the module “%s” were updated.', $this->title());
+            $message = I18N::translate('The preferences for the module "%s" were updated.', $this->title());
             FlashMessages::addMessage($message, 'success');
         }
 
@@ -1701,7 +1701,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::viewsNamespace() . '::error',
                 [
 					'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
-                    'text'  => I18N::translate('The tree “%s” does not contain any repository', $tree->name()),
+                    'text'  => I18N::translate('The tree "%s" does not contain any repository', $tree->name()),
                 ]
             );
         }
