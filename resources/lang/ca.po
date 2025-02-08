@@ -1,0 +1,680 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RepositoryHierarchy for webtrees 2\n"
+"POT-Creation-Date: 2025-02-08 10:11+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Flags-xgettext: --no-location\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Sources without call number"
+msgstr "Fonts sense número de trucada"
+
+msgid "Default call number category"
+msgstr "Categoria de número de trucada per defecte"
+
+msgid "The source citation was copied to an internal clipboard."
+msgstr "La citació de la font es va copiar a un porta-retalls intern."
+
+msgid ""
+"The source citation can be added to other facts/events by clicking on the "
+"source icon in the edit area of the fact/event."
+msgstr ""
+"La citació de la font es pot afegir a altres fets/esdeveniments fent clic a "
+"la icona de la font a l'àrea d'edició del fet/esdeveniment."
+
+msgid ""
+"Currently, you do not have the user rights to create new sources. In order "
+"to create new sources, you need to be logged in as a user."
+msgstr ""
+"Actualment, no teniu els drets d'usuari per crear noves fonts. Per crear "
+"noves fonts, heu d'iniciar sessió com a usuari."
+
+msgid "Create new sources"
+msgstr "Crear fonts noves"
+
+msgid "EAD XML"
+msgstr "EAD XML"
+
+msgid "Finding aid as HTML"
+msgstr "Ajuda a la recerca com a HTML"
+
+msgid "Finding aid as PDF"
+msgstr "Ajuda a la recerca com a PDF"
+
+msgid "Repository Hierarchy"
+msgstr "Jerarquia de repositoris"
+
+msgid ""
+"A hierarchical structured list of the sources of an archive based on the "
+"call numbers of the sources"
+msgstr ""
+"Una llista jeràrquica estructurada de les fonts d'un arxiu basada en els "
+"números de trucada de les fonts"
+
+#, php-format
+msgid "The preferences for the module \"%s\" were updated."
+msgstr "S'han actualitzat les preferències del mòdul \"%s\"."
+
+msgid "Error during updating the custom module files to a new version."
+msgstr ""
+"Error en actualitzar els fitxers del mòdul personalitzat a una nova versió."
+
+#, php-format
+msgid ""
+"Error while trying to update the custom module \"%s\" to the new module "
+"version %s: "
+msgstr ""
+"S'ha produït un error en intentar actualitzar el mòdul personalitzat \"%s\" "
+"a la nova versió del mòdul %s: "
+
+#, php-format
+msgid ""
+"The preferences for the custom module \"%s\" were sucessfully updated to the "
+"new module version %s."
+msgstr ""
+"Les preferències per al mòdul personalitzat \"%s\" s'han actualitzat amb "
+"èxit a la nova versió del mòdul %s."
+
+msgid ""
+"The Repository Hierarchy data fix cannot be used in the \"control panel\"."
+msgstr ""
+"La correcció de dades de la jerarquia del repositori no es pot utilitzar al "
+"\"tauler de control\"."
+
+msgid ""
+"The data fix can be called from the user front end by clicking on the link "
+"to rename a call number category."
+msgstr ""
+"La correcció de dades es pot trucar des de la interfície de l'usuari fent "
+"clic a l'enllaç per canviar el nom d'una categoria de número de trucada."
+
+msgid "Error in custom module"
+msgstr "Error en el mòdul personalitzat"
+
+msgid ""
+"Currently, you do not have the user rights to change call number categories."
+msgstr ""
+"Actualment, no teniu els drets d'usuari per canviar les categories de número "
+"de trucada."
+
+msgid ""
+"In order to change call number categories, you need to have a \"Manager\" "
+"role for the corresponding tree."
+msgstr ""
+"Per canviar les categories de números de trucada, heu de tenir una funció de "
+"\"Gestor\" per a l'arbre corresponent."
+
+#, php-format
+msgid ""
+"The custom module \"%s\" is activated in parallel to the %s custom module. "
+"This can lead to unintended behavior. If using the %s module, it is strongly "
+"recommended to deactivate the \"%s\" module, because the identical "
+"functionality is also integrated in the %s module."
+msgstr ""
+"El mòdul personalitzat \"%s\" s'activa en paral·lel al mòdul personalitzat "
+"%s. Això pot conduir a un comportament no desitjat. Si utilitzeu el mòdul "
+"%s, es recomana desactivar el mòdul \"%s\", ja que la funcionalitat idèntica "
+"també està integrada al mòdul %s."
+
+#, php-format
+msgid ""
+"The custom module \"%s\" is activated in parallel to the %s custom module. "
+"This can lead to unintended behavior, because both of the modules have "
+"registered the same custom view \"%s\". It is strongly recommended to "
+"deactivate one of the modules."
+msgstr ""
+"El mòdul personalitzat \"%s\" s'activa en paral·lel al mòdul personalitzat "
+"%s. Això pot provocar un comportament no desitjat, ja que els dos mòduls han "
+"registrat la mateixa visualització personalitzada \"%s\". Es recomana "
+"desactivar un dels mòduls."
+
+msgid "Error"
+msgstr "Error"
+
+#, php-format
+msgid ""
+"The custom module view \"%s\" is not registered as replacement for the "
+"standard webtrees view. There might be another module installed, which "
+"registered the same custom view. This can lead to unintended behavior. It is "
+"strongly recommended to deactivate one of the modules. The path of the "
+"parallel view is: %s"
+msgstr ""
+"La visualització del mòdul personalitzat \"%s\" no es registra com a "
+"substitut de la visualització estàndard d'arbres web. Pot ser que hi hagi un "
+"altre mòdul instal·lat, que registri la mateixa vista personalitzada. Això "
+"pot conduir a un comportament no desitjat. Es recomana desactivar un dels "
+"mòduls. El camí de la vista paral·és: %s"
+
+#, php-format
+msgid "Repository Hierarchy of: %s"
+msgstr "Jerarquia del repositori de: %s"
+
+msgid "Regular expression not accepted"
+msgstr "Expressió regular no acceptada"
+
+msgid "No valid delimiter or valid regular expression for delimiter found."
+msgstr ""
+"No s'ha trobat cap delimitador vàlid ni expressió regular vàlida per al "
+"delimitador."
+
+msgid "load delimiter expression from administrator"
+msgstr "Expressió de delimitador de càrrega de l'administrador"
+
+#, fuzzy
+msgid "none"
+msgstr "cap"
+
+msgid "save repository"
+msgstr "Desa el repositori"
+
+msgid "load repository"
+msgstr "Carrega el repositori"
+
+msgid "save delimiter expression"
+msgstr "Desa l'expressió del delimitador"
+
+msgid "load delimiter expression"
+msgstr "expressió de delimitador de càrrega"
+
+msgid "Could not load repository. No repository stored."
+msgstr ""
+"No s'ha pogut carregar el repositori. No s'ha emmagatzemat cap repositori."
+
+#, php-format
+msgid "The tree \"%s\" does not contain any repository"
+msgstr "L'arbre \"%s\" no conté cap repositori"
+
+msgid ""
+"Could not load delimiter expression from administrator. No administrator "
+"delimiter expression stored."
+msgstr ""
+"No s'ha pogut carregar l'expressió del delimitador de l'administrador. No "
+"s'ha emmagatzemat cap expressió delimitadora d'administrador."
+
+msgid "Could not load delimiter expression. No delimiter expression stored."
+msgstr ""
+"No s'ha pogut carregar l'expressió del delimitador. No s'ha emmagatzemat cap "
+"expressió delimitadora."
+
+msgid "Error in delimiter expression"
+msgstr "Error en l'expressió del delimitador"
+
+msgid ""
+"Please note that the following characters need to be escaped if not used as "
+"meta characters in a regular expression"
+msgstr ""
+"Tingueu en compte que els caràcters següents s'han d'escapar si no "
+"s'utilitzen com a metacaràcters en una expressió regula"
+
+msgid "For example, use"
+msgstr "Per exemple, utilitzeu"
+
+msgid "instead of"
+msgstr "En lloc de"
+
+msgid "or"
+msgstr "o"
+
+msgid "if the characters shall be used as plain text."
+msgstr "si els caràcters s'han d'utilitzar com a text sense format."
+
+msgid ""
+"XML export settings not found. Please open EAD XML settings and provide "
+"settings."
+msgstr ""
+"No s'ha trobat la configuració d'exportació XML. Obriu la configuració XML "
+"de l'EAD i proporcioneu la configuració."
+
+msgid "Finding aid"
+msgstr "Ajuda a la recerca"
+
+msgid "How to use delimiter expressions?"
+msgstr "Com s'utilitzen expressions delimitadores?"
+
+msgid ""
+"A delimiter is a sequence of one or more characters for specifying the "
+"boundary between separate, independent regions in a text. Use delimiters to "
+"cut call numbers into chunks of call number categories. The call number "
+"categories will be used to construct a hierarchy of call numbers."
+msgstr ""
+"Un delimitador és una seqüència d'un o més caràcters per especificar el "
+"límit entre regions separades i independents d'un text. Utilitzeu "
+"delimitadors per tallar els números de trucada en trossos de categories de "
+"números de trucada. Les categories de números de trucada s'utilitzaran per "
+"construir una jerarquia de números de trucada."
+
+msgid "Use a single delimiter, e.g."
+msgstr "Utilitzeu un únic delimitador, p. ex."
+
+msgid "Use a set of delimiters separated by"
+msgstr "Utilitzar un conjunt de delimitadors separats per"
+
+msgid "e.g."
+msgstr "p. ex."
+
+msgid ""
+"Use a regular expressions, which contain the delimiter in brackets, e.g."
+msgstr ""
+"Utilitzeu expressions regulars, que continguin el delimitador entre "
+"parèntesis, p. ex."
+
+msgid "Fonds"
+msgstr "Fonds"
+
+msgid "Use a set of regular expressions separated by"
+msgstr "Utilitzar un conjunt d'expressions regulars separades per"
+
+msgid "Series"
+msgstr "Sèrie"
+
+msgid "Example"
+msgstr "Exemple"
+
+msgid "Call numbers"
+msgstr "Números de trucada"
+
+msgid "Delimiter expression"
+msgstr "Expressió delimitadora"
+
+msgid "Film Number"
+msgstr "Número de pel·lícula"
+
+msgid "Film"
+msgstr "Pel·lícula"
+
+msgid "Number"
+msgstr "Número"
+
+msgid "Biography Number"
+msgstr "Número de biografia"
+
+msgid "Photo Number"
+msgstr "Número de foto"
+
+msgid "Delimiter expression:"
+msgstr "Expressió delimitadora:"
+
+msgid "Biography"
+msgstr "Biografia"
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Important Note"
+msgstr "Nota important"
+
+msgid "if they should be recognized as plain characters."
+msgstr "si haguessin de ser reconeguts com a caràcters senzills."
+
+msgid "Detailed description"
+msgstr "Descripció detallada"
+
+msgid "Information about regular expressions"
+msgstr "Informació sobre expressions regulars"
+
+msgid "Help"
+msgstr "Ajudar"
+
+msgid "The help text has not yet been written for this item."
+msgstr "El text d'ajuda encara no s'ha escrit per a aquest element."
+
+msgid "EAD XML settings"
+msgstr "Configuració XML de l'EAD"
+
+msgid "The EAD XML settings have been changed"
+msgstr "S'ha canviat la configuració XML de l'EAD"
+
+msgid "Link to archival description in AtoM"
+msgstr "Enllaç a la descripció de l'arxiu a l'AtoM"
+
+msgid "Call number"
+msgstr "Número de trucada"
+
+msgid "Gedcom-ID"
+msgstr "Gedcom-ID"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Copy source citation to clipboard"
+msgstr "Copia la citació de la font al porta-retalls"
+
+msgid "Are you sure you want to delete the source citation?"
+msgstr "Esteu segur que voleu esborrar la citació de la font?"
+
+msgid "Delete source citation"
+msgstr "Suprimeix la citació de la font"
+
+msgid "Sort source citation - move up/down"
+msgstr "Ordena la citació de la font - mou amunt/avall"
+
+msgid "Sort source citation - move up"
+msgstr "Ordena la citació de la font - puja"
+
+msgid "Sort source citation - move down"
+msgstr "Ordena la citació de la font - mou cap avall"
+
+msgid "Paste source citation from clipboard"
+msgstr "Enganxa la citació de la font del porta-retalls"
+
+msgid "Generated on"
+msgstr "Generat el"
+
+msgid "Language of description"
+msgstr "Idioma de descripció"
+
+msgid "Table of Contents - Archival Arrangement"
+msgstr "Taula de continguts - Arranjament d'arxiu"
+
+msgid "List of Sources"
+msgstr "Llista de fonts"
+
+msgid "Create a source"
+msgstr "Crear una font"
+
+msgid "new"
+msgstr "Nou"
+
+msgid "Finding aid title"
+msgstr "Títol de l'ajuda a la recerca"
+
+msgid "Country code"
+msgstr "Codi de país"
+
+msgid "Main agency code"
+msgstr "Codi principal de l'agència"
+
+msgid "Finding aid identifier"
+msgstr "Identificador de l'ajuda a la recerca"
+
+msgid "URL of the online finding aid"
+msgstr "URL de l'ajuda a la recerca en línia"
+
+msgid "Publisher"
+msgstr "Editor"
+
+msgid "Explanations"
+msgstr "Explicacions"
+
+msgid "Title proper of the finding aid."
+msgstr "Títol propi de l'ajuda a la cerca."
+
+msgid ""
+"Country name encoded according to ISO 3166-1, e.g. \"FR\" for \"France\"."
+msgstr ""
+"Nom del país codificat segons ISO 3166-1, per exemple, \"FR\" per a "
+"\"França\"."
+
+msgid ""
+"Unique code identifying the archival institution maintaining the described "
+"collection; encoded according to ISO 15511 (ISIL). The main agency code is "
+"officially assigned to archives by a national authority. As a substitute "
+"value, the country code and \"-XXXXX\" might be chosen, e.g. FR-XXXXX"
+msgstr ""
+"Codi únic que identifica la institució arxivística que manté la col·lecció "
+"descrita; codificat segons ISO 15511 (ISIL). El codi principal de l'agència "
+"és assignat oficialment als arxius per una autoritat nacional. Com a valor "
+"substitutiu, es pot triar el codi de país i \"-XXXXX\", per exemple, FR-XXXXX"
+
+msgid "Unique identifyer for the finding aid document."
+msgstr "Identificador únic per al document d'ajuda a la cerca."
+
+msgid "URL of the online finding aid (optional)"
+msgstr "URL de l'ajuda a la recerca en línia (opcional)"
+
+msgid "An URL, where the finding aid can be found oline."
+msgstr "Una URL, on es pot trobar l'ajuda per a la recerca oline."
+
+msgid "Publisher (optional)"
+msgstr "Editor (opcional)"
+
+msgid "Name of the editing institution or the publishing company."
+msgstr "Nom de l'entitat editora o de l'editorial."
+
+msgid "EAD XML export settings"
+msgstr "Configuració de l'exportació XML de l'EAD"
+
+msgid "Load settings from administrator"
+msgstr "Carrega la configuració de l'administrador"
+
+msgid "Search call number category"
+msgstr "Cerca la categoria del número de trucada"
+
+msgid "Category full name"
+msgstr "Nom complet de la categoria"
+
+msgid "Replace by"
+msgstr "Substituïu per"
+
+msgid "Delimiter Expression for Call Numbers"
+msgstr "Expressió delimitadora per a números de trucada"
+
+msgid "View and load/save options"
+msgstr "Veure i carregar/desar opcions"
+
+msgid "view"
+msgstr "vista"
+
+msgid "Call Number Category"
+msgstr "Categoria de número de trucada"
+
+msgid "Rename"
+msgstr "Rebatejar"
+
+msgid "Add new source"
+msgstr "Afegeix una font nova"
+
+msgid "Settings for Repository Hierarchy list"
+msgstr "Configuració de la llista de jerarquia de repositoris"
+
+msgid "Show label before call number category."
+msgstr "Mostra l'etiqueta abans de la categoria de número de trucada."
+
+msgid "Show titles of call number categories (if available from .po file)."
+msgstr ""
+"Mostra els títols de les categories de número de trucada (si estan "
+"disponibles des del fitxer .po)."
+
+msgid "Show help icon after label for delimiter expression."
+msgstr ""
+"Mostra la icona d'ajuda després de l'etiqueta per a l'expressió del "
+"delimitador."
+
+msgid "Show help link after label for delimiter expression."
+msgstr ""
+"Mostra l'enllaç d'ajuda després de l'etiqueta per a l'expressió del "
+"delimitador."
+
+msgid ""
+"Use truncated categories. The call number categories will be truncated and "
+"shown without the trunk."
+msgstr ""
+"Utilitzeu categories truncades. Les categories de número de trucada es "
+"truncaran i es mostraran sense el tronc."
+
+msgid ""
+"Use truncated call numbers. The call numbers will be truncated and shown "
+"without call number category."
+msgstr ""
+"Utilitzeu números de trucada truncats. Els números de trucada es truncaran i "
+"es mostraran sense categoria de número de trucada."
+
+msgid "Show date range for call number categories."
+msgstr "Mostra l'interval de dates per a les categories de número de trucada."
+
+msgid ""
+"Allow renaming of call number categories. Will show an icon and a link for "
+"renaming."
+msgstr ""
+"Permet canviar el nom de les categories de número de trucada. Mostrarà una "
+"icona i un enllaç per canviar el nom."
+
+msgid ""
+"Allow adding new sources to a call number category. Will show an icon and a "
+"link to add new sources."
+msgstr ""
+"Permet afegir noves fonts a una categoria de número de trucada. Mostrarà una "
+"icona i un enllaç per afegir noves fonts."
+
+msgid "Show the title of the sources."
+msgstr "Mostra el títol de les fonts."
+
+msgid "Show the XREF of the sources."
+msgstr "Mostra la XREF de les fonts."
+
+msgid "Show the author of the sources."
+msgstr "Mostra l'autor de les fonts."
+
+msgid "Show the date range of the sources."
+msgstr "Mostra l'interval de dates de les fonts."
+
+msgid "Allow users to load stored delimiter expressions from administrator."
+msgstr ""
+"Permet als usuaris carregar expressions delimitadores emmagatzemades des de "
+"l'administrador."
+
+msgid "Settings for source citations"
+msgstr "Configuració de les cites de fonts"
+
+msgid "Source facts to show for sources within source citations"
+msgstr "Dades de la font per mostrar les fonts dins de les cites de les fonts"
+
+msgid "Automatically expand the following facts within source citations"
+msgstr "Ampliar automàticament els fets següents dins de les cites de fonts"
+
+msgid ""
+"Directly show media objects of source citations in facts and not "
+"subordinated within source citations."
+msgstr ""
+"Mostra directament els objectes dels mitjans de comunicació de cites de "
+"fonts en fets i no subordinades a les cites de fonts."
+
+msgid ""
+"Enable copy/paste mechanism for source citations in the individual and "
+"family view."
+msgstr ""
+"Habilita el mecanisme de copiar/enganxar per a les cites de fonts a la vista "
+"individual i familiar."
+
+msgid ""
+"Enable delete mechanism for source citations in the individual and family "
+"view."
+msgstr ""
+"Habilita el mecanisme d'eliminació per a les cites de fonts a la vista "
+"individual i familiar."
+
+msgid ""
+"Enable sort mechanism for source citations in the individual and family view."
+msgstr ""
+"Habilita el mecanisme d'ordenació per a les cites de fonts en la vista "
+"individual i familiar."
+
+msgid "Settings for media objects"
+msgstr "Configuració dels objectes multimèdia"
+
+msgid "Show notes of media objects below media objects."
+msgstr ""
+"Mostra les notes dels objectes multimèdia a sota dels objectes multimèdia."
+
+msgid "Settings for finding aid exports"
+msgstr "Configuració per a les exportacions d'ajuda a la cerca"
+
+msgid "Include repository address within finding aid export."
+msgstr "Incloeu l'adreça del repositori a l'exportació d'ajuda a la cerca."
+
+msgid "Include links to webtrees sources within finding aid export."
+msgstr ""
+"Incloeu enllaços a fonts d'arbres web dins de l'exportació d'ajuda a la "
+"cerca."
+
+msgid "Include table of contents within finding aid export."
+msgstr "Incloeu la taula de continguts a l'exportació d'ajuda a la cerca."
+
+msgid "Show titles within table of contents in finding aid export."
+msgstr ""
+"Mostra els títols dins de la taula de continguts a l'exportació d'ajuda a la "
+"cerca."
+
+msgid ""
+"Show links within table of contents in finding aid export (not available for "
+"PDF export)."
+msgstr ""
+"Mostra els enllaços dins de la taula de continguts a l'exportació de l'ajuda "
+"de recerca (no disponible per a l'exportació de PDF)."
+
+msgid "Settings for EAD XML exports"
+msgstr "Configuració per a les exportacions XML de l'EAD"
+
+msgid "Allow users to load stored XML settings from administrator."
+msgstr ""
+"Permet als usuaris carregar la configuració XML emmagatzemada des de "
+"l'administrador."
+
+msgid "Settings for Meta Repositories"
+msgstr "Configuració dels metarepositoris"
+
+msgid "Use Meta Repositories."
+msgstr "Utilitzeu metarepositoris."
+
+msgid "Settings for linking to external archive management tools"
+msgstr "Configuració per enllaçar a eines externes de gestió d'arxius"
+
+msgid ""
+"The following settings apply if AtoM (https://www.accesstomemory.org) is "
+"used as an external archive management system."
+msgstr ""
+"Els paràmetres següents s'apliquen si AtoM (https://www.accesstomemory.org) "
+"s'utilitza com a sistema de gestió d'arxius extern."
+
+msgid "Show link to AtoM records within source citations"
+msgstr "Mostra l'enllaç als registres de l'AtoM dins de les cites de les fonts"
+
+#, php-format
+msgid ""
+"Settings for the creation of AtoM REST links (\"AtoM slugs\"), which can be "
+"used to link a webtrees source citation to the source view in an external "
+"AtoM archive management system. Only applies if the option \"%s\" is "
+"activated."
+msgstr ""
+"Configuració per a la creació d'enllaços REST d'AtoM (\"slugs d'AtoM\"), que "
+"es poden utilitzar per enllaçar una citació de la font de l'arbre web a la "
+"vista de la font en un sistema de gestió d'arxius AtoM extern. Només "
+"s'aplica si l'opció \"%s\" està activada."
+
+msgid "Use call numbers to create AtoM REST links (\"AtoM slugs\")"
+msgstr ""
+"Utilitzar números de trucada per crear enllaços REST d'AtoM (\"llimacs "
+"d'AtoM\")"
+
+msgid "Use source titles to create AtoM REST links (\"AtoM slugs\")"
+msgstr ""
+"Utilitzeu títols de font per crear enllaços REST d'AtoM (\"llimacs d'AtoM\")"
+
+msgid "Base URL for AtoM"
+msgstr "URL base per a AtoM"
+
+msgid "Repositories, for which AtoM linking is used."
+msgstr "Repositoris, per als quals s'utilitza l'enllaç AtoM."
+
+msgid ""
+"Format treename:xref. A list of several entries can be separated by comma, e."
+"g. \"my_tree:X1765,my_tree:X2987\""
+msgstr ""
+"Formata el nom de l'arbre:xref. Una llista de diverses entrades es pot "
+"separar per coma, per exemple \"my_tree:X1765,my_tree:X2987\""
+
+msgid "save"
+msgstr "salvar"
+
+msgid "Media objects of source"
+msgstr "Objectes multimèdia de la font"
