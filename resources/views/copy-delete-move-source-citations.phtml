@@ -28,8 +28,11 @@ $can_edit = false;
 //Check if individual or family view and wether editable
 //Decide whether to show copy source citation icon
 
-if ((Session::get('last_page_name') === "individual.php") && Session::has('last_page_parameter')){
-    $individual  = Registry::individualFactory()->make(Session::get('last_page_parameter'), $tree);
+if ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_INDIVIDUAL)
+	&& (Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_TREE) === $tree->name())
+	&& Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER)) 
+{
+    $individual  = Registry::individualFactory()->make(Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER), $tree);
     $can_edit = $individual->canEdit();
     $showCopySourceCitationIcon = $can_edit && boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'));
     $xref = $individual->xref();
@@ -38,8 +41,11 @@ if ((Session::get('last_page_name') === "individual.php") && Session::has('last_
     $facts = $facts->merge($family_facts);
     $xref_type = 'INDI';
 }
-elseif ((Session::get('last_page_name') === "family.php") && Session::has('last_page_parameter')){
-    $family  = Registry::familyFactory()->make(Session::get('last_page_parameter'), $tree);
+elseif ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_FAMILY) 
+    && (Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_TREE) === $tree->name()) 
+    && Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER))
+{
+    $family  = Registry::familyFactory()->make(Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER), $tree);
     $can_edit = $family->canEdit();
     $showCopySourceCitationIcon = $can_edit && boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'));
     $xref = $family->xref();
