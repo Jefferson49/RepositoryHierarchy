@@ -96,8 +96,8 @@ This README file contains the following main sections:What](
 + Sort and delete source citations within facts/events by clicking icons in the user frontend
 
 ##  Installation
-+ Download the [latest release](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest) of the module
-+ Copy the folder "repository_hierarchy" into the "module_v4" folder of your webtrees installation
++ Download the [latest release](https://github.com/Jefferson49/RepositoryHierarchy/releases/latest) of the module by downloading the "**repository_hierarchy_v\*.zip**" file from "Assets". Do not download "Source code.zip".
++ Unzip the downloaded file and copy the included folder "repository_hierarchy" into the "module_v4" folder of your webtrees installation
 + Check if the module is activated in the control panel:
     + Login to webtrees as an administrator
 	+ Go to "Control Panel/All Modules", and find the module called "Repository Hierarchy" (or corresponding translation)
