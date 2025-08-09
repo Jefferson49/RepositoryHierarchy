@@ -2,7 +2,7 @@
 
 /**
  * webtrees: online genealogy
- * Copyright (C) 2023 webtrees development team
+ * Copyright (C) 2025 webtrees development team
  *                    <http://webtrees.net>
  *
  * Fancy Research Links (webtrees custom module):
@@ -14,7 +14,7 @@
  *                    <https://justcarmen.nl>
  *
  * RepositoryHierarchy (webtrees custom module):
- * Copyright (C) 2023 Markus Hemprich
+ * Copyright (C) 2025 Markus Hemprich
  *                    <http://www.familienforschung-hemprich.de>
  *
  * This program is free software: you can redistribute it and/or modify
