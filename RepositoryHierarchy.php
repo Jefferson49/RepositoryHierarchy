@@ -35,7 +35,6 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Exception;
 use Fig\Http\Message\RequestMethodInterface;
-use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\ElementInterface;
@@ -105,7 +104,7 @@ class RepositoryHierarchy extends AbstractModule implements
     use ModuleDataFixTrait;
 
     //Custom module version
-    public const CUSTOM_VERSION = '1.5.4';
+    public const CUSTOM_VERSION = '1.5.5';
 
     //Routes, attributes
     protected const MODULE_NAME_IN_ROUTE = 'repositoryhierarchy';
