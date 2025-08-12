@@ -12,5 +12,8 @@
     "require": {
         "jefferson49/webtrees-common": ">=1.2.14",
         "matriphe/iso-639": "=1.3"
-    }
+    },
+    "config": {
+        "prepend-autoloader": false
+    }    
 }

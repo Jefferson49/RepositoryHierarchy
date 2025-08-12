@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "826e59fbf464a48d644e709cf624684a",
+    "content-hash": "035733beebe3de36dbd84ae7368a6ac8",
     "packages": [
         {
             "name": "jefferson49/webtrees-common",
