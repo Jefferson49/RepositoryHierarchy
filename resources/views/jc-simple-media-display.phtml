@@ -11,6 +11,11 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 
 ?>
 
+/**
+ * Code from: \modules_v4\jc-simple-media-display\resources\views\jc-simple-media-display.phtml
+ * Last updated: 2026-04-20
+ */
+
 <?php $media = Registry::mediaFactory()->make($xref, $tree) ?>
 <?php if ($media instanceof Media) : ?>
     <div class="jc-simple-media-display">
@@ -35,3 +40,5 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
         <?php endif ?>
     </div>
 <?php endif ?>
+
+
