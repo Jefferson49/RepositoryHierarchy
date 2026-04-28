@@ -9,12 +9,12 @@ use Fisharebest\Webtrees\Services\ModuleService;
 $module_service = new ModuleService();
 $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
 
-?>
-
 /**
  * Code from: \modules_v4\jc-simple-media-display\resources\views\jc-simple-media-display.phtml
  * Last updated: 2026-04-20
  */
+
+?>
 
 <?php $media = Registry::mediaFactory()->make($xref, $tree) ?>
 <?php if ($media instanceof Media) : ?>
@@ -40,5 +40,3 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
         <?php endif ?>
     </div>
 <?php endif ?>
-
-
