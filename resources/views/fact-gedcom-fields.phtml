@@ -141,13 +141,15 @@ foreach ($keys as $key) {
 
         <?php //Additionally show media objects after source citation?>
         <?php if (boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOW_MEDIA_AFTER_CITATIONS, '0'))) : ?>
-            <?php foreach ($keys as $key) : ?>
-                <?php if ($values[$key] !== '') : ?>
-                    <?php if ($elements[$key] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[$key], $match) === 1) : ?>
-                        <?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $match[1], 'tree' => $tree]); ?>
+            <div class="ps-4">
+                <?php foreach ($keys as $key) : ?>
+                    <?php if ($values[$key] !== '') : ?>
+                        <?php if ($elements[$key] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[$key], $match) === 1) : ?>
+                            <?= view(RepositoryHierarchy::viewsNamespace() . '::jc-simple-media-display', ['xref' => $match[1], 'tree' => $tree]); ?>
+                        <?php endif ?>
                     <?php endif ?>
-                <?php endif ?>
-            <?php endforeach ?>
+                <?php endforeach ?>
+            </div>
         <?php endif ?>
     <?php endif ?>
 <?php elseif ($elements[0] instanceof XrefMedia && preg_match('/^@(' . Gedcom::REGEX_XREF . ')@$/', $values[0], $match) === 1) : ?>

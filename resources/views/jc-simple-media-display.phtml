@@ -20,11 +20,11 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
 <?php if ($media instanceof Media) : ?>
     <div class="jc-simple-media-display">
         <div class="wt-media-link row row-cols-auto p-1 gy-3">
-        <?php foreach ($media->mediaFiles() as $media_file) : ?>
-            <div class="wt-media-link-image col">
-                <?= $media_file->displayImage(100, 100, 'contain', []) ?>
-            </div>
-        <?php endforeach ?>
+            <?php foreach ($media->mediaFiles() as $media_file) : ?>
+                <div class="wt-media-link-image col">
+                    <?= $media_file->displayImage(100, 100, 'contain', []) ?>
+                </div>
+            <?php endforeach ?>
         </div>
         <div class="row wt-media-link-title px-1">
             <a href="<?= e($media->url()) ?>"><?= $media->fullName() ?></a>
