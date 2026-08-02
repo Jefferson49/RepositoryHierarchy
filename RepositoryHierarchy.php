@@ -35,7 +35,6 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Exception;
 use Fig\Http\Message\RequestMethodInterface;
-use Fisharebest\Localization\Translation;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Contracts\ElementInterface;
 use Fisharebest\Webtrees\Contracts\UserInterface;
@@ -583,13 +582,7 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function customTranslations(string $language): array
     {
-        $lang_dir   = $this->resourcesFolder() . 'lang/';
-        $file       = $lang_dir . $language . '.mo';
-        if (file_exists($file)) {
-            return (new Translation($file))->asArray();
-        } else {
-            return [];
-        }
+        return MoreI18N::readTranslationsFromMoFile($this->resourcesFolder() . 'lang/', $language);
     }
 
     /**
@@ -1237,9 +1230,6 @@ class RepositoryHierarchy extends AbstractModule implements
     /**
      * Get call number category titles .po file path
      *
-     * @param Tree   $tree
-     * @param string $xref
-     *
      * @return string
      */
     public function getCallNumberCategoryTitlesPoFilePath(): string
@@ -1251,7 +1241,6 @@ class RepositoryHierarchy extends AbstractModule implements
      * Sorting sources by call number
      *
      * @param Collection $sources
-     * @param Repository $repository
      *
      * @return Collection
      */
