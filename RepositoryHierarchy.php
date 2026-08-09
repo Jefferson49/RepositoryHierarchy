@@ -71,6 +71,7 @@ use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\View;
+use Fisharebest\Webtrees\Webtrees;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
 use Jefferson49\Webtrees\Exceptions\GithubCommunicationError;
@@ -345,8 +346,14 @@ class RepositoryHierarchy extends AbstractModule implements
         ->mapWithKeys(static fn (string $value, string $key): array => [$key => 'SOUR:' . $key])
         ->map(static fn (string $tag): ElementInterface => Registry::elementFactory()->make($tag))
         ->filter(static fn (ElementInterface $element): bool => !$element instanceof UnknownElement)
-        ->map(static fn (ElementInterface $element): string => $element->label())
-        ->sort(I18N::comparator());
+        ->map(static fn (ElementInterface $element): string => $element->label());
+
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+            self::$ALL_SOURCE_FACTS_IN_CITATIONS = self::$ALL_SOURCE_FACTS_IN_CITATIONS->sort(I18N::compare(...));
+        }
+        else {
+            self::$ALL_SOURCE_FACTS_IN_CITATIONS = self::$ALL_SOURCE_FACTS_IN_CITATIONS->sort(I18N::comparator());
+        }
 
         //Initialization of source facts, which can expanded within source citations
         self::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS = Collection::make([
