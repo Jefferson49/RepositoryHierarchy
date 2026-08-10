@@ -36,6 +36,7 @@ use Fisharebest\Webtrees\Module\ModuleListInterface;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Tree;
+use Fisharebest\Webtrees\Webtrees;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
 
@@ -174,12 +175,12 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
      * Display a date range
      *
      * @param Date   $date_range
-     * @param Tree   $tree
-     * @param string $date   format
+     * @param ?Tree   $tree
+     * @param ?string $date_format
      *
      * @return string
      */
-    public static function displayDateRange(Date $date_range = null, Tree $tree = null, string $date_format = null): string
+    public static function displayDateRange(Date $date_range, ?Tree $tree = null, ?string $date_format = null): string
     {
         if (($date_range !== null) && $date_range->isOK()) {
             return $date_range->display($tree, $date_format);
@@ -196,13 +197,13 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
      *
      * @return string
      */
-    public static function displayISOformatForDateRange(Date $date_range = null, string $delimiter = '/'): string
+    public static function displayISOformatForDateRange(Date $date_range, string $delimiter = '/'): string
     {
         if (($date_range !== null) && $date_range->isOK()) {
             $min_date = $date_range->minimumDate();
             $max_date = $date_range->maximumDate();
 
-            $date_range_text = $min_date->format('%Y-%m-%d') . $delimiter . $max_date->format('%Y-%m-%d');
+            $date_range_text = self::isoDateFormat($min_date) . $delimiter . self::isoDateFormat($max_date);
 
             $patterns = [
                 '/\A(\d+)\/\Z/',            //  1659/
@@ -244,6 +245,41 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
     }
 
     /**
+     * Return a date in ISO format
+     *
+     * @param AbstractCalendarDate $date
+     *
+     * @return string
+     */
+    public static function isoDateFormat(AbstractCalendarDate $date): string
+    {
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {        
+            return $date->year() . '-' . str_pad((string) $date->month(), 2, '0', STR_PAD_LEFT) . '-' . str_pad((string)$date->day(), 2, '0', STR_PAD_LEFT);
+        }
+        else {
+            return $date->format('%Y-%m-%d');
+        }
+    }
+
+    /**
+     * Return a date in GEDCOM format
+     *
+     * @param AbstractCalendarDate $date
+     *
+     * @return string
+     */
+    public static function gedcomDateFormat(AbstractCalendarDate $date): string
+    {
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {        
+            return str_pad((string)$date->day(), 2, '0', STR_PAD_LEFT) . ' ' . $date->gedcomMonth() . ' ' . (string) $date->year() ;
+        }
+        else {
+            return $date->format('%A %O %E');
+        }
+    }    
+
+
+    /**
      * Validate whether a string is an URL
      *
      * @param string $url
@@ -275,8 +311,8 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
      * Get overall date range for a set of date ranges,
      * i.e. minimum and maximum dates of all the date ranges
      *
-     * @param array $dates [Date]
-     *
+     * @param array<Date> $dates
+     * 
      * @return Date
      */
     public static function getOverallDateRange(array $dates): ?Date
@@ -299,7 +335,7 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
                     $max_date = $date_range->maximumDate();
                 }
 
-                $date_range = new Date('FROM ' . $min_date->format('%A %O %E') . ' TO ' . $max_date->format('%A %O %E'));
+                $date_range = new Date('FROM ' . self::gedcomDateFormat($min_date) . ' TO ' . self::gedcomDateFormat($max_date));
             } else {
                 $date_range = $date;
             }
