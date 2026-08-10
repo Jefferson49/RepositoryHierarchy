@@ -33,6 +33,7 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
+use Fisharebest\Webtrees\Webtrees;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -61,10 +62,10 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     /**
     * Update EAD/XML preferences/settings from former module versions
     *
-    * @param int                 $tree_id
-    * @param string              $repository_xref
-    * @param int                 $user_id
-    * @param string              $delimiter_expression
+    * @param Tree   $tree
+    * @param string $repository_xref
+    * @param int    $user_id
+    * @param string $delimiter_expression
     *
     * @return void
     */
@@ -113,7 +114,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     /**
     * Provide default URL (i.e. PDF download from webtrees installation)
     *
-    * @param int $tree_id
+    * @param Tree $tree
     * @param string $repository_xref
     * @param string $delimiter_expression
     *
@@ -165,10 +166,15 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         //Update old preferences/settings
         self::updatePreferenes($tree, $repository_xref, $user_id, $delimiter_expression);
 
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+            $language = I18N::language();
+        }
+        else {
+            $language = I18N::locale();
+        }
 
-        $locale = Locale::create(Session::get('language'));
         //ISO-3166 country code
-        $country_code = $locale->territory()->code();
+        $country_code = $language->territory()->code();
         $main_agency_code_default = $country_code . '-XXXXX';
 
         $finding_aid_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, '');

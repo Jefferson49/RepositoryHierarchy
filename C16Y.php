@@ -27,25 +27,25 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Exception;
 use Fisharebest\Localization\Locale;
-use Fisharebest\Localization\Locale\LocaleInterface;
-use Fisharebest\Localization\Translator;
-use Fisharebest\Localization\Translation;
+use Fisharebest\Localization\Translator as FisharebestTranslator;
+use Fisharebest\Localization\Translation as FisharebestTranslation;
+use Fisharebest\Webtrees\Factories\LanguageFactory;
+use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Webtrees;
 use Fisharebest\Webtrees\Repository;
-use Fisharebest\Webtrees\Session;
-use Fisharebest\Webtrees\Module\ModuleLanguageInterface;
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\I18N\Translation;
+use Fisharebest\Webtrees\I18N\Translator;
 
 use function sprintf;
+
 
 /**
  * Provide full names for call number category, using the translation mechanism of the Translator class
  */
 class C16Y
 {
-    private static ?ModuleLanguageInterface $language;
-
-    private static LocaleInterface $locale;
-
-    private static Translator $translator;
+    private static Translator|FisharebestTranslator $translator;
 
     /**
      * Constructor
@@ -57,27 +57,76 @@ class C16Y
      */
     public function __construct(string $path, string $tree_name, Repository $repository)
     {
-        $po_file = $path . $tree_name . '_' . $repository->xref() . '_' .  Session::get('language') .'.po';
         $default_po_file = $path . $tree_name . '_' . $repository->xref() .'.po';
+        $default_language_tag = 'en-GB';
 
-        //Create locale (is required by the Translator for the plural rule)
-        $locale = Locale::create(Session::get('language'));
-        $default_locale = Locale::create('en-GB');
+        // webtrees versions beyond 2.2.6
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
 
-        // Load the "translation" file
-        try {
-            $translation  = new Translation($po_file);
-            $translations = $translation->asArray();
-            self::$translator = new Translator($translations, $locale->pluralRule());
-        } catch (Exception $ex) {
-            //if no .po file is found, try the default file (without language tag)
+            $language_tag = I18N::languageTag();
+            $po_file = $path . $tree_name . '_' . $repository->xref() . '_' .  $language_tag .'.po';
+
+            //Create language (is required by the Translator for the plural rule)
+            $language_factory = Registry::container()->get(LanguageFactory::class);
+            $default_language = $language_factory->fromLanguageTag($default_language_tag);
+
+            if (is_string($language_tag)) {
+                $language = $language_factory->fromLanguageTag($language_tag);
+            }
+            else {
+                $language = $language_factory->fromLanguageTag($default_language_tag);
+            }
+
+            // Load the "translation" file
             try {
-                $translation  = new Translation($default_po_file);
-                $translations = $translation->asArray();
-                self::$translator = new Translator($translations, $default_locale->pluralRule());
+                if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+                    $stream       = fopen($po_file, 'rb');
+                    $translations = Translation::fromPoStream($stream)->toArray();
+                    self::$translator = new Translator($translations, $language->pluralRule());
+                }
             } catch (Exception $ex) {
-                //if still no .po file is found, create empty translator
-                self::$translator = new Translator([], $default_locale->pluralRule());
+                //if no .po file is found, try the default file (without language tag)
+                try {
+                    $stream       = fopen($default_po_file, 'rb');
+                    $translations = Translation::fromPoStream($stream)->toArray();
+                    self::$translator = new Translator($translations, $default_language->pluralRule());
+                } catch (Exception $ex) {
+                    //if still no .po file is found, create empty translator
+                    self::$translator = new Translator([], $default_language->pluralRule());
+                }
+            }
+        }
+
+        // webtrees versions until 2.2.6
+        else {
+            $language_tag = I18N::locale()->languageTag();            
+            $po_file = $path . $tree_name . '_' . $repository->xref() . '_' .  $language_tag .'.po';
+
+            //Create language (is required by the Translator for the plural rule)
+            $default_language = Locale::create($default_language_tag);
+
+            if (is_string($language_tag)) {
+                $language = Locale::create($language_tag);
+            }
+            else {
+                $language = Locale::create($default_language_tag);
+            }
+
+            // Load the "translation" file
+            try {
+                $translation  = new FisharebestTranslation($po_file);
+                $translations = $translation->asArray();
+                self::$translator = new FisharebestTranslator($translations, $language->pluralRule());
+            } catch (Exception $ex) {
+                //if no .po file is found, try the default file (without language tag)
+                try {
+                    $translation  = new FisharebestTranslation($default_po_file);
+                    $translations = $translation->asArray();
+                    self::$translator = new FisharebestTranslator($translations, $default_language->pluralRule());
+                } catch (Exception $ex) {
+                    //if still no .po file is found, create empty translator
+                    self::$translator = new FisharebestTranslator([], $default_language->pluralRule());
+                }
             }
         }
     }

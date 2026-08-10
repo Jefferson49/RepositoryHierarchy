@@ -30,10 +30,12 @@ use DOMDocument;
 use DOMImplementation;
 use DOMNode;
 use Fisharebest\Webtrees\Contracts\UserInterface;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
+use Fisharebest\Webtrees\Webtrees;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Matriphe\ISO639\ISO639;
 use Psr\Http\Message\ResponseInterface;
@@ -91,7 +93,12 @@ class DownloadEADxmlService extends DownloadService
         $this->module_service = new ModuleService();
 		
         //Get language
-        $language_tag = Session::get('language');
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+            $language_tag = I18N::languageTag();
+        }
+        else {
+            $language_tag = I18N::locale()->languageTag();
+        }
 
         //Convert different English 'en-*' tags to simple 'en' tag
         $language_tag = substr($language_tag, 0, 2) === 'en' ? 'en' : $language_tag;

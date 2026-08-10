@@ -25,10 +25,13 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
+use Fisharebest\Localization\Locale;
 use Fisharebest\Webtrees\Contracts\UserInterface;
+use Fisharebest\Webtrees\Factories\LanguageFactory;
 use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Report\PdfRenderer;
-use Fisharebest\Webtrees\Session;
+use Fisharebest\Webtrees\Webtrees;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -67,15 +70,29 @@ class DownloadFindingAidService extends DownloadService
      */
     public function generateHtml(bool $forPDF = false): string
     {
-        $language_tag = Session::get('language');
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+            $language_tag = I18N::languageTag();
+        }
+        else {
+            $language_tag = I18N::locale()->languageTag();
+        }
 
         //Convert different English 'en-*' tags to simple 'en' tag
         $language_tag = substr($language_tag, 0, 2) === 'en' ? 'en' : $language_tag;
+
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+            $language_factory = Registry::container()->get(LanguageFactory::class);
+            $language = $language_factory->fromLanguageTag($language_tag);
+        }
+        else {
+            $language = Locale::create($language_tag);
+        }
 
         return view(
             RepositoryHierarchy::viewsNamespace() . '::finding-aid',
             [
                 'language_tag'          => $language_tag,
+                'language'              => $language,
                 'repository_hierarchy'  => $this->repository_hierarchy,
                 'forPDF'                => $forPDF,
             ]
