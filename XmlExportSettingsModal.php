@@ -25,15 +25,13 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
-use Fisharebest\Webtrees\Auth;
-use Fisharebest\Localization\Locale;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Registry;
-use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Webtrees;
+use Jefferson49\Webtrees\Authorization\Auth;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -174,7 +172,13 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         }
 
         //ISO-3166 country code
-        $country_code = $language->territory()->code();
+        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+            $country_code = strtoupper($language->languageTag());
+        }
+        else {
+            $country_code = $language->territory()->code();
+        }
+
         $main_agency_code_default = $country_code . '-XXXXX';
 
         $finding_aid_url = $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_FINDING_AID_URL . $tree->id() . '_' . $repository_xref . '_' . $user_id, '');
