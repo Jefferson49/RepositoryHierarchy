@@ -339,7 +339,7 @@ class RepositoryHierarchy extends AbstractModule implements
         ->map(static fn (ElementInterface $element): string => $element->label());
 
         if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
-            self::$ALL_SOURCE_FACTS_IN_CITATIONS = self::$ALL_SOURCE_FACTS_IN_CITATIONS->sort(I18N::compare(...));
+            self::$ALL_SOURCE_FACTS_IN_CITATIONS = self::$ALL_SOURCE_FACTS_IN_CITATIONS->sort([I18N::class, 'compare']);
         }
         else {
             self::$ALL_SOURCE_FACTS_IN_CITATIONS = self::$ALL_SOURCE_FACTS_IN_CITATIONS->sort(I18N::comparator());
