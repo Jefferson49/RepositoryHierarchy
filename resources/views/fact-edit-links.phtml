@@ -7,6 +7,8 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 use Fisharebest\Webtrees\Fact;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Services\ModuleService;
+use Jefferson49\Webtrees\Helpers\Functions;
+
 
 /**
  * @var Fact        $fact
@@ -14,7 +16,7 @@ use Fisharebest\Webtrees\Services\ModuleService;
  */
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 
 ?>
 
@@ -25,7 +27,7 @@ $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeM
         <?= view('edit/icon-fact-delete', ['fact' => $fact]) ?>
 
         <?php //Additionally show icon to paste source citations; only show for individual and family views?>
-        <?php if (Session::has(RepositoryHierarchy::activeModuleName() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $fact->record()->tree()->id()) &&
+        <?php if (Session::has($repository_hierarchy->name() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $fact->record()->tree()->id()) &&
                   boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))    ) : ?>
             <?php if (in_array($fact->record()->tag(), ['INDI', 'FAM'])) : ?>
                 <?php //Dont show certain tags, where source citations are not allowed?>

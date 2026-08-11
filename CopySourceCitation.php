@@ -30,11 +30,13 @@ use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Validator;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function response;
+
 
 /**
  * Copy a source citation.
@@ -59,7 +61,9 @@ class CopySourceCitation implements RequestHandlerInterface
         }
 
         //Save received GEDCOM to session
-        Session::put(RepositoryHierarchy::activeModuleName() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), $gedcom);
+        /** @var RepositoryHierarchy $repository_hierarchy To avoid IDE warnings */
+        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);		
+        Session::put($repository_hierarchy->name() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), $gedcom);
 
         FlashMessages::addMessage(I18N::translate('The source citation was copied to an internal clipboard.') . '<br>' .
             I18N::translate('The source citation can be added to other facts/events by clicking on the source icon in the edit area of the fact/event.'));

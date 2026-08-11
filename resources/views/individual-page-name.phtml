@@ -11,7 +11,9 @@ use Fisharebest\Webtrees\Http\RequestHandlers\CopyFact;
 use Fisharebest\Webtrees\Http\RequestHandlers\DeleteFact;
 use Fisharebest\Webtrees\Http\RequestHandlers\EditFactPage;
 use Fisharebest\Webtrees\Services\ModuleService;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
+
 
 /**
  * Code from: \resources\views\individual-page-name.phtml
@@ -24,7 +26,7 @@ $individual = $fact->record();
 $tree       = $individual->tree();
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 
 // Create a fake record, so we can extract the formatted NAME value from it.
 $fake_individual = Registry::individualFactory()->new(
@@ -105,7 +107,7 @@ if ($fact->isPendingDeletion()) {
                     </a>
 
                     <?php //Additionally show icon to paste source citations?>
-                    <?php if (Session::has(RepositoryHierarchy::activeModuleName() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $fact->record()->tree()->id()) &&
+                    <?php if (Session::has($repository_hierarchy->name() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $fact->record()->tree()->id()) &&
                             boolval($repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ENABLE_COPY_PASTE_CITATIONS, '0'))    ) : ?>
                         <?= view(RepositoryHierarchy::viewsNamespace() . '::edit/icon-source-citation-paste', ['fact' => $fact]) ?>
                     <?php endif ?>

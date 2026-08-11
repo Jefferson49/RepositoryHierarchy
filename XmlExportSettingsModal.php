@@ -32,6 +32,7 @@ use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\Webtrees;
 use Jefferson49\Webtrees\Authorization\Auth;
+use Jefferson49\Webtrees\Helpers\Functions as CommonFunctions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -70,7 +71,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     public static function updatePreferenes(Tree $tree, string $repository_xref, int $user_id, string $delimiter_expression)
     {
         $module_service = new ModuleService();
-        $repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = CommonFunctions::getFromContainer(RepositoryHierarchy::class);
 
         $replaces_list = [
             ['search' => RepositoryHierarchy::OLD_PREF_FINDING_AID_TITLE,      'replace' => RepositoryHierarchy::PREF_FINDING_AID_TITLE],
@@ -149,7 +150,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
             return response();
 		}
 		
-        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = CommonFunctions::getFromContainer(RepositoryHierarchy::class);
         $repository = Registry::repositoryFactory()->make($repository_xref, $tree);
 
         //If XML settings shall be loaded from administrator

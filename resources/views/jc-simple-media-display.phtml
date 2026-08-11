@@ -5,9 +5,11 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 use Fisharebest\Webtrees\Media;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ModuleService;
+use Jefferson49\Webtrees\Helpers\Functions;
+
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 
 /**
  * Code from: \modules_v4\jc-simple-media-display\resources\views\jc-simple-media-display.phtml

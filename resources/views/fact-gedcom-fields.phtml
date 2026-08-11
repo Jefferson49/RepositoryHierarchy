@@ -14,7 +14,9 @@ use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
+
 
 /**
  * Code from: \resources\views\fact-gedcom-fields.phtml
@@ -26,7 +28,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
  */
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 $showSourceCitationIcon = false;
 
 //If copy source citation icon shall be shown, check if individual or family view and wether editable

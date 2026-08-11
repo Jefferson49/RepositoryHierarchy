@@ -53,7 +53,6 @@ use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use Fisharebest\Webtrees\Module\ModuleConfigTrait;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
-use Fisharebest\Webtrees\Module\ModuleCustomTrait;
 use Fisharebest\Webtrees\Module\ModuleDataFixInterface;
 use Fisharebest\Webtrees\Module\ModuleDataFixTrait;
 use Fisharebest\Webtrees\Module\ModuleGlobalInterface;
@@ -65,7 +64,6 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\DataFixService;
 use Fisharebest\Webtrees\Services\LinkedRecordService;
-use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Tree;
@@ -74,14 +72,12 @@ use Fisharebest\Webtrees\View;
 use Fisharebest\Webtrees\Webtrees;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
-use Jefferson49\Webtrees\Exceptions\GithubCommunicationError;
-use Jefferson49\Webtrees\Helpers\GithubService;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
+use Jefferson49\Webtrees\Module\ModuleCustomTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use RuntimeException;
 
 use function route;
 
@@ -246,9 +242,6 @@ class RepositoryHierarchy extends AbstractModule implements
     //Author of custom module
     public const CUSTOM_AUTHOR = 'Markus Hemprich';
 
-    //Website of author
-    public const AUTHOR_WEBSITE = 'http://www.familienforschung-hemprich.de';
-
     //The tree, to which the repository hierarchy relates
     private Tree $tree;
 
@@ -281,9 +274,6 @@ class RepositoryHierarchy extends AbstractModule implements
 
     //The call number category title service, which is used
     private C16Y $call_number_category_title_service;
-
-    //A list of custom views, which are registered by the module
-    private Collection $custom_view_list;
 
     //Tables for fast access to source data
     public array $title_of_source;
@@ -467,16 +457,16 @@ class RepositoryHierarchy extends AbstractModule implements
         //Register a custom view for facts in order to show additional source facts in citations, media objects in facts, or AtoM links
         //Also used to show additonal icons to copy/delete source citation
         //Also used to show media objects with several images (code from jc-simple-media-display) 
-        View::registerCustomView('::fact-gedcom-fields', $this->name() . '::fact-gedcom-fields');
-        $this->custom_view_list->add($this->name() . '::fact-gedcom-fields');
+        View::registerCustomView(View::NAMESPACE_SEPARATOR . 'fact-gedcom-fields', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'fact-gedcom-fields');
+        $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'fact-gedcom-fields');
 
         //Register a custom view for fact edit links in order to allow pasting source citations
-        View::registerCustomView('::fact-edit-links', $this->name() . '::fact-edit-links');
-        $this->custom_view_list->add($this->name() . '::fact-edit-links');
+        View::registerCustomView(View::NAMESPACE_SEPARATOR . 'fact-edit-links', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'fact-edit-links');
+        $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'fact-edit-links');
 
         //Register a custom view for individual page name in order to allow pasting source citations in names
-        View::registerCustomView('::individual-page-name', $this->name() . '::individual-page-name');
-        $this->custom_view_list->add($this->name() . '::individual-page-name');
+        View::registerCustomView(View::NAMESPACE_SEPARATOR . 'individual-page-name', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'individual-page-name');
+        $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'individual-page-name');
     }
 
     /**
@@ -502,114 +492,6 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         /* I18N: Description of the “AncestorsChart” module */
         return I18N::translate('A hierarchical structured list of the sources of an archive based on the call numbers of the sources');
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\AbstractModule::resourcesFolder()
-     */
-    public function resourcesFolder(): string
-    {
-        return __DIR__ . '/resources/';
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleAuthorName()
-     */
-    public function customModuleAuthorName(): string
-    {
-        return self::CUSTOM_AUTHOR;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleVersion()
-     */
-    public function customModuleVersion(): string
-    {
-        return self::CUSTOM_VERSION;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleLatestVersion()
-     */
-    public function customModuleLatestVersion(): string
-    {
-        return Registry::cache()->file()->remember(
-            $this->name() . '-latest-version',
-            function (): string {
-
-                try {
-                    //Get latest release from GitHub
-                    return GithubService::getLatestReleaseTag(self::GITHUB_REPO);
-                }
-                catch (GithubCommunicationError $ex) {
-                    // Can't connect to GitHub?
-                    return $this->customModuleVersion();
-                }
-            },
-            86400
-        );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customModuleSupportUrl()
-     */
-    public function customModuleSupportUrl(): string
-    {
-        return 'https://github.com/' . self::GITHUB_REPO;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param string $language
-     *
-     * @return array
-     *
-     * @see \Fisharebest\Webtrees\Module\ModuleCustomInterface::customTranslations()
-     */
-    public function customTranslations(string $language): array
-    {
-        return MoreI18N::readTranslationsFromMoFile($this->resourcesFolder() . 'lang/', $language);
-    }
-
-    /**
-     * Get the namespace for the views
-     *
-     * @return string
-     */
-    public static function viewsNamespace(): string
-    {
-        return '_' . basename(__DIR__) . '_';
-    }
-
-    /**
-     * Get the active module name, e.g. the name of the currently running module
-     *
-     * @return string
-     */
-    public static function activeModuleName(): string
-    {
-        return '_' . basename(__DIR__) . '_';
     }
 
     /**
@@ -735,43 +617,6 @@ class RepositoryHierarchy extends AbstractModule implements
         return redirect($this->getConfigLink());
     }
 
-    /**
-     * Check if module version is new and start update activities if needed
-     *
-     * @return void
-     */
-    public function checkModuleVersionUpdate(): void
-    {
-        //If new custom module version is detected
-        if ($this->getPreference(self::PREF_MODULE_VERSION) !== self::CUSTOM_VERSION) {
-
-            //Update module files
-            if (require __DIR__ . '/update_module_files.php') {
-                $update_result = '';    
-            }
-            else {
-                $update_result = I18N::translate('Error during updating the custom module files to a new version.');                
-            }
-
-            //Update prefences stored in database
-            $update_result .= $this->updatePreferences();
-
-            //Show flash message for error or sucessful update of preferences
-            if ($update_result !== '') {
-
-                $message = I18N::translate('Error while trying to update the custom module "%s" to the new module version %s: ' . $update_result, $this->title(), self::CUSTOM_VERSION);
-                FlashMessages::addMessage($message, 'danger');
-            } 
-            else {
-
-                $message = I18N::translate('The preferences for the custom module "%s" were sucessfully updated to the new module version %s.', $this->title(), self::CUSTOM_VERSION);
-                FlashMessages::addMessage($message, 'success');	    
-                
-                //Update custom module version
-                $this->setPreference(self::PREF_MODULE_VERSION, self::CUSTOM_VERSION);
-            }
-        }        
-    }
 
     /**
      * Update the preferences (after new module version is detected)
@@ -860,7 +705,6 @@ class RepositoryHierarchy extends AbstractModule implements
 
         return;
     }
-
 
     /**
      * {@inheritDoc}
@@ -1028,72 +872,6 @@ class RepositoryHierarchy extends AbstractModule implements
     }
 
     /**
-     * Check availability of the registered custom views and show flash messages with warnings if any errors occur 
-     *
-     * @return void
-     */
-    private function checkCustomViewAvailability() : void {
-
-        $module_service = new ModuleService();
-        $custom_modules = $module_service->findByInterface(ModuleCustomInterface::class);
-        $alternative_view_found = false;
-
-        foreach($this->custom_view_list as $custom_view) {
-
-            [$namespace, $view_name] = explode(View::NAMESPACE_SEPARATOR, (string) $custom_view, 2);
-
-            foreach($custom_modules->forget($this->activeModuleName()) as $custom_module) {
-
-                $view = new View('test');
-
-                try {
-                    $file_name = $view->getFilenameForView($custom_module->name() . View::NAMESPACE_SEPARATOR . $view_name);
-                    $alternative_view_found = true;
-    
-                    //If a view of one of the custom modules is found, which are known to use the same view
-                    if (in_array($custom_module->name(), ['_jc-simple-media-display_', '_webtrees-simple-media-display_'])) {
-                        
-                        $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' .
-                                    I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This can lead to unintended behavior. If using the %s module, it is strongly recommended to deactivate the "%s" module, because the identical functionality is also integrated in the %s module.', 
-                                    '<b>' . $custom_module->title() . '</b>', $this->title(), $this->title(), $custom_module->title(), $this->title());
-                    }
-                    else {
-                        $message =  '<b>' . MoreI18N::xlate('Warning') . ':</b><br>' . 
-                                    I18N::translate('The custom module "%s" is activated in parallel to the %s custom module. This can lead to unintended behavior, because both of the modules have registered the same custom view "%s". It is strongly recommended to deactivate one of the modules.', 
-                                    '<b>' . $custom_module->title() . '</b>', $this->title(),  '<b>' . $view_name . '</b>');
-                    }
-                    FlashMessages::addMessage($message, 'danger');
-                }    
-                catch (RuntimeException $e) {
-                    //If no file name (i.e. view) was found, do nothing
-                }
-            }
-            if (!$alternative_view_found) {
-
-                $view = new View('test');
-
-                try {
-                    $file_name = $view->getFilenameForView($view_name);
-
-                    //Check if the view is registered with a file path other than the current module; e.g. another moduleS probably registered it with an unknown views namespace
-                    if (mb_strpos($file_name, $this->resourcesFolder()) === false) {
-                        throw new RuntimeException;
-                    }
-                }
-                catch (RuntimeException $e) {
-                    $message =  '<b>' . I18N::translate('Error') . ':</b><br>' .
-                                I18N::translate(
-                                    'The custom module view "%s" is not registered as replacement for the standard webtrees view. There might be another module installed, which registered the same custom view. This can lead to unintended behavior. It is strongly recommended to deactivate one of the modules. The path of the parallel view is: %s',
-                                    '<b>' . $custom_view . '</b>', '<b>' . $file_name  . '</b>');
-                    FlashMessages::addMessage($message, 'danger');
-                }
-            }
-        }
-        
-        return;
-    }   
-
-    /**
      * Update Gedcom for a record
      *
      * @param GedcomRecord $record
@@ -1141,11 +919,11 @@ class RepositoryHierarchy extends AbstractModule implements
     /**
      * The title for a specific instance of this list.
      *
-     * @param Repository $repository
+     * @param ?Repository $repository
      *
      * @return string
      */
-    public function getListTitle(Repository $repository = null): string
+    public function getListTitle(?Repository $repository = null): string
     {
         //In this module, repositories are listed
         if ($repository === null) {
@@ -1263,13 +1041,13 @@ class RepositoryHierarchy extends AbstractModule implements
     /**
      * Create source data tables
      *
-     * @param Collection $sources
-     * @param Repository $repository
-     * @param Repository $meta_repository
+     * @param Collection  $sources
+     * @param Repository  $repository
+     * @param ?Repository $meta_repository
      *
      * @return void
      */
-    private function createDataTablesForSources(Collection $sources, Repository $repository, Repository $meta_repository = null): void
+    private function createDataTablesForSources(Collection $sources, Repository $repository, ?Repository $meta_repository = null): void
     {
         if ($meta_repository === null) {
             $meta_repository = $repository;
@@ -1601,10 +1379,10 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $tree                      = Validator::attributes($request)->tree();
-        $user                      = Validator::attributes($request)->user();
-        $xref                      = Validator::attributes($request)->string('xref');
-        $command                   = Validator::attributes($request)->string('command');
+        $tree    = Validator::attributes($request)->tree();
+        $user    = Validator::attributes($request)->user();
+        $xref    = Validator::attributes($request)->string('xref');
+        $command = Validator::attributes($request)->string('command');
 
         try {
             $delimiter_expression = Validator::parsedBody($request)->string('delimiter_expression');

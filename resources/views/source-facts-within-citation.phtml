@@ -10,7 +10,9 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
+
 
 /**
  * @var \Fisharebest\Webtrees\Tree $tree
@@ -18,7 +20,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
  */
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 $atom_repositories = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_ATOM_REPOSITORIES, ''));
 $xrefs_of_media_objects = [];
 $shown_source_tags = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_SHOWN_SOURCE_FACTS_IN_CITATIONS, ''));

@@ -29,7 +29,7 @@ use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Validator;
-use Jefferson49\Webtrees\Helpers\Functions as CommonFunctions;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -57,9 +57,11 @@ class PasteSourceCitation implements RequestHandlerInterface
         $record = Registry::gedcomRecordFactory()->make($xref, $tree);
         $record = Auth::checkRecordAccess($record, true);
 
-        $source_citation_gedcom = Session::get(RepositoryHierarchy::activeModuleName() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), '');
+        /** @var RepositoryHierarchy $repository_hierarchy To avoid IDE warnings */
+        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);		
+        $source_citation_gedcom = Session::get($repository_hierarchy->name() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), '');
 
-        foreach (CommonFunctions::getRecordFacts($record, [], false, null, true) as $fact) {
+        foreach (Functions::getRecordFacts($record, [], false, null, true) as $fact) {
             if ($fact->id() === $fact_id && $fact->canEdit()) {
                 $new_gedcom = $fact->gedcom() . "\n" . $source_citation_gedcom;
                 $record->updateFact($fact_id, $new_gedcom, false);

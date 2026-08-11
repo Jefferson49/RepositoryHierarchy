@@ -30,11 +30,13 @@ use Fisharebest\Webtrees\Http\RequestHandlers\PendingChanges;
 use Fisharebest\Webtrees\Http\ViewResponseTrait;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Validator;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function route;
+
 
 /**
  * Run data-fix for call number categories
@@ -77,13 +79,13 @@ class CallNumberDataFix implements RequestHandlerInterface
 		}
 		
         /** @var RepositoryHierarchy $repository_hierarchy To avoid IDE warnings */
-        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
         $repository_hierarchy->setDataFixParams($tree, $repository_xref, $category_name, $category_full_name);
 
         $this->layout = 'layouts/administration';
 
         $title       = $repository_hierarchy->title() . ' — ' . e($tree->title());
-        $data_fix    = RepositoryHierarchy::activeModuleName();
+        $data_fix    = $repository_hierarchy->name();
         $page_url    = route(self::class, ['data_fix' => $data_fix, 'tree' => $tree->name()]);
         $pending_url = route(PendingChanges::class, ['tree' => $tree->name(), 'url' => $page_url]);
 

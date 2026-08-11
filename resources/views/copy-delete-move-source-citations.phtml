@@ -10,6 +10,7 @@ use Fisharebest\Webtrees\Services\LinkedRecordService;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Tree;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Illuminate\Support\Collection;
 
 /**
@@ -19,7 +20,7 @@ use Illuminate\Support\Collection;
  */
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 
 $linked_record_service = new LinkedRecordService();
 $individual_facts_service = new IndividualFactsService($linked_record_service, $module_service);

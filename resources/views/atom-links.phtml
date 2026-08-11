@@ -5,6 +5,8 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
+use Jefferson49\Webtrees\Helpers\Functions;
+
 
 /**
 	* @var \Fisharebest\Webtrees\Tree $tree
@@ -13,7 +15,7 @@ use Fisharebest\Webtrees\Source;
 	*/
 
 $module_service = new ModuleService();
-$repository_hierarchy = $module_service->findByName(RepositoryHierarchy::activeModuleName());
+$repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 
 ?>
 <div>

@@ -33,14 +33,15 @@ use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\ModuleService;
-use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Webtrees;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Matriphe\ISO639\ISO639;
 use Psr\Http\Message\ResponseInterface;
 
 use function date;
+
 
 /**
  * Download Service for EAD XML files
@@ -188,7 +189,7 @@ class DownloadEADxmlService extends DownloadService
      */
     private function addHeader(string $xml_type, DOMNode $dom): DOMNode
     {
-        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
         $user_id = $this->user->id();
 
         //<eadheader>

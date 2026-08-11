@@ -28,8 +28,8 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Validator;
-use Fisharebest\Webtrees\Webtrees;
 use Jefferson49\Webtrees\Authorization\Auth;
+use Jefferson49\Webtrees\Helpers\Functions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -73,7 +73,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
 		}
 
         $admin_user_id = RepositoryHierarchy::ADMIN_USER_STRING;
-        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 
         if ($command === RepositoryHierarchy::CMD_LOAD_ADMIN_XML_SETTINGS) {
             return response(
@@ -148,7 +148,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
             $user_id = $user->id();
         }
 
-        $repository_hierarchy = $this->module_service->findByName(RepositoryHierarchy::activeModuleName());
+        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
 
         //Save received values to preferences
         $repository_hierarchy->setPreference(RepositoryHierarchy::PREF_FINDING_AID_TITLE . $tree->id() . '_' . $repository_xref . '_' . $user_id, $finding_aid_title);
