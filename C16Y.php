@@ -45,7 +45,8 @@ use function sprintf;
  */
 class C16Y
 {
-    private static Translator|FisharebestTranslator $translator;
+    /** @var Translator|FisharebestTranslator */
+    private static $translator;
 
     /**
      * Constructor

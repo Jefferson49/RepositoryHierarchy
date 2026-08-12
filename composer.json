@@ -10,7 +10,7 @@
         }        
     ],
     "require": {
-        "jefferson49/webtrees-common": ">=1.2.37",
+        "jefferson49/webtrees-common": ">=1.2.39",
         "matriphe/iso-639": "=1.3"
     },
     "config": {
