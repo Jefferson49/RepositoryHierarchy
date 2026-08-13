@@ -54,7 +54,6 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
 
 <div class="row mb-3">
     <form method="post">
-        <?= csrf_field() ?>
         <input type="hidden" name="save" id="save" value="1">
         <div class="row mb-3 justify-content-between m-0">
             <div class="row"><?= view('icons/spacer') ?></div>
@@ -224,6 +223,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
                 <?= I18N::translate('save') ?>
             </button>
         </div>
+        <?= csrf_field() ?>		
     </form>
 </div>
 
