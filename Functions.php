@@ -31,6 +31,7 @@ use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\Date\AbstractCalendarDate;
 use Fisharebest\Webtrees\GedcomRecord;
+use Fisharebest\Webtrees\Http\Exceptions\HttpAccessDeniedException;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleListInterface;
 use Fisharebest\Webtrees\Registry;
@@ -373,8 +374,14 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
      */
     public static function getDefaultRepositoryXref(AbstractModule $module, Tree $tree, UserInterface $user): string
     {
-        Auth::checkComponentAccess($module, ModuleListInterface::class, $tree, $user);
+        try {
+            Auth::checkComponentAccess($module, ModuleListInterface::class, $tree, $user);
+        }
+        catch (HttpAccessDeniedException $e){
+            return '';
+        }
 
+        // Code from: Fisharebest\Webtrees\Module\RepositoryListModule
         $repositories = DB::table('other')
             ->where('o_file', '=', $tree->id())
             ->where('o_type', '=', Repository::RECORD_TYPE)

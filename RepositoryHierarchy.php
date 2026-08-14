@@ -734,6 +734,7 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function listIsEmpty(Tree $tree): bool
     {
+        // Code from: Fisharebest\Webtrees\Module\RepositoryListModule
         return !DB::table('other')
             ->where('o_file', '=', $tree->id())
             ->where('o_type', '=', Repository::RECORD_TYPE)
@@ -1454,6 +1455,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 [
 					'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
                     'text'  => I18N::translate('The tree "%s" does not contain any repository', $tree->name()),
+                    'tree'  => $tree,
                 ]
             );
         }
