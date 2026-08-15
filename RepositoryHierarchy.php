@@ -735,10 +735,13 @@ class RepositoryHierarchy extends AbstractModule implements
     public function listIsEmpty(Tree $tree): bool
     {
         // Code from: Fisharebest\Webtrees\Module\RepositoryListModule
-        return !DB::table('other')
+        return DB::table('other')
             ->where('o_file', '=', $tree->id())
             ->where('o_type', '=', Repository::RECORD_TYPE)
-            ->exists();
+            ->get()
+            ->map(Registry::repositoryFactory()->mapper($tree))
+            ->filter(GedcomRecord::accessFilter())
+            ->isEmpty();
     }
 
     /**
