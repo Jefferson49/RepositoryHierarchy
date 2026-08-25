@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
-use Fisharebest\Webtrees\Http\RequestHandlers\ControlPanel;
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\View;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 
 /**
@@ -48,7 +47,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
 
 ?>
 
-<?= view('components/breadcrumbs', ['links' => [route(ControlPanel::class) => MoreI18N::xlate('Control panel'), $title]]) ?>
+<?= view('components/breadcrumbs', ['links' => [route(ClassName::get(ClassName::CONTROL_PANEL)) => MoreI18N::xlate('Control panel'), $title]]) ?>
 
 <h1><?=e($title) ?></h1>
 
@@ -223,7 +222,7 @@ use Jefferson49\Webtrees\Internationalization\MoreI18N;
                 <?= I18N::translate('save') ?>
             </button>
         </div>
-        <?= csrf_field() ?>		
+        <?= csrf_field() ?>
     </form>
 </div>
 

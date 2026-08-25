@@ -26,10 +26,10 @@ declare(strict_types=1);
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
 use Fisharebest\Webtrees\Auth;
-use Fisharebest\Webtrees\Http\RequestHandlers\PendingChanges;
 use Fisharebest\Webtrees\Http\ViewResponseTrait;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Validator;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Helpers\Functions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -77,7 +77,7 @@ class CallNumberDataFix implements RequestHandlerInterface
         if (Auth::accessLevel($tree, $user) === Auth::PRIV_PRIVATE) {
             return response();
 		}
-		
+
         /** @var RepositoryHierarchy $repository_hierarchy To avoid IDE warnings */
         $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
         $repository_hierarchy->setDataFixParams($tree, $repository_xref, $category_name, $category_full_name);
@@ -87,7 +87,7 @@ class CallNumberDataFix implements RequestHandlerInterface
         $title       = $repository_hierarchy->title() . ' — ' . e($tree->title());
         $data_fix    = $repository_hierarchy->name();
         $page_url    = route(self::class, ['data_fix' => $data_fix, 'tree' => $tree->name()]);
-        $pending_url = route(PendingChanges::class, ['tree' => $tree->name(), 'url' => $page_url]);
+        $pending_url = route(ClassName::get(ClassName::PENDING_CHANGES), ['tree' => $tree->name(), 'url' => $page_url]);
 
         return $this->viewResponse(
             'admin/data-fix-page',

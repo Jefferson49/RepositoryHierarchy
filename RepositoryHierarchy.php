@@ -72,7 +72,9 @@ use Fisharebest\Webtrees\View;
 use Fisharebest\Webtrees\Webtrees;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
+use Jefferson49\Webtrees\Helpers\ClassName;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
+use Jefferson49\Webtrees\Helpers\Functions as CommonFunctions;
 use Jefferson49\Webtrees\Module\ModuleCustomTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -295,7 +297,7 @@ class RepositoryHierarchy extends AbstractModule implements
      */
     public function __construct()
     {
-        //Caution: Do not use the shared library jefferson47/webtrees-common within __construct(), 
+        //Caution: Do not use the shared library jefferson47/webtrees-common within __construct(),
         //         because it might result in wrong autoload behavior
     }
 
@@ -310,7 +312,7 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         //Register this class in the webtrees container
         //This allows to access the module instance from other places, e.g. views/scripts (->assetUrl)
-        Functions::registerInContainer(self::class, $this);
+        CommonFunctions::registerInContainer(self::class, $this);
 
         //Check module version and update preferences etc.
         $this->checkModuleVersionUpdate();
@@ -319,7 +321,7 @@ class RepositoryHierarchy extends AbstractModule implements
         $this->data_fix_service = new DataFixService();
 
         //Path for .po files (if call number category titles are used)
-        $this->call_number_category_titles_po_file_path = __DIR__ . '/resources/caln/';  
+        $this->call_number_category_titles_po_file_path = __DIR__ . '/resources/caln/';
 
         //Initialization of source data tables
         $this->title_of_source = [];
@@ -357,110 +359,80 @@ class RepositoryHierarchy extends AbstractModule implements
             'TEXT'  => MoreI18N::xlate('Text'),
         ]);
 
-        $router = Registry::routeFactory()->routeMap();
-
-        //Register a route for the class
-        $router ->get(
-            self::class,
+        //Register the routes for the custom module
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::MODULE_NAME_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
             '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT,
+            self::class,
             $this
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the help texts
-        $router->get(
-            RepositoryHierarchyHelpTexts::class,
+        );
+        CommonFunctions::registerRoute(
             '/'.self::HELP_TEXTS_IN_ROUTE.
-            '/topic/'.self::TOPIC_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the create source modal
-        $router ->get(
-            CreateSourceModal::class,
+            '/topic/'.self::TOPIC_ATTRIBUTE_DEFAULT,
+            RepositoryHierarchyHelpTexts::class
+        );
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::CREATE_SOURCE_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the call number fix action
-        $router ->get(
-            CallNumberDataFix::class,
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT,
+            CreateSourceModal::class
+        );
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::FIX_CALL_NUMBER_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the XML export settings modal
-        $router ->get(
-            XmlExportSettingsModal::class,
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT,
+            CallNumberDataFix::class
+        );
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::XML_SETTINGS_MODAL_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the XML export settings action
-        $router ->get(
-            XmlExportSettingsAction::class,
+            '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT,
+            XmlExportSettingsModal::class
+        );
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::XML_SETTINGS_ACTION_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the copy source citation action
-        $router ->get(
-            CopySourceCitation::class,
+            '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT,
+            XmlExportSettingsAction::class
+        );
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::COPY_SOURCE_CITATION_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the paste source citation action
-        $router ->get(
-            PasteSourceCitation::class,
+            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT,
+            CopySourceCitation::class
+        );
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::PASTE_SOURCE_CITATION_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the delete source citation action
-        $router ->get(
-            DeleteSourceCitation::class,
+            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT,
+            PasteSourceCitation::class
+        );
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::DELETE_SOURCE_CITATION_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
-
-        //Register a route for the sort source citation action
-        $router ->get(
-            SortSourceCitation::class,
+            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT,
+            DeleteSourceCitation::class
+        );
+        CommonFunctions::registerRoute(
             '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
             '/'.self::SORT_SOURCE_CITATION_IN_ROUTE.
             '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT
-        )
-            ->allows(RequestMethodInterface::METHOD_POST);
+            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT,
+            SortSourceCitation::class
+        );
 
         //Register a namespace for the views
         View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
 
         //Register a custom view for facts in order to show additional source facts in citations, media objects in facts, or AtoM links
         //Also used to show additonal icons to copy/delete source citation
-        //Also used to show media objects with several images (code from jc-simple-media-display) 
+        //Also used to show media objects with several images (code from jc-simple-media-display)
         View::registerCustomView(View::NAMESPACE_SEPARATOR . 'fact-gedcom-fields', self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'fact-gedcom-fields');
         $this->custom_view_list->add(self::viewsNamespace() . View::NAMESPACE_SEPARATOR . 'fact-gedcom-fields');
 
@@ -550,8 +522,8 @@ class RepositoryHierarchy extends AbstractModule implements
                 self::PREF_ATOM_REPOSITORIES                   => $this->getPreference(self::PREF_ATOM_REPOSITORIES, ''),
             ]
         );
-    }  
-    
+    }
+
     /**
      * Save module settings after returning from control panel
      *
@@ -628,7 +600,7 @@ class RepositoryHierarchy extends AbstractModule implements
      * @return string
      */
     public function updatePreferences(): string
-    {       
+    {
         $error = '';
 
         //Rename old preferences
@@ -637,17 +609,17 @@ class RepositoryHierarchy extends AbstractModule implements
 
             //Copy old value to new preference
             $this->setPreference(self::OLD_PREF_SHOW_REPO_FACTS_IN_CITATIONS, $this->getPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS));
-        } 
+        }
         $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);
-		
+
         if (    $this->getPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS) === ''
             &&  $this->getPreference(self::OLD_PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS) !== self::PREF_DELETED) {
 
             //Copy old value to new preference
             $this->setPreference(self::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, $this->getPreference(self::OLD_PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS));
-        } 
-        $this->setPreference(self::OLD_PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);		
-		
+        }
+        $this->setPreference(self::OLD_PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);
+
 
         //Move old preferences for source facts to new preferences
         if (    $this->getPreference(self::OLD_PREF_SHOW_FURTHER_FACTS_IN_CITATIONS) !== self::PREF_DELETED
@@ -666,7 +638,7 @@ class RepositoryHierarchy extends AbstractModule implements
         foreach($old_facts_in_citations_preferences as $update) {
             $this->updateShownFactsInCitationsPreferences($update[0], $update[1], $update[2]);
         }
-        
+
         //Delete old preferences, i.e. set old preference value to deleted
         $this->setPreference(self::OLD_PREF_SHOW_SOURCE_FACTS_IN_CITATIONS, self::PREF_DELETED);
 
@@ -794,7 +766,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
             return view(
                 self::viewsNamespace() . '::error',
-                [				
+                [
 				'title' => I18N::translate('Error in custom module') . ': ' . $this->getListTitle(),
                 'text' => $error_text,
                 ]
@@ -1090,7 +1062,7 @@ class RepositoryHierarchy extends AbstractModule implements
                     case 'SOUR:DATA':
 
                         preg_match_all('/3 DATE (.{1,35})/', $fact->gedcom(), $matches, PREG_PATTERN_ORDER);
-                
+
                         foreach ($matches[1] as $match) {
                             array_push($dates, new Date($match));
                             $dates_found++;
@@ -1104,8 +1076,8 @@ class RepositoryHierarchy extends AbstractModule implements
                 $date_range = Functions::getOverallDateRange($dates);
                 $this->date_range_of_source[$source->xref()] = $date_range;
                 $this->date_range_text_of_source[$source->xref()] = Functions::displayDateRange($date_range);
-                $this->iso_date_range_text_of_source[$source->xref()] = Functions::displayISOformatForDateRange($date_range);    
-            } 
+                $this->iso_date_range_text_of_source[$source->xref()] = Functions::displayISOformatForDateRange($date_range);
+            }
 
             //If call number of meta repository was found, take it. Otherwise take call number of repository
             if ($call_number_meta_repository !== '') {
@@ -1116,7 +1088,7 @@ class RepositoryHierarchy extends AbstractModule implements
             }
             else {
                 $this->call_number_of_source[$source->xref()] = '';
-            }               
+            }
         }
 
         return;
@@ -1332,7 +1304,7 @@ class RepositoryHierarchy extends AbstractModule implements
 
         return $options + $admin_option;
     }
-   
+
     /**
      * A middleware method to identify, whether an individual or Family page is shown
      *
@@ -1345,9 +1317,11 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         $route = Validator::attributes($request)->route();
 
-        switch ($route->name) {
+        $controller = version_compare(Webtrees::VERSION, '2.3', '>=') ? $route->controller : $route->name;
 
-            case IndividualPage::class:
+        switch ($controller) {
+
+            case ClassName::get(ClassName::INDIVIDUAL_PAGE):
                 $tree  = Validator::attributes($request)->treeOptional();
                 $xref = Validator::attributes($request)->isXref()->string('xref');
                 Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_INDIVIDUAL);
@@ -1355,7 +1329,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
                 break;
 
-            case FamilyPage::class:
+            case ClassName::get(ClassName::FAMILY_PAGE):
                 $tree  = Validator::attributes($request)->treeOptional();
                 $xref = Validator::attributes($request)->isXref()->string('xref');
                 Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_FAMILY);
@@ -1363,13 +1337,13 @@ class RepositoryHierarchy extends AbstractModule implements
                 Session::put($this->name() . self::LAST_PAGE_PARAMETER, $xref);
                 break;
 
-            case MediaPage::class:
-            case NotePage::class:
-            case RepositoryPage::class:
-            case SourcePage::class:
-            case SubmitterPage::class:
+            case ClassName::get(ClassName::MEDIA_PAGE):
+            case ClassName::get(ClassName::NOTE_PAGE):
+            case ClassName::get(ClassName::REPOSITORY_PAGE):
+            case ClassName::get(ClassName::SOURCE_PAGE):
+            case ClassName::get(ClassName::SUBMITTER_PAGE):
                 $tree  = Validator::attributes($request)->treeOptional();
-                Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_OTHER);                
+                Session::put($this->name() . self::LAST_PAGE_NAME, self::PAGE_NAME_OTHER);
                 Session::put($this->name() . self::LAST_PAGE_TREE, $tree->name());
                 Session::put($this->name() . self::LAST_PAGE_PARAMETER, '');
                 break;
@@ -1423,7 +1397,7 @@ class RepositoryHierarchy extends AbstractModule implements
                 )
             );
         }
-    
+
         //Variable for error texts; default is empty
         $error_text = '';
 
