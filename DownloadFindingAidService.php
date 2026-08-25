@@ -70,7 +70,7 @@ class DownloadFindingAidService extends DownloadService
      */
     public function generateHtml(bool $forPDF = false): string
     {
-        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
             $language_tag = I18N::languageTag();
         }
         else {
@@ -80,7 +80,7 @@ class DownloadFindingAidService extends DownloadService
         //Convert different English 'en-*' tags to simple 'en' tag
         $language_tag = substr($language_tag, 0, 2) === 'en' ? 'en' : $language_tag;
 
-        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
             $language_factory = Registry::container()->get(LanguageFactory::class);
             $language = $language_factory->fromLanguageTag($language_tag);
         }

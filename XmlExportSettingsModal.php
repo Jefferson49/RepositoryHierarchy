@@ -165,7 +165,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         //Update old preferences/settings
         self::updatePreferenes($tree, $repository_xref, $user_id, $delimiter_expression);
 
-        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
             $language = I18N::language();
         }
         else {
@@ -173,7 +173,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         }
 
         //ISO-3166 country code
-        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
             $country_code = strtoupper($language->languageTag());
         }
         else {

@@ -94,7 +94,7 @@ class DownloadEADxmlService extends DownloadService
         $this->module_service = new ModuleService();
 		
         //Get language
-        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
             $language_tag = I18N::languageTag();
         }
         else {

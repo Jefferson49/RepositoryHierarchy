@@ -61,8 +61,8 @@ class C16Y
         $default_po_file = $path . $tree_name . '_' . $repository->xref() .'.po';
         $default_language_tag = 'en-GB';
 
-        // webtrees versions beyond 2.2.6
-        if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+        // webtrees versions from 2.3
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
 
             $language_tag = I18N::languageTag();
             $po_file = $path . $tree_name . '_' . $repository->xref() . '_' .  $language_tag .'.po';
@@ -80,7 +80,7 @@ class C16Y
 
             // Load the "translation" file
             try {
-                if (version_compare(Webtrees::VERSION, '2.2.6', '>')) {
+                if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
                     $stream       = fopen($po_file, 'rb');
                     $translations = Translation::fromPoStream($stream)->toArray();
                     self::$translator = new Translator($translations, $language->pluralRule());
@@ -98,7 +98,7 @@ class C16Y
             }
         }
 
-        // webtrees versions until 2.2.6
+        // webtrees versions before 2.3
         else {
             $language_tag = I18N::locale()->languageTag();            
             $po_file = $path . $tree_name . '_' . $repository->xref() . '_' .  $language_tag .'.po';
