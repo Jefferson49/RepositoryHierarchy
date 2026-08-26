@@ -47,7 +47,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
 {
 	//Module service to search and find modules
 	private ModuleService $module_service;
-	
+
 	/**
     * Constructor.
     *
@@ -56,7 +56,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     public function __construct(ModuleService $module_service)
     {
         $this->module_service = $module_service;
-    }	
+    }
 
     /**
     * Update EAD/XML preferences/settings from former module versions
@@ -101,14 +101,14 @@ class XmlExportSettingsModal implements RequestHandlerInterface
                         //Save old setting to new preference name
                         $repository_hierarchy->setPreference($replace_pair['replace'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, $old_setting);
                     }
-        
+
                     //Delete old setting (i.e. set to deleted)
                     $repository_hierarchy->setPreference($replace_pair['search'] . $tree->id() . '_' . $repository_xref . '_' . $user_id_in_pref, RepositoryHierarchy::PREF_DELETED);
                 }
-    
+
             }
         }
-    }	
+    }
 
     /**
     * Provide default URL (i.e. PDF download from webtrees installation)
@@ -127,7 +127,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
             'command'               => DownloadService::DOWNLOAD_OPTION_PDF,
             'delimiter_expression'  => $delimiter_expression,
             ]
-        ); 
+        );
     }
 
     /**
@@ -149,7 +149,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         if (Auth::accessLevel($tree, $user) === Auth::PRIV_PRIVATE) {
             return response();
 		}
-		
+
         $repository_hierarchy = CommonFunctions::getFromContainer(RepositoryHierarchy::class);
         $repository = Registry::repositoryFactory()->make($repository_xref, $tree);
 
@@ -187,7 +187,7 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         if ($finding_aid_url === '') {
 
             $finding_aid_url = $this->defaultURL( $tree, $repository_xref,  $delimiter_expression);
-        } 
+        }
 
         return response(
             view(

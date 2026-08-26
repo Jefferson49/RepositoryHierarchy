@@ -41,7 +41,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
 {
 	//Module service to search and find modules
 	private ModuleService $module_service;
-	
+
 	/**
     * Constructor.
     *
@@ -51,7 +51,7 @@ class XmlExportSettingsAction implements RequestHandlerInterface
     {
         $this->module_service = $module_service;
     }
-	
+
     /**
      * Handle a request to view a modal XML export settings
      *

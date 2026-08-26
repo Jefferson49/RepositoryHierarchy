@@ -27,8 +27,8 @@ $shown_source_tags = explode(',', $repository_hierarchy->getPreference(Repositor
 $expandable_source_tags = RepositoryHierarchy::$EXPANDABLE_SOURCE_FACTS_IN_CITATIONS->keys()->toArray();
 $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(RepositoryHierarchy::PREF_EXPANDED_SOURCE_FACTS_IN_CITATIONS, ''));
 
-?> 
- 
+?>
+
 <?php $facts = $source->facts() ?>
 <?php $count_source_facts = 0 ?>
 
@@ -73,8 +73,8 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 					<?php endif ?>
 					<?php if ($show_atom_links) : ?>
 						<?= view(RepositoryHierarchy::viewsNamespace() . '::atom-links', ['tree' => $tree, 'source' => $source, 'caln_string' => $caln_string]) ?>
-						<?php $count_source_facts++ ?>				
-					<?php endif ?>					
+						<?php $count_source_facts++ ?>
+					<?php endif ?>
 				</div>
 			<?php endif ?>
 		<?php endif ?>
@@ -104,10 +104,10 @@ $expanded_source_tags = explode(',', $repository_hierarchy->getPreference(Reposi
 					<?= MoreI18N::xlate('%1$s: %2$s', $label, $value) ?>
 				</div>
 				<div id="<?= e($id) ?>" class="ps-4 collapse <?= $expanded ? 'show' : '' ?>">
-					<?php if ($fact_tag_within_citation === 'TEXT') : ?>					
+					<?php if ($fact_tag_within_citation === 'TEXT') : ?>
 						<span class="value align-top"><?= $element->value($fact->value(), $tree) ?></span>
 						<?php $count_source_facts++ ?>
-					<?php elseif ($fact_tag_within_citation === 'DATA') : ?>				
+					<?php elseif ($fact_tag_within_citation === 'DATA') : ?>
 						<?php preg_match_all('/\n2 (' . Gedcom::REGEX_TAG . ')( .*)?((\n[3-9].*)*)/', $fact->gedcom(), $matches, PREG_SET_ORDER) ?>
 						<?php foreach ($matches as $match) : ?>
 							<?= view('fact-gedcom-fields', ['gedcom' => $match[0], 'parent' => $fact->tag() . ':' . $match[1], 'tree' => $tree]) ?>

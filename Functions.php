@@ -254,7 +254,7 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
      */
     public static function isoDateFormat(AbstractCalendarDate $date): string
     {
-        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {        
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
             return $date->year() . '-' . str_pad((string) $date->month(), 2, '0', STR_PAD_LEFT) . '-' . str_pad((string)$date->day(), 2, '0', STR_PAD_LEFT);
         }
         else {
@@ -271,13 +271,13 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
      */
     public static function gedcomDateFormat(AbstractCalendarDate $date): string
     {
-        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {        
+        if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
             return str_pad((string)$date->day(), 2, '0', STR_PAD_LEFT) . ' ' . $date->gedcomMonth() . ' ' . (string) $date->year() ;
         }
         else {
             return $date->format('%A %O %E');
         }
-    }    
+    }
 
 
     /**
@@ -313,7 +313,7 @@ class Functions extends \Jefferson49\Webtrees\Helpers\Functions
      * i.e. minimum and maximum dates of all the date ranges
      *
      * @param array<Date> $dates
-     * 
+     *
      * @return Date
      */
     public static function getOverallDateRange(array $dates): ?Date

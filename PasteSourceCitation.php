@@ -58,7 +58,7 @@ class PasteSourceCitation implements RequestHandlerInterface
         $record = Auth::checkRecordAccess($record, true);
 
         /** @var RepositoryHierarchy $repository_hierarchy To avoid IDE warnings */
-        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);		
+        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
         $source_citation_gedcom = Session::get($repository_hierarchy->name() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), '');
 
         foreach (Functions::getRecordFacts($record, [], false, null, true) as $fact) {

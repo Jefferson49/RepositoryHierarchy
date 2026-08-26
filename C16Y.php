@@ -100,7 +100,7 @@ class C16Y
 
         // webtrees versions before 2.3
         else {
-            $language_tag = I18N::locale()->languageTag();            
+            $language_tag = I18N::locale()->languageTag();
             $po_file = $path . $tree_name . '_' . $repository->xref() . '_' .  $language_tag .'.po';
 
             //Create language (is required by the Translator for the plural rule)

@@ -36,7 +36,7 @@ $xref_type = '';
 
 if ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_INDIVIDUAL)
 	&& (Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_TREE) === $tree->name())
-	&& Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER)) 
+	&& Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER))
 {
     $individual = Registry::individualFactory()->make(Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER), $tree);
     if ($individual !== null) {
@@ -49,8 +49,8 @@ if ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE
         $xref_type = 'INDI';
     }
 }
-elseif ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_FAMILY) 
-    && (Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_TREE) === $tree->name()) 
+elseif ((Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_NAME) === RepositoryHierarchy::PAGE_NAME_FAMILY)
+    && (Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_TREE) === $tree->name())
     && Session::has($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER))
 {
     $family  = Registry::familyFactory()->make(Session::get($repository_hierarchy->name() . RepositoryHierarchy::LAST_PAGE_PARAMETER), $tree);

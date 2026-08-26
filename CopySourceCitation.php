@@ -62,7 +62,7 @@ class CopySourceCitation implements RequestHandlerInterface
 
         //Save received GEDCOM to session
         /** @var RepositoryHierarchy $repository_hierarchy To avoid IDE warnings */
-        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);		
+        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
         Session::put($repository_hierarchy->name() . RepositoryHierarchy::PREF_CITATION_GEDCOM . '_' . $tree->id(), $gedcom);
 
         FlashMessages::addMessage(I18N::translate('The source citation was copied to an internal clipboard.') . '<br>' .

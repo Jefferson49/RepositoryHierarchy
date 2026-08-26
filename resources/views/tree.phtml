@@ -12,7 +12,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
  * @var array                  $date_range_text_of_source
  * @var CallNumberCategory     $category
  * @var C16Y                   $callNumberCategoryTitleService
- * 
+ *
  * @var bool                   $PREF_SHOW_CATEGORY_LABEL
  * @var bool                   $PREF_SHOW_TRUNCATED_CATEGORY
  * @var bool                   $PREF_SHOW_DATE_RANGE_FOR_CATEGORY
@@ -24,7 +24,7 @@ namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
  * @var bool                   $PREF_SHOW_XREF
  * @var bool                   $PREF_SHOW_AUTHOR
  * @var bool                   $PREF_SHOW_DATE_RANGE
- * 
+ *
  * @var string                 $trans_Call_Number_Category
  * @var string                 $trans_Rename
  * @var string                 $trans_Add_new_source
@@ -90,7 +90,7 @@ $category_full_name = $category->getFullName();
 				<?= view('icons/spacer') ?>
 			<?php endif ?>
 			<?php if ($PREF_ALLOW_NEW_SOURCE) : ?>
-				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal" 
+				<a href="#" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#wt-ajax-modal"
 							data-wt-href="<?= e(route(CreateSourceModal::class, [
                                 'tree' => $tree_name,
                                 'xref' => $repository_xref,
@@ -188,4 +188,3 @@ $category_full_name = $category->getFullName();
 		</div>
 	</div>
 </div>
-    
