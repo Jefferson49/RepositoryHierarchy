@@ -35,7 +35,7 @@ use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Webtrees;
-use Jefferson49\Webtrees\Helpers\Functions;
+use Jefferson49\Webtrees\Helpers\Functions as CommonFunctions;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Matriphe\ISO639\ISO639;
 use Psr\Http\Message\ResponseInterface;
@@ -92,7 +92,7 @@ class DownloadEADxmlService extends DownloadService
         $this->user = $user;
         $this->use_encoding_analog = ($xml_type !== self::DOWNLOAD_OPTION_DDB_EAD);
         $this->module_service = new ModuleService();
-		
+
         //Get language
         if (version_compare(Webtrees::VERSION, '2.3', '>=')) {
             $language_tag = I18N::languageTag();
@@ -189,7 +189,7 @@ class DownloadEADxmlService extends DownloadService
      */
     private function addHeader(string $xml_type, DOMNode $dom): DOMNode
     {
-        $repository_hierarchy = Functions::getFromContainer(RepositoryHierarchy::class);
+        $repository_hierarchy = CommonFunctions::getFromContainer(RepositoryHierarchy::class);
         $user_id = $this->user->id();
 
         //<eadheader>
