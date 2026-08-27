@@ -41,13 +41,6 @@ use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\GedcomRecord;
-use Fisharebest\Webtrees\Http\RequestHandlers\FamilyPage;
-use Fisharebest\Webtrees\Http\RequestHandlers\IndividualPage;
-use Fisharebest\Webtrees\Http\RequestHandlers\MediaPage;
-use Fisharebest\Webtrees\Http\RequestHandlers\NotePage;
-use Fisharebest\Webtrees\Http\RequestHandlers\RepositoryPage;
-use Fisharebest\Webtrees\Http\RequestHandlers\SourcePage;
-use Fisharebest\Webtrees\Http\RequestHandlers\SubmitterPage;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
@@ -105,26 +98,8 @@ class RepositoryHierarchy extends AbstractModule implements
     public const CUSTOM_VERSION = '1.5.7';
 
     //Routes, attributes
-    protected const MODULE_NAME_IN_ROUTE = 'repositoryhierarchy';
-    protected const HELP_TEXTS_IN_ROUTE = 'repositoryhierarchy_helptexts';
-    protected const CREATE_SOURCE_IN_ROUTE = 'repositoryhierarchy_create_source';
-    protected const FIX_CALL_NUMBER_IN_ROUTE = 'repositoryhierarchy_fix_callnumbers';
-    protected const REPO_ACTIONS_IN_ROUTE = 'repositoryhierarchy_repo_actions';
-    protected const XML_SETTINGS_MODAL_IN_ROUTE = 'repositoryhierarchy_xml_settings_modal';
-    protected const XML_SETTINGS_ACTION_IN_ROUTE = 'repositoryhierarchy_xml_settings_action';
-    protected const COPY_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_copy_citation';
-    protected const PASTE_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_paste_citation';
-    protected const DELETE_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_delete_citation';
-    protected const SORT_SOURCE_CITATION_IN_ROUTE = 'repositoryhierarchy_sort_citation';
-    protected const TREE_ATTRIBUTE_DEFAULT = '{tree}';
-    protected const XREF_ATTRIBUTE_DEFAULT = '{xref}';
+    protected const XREF_ATTRIBUTE_DEFAULT      = '{xref}';
     protected const DELIMITER_ATTRIBUTE_DEFAULT = '{delimiter_expression}';
-    protected const COMMAND_ATTRIBUTE_DEFAULT = '{command}';
-    protected const TOPIC_ATTRIBUTE_DEFAULT = '{topic}';
-    protected const SOURCE_CALL_NUMBER_ATTRIBUTE_DEFAULT = '{source_call_number}';
-    protected const CATEGORY_NAME_ATTRIBUTE_DEFAULT = '{category_name}';
-    protected const CATEGORY_FULL_NAME_ATTRIBUTE_DEFAULT = '{category_full_name}';
-    protected const FACT_ID_ATTRIBUTE_DEFAULT = '{fact_id}';
 
     //Strings cooresponding to variable names
     public const VAR_DATA_FIX = 'data_fix';
@@ -360,72 +335,16 @@ class RepositoryHierarchy extends AbstractModule implements
         ]);
 
         //Register the routes for the custom module
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::MODULE_NAME_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT,
-            self::class,
-            $this
-        );
-        CommonFunctions::registerRoute(
-            '/'.self::HELP_TEXTS_IN_ROUTE.
-            '/topic/'.self::TOPIC_ATTRIBUTE_DEFAULT,
-            RepositoryHierarchyHelpTexts::class
-        );
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::CREATE_SOURCE_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT,
-            CreateSourceModal::class
-        );
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::FIX_CALL_NUMBER_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT,
-            CallNumberDataFix::class
-        );
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::XML_SETTINGS_MODAL_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT,
-            XmlExportSettingsModal::class
-        );
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::XML_SETTINGS_ACTION_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/command/'.self::COMMAND_ATTRIBUTE_DEFAULT,
-            XmlExportSettingsAction::class
-        );
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::COPY_SOURCE_CITATION_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT,
-            CopySourceCitation::class
-        );
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::PASTE_SOURCE_CITATION_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT,
-            PasteSourceCitation::class
-        );
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::DELETE_SOURCE_CITATION_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT,
-            DeleteSourceCitation::class
-        );
-        CommonFunctions::registerRoute(
-            '/tree/'.self::TREE_ATTRIBUTE_DEFAULT.
-            '/'.self::SORT_SOURCE_CITATION_IN_ROUTE.
-            '/xref/'.self::XREF_ATTRIBUTE_DEFAULT.
-            '/fact_id/'.self::FACT_ID_ATTRIBUTE_DEFAULT,
-            SortSourceCitation::class
-        );
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy{/xref}', self::class, $this);
+        CommonFunctions::registerRoute('/repositoryhierarchy_helptexts/{topic}', RepositoryHierarchyHelpTexts::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_create_source/{xref}', CreateSourceModal::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_fix_callnumbers/{xref}', CallNumberDataFix::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_xml_settings_modal/{xref}', XmlExportSettingsModal::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_xml_settings_action/{xref}', XmlExportSettingsAction::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_copy_citation/{xref}', CopySourceCitation::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_paste_citation/{xref}/{fact_id}', PasteSourceCitation::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_delete_citation/{xref}/{fact_id}', DeleteSourceCitation::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_sort_citation/{xref}/{fact_id}', SortSourceCitation::class);
 
         //Register a namespace for the views
         View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
@@ -1363,13 +1282,14 @@ class RepositoryHierarchy extends AbstractModule implements
     {
         $tree    = Validator::attributes($request)->tree();
         $user    = Validator::attributes($request)->user();
-        $xref    = Validator::attributes($request)->string('xref');
-        $command = Validator::attributes($request)->string('command');
+        $xref    = Validator::attributes($request)->string('xref', '');
 
         try {
+            $command              = Validator::parsedBody($request)->string('command');
             $delimiter_expression = Validator::parsedBody($request)->string('delimiter_expression');
         }
         catch (Exception $ex) {
+            $command              = Validator::queryParams($request)->string('command', '');
             $delimiter_expression = Validator::queryParams($request)->string('delimiter_expression');
         }
 

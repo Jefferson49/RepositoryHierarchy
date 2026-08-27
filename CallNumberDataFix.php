@@ -70,6 +70,7 @@ class CallNumberDataFix implements RequestHandlerInterface
         $tree               = Validator::attributes($request)->tree();
 		$user               = Validator::attributes($request)->user();
         $repository_xref    = Validator::attributes($request)->string(CallNumberCategory::VAR_XREF);
+
         $category_name      = Validator::queryParams($request)->string(CallNumberCategory::VAR_CATEGORY_NAME);
         $category_full_name = Validator::queryParams($request)->string(CallNumberCategory::VAR_CATEGORY_FULL_NAME);
 

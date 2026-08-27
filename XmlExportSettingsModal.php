@@ -70,7 +70,6 @@ class XmlExportSettingsModal implements RequestHandlerInterface
     */
     public static function updatePreferenes(Tree $tree, string $repository_xref, int $user_id, string $delimiter_expression)
     {
-        $module_service = new ModuleService();
         $repository_hierarchy = CommonFunctions::getFromContainer(RepositoryHierarchy::class);
 
         $replaces_list = [
@@ -142,8 +141,9 @@ class XmlExportSettingsModal implements RequestHandlerInterface
         $tree                 = Validator::attributes($request)->tree();
         $user                 = Validator::attributes($request)->user();
         $repository_xref      = Validator::attributes($request)->string('xref');
-        $command              = Validator::attributes($request)->string('command');
-        $delimiter_expression = Validator::queryParams($request)->string('delimiter_expression');
+
+        $command              = Validator::queryParams($request)->string('command', '');
+        $delimiter_expression = Validator::queryParams($request)->string('delimiter_expression', '');
 
 		//If user does not have access
         if (Auth::accessLevel($tree, $user) === Auth::PRIV_PRIVATE) {

@@ -52,6 +52,7 @@ class CopySourceCitation implements RequestHandlerInterface
     {
         $tree    = Validator::attributes($request)->tree();
 		$user    = Validator::attributes($request)->user();
+
         $gedcom  = Validator::queryParams($request)->string('gedcom', '');
 
 		//If user does not have access to the tree

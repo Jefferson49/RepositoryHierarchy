@@ -52,6 +52,7 @@ class DeleteSourceCitation implements RequestHandlerInterface
         $tree      = Validator::attributes($request)->tree();
         $xref      = Validator::attributes($request)->isXref()->string('xref');
         $fact_id   = Validator::attributes($request)->string('fact_id');
+
         $xref_type = Validator::queryParams($request)->string('xref_type');
         $gedcom    = Validator::queryParams($request)->string('gedcom');
 

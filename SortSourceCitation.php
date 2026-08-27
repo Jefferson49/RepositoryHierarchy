@@ -52,6 +52,7 @@ class SortSourceCitation implements RequestHandlerInterface
         $tree              = Validator::attributes($request)->tree();
         $xref              = Validator::attributes($request)->isXref()->string('xref');
         $fact_id           = Validator::attributes($request)->string('fact_id');
+
         $xref_type         = Validator::queryParams($request)->string('xref_type');
         $matched_citations = Validator::queryParams($request)->array('matched_citations');
         $old_position      = Validator::queryParams($request)->integer('old_position', 1);
