@@ -2,6 +2,9 @@
 
 namespace Jefferson49\Webtrees\Module\RepositoryHierarchy;
 
+use Fisharebest\Webtrees\Auth;
+
+
 /**
  * @var RepositoryHierarchy    $repository_hierarchy
  * @var string                 $repository_xref
@@ -77,7 +80,7 @@ $category_full_name = $category->getFullName();
 	<?= view('icons/spacer') ?>
 	<?php if ((strpos($category_full_name, CallNumberCategory::EMPTY_CATEGORY_NAME) === false) and (strpos($category_full_name, CallNumberCategory::DEFAULT_CATEGORY_NAME) === false)) : ?>
 		<button class="btn btn-link px-0 py-1 wt-chart-expansion-control" aria-expanded="true">
-			<?php if ($PREF_ALLOW_RENAME) : ?>
+			<?php if ($PREF_ALLOW_RENAME && Auth::isAdmin()) : ?>
 				<a href="<?= e(route(CallNumberDataFix::class, [
                         'tree' => $tree_name,
                         'xref' => $repository_xref,

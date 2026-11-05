@@ -41,6 +41,7 @@ use Fisharebest\Webtrees\Contracts\UserInterface;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\GedcomRecord;
+use Fisharebest\Webtrees\Http\Middleware\AuthAdministrator;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
@@ -66,6 +67,7 @@ use Fisharebest\Webtrees\Webtrees;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Collection;
 use Jefferson49\Webtrees\Helpers\ClassName;
+use Jefferson49\Webtrees\Http\Middleware\RequireHttpPostMethod;
 use Jefferson49\Webtrees\Internationalization\MoreI18N;
 use Jefferson49\Webtrees\Helpers\Functions as CommonFunctions;
 use Jefferson49\Webtrees\Module\ModuleCustomTrait;
@@ -338,13 +340,13 @@ class RepositoryHierarchy extends AbstractModule implements
         CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy{/xref}', self::class, $this);
         CommonFunctions::registerRoute('/repositoryhierarchy_helptexts/{topic}', RepositoryHierarchyHelpTexts::class);
         CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_create_source/{xref}', CreateSourceModal::class);
-        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_fix_callnumbers/{xref}', CallNumberDataFix::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_fix_callnumbers/{xref}', CallNumberDataFix::class, null, [AuthAdministrator::class]);
         CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_xml_settings_modal/{xref}', XmlExportSettingsModal::class);
-        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_xml_settings_action/{xref}', XmlExportSettingsAction::class);
-        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_copy_citation/{xref}', CopySourceCitation::class);
-        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_paste_citation/{xref}/{fact_id}', PasteSourceCitation::class);
-        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_delete_citation/{xref}/{fact_id}', DeleteSourceCitation::class);
-        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_sort_citation/{xref}/{fact_id}', SortSourceCitation::class);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_xml_settings_action/{xref}', XmlExportSettingsAction::class, null, [RequireHttpPostMethod::class]);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_copy_citation/{xref}', CopySourceCitation::class, null, [RequireHttpPostMethod::class]);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_paste_citation/{xref}/{fact_id}', PasteSourceCitation::class, null, [RequireHttpPostMethod::class]);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_delete_citation/{xref}/{fact_id}', DeleteSourceCitation::class, null, [RequireHttpPostMethod::class]);
+        CommonFunctions::registerRoute('/tree/{tree}/repositoryhierarchy_sort_citation/{xref}/{fact_id}', SortSourceCitation::class, null, [RequireHttpPostMethod::class]);
 
         //Register a namespace for the views
         View::registerNamespace(self::viewsNamespace(), $this->resourcesFolder() . 'views/');
